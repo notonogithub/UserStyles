@@ -3,11 +3,11 @@
 @name           Lemmy | Modernised [Now Customizable!]
 @version        1.2.6
 @description    A customizable, modernised version of Lemmy, A (soon to be) Federated Reddit Alternative. Should work with *most* builtin themes
-@updateURL      https://codeberg.org/Freeplay/UserStyles/src/branch/main/lemmy-modernised.user.css
+@updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/lemmy-modernised.user.css
 
  -- AUTHOR STUFF --
 @namespace      Freeplay
-@author         Freeplay <freeplayg@tutanota.com> (https://pages.codeberg.org/freeplay/)
+@author         Freeplay (https://pages.codeberg.org/freeplay/)
 @preprocessor   stylus
 @homepageURL    https://codeberg.org/Freeplay/UserStyles
 @supportURL     https://codeberg.org/Freeplay/UserStyles/issues
