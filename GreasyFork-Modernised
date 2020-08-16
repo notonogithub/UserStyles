@@ -1,0 +1,377 @@
+/* ==UserStyle==
+ -- THEME STUFF --
+@name           [Update!] GreasyFork | Modernized 
+@version        1.3.0
+@description    A much cleaner and more modern version of GreasyFork!
+@updateURL     	https://codeberg.org/Freeplay/UserStyles/raw/branch/main/GreasyFork-Modernised
+
+ -- AUTHOR STUFF --
+@namespace      Freeplay
+@author         Freeplay (https://pages.codeberg.org/freeplay/)
+@homepageURL    https://codeberg.org/Freeplay/UserStyles
+@supportURL     https://codeberg.org/Freeplay/UserStyles/issues
+@preprocessor   stylus
+
+
+--- SETTINGS ---
+@var checkbox darkmode "Dark Mode - Colors changable inside the script" 0 
+
+==/UserStyle== */
+/* Aug, 16 / 20
+- Better positioning & look
+- Better sidebar
+- Forums support
+- Added max-width to some pages
+*/
+/* Jul, 6 / 20
+- Dark Mode!
+*/
+/* Jun, 7 / 20 
+- Changed links back to underlines, Didn't work too well in some areas
+*/
+/* Jun, 5 / 20 
+- Minor changes - AKA other things I forgot to log.
+- Modern TextBox
+- Sortof Modern Dropdown
+- Links are now shown by the blue color instead of the underline, hovering displays underline
+- Tweaked Header
+*/
+@-moz-document domain("greasyfork.org") {
+	:root {
+		if darkmode {
+			--color-primary: #272b36;
+			--color-secondary: #272b3a;
+			--color-tertiary: #2c3242;
+			--color-bg: #1c1f28;
+			--color-text: #d1d1d1;
+			--color-link: #00b3ff;
+			--color-link-visited: cyan;
+			--shadow-normal: 0 0 5px rgba(0,0,0,0.5);
+			--shadow-button: 0px 0px 2px rgba(150,150,150,0.3);
+		} else {
+			--color-primary: #ff2b2b;
+			--color-secondary: white;
+			--color-tertiary: white;
+			--color-bg: #F6F6F6;
+			--color-text: black;
+			--color-link: #0265be;
+			--color-link-visited: #cf2525;
+			--shadow-normal: 0 0 5px #DDDDDD;
+			--shadow-button: 0px 0px 2px rgba(0,0,0,0.2);
+		}
+	}
+	* {
+		transition: background .2s;
+	}
+
+		
+		/* TEXT */
+		h3 {
+			color: var(--color-text);
+		}
+		p {
+			color: var(--color-text);
+		}
+		pre.prettyprint {
+			background-color: white;
+		}
+		
+		/* BUTTONS/LINKS */
+		select, option, input, button, code, #user-control-panel > li, .pagination > a, .pagination > em, .pagination > span, a.list-option-button {
+			border: none;
+			box-shadow: var(--shadow-button);
+			border-radius: 5px;
+			padding: 5px;
+			transition: all .2s;
+			background-color: var(--color-secondary) !important;
+			color: var(--color-text);
+		}
+		select:hover, input:hover, input:focus, button:hover, #user-control-panel > li:hover, a.list-option-button:hover {
+			/*border-bottom: 1px solid rgba(0,0,0,0.2) !important; */
+			box-shadow: 0px 0px 8px rgba(0,0,0,0.3);
+			background-color: var(--color-tertiary) !important;
+		}
+		
+		nav > li > a, .pagination > a, #user-control-panel > li > a, #script-links > li > a, div[class="list-option-group"] > ul > li > a, h2 > a {
+			text-decoration: none;
+			color: var(--color-text);
+		}
+		a {
+			text-underline-offset: .25em;
+			color: var(--color-link);
+		}
+		a:hover {
+			text-decoration: underline !important;
+		}
+		a:visited {
+			color: var(--color-link-visited);
+		}
+		body {
+			background-color: var(--color-bg);
+		}
+		body > .width-constraint {
+			max-width: 100%;
+			margin: 0;
+			padding: 10px;
+		}
+		body > .width-constraint > section {
+			max-width: 80rem;
+			margin: auto !important;
+		}
+		body > .width-constraint > section:first-child {
+			margin-top: 20px !important;
+		}
+		body > .width-constraint > section:last-of-type {
+			margin-bottom: 40px !important;
+		}
+		
+		section {
+			border: none !important;
+		}
+		
+		
+		
+	@media only screen and (min-width: 801px) { 
+		
+		
+		body {
+			margin-top: 44px;
+		}
+		
+		.text-content, .discussion-list {
+			border: none;
+			padding-top: 2px;
+			box-shadow: none;
+			background-color: var(--color-tertiary);
+			color: var(--color-text);
+		}
+
+		/* HEADER */
+		#main-header {
+			position: fixed;
+			top: 0;
+			width: 100%;
+			height: 44px;
+			padding: 0;
+			z-index: 1;
+			background-image: none;
+			background-color: var(--color-primary);
+		}
+		#main-header > .width-constraint{
+			max-width: 100%;
+			padding-left: 10px;
+			padding-right: 10px;
+			display: flex !important;
+			align-items: center;
+			margin: auto !important;
+		}
+		#site-name {
+			position: absolute;
+			width: 200px;
+			min-width: 200px;
+			height: 30px;
+			margin-top: auto;
+			margin-bottom: auto;
+		}
+		#site-name > a > img {
+			height: 30px;
+		}
+		#site-name-text {
+			margin-top: 0 !important;
+		}
+		#site-name-text > h1 {
+			height: 30px;
+			font-size: 25px;
+		}
+
+		#site-nav {
+			display: flex !important;
+			height: 40px;
+			width: auto;
+			align-items: center;
+			margin-left: auto;
+			margin-top: 0 !important;
+		}
+		#site-nav > * {
+			position: relative !important;
+		}
+		#site-nav > nav {
+			width: 250px !important;
+			min-width: 250px;
+		}
+		#nav-user-info {
+			width: 100%;
+			min-width: 300px;
+		}
+		#nav-user-info > form > select {
+			margin: 0 10px;
+		}
+		
+		.with-submenu > nav {
+			background-color: var(--color-primary);
+		}
+		
+		/* SIDEBAR */
+		/*.sidebar {
+			position: fixed;
+			left: 0;
+			z-index: 2;
+			background-color: var(--color-secondary);
+			padding: 0;
+			margin: 0;
+			top: 44px;
+			overflow-y: auto;
+			overflow-x: hidden;
+			width: 210px;
+			height: calc(100% - 44px);
+			box-shadow: 5px 0px 5px rgba(0,0,0,0.1);
+			text-decoration: none !important;
+		}*/
+		.sidebar ~ div {
+			max-width: 50rem;
+		}
+		.sidebar {
+			position: sticky;
+			top: 44px;
+			order: -1;
+			margin: -10px 5px -10px -10px;
+			padding: 20px 5px 20px 10px;
+			height: calc(100vh - 84px);
+			max-height: calc(100vh - 84px);
+			overflow-y: auto;
+			overflow-x: hidden;
+
+			text-decoration: none !important;
+			scrollbar-width: thin;
+		}
+		
+			.sidebar-search input[type="search"] {
+				height: 30px;
+				/*padding: 0*/
+				/*margin: 10px;*/
+				border: none;
+				width: 100%;
+				/*background-color: transparent;*/
+				color: var(--color-text);
+			}
+			.sidebar-search input[type="submit"] {
+				display: none;
+			}
+			#script-list-option-groups > div, .list-option-group {
+				padding: 10px;
+				color: var(--color-text);
+				
+				background-color: var(--color-secondary);
+				border-radius: 6px;
+				box-shadow: 0px 0px 5px rgba(0,0,0,0.1);
+			}
+				#script-list-option-groups > div > ul, .list-option-group > ul {
+					background-color: transparent;
+					box-shadow: none;
+					border: none;
+					margin: -10px;
+				}
+				.list-current {
+					border-left-color: var(--color-primary) !important;
+					border-left-width: 4px !important;
+				}
+				if darkmode {
+					.list-current {
+						background: none !important;
+						background-color: var(--color-tertiary) !important;
+						color: var(--color-text);
+					}
+					.list-option-group a:hover, .list-option-group a:focus {
+						background: none !important;
+						background-color: var(--color-tertiary) !important;
+						box-shadow: none !important;
+					}
+				}
+					
+					
+	
+					
+					
+					
+		/* LISTS */
+		#browse-script-list, #user-script-list, #user-deleted-script-list {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+			grid-gap: 10px;
+			border: none;
+			box-shadow: none;
+			background-color: transparent;
+		}
+		
+		
+	}
+		
+		
+			#browse-script-list > li, #user-script-list > li, #user-deleted-script-list > li {
+				border: none !important;
+				border-radius: 6px;
+				background-color: var(--color-secondary);
+				transition: box-shadow .2s;
+				color: var(--color-text);
+			}
+			#browse-script-list > li:hover, #user-script-list > li:hover, #user-deleted-script-list > li:hover {
+				box-shadow: 0px 2px 20px rgba(0,0,0,0.1);
+			}
+				#browse-script-list > li > article {
+					height: 100%;
+					display: flex;
+					flex-wrap: wrap;
+				}
+					#browse-script-list > li > article > h2 {
+						overflow: hidden;
+					}
+					.inline-script-stats {
+						margin-top: auto;
+						width: 100%;
+					}
+				
+			.script-list li:not(.ad-entry) {
+				border-right: 1px solid #DDDDDD;
+			}
+			.ad-entry, #codefund {
+				grid-column: 1/-1;
+			}
+			[data-ea-publisher].loaded .ea-content a:link, [data-ea-type].loaded .ea-content a:link {
+				color: var(--color-link) !important;
+			}
+		.sidebarred-main-content > p:last-child {
+			display: none;	
+		}
+			
+		/*** FILTER BY SITES PAGE ***/
+		
+		/*** SCRIPT DETAILS PAGE ***/
+
+		#script-info, #additional-info, #user-profile {
+			background: none;
+			background-color: var(--color-tertiary);
+			box-shadow: none;
+			color: var(--color-text);
+		}
+		
+
+			
+		/*** USER PAGE ***/
+		/* Control Panel */
+		#user-control-panel {
+			display: flex;
+			flex-wrap: wrap;
+			grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+			grid-gap: 10px;
+			padding: 10px;
+		}
+			#user-control-panel > li {
+				text-decoration: none;
+				list-style: none;
+				text-align: center;
+				background-color: var(--color-secondary);
+				padding: 5px 10px;
+				border-radius: 5px;
+			}
+		
+	}
