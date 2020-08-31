@@ -1,7 +1,7 @@
 /* ==UserStyle==
  -- THEME STUFF --
 @name           GreasyFork | Modernized 
-@version        1.3.2
+@version        1.3.3
 @description    A much cleaner and more modern version of GreasyFork!
 @updateURL     	https://codeberg.org/Freeplay/UserStyles/raw/branch/main/GreasyFork-Modernised.user.css
 
@@ -17,6 +17,10 @@
 @var checkbox darkmode "Dark Mode" 0 
 
 ==/UserStyle== */
+/* Aug, 31 / 20
+- Fixed ad placement in Script Details page
+- Less saturated topbar on light theme, You can always change the colors inside of :root{}
+- Moved some buttons on scripts list page
 /* Aug, 23 / 20
 - Properly modernised the Script Details page! :D
 /* Aug, 20 / 20
@@ -50,6 +54,7 @@
 @-moz-document domain("greasyfork.org") {
 	:root {
 		if darkmode {
+			/* DARK MODE COLORS */
 			--color-primary: #272b36;
 			--color-secondary: #072b3a;
 			--color-tertiary: #2c3242;
@@ -62,7 +67,8 @@
 			--shadow-button: 0px 0px 2px rgba(150,150,150,0.3);
 			--border-button:  1px solid rgba(150,150,150,0.2);
 		} else {
-			--color-primary: #ff2b2b;
+			/* LIGHT MODE COLORS */
+			--color-primary: #980000;
 			--color-secondary: white;
 			--color-tertiary: white;
 			--color-bg: #F6F6F6;
@@ -96,13 +102,14 @@
 		.pagination > *, .script-list + .pagination > *, .user-list + .pagination > *, 
 		a.list-option-button, #script-links > li > *, #script-feedback-suggestion a, 
 		#about-user > p:last-child > *, #about-user > a:first-child,
- 		#install-area a, .expander {
+ 		#install-area a, .expander,
+ 		.sidebarred-main-content > p:last-child a, .sidebarred-main-content > p:first-of-type a {
 			border: none;
 			
 			border: var(--border-button);
 			text-decoration: none;
 			border-radius: .3rem;
-			padding: 5px 16px;
+			padding: 5px 14px;
 			transition: all .2s;
 			background-color: var(--color-secondary);
 			color: var(--color-text) !important;
@@ -110,7 +117,8 @@
 		select:hover, input:hover, input:focus, button:hover, #user-control-panel > li:hover, a.list-option-button:hover, #script-links > li > *:hover, #script-feedback-suggestion a:hover, #script-links .current span, 
 		#about-user > p:last-child > *:hover, #about-user > a:first-child:hover,
 		.pagination > *:hover, .script-list + .pagination > *:hover, .user-list + .pagination > *:hover, .pagination > *:focus, .script-list + .pagination > *:focus, .user-list + .pagination > *:focus, 
- 		#install-area a:hover, .expander:hover {
+ 		#install-area a:hover, .expander:hover,
+ 		.sidebarred-main-content > p:last-child a:hover, .sidebarred-main-content > p:first-of-type a:hover {
 			box-shadow: 0px 0px 8px rgba(0,0,0,0.1) !important;
 			background: var(--color-tertiary) !important;
 			text-decoration: none !important;
@@ -158,12 +166,14 @@
 		}
 		
 		
+		
 	@media only screen and (min-width: 940px) { 
 		
 		
 		body {
 			margin-top: 44px;
 		}
+		
 		
 		.text-content, .discussion-list, #browse-user-list, #script-meta, #additional-info, #script-show-info-ad, #script-content .script-discussion-list, canvas {
 			padding: 1rem !important;
@@ -372,8 +382,23 @@
 			[data-ea-publisher].loaded .ea-content a:link, [data-ea-type].loaded .ea-content a:link {
 				color: var(--color-link) !important;
 			}
+			
+			
+		.sidebarred-main-content {
+			display: flex;
+			flex-wrap: wrap;
+			height: min-content;
+		}
+		.sidebarred-main-content > * {
+			width: 100%;
+			
+		}
+		.sidebarred-main-content > p {
+			width: auto;
+			margin: 1em 4px 0;
+		}
 		.sidebarred-main-content > p:last-child {
-			display: none;	
+			order: -1;
 		}
 			
 		/*** FILTER BY SITES PAGE ***/
@@ -462,7 +487,7 @@
 		#script-show-info-ad {
 			order: 3;
 			margin-left: 1em !important;
-			width: auto !important;
+			flex: 1 1 200px;
 		}
 		#additional-info {
 			order: 3;
