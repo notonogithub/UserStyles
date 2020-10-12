@@ -1,0 +1,67 @@
+/* ==UserStyle==
+@name           Mastodon | Custom Theme Color
+@version        1.0.0
+@description    Change the default blue to any color you like!
+@updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/Mastodon-CustomThemeColor.user.css
+
+ -- AUTHOR STUFF --
+@namespace      Freeplay
+@author         Freeplay (https://pages.codeberg.org/freeplay/)
+@homepageURL    https://codeberg.org/Freeplay/UserStyles
+@supportURL     https://codeberg.org/Freeplay/UserStyles/issues
+@preprocessor   stylus
+
+ -- VARIABLES --
+@var color theme "Theme Color" #db6c14
+@var color text "Button Text Color" white
+==/UserStyle== */
+
+@-moz-document domain("mstdn.social") {
+	:root {
+		--theme: theme !important;
+		--text: text !important;
+	}
+	.button:not(.button-secondary), .block-button,
+	.icon-with-badge__badge,
+	.poll__chart.leading,
+	.simple-navigation-active-leaf a, .btn, .react-toggle--checked .react-toggle-track, .radio-button__input.checked, .input-copy > button,
+ 	li.dropdown-menu__item a:hover, .privacy-dropdown__option.active, .privacy-dropdown__option:hover,
+ 	.video-player__volume__current, .video-player__volume__handle, .video-player__seek__buffer, .video-player__seek__progress, .video-player__seek__handle {
+		background-color: var(--theme) !important;
+		color: var(--text) !important;		
+		border-color: var(--theme) !important;
+	}
+	.button:hover,
+ 	.active:hover,
+	.simple-navigation-active-leaf a:hover, .btn:hover,
+ 	.status__content button > span:hover {
+		filter: opacity(.9);
+		transition: filter .2s;
+	}
+	a.active, p > a, tbody a,
+	.icon-button.active, .selected,
+	.status__content a, .status__content__read-more-button, .account__header__content a, .verified__mark,
+	.column-header__back-button > *, .column-back-button > *, .column-header__icon, .column-back-button, .column-header__back-button,
+	.notification__message .fa,
+	dd a {
+		color: var(--theme) !important;
+		text-decoration-color: var(--theme) !important;
+		border-color: var(--theme) !important;
+	}
+	.verified {
+		background: rgba( theme, .1 ) !important;
+		border-color: var(--theme) !important;
+	}
+	.icon-button, .button-secondary {
+		border-color: var(--theme) !important;
+		border-radius: 4px !important;
+	}
+	.trends__item__sparkline path:last-child {
+		stroke: var(--theme) !important;
+	}
+	.trends__item__sparkline path:first-child {
+		fill: rgba( theme, .1 ) !important;
+	}
+	
+	
+}
