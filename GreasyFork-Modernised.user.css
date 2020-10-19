@@ -1,7 +1,7 @@
 /* ==UserStyle==
  -- THEME STUFF --
-@name           GreasyFork | Modernized (Optional DarkMode)
-@version        1.3.4
+@name           GreasyFork | Modernized ( Optional Dark Theme )
+@version        1.3.5
 @description    A much cleaner and more modern version of GreasyFork!
 @updateURL     	https://codeberg.org/Freeplay/UserStyles/raw/branch/main/GreasyFork-Modernised.user.css
 
@@ -17,6 +17,14 @@
 @var checkbox darkmode "Dark Mode" 0 
 
 ==/UserStyle== */
+/* Oct, 19 / 20
+- Nicer font
+- Fixed spacing in some areas
+- Fixed alerts box on Dark Mode
+- Better sortof seperators
+- Transparent blurred header, can be removed by making color-primary var opaque.
+- More Tweaks
+- Now works with 'Greasy Fork Tweaks'! https://greasyfork.org/en/scripts/368183
 /* Oct, 15 / 20
 - Added max-width to alerts
 - Added boxes around forms and comments
@@ -63,30 +71,30 @@
 	:root {
 		if darkmode {
 			/* DARK MODE COLORS */
-			--color-primary: #272b36;
-			--color-secondary: #072b3a;
+			--color-primary: #272b36bd;
+			--color-secondary: #072b3a ;
 			--color-tertiary: #2c3242;
 			--color-bg: #1c1f28;
 			--color-text: #d1d1d1;
 			--color-link: #00b3ff;
 			--color-link-visited: cyan;
-			--color-green: #045108;
-			--shadow-normal: 0 0 20px rgba(0,0,0,0.2);
-			--shadow-button: 0px 0px 2px rgba(150,150,150,0.3);
-			--border-button:  1px solid rgba(150,150,150,0.2);
+			--color-highlighted #287721;
+			--shadow-normal: 0 0 5px rgba(0,0,0,0.1);
+			--shadow-button: 0px 0px 2px rgba(150,150,150,0);
+			--border-button:  1px solid rgba(150,150,150,0.1);
 		} else {
 			/* LIGHT MODE COLORS */
-			--color-primary: #980000;
+			--color-primary: #980000bd;
 			--color-secondary: white;
 			--color-tertiary: white;
 			--color-bg: #F6F6F6;
 			--color-text: black;
 			--color-link: #0265be;
 			--color-link-visited: #cf2525;
-			--color-green: #9fefa3;
-			--shadow-normal: 0 0 20px rgba(221, 221, 221, .5);
+			--color-highlighted: #9fefa3;
+			--shadow-normal: 0 0 20px rgba(221, 221, 221, 1);
 			--shadow-button: 0px 0px 2px rgba(0,0,0,0.3);
-			--border-button:  1px solid rgba(0,0,0,0.1);
+			--border-button:  1px solid rgba(0,0,0,0.2);
 		}
 	}
 	* {
@@ -108,9 +116,9 @@
 		/* BUTTONS/LINKS */
 		select, option, input, button, code, #user-control-panel > li, 
 		.pagination > *, .script-list + .pagination > *, .user-list + .pagination > *, 
-		a.list-option-button, #script-links > li > *, #script-feedback-suggestion a, 
+		a.list-option-button, #script-links > li > *, #script-feedback-suggestion a, .discussion-actions a, .report-link, .edit-comment,
 		#about-user > p:last-child > *, #about-user > a:first-child,
- 		#install-area a, .expander, #contribution > a,  #support-url > a,
+ 		#install-area a, .expander, #contribution > a,  #support-url > a, .script-in-sets > a,
  		.sidebarred-main-content > p:last-child a, .sidebarred-main-content > p:first-of-type a {
 			border: none;
 			
@@ -118,23 +126,30 @@
 			text-decoration: none;
 			border-radius: .3rem;
 			padding: 5px 14px;
+			font-size: 14px;
+			/*font-family: Segoe UI, Helvetica, Arial, sans-serif, Segoe UI Emoji !important;*/
 			transition: all .2s;
 			background-color: var(--color-secondary);
 			color: var(--color-text) !important;
 		}
-		select:hover, input:hover, input:focus, button:hover, #user-control-panel > li:hover, a.list-option-button:hover, #script-links > li > *:hover, #script-feedback-suggestion a:hover, #script-links .current span, 
+		select:hover, input:hover, input:focus, button:hover, #user-control-panel > li:hover, 
+		a.list-option-button:hover, #script-links > li > *:hover, #script-feedback-suggestion a:hover, #script-links .current span, .discussion-actions a:hover, .report-link:hover, .edit-comment:hover,
 		#about-user > p:last-child > *:hover, #about-user > a:first-child:hover,
 		.pagination > *:hover, .script-list + .pagination > *:hover, .user-list + .pagination > *:hover, .pagination > *:focus, .script-list + .pagination > *:focus, .user-list + .pagination > *:focus, 
- 		#install-area a:hover, .expander:hover, #contribution > a:hover, #support-url > a:hover,
+ 		#install-area a:hover, .expander:hover, #contribution > a:hover, #support-url > a:hover, .script-in-sets > a:hover,
  		.sidebarred-main-content > p:last-child a:hover, .sidebarred-main-content > p:first-of-type a:hover {
 			box-shadow: 0px 0px 8px rgba(0,0,0,0.1) !important;
 			background: var(--color-tertiary) !important;
 			text-decoration: none !important;
 		}
 		
-		nav > li > a, .pagination > a, #user-control-panel > li > a, #script-links > li > a, div[class="list-option-group"] > ul > li > a, h2 > a {
+		nav > li > a, .pagination > a, #user-control-panel > li > a, #script-links > li > a, div[class="list-option-group"] > ul > li > a, h2 > a ,
+		.comment-meta-item-main a {
 			text-decoration: none;
 			color: var(--color-text);
+		}
+		a {
+			display: inline-block;
 		}
 		a, a.discussion-title, a.discussion-title:hover {
 			text-underline-offset: .25em;
@@ -148,9 +163,10 @@
 		}
 		body {
 			background-color: var(--color-bg);
+			font-family: Segoe UI, Helvetica, Arial, sans-serif, Segoe UI Emoji !important;
 		}
 		body > .width-constraint {
-			max-width: 100%;
+			max-width: 100% !important;
 			margin: 0;
 			padding: 10px;
 			display: flex;
@@ -169,6 +185,13 @@
 		body > .width-constraint > section:last-of-type {
 			margin-bottom: 40px !important;
 		}
+		.alert {
+			background-color: var(--color-secondary);
+			margin-bottom: 20px !important;
+		}
+		.alert * {
+			color: var(--color-text) !important;
+		}
 		
 		section {
 			border: none !important;
@@ -183,7 +206,8 @@
 		#script-meta, #additional-info, #script-show-info-ad, #script-content .script-discussion-list, canvas, 
 		/*.multiform-page*/, #script-content form:not(.script-in-sets), table, .comment {
 			padding: 1rem !important;
-			margin: 10px 0 !important;
+			margin: 0 !important;
+			margin-bottom: 20px !important;
 			border: none;
 			box-shadow: var(--shadow-normal) !important;
 			background-color: var(--color-tertiary);
@@ -219,8 +243,9 @@
 			z-index: 5;
 			background-image: none;
 			background-color: var(--color-primary);
+			backdrop-filter: blur(10px);
 		}
-		#main-header > .width-constraint{
+		#main-header > .width-constraint {
 			max-width: 100%;
 			padding-left: 10px;
 			padding-right: 10px;
@@ -245,11 +270,13 @@
 		#site-name-text > h1 {
 			height: 30px;
 			font-size: 25px;
+			font-weight: 600;
 		}
 
 		#site-nav {
 			display: flex !important;
 			height: 40px;
+			padding-top: 1px;
 			width: auto;
 			align-items: center;
 			margin-left: auto;
@@ -282,15 +309,15 @@
 			position: sticky;
 			top: 44px;
 			order: -1;
-			margin: -10px 5px -10px -10px;
-			padding: 20px 5px 20px 10px;
+			margin: -10px 15px -10px -10px;
+			padding: 20px 0 20px 10px;
 			height: calc(100vh - 84px);
 			max-height: calc(100vh - 84px);
 			overflow-y: auto;
 			overflow-x: hidden;
 			z-index: 6;
 			text-decoration: none !important;
-			scrollbar-width: thin;
+			
 			scrollbar-color: var(--color-primary) var(--color-bg);
 		}
 			.sidebar-search {
@@ -376,7 +403,7 @@
 				color: var(--color-text);
 			}
 			#browse-script-list > li:hover, #user-script-list > li:hover, #user-deleted-script-list > li:hover {
-				box-shadow: 0px 2px 20px rgba(0,0,0,0.05);
+				box-shadow: 0px 2px 20px rgba(0,0,0,0.1);
 			}
 				#browse-script-list > li > article, #user-script-list > li > article, #user-deleted-script-list > li > article {
 					height: 100%;
@@ -391,18 +418,29 @@
 						margin-top: auto;
 						width: 100%;
 					}
+					#browse-script-list > li > article > h2 > a {
+						font-weight: 600;
+					}
 					#browse-script-list > li > article > h2::before {
 						content: "";
 						display: flex;
 						position: relative;
 						z-index: 2;
 						width: 100%;
-						height: 20px;
+						height: 40px;
 						color: var(--color-secondary);
 						background: linear-gradient(transparent, currentColor);
 						box-shadow: 0 10px 0 var(--color-secondary);
-						margin-top: -20px;
+						margin-top: -40px;
 						transform: translateY(100px);
+						pointer-events: none;
+					}
+					/* Greasy Fork Tweaks Thumbnail Images */
+					#browse-script-list > li > article ~ div {
+						height: auto !important;
+					}
+					#browse-script-list > li > article ~ div > img {
+						max-width: 100% !important;
 					}
 				
 			.script-list li:not(.ad-entry) {
@@ -410,6 +448,10 @@
 			}
 			.ad-entry, #codefund {
 				grid-column: 1/-1;
+			}
+			.ad-entry > div {
+				height: auto !important;
+				padding: 0 !important;
 			}
 			[data-ea-publisher].loaded .ea-content a:link, [data-ea-type].loaded .ea-content a:link {
 				color: var(--color-link) !important;
@@ -456,6 +498,9 @@
 			order: -1;
 			width: 100%;
 		}
+		#script-info header h2 {
+			font-weight: 600;
+		}
 		#script-links {
 			margin: 12px 0;
 			margin-top: 12px !important;
@@ -491,7 +536,7 @@
 			width: 100%;
 		}
 		.install-link {
-			background-color: var(--color-green) !important;
+			background-color: var(--color-highlighted) !important;
 		}
 		#script-feedback-suggestion, .script-in-sets, #install-area {
 			margin: 0;
@@ -502,7 +547,7 @@
 			font-size: 0;
 		}
 		#script-feedback-suggestion a, .script-in-sets *, #install-area a {
-			font-size: 16px;
+			font-size: 14px;
 			margin: 0 4px;
 		}
 		.discussion-snippet {
@@ -511,7 +556,7 @@
 		.script-in-sets {
 			order: 1;
 			width: 100% !important;
-			margin-bottom: .5rem;
+			margin-bottom: 1rem;
 		}
 		#script-meta {
 			order: 2;
@@ -545,11 +590,9 @@
 			width: 100%;
 		}
 		
-		section > *:first-child, #script-content > *:first-child, form > p:first-of-type {
+		section > *:first-child, #script-content > *:first-child, #script-content p, #script-content h3, form > p:first-of-type {
 			margin-top: 0 !important;
-			padding-top: 0 !important;
 		}
-		
 		.multiform-page {
 			padding: 0 !important;
 		}
@@ -560,6 +603,10 @@
 		/*** FORUMS ***/
 		.discussion-read {
 			background-color: var(--color-secondary) !important;
+		}
+		.discussion-list-item {
+			border-top: var(--border-button) !important;
+			border-bottom: var(--border-button) !important;
 		}
 		.user-content {
 			background: none;
