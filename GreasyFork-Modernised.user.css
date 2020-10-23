@@ -17,6 +17,12 @@
 @var checkbox darkmode "Dark Mode" 0 
 
 ==/UserStyle== */
+/* Oct, 23 / 20
+- Changed card color in Dark Mode
+- More fixes
+- More tweaks
+- More links to buttons...
+- Changed button color on hover in light theme
 /* Oct, 19 / 20
 - Nicer font
 - Fixed spacing in some areas
@@ -79,9 +85,9 @@
 			--color-link: #00b3ff;
 			--color-link-visited: cyan;
 			--color-highlighted #287721;
-			--shadow-normal: 0 0 5px rgba(0,0,0,0.1);
-			--shadow-button: 0px 0px 2px rgba(150,150,150,0);
-			--border-button:  1px solid rgba(150,150,150,0.1);
+			--shadow-normal: 0 0px 3px rgba(0,0,0,0.5);
+			--shadow-button: none;
+			--border-button:  1px solid rgba(150,150,150,.1);
 		} else {
 			/* LIGHT MODE COLORS */
 			--color-primary: #980000bd;
@@ -92,9 +98,9 @@
 			--color-link: #0265be;
 			--color-link-visited: #cf2525;
 			--color-highlighted: #9fefa3;
-			--shadow-normal: 0 0 20px rgba(221, 221, 221, 1);
-			--shadow-button: 0px 0px 2px rgba(0,0,0,0.3);
-			--border-button:  1px solid rgba(0,0,0,0.2);
+			--shadow-normal: 0 0 10px rgba(0, 0, 0, .1);
+			--shadow-button: 0px 0px 0px 20px var(--color-bg) inset;
+			--border-button:  1px #dcdcdc solid;
 		}
 	}
 	* {
@@ -105,23 +111,40 @@
 		h3, h2 {
 			color: var(--color-text);
 		}
+		h3 {
+			margin-bottom: 1em !important;
+		}
 		p {
 			color: var(--color-text);
 		}
+		pre, textarea, .preview-results {
+			background-color: var(--color-secondary) !important;
+			border: var(--border-button) !important;
+			border-radius: .3rem;
+			color: var(--color-text);
+		}
 		pre.prettyprint {
-			background-color: white;
+			background-color: white !important;
 			max-height: none;
+			margin-top: 0;
+		}
+		
+		.post-discussion > p:first-child,
+ 		.sidebarred-main-content > p {
+			font-size: 0;
+		}
+		.sidebarred-main-content > h2 + p {
+			font-size: inherit !important;
+			margin-top: 0 !important;
 		}
 		
 		/* BUTTONS/LINKS */
 		select, option, input, button, code, #user-control-panel > li, 
 		.pagination > *, .script-list + .pagination > *, .user-list + .pagination > *, 
-		a.list-option-button, #script-links > li > *, #script-feedback-suggestion a, .discussion-actions a, .report-link, .edit-comment,
+		a.list-option-button, #script-links > li > *, #script-feedback-suggestion a, .discussion-actions a, .report-link, .edit-comment, .post-discussion > p:first-of-type a, .discussion-up-level a,
 		#about-user > p:last-child > *, #about-user > a:first-child,
  		#install-area a, .expander, #contribution > a,  #support-url > a, .script-in-sets > a,
- 		.sidebarred-main-content > p:last-child a, .sidebarred-main-content > p:first-of-type a {
-			border: none;
-			
+ 		.sidebarred-main-content > p:last-child a, .sidebarred-main-content > p:first-of-type a {			
 			border: var(--border-button);
 			text-decoration: none;
 			border-radius: .3rem;
@@ -133,12 +156,12 @@
 			color: var(--color-text) !important;
 		}
 		select:hover, input:hover, input:focus, button:hover, #user-control-panel > li:hover, 
-		a.list-option-button:hover, #script-links > li > *:hover, #script-feedback-suggestion a:hover, #script-links .current span, .discussion-actions a:hover, .report-link:hover, .edit-comment:hover,
+		a.list-option-button:hover, #script-links > li > *:hover, #script-feedback-suggestion a:hover, #script-links .current span, .discussion-actions a:hover, .report-link:hover, .edit-comment:hover, .post-discussion > p:first-of-type a:hover, .discussion-up-level a:hover,
 		#about-user > p:last-child > *:hover, #about-user > a:first-child:hover,
 		.pagination > *:hover, .script-list + .pagination > *:hover, .user-list + .pagination > *:hover, .pagination > *:focus, .script-list + .pagination > *:focus, .user-list + .pagination > *:focus, 
  		#install-area a:hover, .expander:hover, #contribution > a:hover, #support-url > a:hover, .script-in-sets > a:hover,
  		.sidebarred-main-content > p:last-child a:hover, .sidebarred-main-content > p:first-of-type a:hover {
-			box-shadow: 0px 0px 8px rgba(0,0,0,0.1) !important;
+			box-shadow: var(--shadow-button) !important;
 			background: var(--color-tertiary) !important;
 			text-decoration: none !important;
 		}
@@ -147,6 +170,9 @@
 		.comment-meta-item-main a {
 			text-decoration: none;
 			color: var(--color-text);
+		}
+		.pagination {
+			margin-bottom: 20px;
 		}
 		a {
 			display: inline-block;
@@ -212,7 +238,7 @@
 			box-shadow: var(--shadow-normal) !important;
 			background-color: var(--color-tertiary);
 			color: var(--color-text);
-			border-radius: 5px;
+			border-radius: .3rem;
 		}
 		.text-content > *:first-child {
 			margin-top: 0 !important;
@@ -382,6 +408,15 @@
 					
 					
 		/* LISTS */
+		.sidebarred-main-content {
+			margin-top: 10px !important;
+		}
+		.sidebarred-main-content > h2 {
+			margin-top: 0;
+		}
+		#browse-script-list {
+			margin-top: 0;
+		}
 		#browse-script-list, #user-script-list, #user-deleted-script-list {
 			display: grid;
 			grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
@@ -398,7 +433,7 @@
 			#browse-script-list > li, #user-script-list > li, #user-deleted-script-list > li {
 				border: none !important;
 				border-radius: .3rem;
-				background-color: var(--color-secondary);
+				background-color: var(--color-tertiary);
 				transition: box-shadow .2s;
 				color: var(--color-text);
 			}
@@ -428,9 +463,9 @@
 						z-index: 2;
 						width: 100%;
 						height: 40px;
-						color: var(--color-secondary);
+						color: var(--color-tertiary);
 						background: linear-gradient(transparent, currentColor);
-						box-shadow: 0 10px 0 var(--color-secondary);
+						box-shadow: 0 10px 0 var(--color-tertiary);
 						margin-top: -40px;
 						transform: translateY(100px);
 						pointer-events: none;
@@ -469,7 +504,7 @@
 		}
 		.sidebarred-main-content > p {
 			width: auto;
-			margin: 1em 4px 0;
+			margin: 1em 0 0;
 		}
 		.sidebarred-main-content > p:last-child {
 			order: -1;
@@ -543,12 +578,15 @@
 			width: auto !important;
 			display: flex;
 			flex-wrap: wrap;
-			margin-bottom: 1rem;
 			font-size: 0;
 		}
-		#script-feedback-suggestion a, .script-in-sets *, #install-area a {
+		#script-feedback-suggestion a, .script-in-sets *, #install-area a,
+ 		.post-discussion > p:first-child a,
+ 		.sidebarred-main-content > p a {
 			font-size: 14px;
-			margin: 0 4px;
+			margin: 0;
+			margin-right: 8px;
+			margin-bottom: 1em;
 		}
 		.discussion-snippet {
 			white-space: normal !important;
@@ -556,7 +594,6 @@
 		.script-in-sets {
 			order: 1;
 			width: 100% !important;
-			margin-bottom: 1rem;
 		}
 		#script-meta {
 			order: 2;
@@ -590,7 +627,8 @@
 			width: 100%;
 		}
 		
-		section > *:first-child, #script-content > *:first-child, #script-content p, #script-content h3, form > p:first-of-type {
+		section > *:first-child, #script-content > *:first-child, #script-content p, #script-content h3, form > p:first-of-type,
+ 		.discussion-header {
 			margin-top: 0 !important;
 		}
 		.multiform-page {
@@ -611,12 +649,18 @@
 		.user-content {
 			background: none;
 		}
+		.comment-meta-item a {
+			margin-bottom: -100px;
+		}
+		.discussion-header h2 {
+			margin-top: .5rem;
+		}
 			
 		/*** USER PAGE ***/
 		/* About User */
 		
-		.report-link-abs {
-			position: relative;
+		a.report-link.report-link-abs {
+			margin-top: 1em !important;
 		}
 		/* Control Panel */
 		#user-control-panel {
