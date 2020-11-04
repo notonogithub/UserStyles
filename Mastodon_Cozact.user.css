@@ -1,12 +1,12 @@
 /* ==UserStyle==
 @name           Mastodon Cozact
-@version        1.0.0
-@description    Makes Mastodon look alot better (imo)
-@updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/Mastodon_Cozact.user.css
+@version        1.0.1
+@description    Changes to Mastodon's layout for a cleaner look.
+@updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/Mastodon_Cozact
 
  -- AUTHOR STUFF --
 @namespace      Freeplay
-@author         Freeplay (https://pages.codeberg.org/freeplay/)
+@author         Freeplay (https://freeplay.codeberg.page/)
 @homepageURL    https://codeberg.org/Freeplay/UserStyles
 @supportURL     https://codeberg.org/Freeplay/UserStyles/issues
 @preprocessor   stylus
@@ -14,239 +14,253 @@
 ==/UserStyle== */
 @-moz-document domain("If you aren't on any of the instance's below, replace this with your instance URL"),
 domain("mstdn.social"), domain("mastodon.social"), domain("mastodon.online") {	
-    :root {
-    	--shadow: 0 0 20px rgba(0,0,0,0.02);
-    	--column-width: 650px; /* Use 100% for full-width */
-    }
+	:root {
+		--shadow: 0 0 20px rgba(0,0,0,0.02);
+		--column-width: 650px; /* Use 100% for full-width */
+	}
 
-    /* Credits */
-    .table-of-contents > li:first-child::before {
-        display: block;
-        content: "Mastodon Cozact Theme (v1.0.0) \A Created by @freeplay@mstdn.social";
-        padding: 15px;
-        background-color: #282c37;
-        border-radius: 4px 4px 0 0;
-        font-size: 12px;
-        font-weight: 400;
-        line-height: 1.7;
-        word-wrap: break-word;
-        white-space: pre;
-        color: #9baec8;
-    }
+	/* Credits */
+	.table-of-contents > li:first-child::before {
+		display: block;
+		content: "Mastodon Cozact Theme (v1.0.0) \A Created by @freeplay@mstdn.social";
+		padding: 15px;
+		background-color: #282c37;
+		border-radius: 4px 4px 0 0;
+		font-size: 12px;
+		font-weight: 400;
+		line-height: 1.7;
+		word-wrap: break-word;
+		white-space: pre;
+		color: #9baec8;
+	}
 
-    /* Here for respondsivieness purposes */
-    .columns-area__panels__main {
-        padding: 0;
-    }
-    .search {
-        margin: 0 10px;
-    }
-    .tabs-bar__wrapper, .tabs-bar__wrapper .tabs-bar, .column-header {
-        padding-top: 0;
-        margin-bottom: 0;
-        border: none;
-    }
+	/* Here for respondsivieness purposes */
+	.columns-area__panels__main {
+		padding: 0;
+	}
+	.search {
+		margin: 0 10px;
+	}
+	.tabs-bar__wrapper, .tabs-bar__wrapper .tabs-bar, .column-header {
+		padding-top: 0;
+		margin-bottom: 0;
+		border: none;
+	}
 
-    @media only screen and (min-width: 1191px) { /* Breaks at widths lower than this cuz of the mobile changes */
-    .columns-area__panels__pane:first-child::before {
-        content: "";
-        position: fixed;
-        width: 265px;
-        height: 48px;
-        margin-right: 10px;
-        margin-top: 20px;
-        background-color: rgba(150,150,150,0.07);
-        border-radius: 4px;
-        z-index: -1;
-    }
-      .compose-panel {
-        margin: 78px 0 0 0;
-        height: calc(100% - 78px);
-        max-height: calc(100% - 78px);
-        overflow-y: auto;
-      }
-      .compose-panel div, input {
-            border: none !important;
-      }
-        .compose-panel .navigation-bar {
-            min-height: 50px;
-        }
-        .compose-panel .search {
-            margin: 0 10px;
-            margin-bottom: 2px;
-            border-radius: 4px;
-            overflow: hidden;
-            min-height: 50px;
-            box-shadow: var(--shadow);
-        }
+	@media only screen and (min-width: 1191px) { /* Breaks at widths lower than this cuz of the mobile changes */
+	.columns-area__panels__pane:first-child::before {
+		content: "";
+		position: fixed;
+		width: 265px;
+		height: 48px;
+		margin-right: 10px;
+		margin-top: 20px;
+		background-color: rgba(150,150,150,0.07);
+		border-radius: 4px;
+		z-index: -1;
+	}
+	  .compose-panel {
+		margin: 78px 0 0 0;
+		height: calc(100% - 78px);
+		max-height: calc(100% - 78px);
+		overflow-y: auto;
+	  }
+	  .compose-panel div, input {
+			border: none !important;
+	  }
+		.compose-panel .navigation-bar {
+			min-height: 50px;
+		}
+		.compose-panel .search {
+			margin: 0 10px;
+			margin-bottom: 2px;
+			border-radius: 4px;
+			overflow: hidden;
+			min-height: 50px;
+			box-shadow: var(--shadow);
+		}
 
-    .columns-area__panels__main {
-        padding: 20px 10px;
-        width: var(--column-width);
-        max-width: calc(100vw - 600px);
-        z-index: 2;
-    }
-    .columns-area--mobile, .react-swipeable-view-container .columns-area--mobile {
-        padding: 0;
-        height: 100% !important;
-    }
-    .columns-area__panels__main > div {
-        box-shadow: var(--shadow);
-    }
-      .tabs-bar__wrapper {
-        position: fixed;
-        width: 265px;
-        margin-left: -285px;
-        border-radius: 4px;
-        overflow: hidden;
-        padding-top: 0;
-        margin-top: 20px;
-        box-shadow: var(--shadow);
-      }
-        .column-header {
-            border: none;
-        }
-          .announcements {
-              flex-wrap: wrap;
-          }
-            .announcements__container {
-                width: 100%;
-            }
-            .announcements__mastodon {
-                order: 2;
-            }
-    }
+	.columns-area__panels__main {
+		padding: 20px 10px;
+		width: var(--column-width);
+		max-width: calc(100vw - 600px);
+		z-index: 2;
+	}
+	.columns-area--mobile, .react-swipeable-view-container .columns-area--mobile {
+		padding: 0;
+		height: 100% !important;
+	}
+	.columns-area__panels__main > div {
+		box-shadow: var(--shadow);
+	}
+	  .tabs-bar__wrapper {
+		position: fixed;
+		width: 265px;
+		margin-left: -285px;
+		border-radius: 4px;
+		overflow: hidden;
+		padding-top: 0;
+		margin-top: 20px;
+		box-shadow: var(--shadow);
+	  }
+		.column-header {
+			border: none;
+		}
+		  .announcements {
+			  flex-wrap: wrap;
+		  }
+			.announcements__container {
+				width: 100%;
+			}
+			.announcements__mastodon {
+				order: 2;
+			}
+	}
 
-      .column {
-          border-radius: 4px;
-      }
-        .scrollable {
-            contain: none !important;
-            border: none !important;
-        }
-          .account-timeline__header {
-              margin-top: -4px;
-          }
+	  .column {
+		  border-radius: 4px;
+	  }
+		.scrollable {
+			contain: none !important;
+			border: none !important;
+		}
+		  .account-timeline__header {
+			  margin-top: -4px;
+		  }
 
-        .scrollable > div > *:not(.account-timeline__header):not(.detailed-status__wrapper):first-of-type {
-            margin-top: 6px;
-        }
-        .scrollable > div > *:last-of-type {
-            margin-bottom: 6px !important;
-        }
-          .focusable:focus {
-              border-radius: 4px;
-          }
-          article, .scrollable > div > div[tabindex="-1"], .search-results > div > div, .entry > .status {
-                border-radius: 4px !important;
-                border: none;
-                margin: 0 4px;
-                transition: background .5s;
-          }
-          article:hover, .scrollable > div > div[tabindex="-1"]:hover, .search-results > div > div:hover, .entry > .status:hover {
-            background-color: rgba(150,150,150,0.07) !important;
-            transition: background .2s;
-          }
-            article div {
-              border-bottom: none !important;
-            }
-            .status {
-              border: none;
-              padding: 8px 8px 6px 68px !important;
-            }
-              .status__prepend, .notification__message {
-                padding-top: 8px !important;
-              }
-              .status__avatar {
-                left: 8px !important;
-                top: 10px !important;
-              }
+		.scrollable > div > *:not(.account-timeline__header):not(.detailed-status__wrapper):first-of-type {
+			margin-top: 6px;
+		}
+		.scrollable > div > *:last-of-type {
+			margin-bottom: 6px !important;
+		}
+		  .focusable:focus {
+			  border-radius: 4px;
+		  }
+		  article, .scrollable > div > div[tabindex="-1"], .search-results > div > div:not(.trends__header), .entry > .status {
+				border-radius: 4px !important;
+				/*border: none;*/
+				margin: 0 4px;
+				transition: background .5s;
+		  }
+		  article:hover, .scrollable > div > div[tabindex="-1"]:hover, .search-results > div > div:hover, .entry > .status:hover {
+			background-color: rgba(150,150,150,0.07) !important;
+			transition: background .2s;
+		  }
+			article div {
+			  border-bottom: none !important;
+			}
+			.status {
+			  border: none;
+			  padding: 8px 8px 6px 68px !important;
+			}
+			  .status__prepend, .notification__message {
+				padding-top: 8px !important;
+			  }
+			  .status__avatar {
+				left: 8px !important;
+				top: 10px !important;
+			  }
+			  .account__avatar-wrapper {
+				margin-left: 0;  
+			  }
+			  .conversation__avatar, .conversation__content {
+				  padding-top: 5px;
+				  padding-left: 3px;
+			  }
+				  .account__avatar-composite {
+					border-radius: 4px !important;
+				  }
 
-              .media-gallery, .status-card, .video-player {
-                    max-width: 650px;
-                    max-height: 70vh;
-              }
+			  .media-gallery, .status-card, .video-player {
+					max-width: 650px;
+			  }
+
+	.navigation-panel {
+		margin: 20px -15px;
+		padding: 0 15px;
+		height: calc(100vh - 40px);
+		z-index: -1;
+	}
+	  .column-link--transparent.active {
+			background-color: rgba(150,150,150,0.07);
+			border-radius: 4px;
+			margin-left: -15px;
+			padding-left: 30px;
+			transition: background-color .2s;
+	  }
+
+	/* Profile HEader */
+	.account__header__image {
+		height: 100%;
+	}
+	.account__header__image img {
+		height: calc((1 / 3) * var(--column-width)  );
+	}
+	account__header__bar .avatar .account__avatar {
+		background: none;
+	}
+
+	.account__header__account-note {
+		padding: 4px;
+	}
+	.account__header__account-note label {
+		display: none;
+	}
+
+	.account__header__fields {
+		display: grid;
+		grid-template-columns: repeat(auto-fill,minmax(300px, 1fr));
+	}
+
+	/* Popouts */
+	.search-popout {
+		margin: 10px;
+	}
 
 
-    .navigation-panel {
-        margin: 20px -15px;
-        padding: 0 15px;
-        height: calc(100vh - 40px);
-        z-index: -1;
-    }
-      .column-link--transparent.active {
-            background-color: rgba(150,150,150,0.07);
-            border-radius: 4px;
-            margin-left: -15px;
-            padding-left: 30px;
-            transition: background-color .2s;
-      }
 
-    /* Profile HEader */
-    .account__header__image {
-        height: 100%;
-    }
-    .account__header__image img {
-        height: calc((1 / 4) * var(--column-width)  );
-    }
+	/*** Mastodon Full Dark - Taken from my other Userstyle (https://codeberg.org/Freeplay/UserStyles/src/branch/main/Freeplays_Mastodon_Snippets.user.css) ***/
+	textarea, input, select, .search-popout, .search-popout em,
+	.compose-form__modifiers, .compose-form__autosuggest-wrapper, /* Compose Form */
+	.privacy-dropdown__dropdown, /* Privacy Dropdown */
+	.reply-indicator, .reply-indicator > *, .reply-indicator__display-name, .reply-indicator__content a, /* Reply Preview */
+	.dropdown-menu, .dropdown-menu__item a, /* Regular Dropdown */
+	.emoji-picker-dropdown__menu, .emoji-mart-search, .emoji-mart-scroll, .emoji-mart-category-label span /* Emoji Picker */,
+	.actions-modal, .block-modal, .boost-modal, .confirmation-modal, .mute-modal, .report-modal /* Popup Modals */ {
+		background-color: #313543 !important;
+		background: #313543 !important;
+		color: white !important;
+	}
+	.dropdown-menu__item a:active, .dropdown-menu__item a:focus, .dropdown-menu__item a:hover {
+		background: #2b90d9 !important;
+	}
 
-    .account__header__account-note {
-        padding: 2px;
-    }
-    .account__header__account-note label {
-        display: none;
-    }
+	.compose-form__buttons-wrapper, .emoji-mart-bar,
+	.block-modal__action-bar, .boost-modal__action-bar, .confirmation-modal__action-bar, .mute-modal__action-bar /* Popup Modals Bottom Bar */ {
+		background: #242731 !important;
+		border: none;
+	}
 
-    .account__header__fields {
-        display: grid;
-        grid-template-columns: repeat(auto-fill,minmax(300px, 1fr));
-    }
-
-    /* Popouts */
-    .search-popout {
-        margin: 10px;
-    }
-
-
-
-    /*** Mastodon Full Dark - Taken from my other Userstyle (https://codeberg.org/Freeplay/UserStyles/src/branch/main/Freeplays_Mastodon_Snippets.user.css) ***/
-    textarea, input, select, .search-popout, .search-popout em,
-    .compose-form__modifiers, .compose-form__autosuggest-wrapper, /* Compose Form */
-    .privacy-dropdown__dropdown, /* Privacy Dropdown */
-    .reply-indicator, .reply-indicator > *, .reply-indicator__display-name, .reply-indicator__content a, /* Reply Preview */
-    .dropdown-menu, .dropdown-menu__item a, /* Regular Dropdown */
-    .emoji-picker-dropdown__menu, .emoji-mart-search, .emoji-mart-scroll, .emoji-mart-category-label span /* Emoji Picker */ {
-        background-color: #313543 !important;
-        background: #313543 !important;
-        color: white !important;
-    }
-    .dropdown-menu__item a:active, .dropdown-menu__item a:focus, .dropdown-menu__item a:hover {
-        background: #2b90d9 !important;
-    }
-
-    .compose-form__buttons-wrapper, .emoji-mart-bar {
-        background: #242731 !important;
-        border: none;
-    }
-
-    .privacy-dropdown__option > div, .privacy-dropdown__option__content strong /* Privacy Dropown Options */{
-        color: white !important;
-    }
-    .button-secondary {
-        color: #9baec8 !important;
-    }
-    .dropdown-menu__separator {
-        border-color: #ffffff50 !important;
-    }
-    .dropdown-menu__arrow {
-        border-color: #313543 !important;
-    }
-    input {
-        background-color: #282c37 !important;
-        background: #282c37 !important;
-        color: white !important;
-        border: none !important;
-    }
+	.privacy-dropdown__option > div, .privacy-dropdown__option__content strong /* Privacy Dropown Options */,
+	.setting-toggle__label {
+		color: white !important;
+	}
+	.button-secondary {
+		color: #9baec8 !important;
+	}
+	.dropdown-menu__separator {
+		border-color: #ffffff50 !important;
+	}
+	.dropdown-menu__arrow {
+		border-color: #313543 !important;
+	}
+	input {
+		background-color: #282c37 !important;
+		background: #282c37 !important;
+		color: white !important;
+		border: none !important;
+	}
 
 
 }
