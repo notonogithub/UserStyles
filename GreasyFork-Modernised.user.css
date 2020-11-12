@@ -1,7 +1,7 @@
 /* ==UserStyle==
  -- THEME STUFF --
 @name           GreasyFork | Modernized ( Optional Dark Theme )
-@version        1.3.9
+@version        1.3.10
 @description    A much cleaner and more modern version of GreasyFork!
 @updateURL     	https://codeberg.org/Freeplay/UserStyles/raw/branch/main/GreasyFork-Modernised.user.css
 
@@ -18,6 +18,9 @@
 
 ==/UserStyle== */
 /* Btw I didn't know how version numbers properly worked before when I first started making this so... */
+/* ??? / 20
+- Changed header to accommodate for other languages & Username lengths (I didn't think about that stuff before, woops!)
+- Added border around script list items 
 /* Nov, 11 / 20
 - Fixed login screen
 - Modernised login button in header
@@ -341,32 +344,35 @@
 			padding-top: 1px;
 			width: auto;
 			align-items: center;
-			margin-left: auto;
 			margin-top: 0 !important;
+			width: 100%;
+			justify-content: flex-end;
 		}
 		#site-nav > * {
 			position: relative !important;
 		}
 		#site-nav > nav {
-			width: 240px !important;
-			min-width: 240px;
+			width: 100% !important;
 			height: 20px;
 			display: flex;
 			align-items: center;
 			justify-content: flex-end;
 		}
 		#nav-user-info {
-			width: 100%;
-			min-width: 300px;
+			width: auto;
 			order: 2;
 			height: 20px;
 			display: flex;
 			align-items: center;
 		}
+		#nav-user-info .sign-out-link {
+			width: max-content !important;
+		}
 		#nav-user-info > form > select {
 			margin: 0 0 0 26px;
 			height: 32px;
 		}
+		
 		#site-nav > nav > li + li {
 			margin-left: 1em;
 		}
@@ -419,7 +425,8 @@
 					height: 32px;
 					border: none !important;
 					border-radius: .3rem !important;
-					width: calc(100vw - 868px);
+					width: 170px;
+					text-align: center;
 					color: var(--color-text) !important;
 					padding-inline-end: 30px;
 					box-shadow: 0px 0px 2px rgba(0,0,0,0.1) !important;
@@ -499,8 +506,8 @@
 		
 		
 			#browse-script-list > li, #user-script-list > li, #user-deleted-script-list > li {
-				border: none !important;
-				border-radius: .3rem;
+				border: var(--border-button) !important;
+				border-radius: .5rem;
 				background-color: var(--color-tertiary);
 				transition: box-shadow .2s;
 				color: var(--color-text);
@@ -545,7 +552,7 @@
 					#browse-script-list > li > article ~ div,
  					#user-script-list > li > article ~ div,
 					#user-deleted-script-list > li > article ~ div {
-						max-height: 220px !important;
+						max-height: 185px !important;
 						height: calc(100% + 2em) !important;
 						width: auto !important;
 						max-width: 40% !important;
@@ -553,13 +560,12 @@
 						margin-top: -1em !important;
 						margin-bottom: -1em !important;
 						margin-left: 1em !important;
-						border-top-right-radius: .3rem !important;
-						border-bottom-right-radius: .3rem !important;
+						border-top-right-radius: .5rem !important;
+						border-bottom-right-radius: .5rem !important;
 						padding: 0 !important;
 						transition: max-width .5s, width .5s;
 						display: flex !important;
 						transition: max-width .5s;
-						background-color: var(--color-secondary);
 						justify-content: center;
 					}
 					#browse-script-list > li > article ~ div > img,
