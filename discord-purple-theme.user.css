@@ -1,0 +1,69 @@
+/* ==UserStyle==
+@name           Discord Purple Theme
+@version        1.0.0
+@description    Changes Discord to purple colors :D
+@updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/discord-purple-theme.user.css
+
+ -- AUTHOR STUFF --
+@namespace      Freeplay
+@author         Freeplay (https://freeplay.codeberg.page/)
+@homepageURL    https://codeberg.org/Freeplay/UserStyles
+@supportURL     https://codeberg.org/Freeplay/UserStyles/issues
+@preprocessor   stylus
+==/UserStyle== */
+
+@-moz-document domain("discord.com") {
+    
+	:root {
+		--background-primary: #471956;
+		--background-secondary: #3e164b;
+		--background-tertiary: #32123c;
+		
+		--background-primary-alt: #471956de;
+		--background-secondary-alt: #3e164b;
+		
+		--background-accent: #a42bc3;
+		--background-accent-alt: #a42bc336;
+		
+		--channeltextarea-background: var(--background-secondary);
+		--background-modifier-selected: var(--background-accent-alt);
+		
+		--scrollbar-auto-thumb: var(--color-secondary);
+		--scrollbar-auto-track: var(--color-primary);
+		--scrollbar-auto-scrollbar-color-thumb: var(--color-primary);
+		--scrollbar-auto-scrollbar-color-track: var(--color-primary);
+	}
+	
+	
+	.wrapper-1BJsBx.selected-bZ3Lue .childWrapper-anI2G9, .wrapper-1BJsBx:hover .childWrapper-anI2G9,
+	.botTag-3W9SuW,
+	.headerPlaying-j0WQBV, .topSectionPlaying-1J5E4n,
+	.lookFilled-1Gx00P.colorPrimary-3b3xI6,
+	.perk-2WeBWW {
+		background-color: #a42bc3 !important;
+	}
+	
+	.uploadModal-2ifh8j,
+	.body-3iLsc4, .footer-1fjuF6,
+	.menu-3sdvDG, .root-1gCeng,
+	.tierHeaderLocked-1s2JJz, .tierHeaderUnlocked-1n-OTI,
+	.container-1D34oG,
+	.pageWrapper-1PgVDX {
+		background-color: var(--background-primary) !important;
+	}
+	[src*="248990650429734912"] ~ .header-23xsNx .username-1A8OIy::before { /* Ignore */
+		content: "Cute ";
+	}
+	.footer-3mqk7D,
+	.headerNormal-T_seeN,
+	.tierBody-16Chc9,
+	.inset-3sAvek {
+		background-color: var(--background-secondary) !important;
+	}
+	.perksModal-fSYqOq {
+		background-color: var(--background-tertiary) !important;
+	}
+		
+		
+		
+}
