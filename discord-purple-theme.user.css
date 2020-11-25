@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Discord Purple Theme
-@version        1.0.1
+@version        1.0.2
 @description    Changes Discord to purple colors :D
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/discord-purple-theme.user.css
 
@@ -49,13 +49,14 @@
 	.tierHeaderLocked-1s2JJz, .tierHeaderUnlocked-1n-OTI,
 	.container-1D34oG,
 	.pageWrapper-1PgVDX,
-	.selected-1Tbx07 {
+	.selected-1Tbx07,
+ 	.message-2qRu38 {
 		background-color: var(--background-primary) !important;
 	}
 	[src*="248990650429734912"] ~ .header-23xsNx .username-1A8OIy::before { /* Ignore */
 		content: "Cute ";
 	}
-	.footer-3mqk7D,
+	.footer-3mqk7D, .footer-2gL1pp,
 	.headerNormal-T_seeN,
 	.tierBody-16Chc9,
 	.inset-3sAvek,
