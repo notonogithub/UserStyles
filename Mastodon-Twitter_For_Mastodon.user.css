@@ -12,6 +12,7 @@
 @supportURL     https://codeberg.org/Freeplay/UserStyles/issues
 
 @var select theme "Theme" ["dim:Dim", "light:Light", "black:Lights out", "custom:Custom - Edit inside script"]
+@var color themeColor "Theme Color" rgb(32, 160, 239)
 
 ==/UserStyle== */
 
@@ -21,8 +22,8 @@
 		/* OTHER SETTINGS */
 		--column-width: 597.5px;
 		
-		--theme: rgb(32, 160, 239);
-		--theme-transparent: rgba(32, 160, 239, .1);
+		--theme: themeColor;
+		--theme-transparent: rgba( themeColor, .1);
 		
 		if theme == custom { 
 			
@@ -657,6 +658,9 @@
 	}
 	.column-link__icon {
 		margin-right: 15px !important;
+	}
+	.column-link.active .column-link__icon {
+		color: var(--theme);
 	}
 	.column-link__icon, .column-link__icon::before {
 		width: 26.25px;
