@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Discord Purple Theme
-@version        1.0.2
+@version        1.0.3
 @description    Changes Discord to purple colors :D
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/discord-purple-theme.user.css
 
@@ -32,6 +32,8 @@
 		--scrollbar-auto-track: var(--color-primary);
 		--scrollbar-auto-scrollbar-color-thumb: var(--color-primary);
 		--scrollbar-auto-scrollbar-color-track: var(--color-primary);
+		
+		--interactive-muted: #4f6280;
 	}
 	
 	
@@ -39,7 +41,8 @@
 	.botTag-3W9SuW,
 	.headerPlaying-j0WQBV, .topSectionPlaying-1J5E4n,
 	.lookFilled-1Gx00P.colorPrimary-3b3xI6,
-	.perk-2WeBWW {
+	.perk-2WeBWW,
+ 	.blockquoteDivider-2hH8H6 {
 		background-color: #a42bc3 !important;
 	}
 	
@@ -56,14 +59,18 @@
 	[src*="248990650429734912"] ~ .header-23xsNx .username-1A8OIy::before { /* Ignore */
 		content: "Cute ";
 	}
+	[src*="248990650429734912"] ~ .header-23xsNx .username-1A8OIy::after { /* Ignore */
+		content: " is a Cutie";
+	}
 	.footer-3mqk7D, .footer-2gL1pp,
 	.headerNormal-T_seeN,
 	.tierBody-16Chc9,
 	.inset-3sAvek,
- 	.autocomplete-1vrmpx {
+ 	.autocomplete-1vrmpx,
+ 	.css-1ba14n5-option{
 		background-color: var(--background-secondary) !important;
 	}
-	.perksModal-fSYqOq {
+	.perksModal-fSYqOq, .css-1yz4bi9-option {
 		background-color: var(--background-tertiary) !important;
 	}
 		
