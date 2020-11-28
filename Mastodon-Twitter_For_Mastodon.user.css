@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Twitter for Mastodon
-@version        1.0.0
+@version        1.0.1
 @description    Makes Mastodon look like Twitter.
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/Mastodon-Twitter_For_Mastodon.user.css
 @preprocessor   stylus
@@ -117,6 +117,7 @@
 	/* OTHER GLOBAL STUFF */
 	button, .icon-button {
 		border-radius: 100px !important;
+		overflow: hidden;
 	}
 	.account__avatar, .account__avatar-overlay > div {
 		border-radius: 100%;
@@ -127,7 +128,8 @@
 	.empty-column-indicator, .error-column, .follow_requests-unlocked_explanation,
 	.drawer__inner.darker,
 	.column-inline-form,
-	.tabs-bar__link {
+	.tabs-bar__link,
+ 	.flex-spacer, .getting-started, .getting-started__wrapper {
 		background-color: var(--color-primary);
 	}
 	.column-header__collapsible {
@@ -151,6 +153,7 @@
 	/*** LEFT SIDEBAR ***/
 	.search {
 		margin: 0 10px !important;
+		margin-bottom: 10px !important;
 	}
 	.search__input {
 		border-radius: 100px;
@@ -184,6 +187,7 @@
 	.navigation-bar {
 		padding: 10px !important;
 		margin: 20px 10px !important;
+		margin-top: 10px !important;
 		min-height: 0 !important;
 		flex: none !important;
 		border-radius: 100px;
@@ -330,7 +334,7 @@
 	/*** MAIN SECTION ***/
 	.columns-area__panels__main {
 		padding: 0;
-		margin: 0 20px;
+		margin: 0 15px;
 		width: var(--column-width);
 		max-width: calc(100vw - 17px);
 		border: var(--border);
@@ -380,6 +384,9 @@
 	}
 	.column-header__buttons {
 		height: 53px;
+	}
+	.column-header__buttons button {
+		background-color: transparent !important;
 	}
 	.column-header__icon {
 		display: none;
@@ -781,12 +788,47 @@
 		color: var(--color-text) !important;
 	}
 	
+	/*** ADVANCED VIEW ***/
+	.drawer {
+		background-color: var(--color-primary);
+		margin: 0 !important;
+		padding: 0 !important;
+		padding-top: 10px !important;
+		border-right: var(--border);
+	}
+	.drawer__header {
+		margin: 10px;
+		margin-top: 0;
+		border-radius: 100px;
+		overflow: hidden;
+		padding: 0 10px;
+		background-color: var(--color-secondary);
+	}
+	.drawer__inner__mastodon {
+		background-color: var(--color-primary);
+		
+	}
+	.layout-multiple-columns .column {
+		border-right: var(--border);
+		margin: 0 !important; 
+		padding: 0 !important;
+		padding-top: 5px;
+	}
+	.layout-multiple-columns .column:last-of-type {
+		border-right: none !important;
+	}
+	.layout-multiple-columns .compose-form .autosuggest-textarea__textarea {
+		border-radius: 16px !important;
+	}
+	
+	.drawer__inner {
+		background-color: var(--color-primary) !important;
+	}
 	
 	
-	
-	
-	
-	
+	.layout-multiple-columns .getting-started__trends {
+		margin: 10px;
+	}
 	
 	
 	
