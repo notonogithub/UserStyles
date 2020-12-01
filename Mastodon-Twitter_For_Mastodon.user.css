@@ -64,7 +64,7 @@ domain("mstdn.social"), domain("mastodon.social"), domain("mastodon.online") {
 			
 		} else if theme == light { 
 
-			/*** >>> WIP <<< LIGHT COLORS ***/
+			/*** LIGHT COLORS ***/
 
 			--color-primary: white;
 			--color-secondary: #f7f9fa;
