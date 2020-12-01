@@ -16,7 +16,8 @@
 
 ==/UserStyle== */
 
-@-moz-document domain("mstdn.social") {
+@-moz-document domain("If you aren't on any of the instance's below, replace this with your instance URL"),
+domain("mstdn.social"), domain("mastodon.social"), domain("mastodon.online") {	
 	:root {
 		
 		/* OTHER SETTINGS */
