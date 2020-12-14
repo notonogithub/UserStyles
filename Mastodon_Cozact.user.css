@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Mastodon Cozact
-@version        1.0.2
+@version        1.0.3
 @description    Changes to Mastodon's layout for a cleaner look.
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/Mastodon_Cozact
 
@@ -224,9 +224,38 @@ domain("mstdn.social"), domain("mastodon.social"), domain("mastodon.online") {
 	}
 
 	.account__header__fields {
-		display: grid;
-		grid-template-columns: repeat(auto-fill,minmax(300px, 1fr));
+		border: none !important;
+		padding: 0 14px !important;
+		display: flex;
+		flex-wrap: wrap;
 	}
+	.account__header__fields dl {
+		border: none !important;
+		margin: 4px;
+		width: auto !important;
+		background-color: #282c37;
+		border-radius: 100px;
+	}
+	.account__header__fields dl > * {
+		padding: 8px 14px;
+		padding-right: 8px;
+		width: auto !important;
+		flex: none;
+	}
+	.account__header__fields dt {
+		background: none;
+	}
+	.account__header__fields dd {
+		padding: 8px 14px;
+		padding-left: 0;
+	}
+	.account__header__fields .verified {
+		border: none;
+		border-radius: 100px !important;
+		padding-left: 14px;
+	}
+	
+	
 	.account__header__bar {
 		border: none;
 	}
