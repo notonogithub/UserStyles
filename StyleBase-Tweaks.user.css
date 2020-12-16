@@ -211,6 +211,11 @@
 	
 	
 	/*** STYLE ITEM ***/
+	if darkMode {
+		.data[data-v-6120d763] {
+			background-color: var(--color-bg) !important;
+		}
+	}
 	if styleCards {
 		.style-card {
 			box-shadow: none !important;
@@ -254,8 +259,7 @@
 		.style-card:hover .image-container img[data-v-ba9762c6] {
 			transform: scale(1.02);
 		}
-		
-		.data[data-v-6120d763] {
+		.data[data-v-6120d763] {	
 			background: none !important;
 			padding: 0;
 			padding-top: 8px;
