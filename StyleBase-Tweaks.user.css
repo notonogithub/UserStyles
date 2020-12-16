@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           StyleBase Tweaks with Dark Mode
-@version        1.0.0
+@version        1.0.1
 @description    All Togglable: Dark Mode, 16:9 Thumbnails, Better Cards & Header, Full-Width etc.
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/StyleBase-Tweaks
 @preprocessor   stylus
@@ -56,7 +56,7 @@
 	}
 	
 	/*** HEADER ***/
-	header .container[data-v-5cc7f8bf] {
+	header .container {
 		padding-top: .5rem !important;
 		padding-bottom: .5rem !important;
 		height: 35px;
@@ -162,10 +162,10 @@
 		}
 	}
 	
-	.cross-first-line[data-v-7396baa6], .cross-second-line[data-v-7396baa6] {
+	.second-line, .first-line {
 		background-color: var(--color-main-darkest) !important;
 	}
-	.close-button:hover .cross-first-line[data-v-7396baa6], .close-button:hover .cross-second-line[data-v-7396baa6] {
+	.close-button:hover .second-line, .close-button:hover .first-line {
 		background-color: var(--color-main) !important;
 	}
 	
@@ -307,7 +307,7 @@
 				pointer-events: all !important;
 			}
 
-			header nav[data-v-5cc7f8bf] {
+			header nav {
 				margin-right: 58px;
 			}
 		}
