@@ -1,0 +1,196 @@
+/* ==UserStyle==
+@name           ProtonMail | Compact
+@namespace      github.com/openstyles/stylus
+@version        1.0.0
+@description    A compact version of Protonmail's beta layout with customizable options
+@author         Freeplay(https://pages.codeberg.org/freeplay/)
+@preprocessor   stylus
+
+
+@name          	ProtonMail Compact
+@version        1.0.0
+@description    A compact version of Protonmail's beta layout with customizable options
+@updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/protonmail-compact.user.css
+@preprocessor   stylus
+
+ -- AUTHOR STUFF --
+@namespace      Freeplay
+@author         Freeplay (https://freeplay.codeberg.page/)
+@homepageURL    https://codeberg.org/Freeplay/UserStyles
+@supportURL     https://codeberg.org/Freeplay/UserStyles/issues
+
+ -- OPTIONS --
+@var checkbox compactHeader "Compact Header" 1
+
+@var checkbox compactToolbar "Compact Toolbar" 1
+@var text mainWidth "Main Width" 35%
+
+@var checkbox compactPreview "Compact Preview" 1
+
+@var checkbox compactSidebar "Compact Sidebar" 1
+@var text sidebarWidth "Sidebar Open Width" 250px
+
+==/UserStyle== */
+@-moz-document domain("beta.protonmail.com"), domain("account.protonmail.com"), domain("contacts.protonmail.com"), domain("calendar.protonmail.com") {
+	* {
+		transition: width .7s, height .2s, padding .2s;
+	}
+	if compactHeader {
+		.header {
+			height: 50px;
+			padding: 0;
+		}
+		
+		
+		.header > * {
+			margin-top: 0;
+			margin-bottom: 0;
+		}
+		
+	}
+	
+	/* TOOLBAR */
+	if compactToolbar {
+		.toolbar {
+			height: 35px;
+		}
+	}
+	/* COLUMN */
+	.items-column-list {
+		width: mainWidth;
+	}
+	
+	if compactPreview {
+		.view-column-detail .pb1 {
+			padding-bottom: .5em;
+		}
+		.view-column-detail .mb1 {
+			margin-bottom: .5em;
+		}
+		.view-column-detail .pt0-5 {
+			padding-top: 0;
+		}
+		.message-container {
+			margin: 0;
+			margin-bottom: 1rem;
+		}
+		#conversation-view header {
+			padding-left: 25px;
+		}
+		.message.marked {
+			border: none;
+		}
+
+		.message-container {
+			border: none;
+		}
+	}
+	
+	/* Sidebar */
+	.sidebar {
+		width: sidebarWidth;
+	}
+	if compactSidebar {
+		.sidebar{
+			width: 55px;
+			max-height: 100%;
+			transition: width .2s;
+			overflow-x: hidden;
+		}
+		.sidebar:hover {
+			width: sidebarWidth;
+		}
+		.sidebar .navigation {
+			overflow-x: hidden !important;
+		}
+		.sidebar .minicalendar {
+			filter: opacity(0) !important;
+			height: 0;
+			transition: filter .2s, height .5s;
+			overflow: hidden;
+		}
+		.sidebar:hover .minicalendar {
+			height: 250px;
+			filter: opacity(1) !important;
+		}
+		.minicalendar-day {
+			min-width: 2em;
+			border-radius: 100px !important;
+		}
+		.sidebar .navigation__link--groupHeader {
+			filter: opacity(0) !important;
+			height: 0;
+			transition: height .2s, filter .2s;
+			margin: .95rem 1em .95rem 2rem;
+			padding: 0 !important;
+		}
+		.sidebar:hover .navigation__link--groupHeader {
+			height: 22px;
+			filter: opacity(1) !important;
+		}
+		.sidebar .navigation__item [data-level="1"] {
+			filter: opacity(0);
+			height: 0;
+			transition: height .2s, filter 1s;
+		}
+		.sidebar:hover .navigation__item [data-level="1"] {
+			height: 21px;
+			filter: opacity(1);
+		}
+		.sidebar .navigation__item .ellipsis {
+			filter: opacity(0);
+			transition: filter .2s;
+		}
+		.sidebar:hover .navigation__item .ellipsis {
+			filter: opacity(1);
+		}
+		.sidebar .navigation__item .flex-items-center > .flex-items-center {
+			position: sticky;
+			right: 6px;
+			min-width: 20px !important;
+			transform: translatey(10px);
+			transition: transform .5s, margin .5s .2s;
+			display: grid;
+		}
+		.sidebar .navigation__item .flex-items-center > .flex-items-center .navigation__counterItem {
+			justify-self: flex-end;
+		}
+		.sidebar:hover .navigation__item .flex-items-center {
+			transform: none;
+		}
+		.sidebar .pm-button--large {
+			overflow: hidden;
+			font-size: 0;
+			transition: font-size .5s;
+			margin: 0 auto;
+		}
+		.sidebar:hover .pm-button--large {
+			font-size: 1.4rem;
+		}
+		.navigation__icon, .menuLabel-item svg {
+			min-width: 16px;
+			margin-right: 2.5rem;
+			transition: margin .5s;
+		}
+		.sidebar:hover .navigation__icon, .sidebar:hover .menuLabel-item svg {
+			margin-right: .5rem;
+		}
+		.sidebar .navigation__sublink {
+			padding-left: 2.5rem;
+			transition: padding .5s;
+		}
+		.sidebar:hover .navigation__sublink {
+			padding-left: 1.5rem;
+		}
+		/* Sidebar Footer */
+		.sidebar .aligncenter.opacity-50.mb0-5 {
+			filter: opacity(0);
+			height: 17px;
+			min-width: sidebarWidth;
+			transition: filter .2s;
+		}
+		.sidebar:hover .aligncenter.opacity-50.mb0-5 {
+			filter: opacity(1);
+		}
+	}
+}
