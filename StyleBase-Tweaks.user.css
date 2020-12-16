@@ -2,7 +2,7 @@
 @name           StyleBase Tweaks with Dark Mode
 @version        1.0.0
 @description    All Togglable: Dark Mode, 16:9 Thumbnails, Better Cards & Header, Full-Width etc.
-@updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/StyleBase-Tweaks.user.css
+@updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/StyleBase-Tweaks
 @preprocessor   stylus
 
  -- AUTHOR STUFF --
@@ -89,6 +89,9 @@
 		.Home {
 			margin-top: 2rem;
 		}
+	}
+	.feature-item {
+		background-color: var(--color-bg);
 	}
 	
 	/*** SEARCH BAR ***/
