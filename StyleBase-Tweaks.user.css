@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           StyleBase Tweaks with Custom Colors
-@version        1.0.2
+@version        1.0.2.1
 @description    All Togglable: Dark Mode, 16:9 Thumbnails, Better Cards & Header, Full-Width etc.
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/StyleBase-Tweaks
 @preprocessor   stylus
@@ -176,19 +176,6 @@
 	.base-dialog[data-v-13fdc2e2] {
 		z-index: 14;
 		backdrop-filter: blur(4px);
-	}
-	
-	if darkMode {
-		.base-dialog {
-			background-color: rgba(0,0,0,0.8) !important;
-		}
-		.base-dialog-window.extra-large[data-v-13fdc2e2] {
-			background-color: transparent !important;
-		}
-		.topics li button {
-			background-color: var(--color-bg);
-			border: none;
-		}
 	}
 	
 	
