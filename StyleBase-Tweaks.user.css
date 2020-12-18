@@ -1,6 +1,6 @@
 /* ==UserStyle==
-@name           StyleBase Tweaks with Dark Mode
-@version        1.0.1
+@name           StyleBase Tweaks with Custom Colors
+@version        1.0.2
 @description    All Togglable: Dark Mode, 16:9 Thumbnails, Better Cards & Header, Full-Width etc.
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/StyleBase-Tweaks
 @preprocessor   stylus
@@ -11,14 +11,16 @@
 @homepageURL    https://codeberg.org/Freeplay/UserStyles
 @supportURL     https://codeberg.org/Freeplay/UserStyles/issues
 
-
-@var checkbox darkMode "Dark Mode" 1
 @var checkbox hideFeatures "Hide Feature Cards" 1
 @var checkbox fixedSearch "Fixed Searchbar" 1
 @var checkbox stickyHeader "Stick Header Section to Top" 1
 @var checkbox styleCards "Better Cards" 1
 @var checkbox dropdownFooter "Make footer a dropdown in header" 1
 @var checkbox noMaxWidth "Full-Width" 0
+
+@var color bgColor "Color Scheme" #faf6f0
+@var color colorText "Color Text" #47525e 
+@var color colorTheme "Color Theme" #d6835c
 
 
 ==/UserStyle== */
@@ -27,9 +29,10 @@
 	
 	:root {
 		if darkMode {
-			--color-bg: #1c1f28;
-			--color-text: white;
+			--color-bg: bgColor;
+			--color-text: colorText;
 			--color-border: var(--color-main-dark);
+			--color-main: colorTheme;
 			--color-main-lightest: var(--color-bg);
 		}
 	}
@@ -61,10 +64,10 @@
 		padding-bottom: .5rem !important;
 		height: 35px;
 	}
-	header[data-v-5cc7f8bf] {
+	header {
 		background-color: transparent !important;
 	}
-	header[data-v-5cc7f8bf]::before {
+	header::before {
 		content: "";
 		position: absolute;
 		top: 0;
@@ -77,7 +80,7 @@
 		box-shadow: 0 0px 10px rgba(0,0,0,0.1);
 	}
 	
-	header nav[data-v-5cc7f8bf] {
+	header nav {
 		background-color: transparent !important;
 	}
 	
@@ -176,13 +179,13 @@
 	}
 	
 	if darkMode {
-		.base-dialog[data-v-13fdc2e2] {
+		.base-dialog {
 			background-color: rgba(0,0,0,0.8) !important;
 		}
 		.base-dialog-window.extra-large[data-v-13fdc2e2] {
 			background-color: transparent !important;
 		}
-		.topics li button[data-v-65c068a0] {
+		.topics li button {
 			background-color: var(--color-bg);
 			border: none;
 		}
@@ -191,7 +194,7 @@
 	
 	/*** STYLE ITEM ***/
 	if darkMode {
-		.data[data-v-6120d763] {
+		.data {
 			background-color: var(--color-bg) !important;
 		}
 	}
@@ -207,7 +210,7 @@
 		.style-card:active {
 			transform: none !important;
 		}
-		.image-container[data-v-6120d763] {
+		.image-container {
 			padding-top: 56.25% !important;
 			height: auto !important;
 			overflow: hidden;
@@ -216,14 +219,14 @@
 			transition: box-shadow .5s, transform .2s;
 			background-color: var(--color-bg) !important;
 		}
-		.style-card:hover .image-container[data-v-6120d763] {
+		.style-card:hover .image-container {
 			box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 			transform: scale(1.02);
 		}
-		.style-card:active .image-container[data-v-6120d763] {
+		.style-card:active .image-container {
 			transform: none !important;
 		}
-		.image-container img[data-v-ba9762c6] {
+		.image-container img {
 			position: absolute !important;
 			top: 0 !important;
 			left: 0 !important;
@@ -235,23 +238,23 @@
 			border-radius: 8px;
 			transition: transform .7s !important;
 		}
-		.style-card:hover .image-container img[data-v-ba9762c6] {
+		.style-card:hover .image-container img {
 			transform: scale(1.02);
 		}
-		.data[data-v-6120d763] {	
+		.style-card .data {	
 			background: none !important;
 			padding: 0;
 			padding-top: 8px;
 			height: auto !important;
 		}
-		.data .footer[data-v-6120d763] {
+		.style-card .data .footer {
 			margin-top: 0;
 		}
 	}	
 	/*** FOOTER ***/
 	if dropdownFooter {
 		@media only screen and (min-width: 768px) { 
-			footer[data-v-4a42c6bf] {
+			footer {
 				top: 0;
 				bottom: unset;
 				width: 100%;
@@ -259,14 +262,14 @@
 				height: 0;
 				z-index: 12;
 			}
-			footer[data-v-4a42c6bf] .container {
+			footer .container {
 				display: flex;
 				justify-content: flex-end;
 				height: 0;
 				position: relative;
 				z-index: 12;
 			}
-			footer[data-v-4a42c6bf] .container::before {
+			footer .container::before {
 				content: "v";
 				font-size: 18px;
 				font-weight: 400;
@@ -278,7 +281,7 @@
 				height: 50px;
 				margin-right: 15px;
 			}
-			footer[data-v-4a42c6bf] .container .link-list {
+			footer .container .link-list {
 				position: relative;
 				flex-direction: column;
 				width: 150px !important;
@@ -292,7 +295,7 @@
 				max-height: 0 !important;
 				pointer-events: none !important;
 			}
-			footer[data-v-4a42c6bf] .container .link-list::before {
+			footer .container .link-list::before {
 				content: "";
 				position: absolute;
 				right: 0px;
@@ -301,7 +304,7 @@
 				height: 60px;
 				pointer-events: all !important;
 			}
-			footer[data-v-4a42c6bf] .container .link-list:hover, footer[data-v-4a42c6bf] .container .link-list:focus {
+			footer .container .link-list:hover, footer .container .link-list:focus {
 				filter: opacity(1);
 				max-height: none !important;
 				pointer-events: all !important;
