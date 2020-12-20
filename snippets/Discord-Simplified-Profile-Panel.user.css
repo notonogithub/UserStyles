@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Simplified Profile Panel
-@version        1.0.0
+@version        1.0.1
 @description   	Changes the profile panel, moving it next to the ChatBar and showing buttons on hover
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/snippets/Discord-Simplified-Profile-Panel.user.css
 
@@ -33,6 +33,7 @@
 	.container-3baos1 .avatarWrapper-2yR4wp {
 		margin-right: 0 !important;
 		box-shadow: var(--elevation-medium);
+		border-radius: 100px;
 	}
 
 	.container-3baos1 .avatar-SmRMf2 {
