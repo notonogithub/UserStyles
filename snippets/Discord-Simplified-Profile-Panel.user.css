@@ -1,0 +1,149 @@
+/* ==UserStyle==
+@name           Simplified Profile Panel
+@version        1.0.0
+@description   	Changes the profile panel, moving it next to the ChatBar and showing buttons on hover
+@updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/snippets/Discord-Simplified-Profile-Panel.user.css
+
+ -- AUTHOR STUFF --
+@namespace      Freeplay
+@author         Freeplay (https://freeplay.codeberg.page/)
+@homepageURL    https://codeberg.org/Freeplay/UserStyles
+@supportURL     https://codeberg.org/Freeplay/UserStyles/issues
+==/UserStyle== */
+
+@-moz-document domain("discord.com") {
+    /* ANCHOR Panels */
+	.panels-j1Uci_ {
+		background-color: var(--background-secondary) !important;
+		box-shadow: 0 -1px 0 rgba(4, 4, 5, 0.2), 0 -1.5px 0 rgba(6, 6, 7, 0.05), 0 -2px 0 rgba(4, 4, 5, 0.05);
+		z-index: 3;
+	}
+
+	.container-3baos1 {
+		position: fixed;
+		margin-left: 240px;
+		margin-bottom: 28px;
+		bottom: 0;
+		padding-left: 16px;
+		flex-direction: column;
+		width: 40px;
+		height: 40px;
+	}
+
+	.container-3baos1 .avatarWrapper-2yR4wp {
+		margin-right: 0 !important;
+		box-shadow: var(--elevation-medium);
+	}
+
+	.container-3baos1 .avatar-SmRMf2 {
+		width: 40px !important;
+		height: 40px !important;
+	}
+
+	.container-3baos1 .nameTag-3uD-yy {
+		display: none;
+	}
+
+	.container-3baos1 .avatarWrapper-2yR4wp~.horizontal-2EEEnY {
+		filter: opacity(0);
+		transform: scale(.85) translateY(10px);
+		width: 40px;
+		overflow: hidden;
+		position: absolute;
+		bottom: 50px;
+		margin-bottom: 5px;
+		align-content: center;
+		align-items: center;
+		border-radius: 10px;
+		padding: 6px 0;
+		flex-direction: column-reverse;
+		height: 0;
+		background-color: var(--background-floating);
+		box-shadow: var(--elevation-high);
+		transition: filter .2s .5s, transform 0s .5s, height 0s .6s, padding .2s .5s;
+	}
+
+	.container-3baos1:hover .horizontal-2EEEnY,
+	.container-3baos1 .horizontal-2EEEnY:focus-within,
+	.container-3baos1 .avatarWrapper-2yR4wp:hover~.horizontal-2EEEnY,
+	.container-3baos1 .horizontal-2EEEnY:hover,
+	.container-3baos1 .avatarWrapper-2yR4wp:focus~.horizontal-2EEEnY {
+		filter: opacity(1);
+		transform: none;
+		height: 96px;
+		transition: filter .1s, transform .1s, height 0s, padding .2s;
+	}
+	.container-3baos1 .horizontal-2EEEnY button {
+		min-height: 32px;
+	}
+
+
+	/* ANCHOR ChatBar */
+	.form-2fGMdU {
+		padding-left: 70px;
+	}
+
+
+	/* ANCHOR Status Picker */
+	#status-picker {
+		width: 40px;
+		border-radius: 10px;
+	}
+	#status-picker > div {
+		padding-left: 4px;
+		padding-right: 4px !important;
+		overflow: visible !important;
+	}
+	#status-picker .item-1tOPte {
+		width: 32px;
+	}
+	#status-picker .item-1tOPte.focused-3afm-j {
+		background: var(--background-modifier-selected) !important;
+	}
+	#status-picker .statusItem-33LqPf {
+		height: 32px;
+		width: 32px;
+		padding-left: 0;
+		padding-right: 0;
+		grid-template-columns: 32px 1fr;
+		overflow: hidden;
+	}
+	#status-picker .statusItem-33LqPf .status-1fhblQ {
+		position: absolute;
+		bottom: 100%;
+		left: 50%;
+		width: max-content;
+		margin: auto;
+
+		background-color: black;
+		color: #dcddde !important;
+		font-weight: 500 !important;
+		font-size: 14px;
+		line-height: 16px;
+		padding: 8px 12px;
+		border-radius: 5px;
+		z-index: 100;
+		transform: scale(.95) translateY(2px) translateX(-50%);
+		filter: opacity(0);
+		pointer-events: none;
+		box-shadow: var(--elevation-high);
+		transition: transform .1s, filter .1s;
+	}
+	#status-picker .statusItem-33LqPf:hover .status-1fhblQ {
+		transform: translateX(-50%);
+		filter: opacity(1);
+	}
+
+
+	.icon-1IxfJ2, .customStatusWithEmoji-8-XZ8I > img {
+		width: 32px;
+		margin-left: 0 !important;
+	}
+	.clearStatusButton-1Mxs1q {
+		display: none;
+	}
+	.description-2L932D {
+		display: none;
+	}
+
+}
