@@ -1,0 +1,82 @@
+/* ==UserStyle==
+@name           Minimized Members List
+@version        1.0.0
+@description   	Collapses the members list, only showing profile icons until you hover over to reveal.
+@updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/snippets/Discord-minimized-members-list
+
+ -- AUTHOR STUFF --
+@namespace      Freeplay
+@author         Freeplay (https://freeplay.codeberg.page/)
+@homepageURL    https://codeberg.org/Freeplay/UserStyles
+@supportURL     https://codeberg.org/Freeplay/UserStyles/issues
+==/UserStyle== */
+
+@-moz-document domain("discord.com") {
+.content-yTz4x3:before { /* Fix topbar shadow */
+    z-index: 12;
+}
+
+.membersWrap-2h-GB4 {
+    margin-right: -175px;
+    transition: transform .4s;
+    z-index: 10;
+}
+
+.membersWrap-2h-GB4:hover,
+.membersWrap-2h-GB4:focus,
+.membersWrap-2h-GB4:focus-within {
+    transform: translatex(-175px);
+}
+
+.members-1998pB {
+    background-color: var(--background-primary);
+    transition: background-color .2s;
+}
+.members-1998pB > div {
+    background: none !important;
+}
+
+.membersWrap-2h-GB4 .content-3YMskv {
+    margin-top: -10px;
+}
+
+.membersWrap-2h-GB4:hover .members-1998pB,
+.membersWrap-2h-GB4:focus .members-1998pB,
+.membersWrap-2h-GB4:focus-within .members-1998pB {
+    background-color: var(--background-secondary);
+}
+
+.membersWrap-2h-GB4 .membersGroup-v9BXpm,
+.membersWrap-2h-GB4 .content-3QAtGj {
+    filter: opacity(0);
+    transition: filter .2s;
+}
+
+.membersWrap-2h-GB4:hover .membersGroup-v9BXpm,
+.membersWrap-2h-GB4:focus .membersGroup-v9BXpm,
+.membersWrap-2h-GB4:focus-within .membersGroup-v9BXpm,
+.membersWrap-2h-GB4:hover .content-3QAtGj,
+.membersWrap-2h-GB4:focus .content-3QAtGj,
+.membersWrap-2h-GB4:focus-within .content-3QAtGj {
+    filter: opacity(1);
+}
+
+/* ANCHOR Group Header */
+.membersWrap-2h-GB4 .content-3YMskv {
+    margin-top: -2px;
+}
+.membersGroup-v9BXpm {
+    display: flex;
+    padding-top: 20px;
+    padding-bottom: 5px;
+    height: auto !important;
+}
+.membersGroup-v9BXpm span {
+    color: var(--text-normal);
+    font-weight: 400;
+}
+
+	
+	
+	
+}
