@@ -1,13 +1,13 @@
 /* ==UserStyle==
  -- THEME STUFF --
 @name           GreasyFork | Modernized ( Optional Dark Theme )
-@version        1.3.11
+@version        1.3.12
 @description    A much cleaner and more modern version of GreasyFork!
 @updateURL     	https://codeberg.org/Freeplay/UserStyles/raw/branch/main/GreasyFork-Modernised.user.css
 
  -- AUTHOR STUFF --
 @namespace      Freeplay
-@author         Freeplay (https://pages.codeberg.org/freeplay/)
+@author         Freeplay (https://freeplay.codeberg.org/)
 @homepageURL    https://codeberg.org/Freeplay/UserStyles
 @supportURL     https://codeberg.org/Freeplay/UserStyles/issues
 @preprocessor   stylus
@@ -18,6 +18,9 @@
 
 ==/UserStyle== */
 /* Btw I didn't know how version numbers properly worked before when I first started making this so... */
+/* Dec, 16 / 20
+- Fixed codeblocks being barely visable https://codeberg.org/Freeplay/UserStyles/issues/4
+- Other minor fixes
 /* Nov, 15 / 20
 - Added borders to sections
 - More fixes
@@ -141,10 +144,16 @@
 			border-radius: .3rem;
 			color: var(--color-text);
 		}
+		.code-container {
+			max-height: none !important;
+			border: none !important;
+			border-radius: 4px !important;
+		}
 		pre.prettyprint {
 			background-color: white !important;
 			max-height: none;
 			margin-top: 0;
+			color: black;
 		}
 		
 		.post-discussion > p:first-child,
@@ -159,7 +168,7 @@
 		}
 		
 		/* BUTTONS/LINKS */
-		select, option, input, button, code, #user-control-panel > li, .sign-in-link a,
+		select, option, input, button:not(.lum-gallery-button), code, #user-control-panel > li, .sign-in-link a,
 		.pagination > *, .script-list + .pagination > *, .user-list + .pagination > *, 
 		a.list-option-button, #script-links > li > *, #script-feedback-suggestion a, .discussion-actions a, .report-link, .edit-comment, .post-discussion > p:first-of-type a, .discussion-up-level a, .post-discussion > div > .inline-list > li a,
 		#script-content > ul li a,
@@ -183,7 +192,7 @@
 		code {
 			padding: 2px 4px !important;
 		}
-		select:hover, input:hover, input:focus, button:hover, #user-control-panel > li:hover,  .sign-in-link a:hover,
+		select:hover, input:hover, input:focus, button:not(.lum-gallery-button):hover, #user-control-panel > li:hover,  .sign-in-link a:hover,
 		a.list-option-button:hover, #script-links > li > *:hover, #script-feedback-suggestion a:hover, #script-links .current span, .discussion-actions a:hover, .report-link:hover, .edit-comment:hover, .post-discussion > p:first-of-type a:hover, .discussion-up-level a:hover, .post-discussion > div > .inline-list > li a:hover,
 		#script-content > ul li a:hover,
 		#about-user > p:last-child > *:hover, #about-user > a:first-child:hover,
@@ -722,7 +731,7 @@
 			flex: 1 1 400px;
 		}
 		#script-meta dt {
-			max-width: 100px;
+			max-width: none !important;
 		}
 		
 		#script-show-info-ad {
