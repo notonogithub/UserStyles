@@ -1,7 +1,8 @@
 /* ==UserStyle==
 @name           Uncrop Twitter Images
-@version        1.0.0
+@version        1.0.1
 @description    Displays full images in timeline
+@preprocessor   stylus
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/snippets/twitter-uncrop-images.user.css
 
  -- AUTHOR STUFF --
@@ -9,11 +10,10 @@
 @author         Freeplay (https://freeplay.codeberg.page/)
 @homepageURL    https://codeberg.org/Freeplay/UserStyles
 @supportURL     https://codeberg.org/Freeplay/UserStyles/issues
-@preprocessor   stylus
 ==/UserStyle== */
 
 @-moz-document domain("twitter.com") {
-	a.css-4rbku5 > .r-1adg3ll .r-13qz1uu, /*.r-1adg3ll .r-13qz1uu > div, */
+	a.css-4rbku5 > .r-1adg3ll .r-13qz1uu, 
 	a.css-4rbku5 > .r-1adg3ll .r-13qz1uu .r-u8s1d,
 	a.css-4rbku5 > .r-1adg3ll .css-9pa8cd {
 		padding-bottom: 0 !important;
