@@ -1,0 +1,25 @@
+/* ==UserStyle==
+@name           Uncrop Twitter Images
+@version        1.0.0
+@description    Displays full images in timeline
+
+ -- AUTHOR STUFF --
+@namespace      Freeplay
+@author         Freeplay (https://freeplay.codeberg.page/)
+@homepageURL    https://codeberg.org/Freeplay/UserStyles
+@supportURL     https://codeberg.org/Freeplay/UserStyles/issues
+@preprocessor   stylus
+==/UserStyle== */
+
+@-moz-document domain("twitter.com") {
+	a.css-4rbku5 > .r-1adg3ll .r-13qz1uu, /*.r-1adg3ll .r-13qz1uu > div, */
+	a.css-4rbku5 > .r-1adg3ll .r-13qz1uu .r-u8s1d,
+	a.css-4rbku5 > .r-1adg3ll .css-9pa8cd {
+		padding-bottom: 0 !important;
+		position: relative !important;
+		height: auto !important;
+	}
+	a.css-4rbku5 .r-1adg3ll .r-13qz1uu [style*="background-image: url"] {
+		position: absolute !important;
+	}
+}
