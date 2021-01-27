@@ -1,6 +1,6 @@
 /* ==UserStyle==
-@name           Uncrop Twitter Images
-@version        1.0.2
+@name           [Snippet] Uncrop Twitter Images
+@version        1.0.3
 @description    Displays full images in timeline
 @preprocessor   stylus
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/snippets/twitter-uncrop-images.user.css 
@@ -10,8 +10,15 @@
 @author         Freeplay (https://freeplay.codeberg.page/)
 @homepageURL    https://codeberg.org/Freeplay/UserStyles
 @supportURL     https://codeberg.org/Freeplay/UserStyles/issues
+
+ -- VARIABLES --
+@var checkbox maxHeight "Set max height to viewport size" 0
+
 ==/UserStyle== */
 @-moz-document domain("twitter.com") {
+	a.css-4rbku5 {
+		justify-content: center !important;
+	}
 	a.css-4rbku5 > .r-1adg3ll .r-13qz1uu,
 	a.css-4rbku5 > .r-1adg3ll .r-13qz1uu .r-u8s1d,
 	a.css-4rbku5 > .r-1adg3ll .css-9pa8cd {
@@ -21,10 +28,17 @@
 		height: auto !important;
 		width: 100%;
 		max-width: 100%;
+		margin: auto !important;
+		if maxHeight {
+			max-height: calc(90vh - 55px) !important; /* -55px is height of the header */
+			background-size: contain !important;
+		}
 	}
 	a.css-4rbku5 .r-1adg3ll .r-13qz1uu [style*="background-image: url"] {
 		position: absolute !important;
 		width: 100%;
 		max-width: 100%;
+		min-height: 100%;
+		margin: auto !important;
 	}
 }
