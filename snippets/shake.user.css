@@ -1,11 +1,3 @@
-/* ==UserStyle==
-@name           SHAKESHAKESHAKESHAKESHAKESHAKESHAKESHAKESHAKESHAKESHAKESHAKE
-@namespace      Freeplay
-@version        1.0.0
-@description    SHAKESHAKESHAKESHAKESHAKESHAKESHAKESHAKESHAKESHAKESHAKESHAKE
-@author         Freeplay (https://freeplay.codeberg.page/)
-@preprocessor   stylus
-==/UserStyle== */
 
 @keyframes shake {
     0%, 100% {transform: translateX(0);}
@@ -15,7 +7,7 @@
 span, p, h1, h2, h3, h4, h5, h6, embed, iframe, date, li, ::after, ::before, b, codeblock, pre,
 header, footer,
 a, i, img, input, select, button, svg, section,
- .container{
+.container {
 	animation-name: shake;
 	animation-duration: 2s;
 	animation-iteration-count: infinite;
@@ -23,3 +15,78 @@ a, i, img, input, select, button, svg, section,
 		animation-duration: .5s;
 	}
 }
+
+/* ==UserStyle==
+@name           SHAKESHAKESHAKESHAKESHAKESHAKESHAKESHAKESHAKESHAKESHAKESHAKE
+@namespace      Freeplay
+@version        1.0.1
+@description    SHAKESHAKESHAKESHAKESHAKESHAKESHAKESHAKESHAKESHAKESHAKESHAKE
+@author         Freeplay (https://freeplay.codeberg.page/)
+@preprocessor   stylus
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@var text owo "We're no strangers to loveYou know the rules and so do IA full commitment's what I'm thinking ofYou wouldn't get this from any other guyI just wanna tell you how I'm feelingGotta make you understandNever gonna give you upNever gonna let you downNever gonna run around and desert youNever gonna make you cryNever gonna say goodbyeNever gonna tell a lie and hurt youWe've known each other for so longYour heart's been aching butYou're too shy to say itInside we both know what's been going onWe know the game and we're gonna play itAnd if you ask me how I'm feelingDon't tell me you're too blind to seeNever gonna give you upNever gonna let you downNever gonna run around and desert youNever gonna make you cryNever gonna say goodbyeNever gonna tell a lie and hurt youNever gonna give you upNever gonna let you downNever gonna run around and desert youNever gonna make you cryNever gonna say goodbyeNever gonna tell a lie and hurt you(Ooh, give you up)(Ooh, give you up)(Ooh)Never gonna give, never gonna give(Give you up)(Ooh)Never gonna give, never gonna give(Give you up)We've know each other for so longYour heart's been aching butYou're too shy to say itInside we both know what's been going onWe know the game and we're gonna play itI just wanna tell you how I'm feelingGotta make you understandNever gonna give you upNever gonna let you downNever gonna run around and desert youNever gonna make you cryNever gonna say goodbyeNever gonna tell a lie and hurt youNever gonna give you upNever gonna let you downNever gonna run around and desert youNever gonna make you cryNever gonna say goodbyeNever gonna tell a lie and hurt youNever gonna give you upNever gonna let you downNever gonna run around and desert youNever gonna make you cryNever gonna say goodbyeNever gonna tell a lie and hurt you" '"Why have you done this"'
+
+==/UserStyle== */
