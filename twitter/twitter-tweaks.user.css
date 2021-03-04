@@ -1,0 +1,201 @@
+/* ==UserStyle==
+@name           Twitter Tweaks
+@version        1.0.0
+@description    A collection of tweaks for: Uncropping images, hiding trends, Avatar roundness, moving header aside, and more!!
+updateURL       https://codeberg.org/Freeplay/UserStyles/raw/branch/main/twitter/twitter-tweaks.user.css
+@preprocessor   stylus
+
+ -- AUTHOR STUFF --
+@namespace      Freeplay
+@author         Freeplay (https://freeplay.codeberg.page/)
+@homepageURL    https://codeberg.org/Freeplay/UserStyles
+@supportURL     https://codeberg.org/Freeplay/UserStyles/issues
+
+@var checkbox moveHeader     "➡ Move header to sidebar" 1
+
+@var checkbox uncrop         "🖼 Uncrop Images" 1
+@var checkbox maxHeight      "🖼 Uncrop Images: Set max height to viewport size" 1
+
+@var checkbox resizeSidebar  "↔ Resize image preview sidebar depending on image size" 1
+@var checkbox removeImageBar "⛔ Hide image preview interaction bar" 1
+
+@var checkbox noTrends       "⛔ Hide 'What's Happening' box" 1
+@var checkbox noFollowBox    "⛔ Hide 'Who to follow' box" 0
+@var checkbox noMessagesBox  "⛔ Hide 'Messages' box" 1
+
+@var checkbox noBorder       "⛔ Hide Borders" 0
+@var checkbox columnBG       "💡 Contrast between background and feed" 1
+@var checkbox bgBanner       "🖼 Use banners as background" 1
+
+@var range    avatarRadius   "⚫ Avatar Border Radius" [30, 5, 50, 5, '%']
+
+==/UserStyle== */
+
+@-moz-document domain("twitter.com") {
+	
+	[data-testid="sidebarColumn"] > .css-1dbjc4n > [class*="css-1dbjc4n r-1xcajam r-ipm5af"]::before {
+		content: "";
+		padding-top: 0;
+	}
+	if moveHeader {
+		@media only screen and (min-width: 1001px) {
+			main .css-1dbjc4n [class="css-1dbjc4n r-1h3ijdo r-136ojw6"] {
+				width: 352px;
+				margin-left: auto;
+				margin-right: -382px;
+				margin-bottom: -54px;
+				background: none !important;
+			}
+			.css-1dbjc4n [class="css-1dbjc4n r-1h3ijdo r-136ojw6"] > div > [class*="r-1h3ijdo r-ymttw5"] {
+				background: none !important;
+			}
+			
+			// Sidebar padding
+			[data-testid="sidebarColumn"] > .css-1dbjc4n > [class*="css-1dbjc4n r-1xcajam r-ipm5af"]::before {
+				content: "";
+				padding-top: 50px !important;
+			}
+			// Search Bar 
+			[data-testid="sidebarColumn"] [class*="r-1xcajam r-ipm5af r-1hycxz r-136ojw6"] {
+				top: 52px;
+				height: 20px;
+				min-height: unset !important;
+				align-items: flex-start !important;
+				overflow: visible;
+				z-index: 2;
+			}
+			[data-testid="sidebarColumn"] > .css-1dbjc4n > .r-1hycxz [class*="r-ipm5af r-1hycxz r-136ojw6"]::before {
+				content: "";
+				background-color: inherit;
+				width: 100%;
+				height: 100px;
+				position: absolute;
+				bottom: -23px;
+				border-bottom-left-radius: 20px;
+				border-bottom-right-radius: 20px;
+			}
+			@media only screen and (max-width: 1090px) {
+				.css-1dbjc4n [class="css-1dbjc4n r-1h3ijdo r-136ojw6"] {
+					width: 290px;
+					margin-right: -311px;
+				}
+			}
+		}
+	}
+	if uncrop {
+		a.css-4rbku5 {
+			justify-content: center !important;
+		}
+		a.css-4rbku5 > .r-1adg3ll .r-13qz1uu,
+		a.css-4rbku5 > .r-1adg3ll .r-13qz1uu .r-u8s1d,
+		a.css-4rbku5 > .r-1adg3ll .css-9pa8cd {
+			padding-bottom: 0 !important;
+			position: relative !important;
+			height: auto !important;
+			width: 100%;
+			max-width: 100%;
+			margin: auto !important;
+			if maxHeight {
+				max-height: calc(90vh - 55px) !important; /* -55px is height of the header */
+				background-size: contain !important;
+				object-fit: contain !important;
+			}
+		}
+		a.css-4rbku5 .r-1adg3ll .r-13qz1uu [style*="background-image: url"] {
+			position: absolute !important;
+			width: 100%;
+			max-width: 100%;
+			min-height: 100%;
+			margin: auto !important;
+		}
+	}
+	if resizeSidebar {
+		[class="css-1dbjc4n r-18u37iz r-1pi2tsx r-11yh6sk r-buy8e9 r-bnwqim r-13qz1uu"] > div:last-of-type {
+			flex-grow: 1;
+			max-width: 600px;
+		}
+	}
+	if removeImageBar {
+		.css-1dbjc4n.r-1pi2tsx.r-11yh6sk.r-buy8e9.r-bnwqim.r-13qz1uu > .css-1dbjc4n.r-13awgt0.r-184en5c + .css-1dbjc4n.r-1kihuf0.r-13qz1uu {
+			display: none;
+		}
+	}
+	if noTrends {
+		[data-testid="sidebarColumn"] section.css-1dbjc4n > .css-4rbku5.css-901oao.r-4iw3lz.r-1xk2f4g.r-109y4c4.r-1udh08x.r-wwvuq4.r-u8s1d.r-92ng3h + .css-1dbjc4n {
+			display: none;
+		}
+	}
+	if noFollowBox {
+		[data-testid="sidebarColumn"] [class*="r-1bro5k0 r-1udh08x"] {
+			display: none !important;
+		}
+	}
+	if noMessagesBox {
+		[class="css-1dbjc4n r-173mn98 r-yfoy6g r-c67a83 r-1qk6wnv r-xnswec r-1mf7evn r-hvns9x r-1jte41z"] {
+			display: none;
+		}
+	}
+	if noBorder {
+		*:not(.r-1xl5njo) {
+			border-color: transparent !important
+		}
+		a.css-4rbku5 > .r-1adg3ll .css-9pa8cd {
+			border-bottom-left-radius: 16px;
+			border-bottom-right-radius: 16px;
+		}
+	}
+	if columnBG {
+		body[style*="background-color: rgb(21"],
+ 		body[style*="background-color: rgb(21"] [data-testid="sidebarColumn"] > .css-1dbjc4n > .r-1hycxz [class*="r-ipm5af r-1hycxz r-136ojw6"],
+ 		body[style*="background-color: rgb(21"] [data-testid="sidebarColumn"] > .css-1dbjc4n > .r-1hycxz [class*="r-ipm5af r-1hycxz r-136ojw6"]::before{ 
+			background-color: #10171e !important;
+		}
+		
+		body[style*="background-color: rgb(255"],
+ 		body[style*="background-color: rgb(255"] [data-testid="sidebarColumn"] > .css-1dbjc4n > .r-1hycxz [class*="r-ipm5af r-1hycxz r-136ojw6"],
+ 		body[style*="background-color: rgb(255"] [data-testid="sidebarColumn"] > .css-1dbjc4n > .r-1hycxz [class*="r-ipm5af r-1hycxz r-136ojw6"]::before {
+			background-color: #e6ecf0 !important;
+		}
+		body[style*="background-color: rgb(0"],
+ 		body[style*="background-color: rgb(0"] [data-testid="sidebarColumn"] > .css-1dbjc4n > .r-1hycxz [class*="r-ipm5af r-1hycxz r-136ojw6"],
+		body[style*="background-color: rgb(0"] [data-testid="sidebarColumn"] > .css-1dbjc4n > .r-1hycxz [class*="r-ipm5af r-1hycxz r-136ojw6"]::before {
+			background-color: rgb(8,8,8) !important;
+		}
+	}
+	if bgBanner {
+		[class="css-1dbjc4n r-1p0dtai r-1mlwlqe r-1d2f490 r-1udh08x r-u8s1d r-zchlnj r-ipm5af r-417010"] > .css-1dbjc4n.r-1niwhzg.r-vvn4in.r-u6sd8q.r-4gszlv.r-1p0dtai.r-1pi2tsx.r-1d2f490.r-u8s1d.r-zchlnj.r-ipm5af.r-13qz1uu.r-1wyyakw[style*="https://pbs.twimg.com/profile_banners"] {
+			position: fixed !important;
+			height: 100vh !important;
+			width: 100vw !important;
+			top: 0;
+			left: 0;
+			opacity: .1;
+			z-index: -99999;
+			pointer-events: none;
+			filter: blur(10px);
+			object-fit: cover;
+			background-size: cover !important;
+		}
+		a.css-4rbku5 > .r-1adg3ll .css-9pa8cd {
+			opacity: 1;
+		}
+	}
+	
+	[class="css-1dbjc4n r-1wbh5a2 r-dnmrzs"] .r-sdzlij,
+	[class*="r-f6ebdl r-sdzlij r-1phboty r-14f9gny r-1loqt21 r-1gzrgec r-cnkkqs r-zjg7tu r-mtrfb5 r-1ny4l3l r-1udh08x r-o7ynqc r-6416eg r-1xce0ei"],
+ 	[class="css-1dbjc4n r-sdzlij r-1p0dtai r-1mlwlqe r-1d2f490 r-1udh08x r-u8s1d r-zchlnj r-ipm5af r-417010"] {
+		border-radius: avatarRadius !important;
+		transition: border-radius .5s;
+	}
+	
+
+	*:not(.r-1xl5njo) {
+		transition: border .5s;
+	}
+	body,
+	.css-1dbjc4n [class="css-1dbjc4n r-1h3ijdo r-136ojw6"], .css-1dbjc4n [class="css-1dbjc4n r-1h3ijdo r-136ojw6"] > div > .r-yfoy6g,
+	[data-testid="sidebarColumn"] > .css-1dbjc4n > [class*="css-1dbjc4n r-1xcajam r-ipm5af"]::before,
+ 	[data-testid="sidebarColumn"] [class*="r-1xcajam r-ipm5af r-1hycxz r-136ojw6"] {
+		transition: background .5s, margin .3s, padding .5s, width .5s, top .3s, height .5s !important;
+	}
+}
