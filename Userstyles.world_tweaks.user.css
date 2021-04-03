@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Userstyles.World Tweaks!
-@version        1.0.0
+@version        1.0.1
 @description    Tweaks for Userstyles.World!
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/Userstyles.world_tweaks.user.css
 @preprocessor   stylus
@@ -34,7 +34,10 @@
 @var color colorText "Color Text" #ddd
 
 ==/UserStyle== */
-
+/* 1.0.1
+- Fixed hover color in header
+- Added :focus to hover elements
+*/
 @-moz-document domain("userstyles.world") {
 	if enableColorScheme {
 		:root {
@@ -150,8 +153,8 @@
 			&::before {
 				bottom: -2.1px !important;
 			}
-			&:hover {
-				color: var(--inverse) !important;
+			&:hover, &:focus {
+				filter: brightness(1.5) !important;
 			}
 		}
 	}
@@ -205,7 +208,7 @@
 					}
 				}
 			}
-			&.animate:hover {
+			&.animate:hover, &.animate:focus {
 				transform: translatey(-1px) !important;
 				figure {
 					transform: scale(1.02);
@@ -273,6 +276,7 @@
 		a:not(.mascot):not(.card):not(.btn), a.mascot span, .link {
 			position: relative;
 			text-decoration: none !important;
+			outline: none !important;
 			&::before {
 				content: "";
 				width: 0%;
@@ -284,11 +288,12 @@
 				bottom: -.3em;
 				border-radius: 100px;
 			}
-			&:hover:before {
+			&:hover:before, &:focus:before {
 				content: "";
 				width: 100%;
 				height: .2em;
 				animation: underlineAnimate .3s !important;
+				
 			}
 		}
 	}
