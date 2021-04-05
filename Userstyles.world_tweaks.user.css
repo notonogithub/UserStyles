@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Userstyles.World Tweaks!
-@version        1.0.3
+@version        1.0.4
 @description    Tweaks for Userstyles.World!
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/Userstyles.world_tweaks.user.css
 @preprocessor   stylus
@@ -35,8 +35,8 @@
 @var color colorText "Color Text" #ddd
 
 ==/UserStyle== */
-/* 1.0.3
-- Quick lil' fixes to pill header
+/* 1.0.4
+- Quick lil' fix to search button in header
 */
 @-moz-document domain("userstyles.world") {
 	if enableColorScheme {
@@ -97,6 +97,7 @@
 					height: auto !important;
 					a {
 						width: 80%;
+						white-space: nowrap !important;
 					}
 				}
 				
