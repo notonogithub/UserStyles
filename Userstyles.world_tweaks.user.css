@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Userstyles.World Tweaks!
-@version        1.0.4
+@version        1.0.5
 @description    Tweaks for Userstyles.World!
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/Userstyles.world_tweaks.user.css
 @preprocessor   stylus
@@ -34,9 +34,10 @@
 @var color colorScheme "Color Scheme" #101010
 @var color colorText "Color Text" #ddd
 
+@var checkbox owo "Make Gopher suffer." 0
 ==/UserStyle== */
-/* 1.0.4
-- Quick lil' fix to search button in header
+/* 1.0.5
+- Fix to 'Uncrop image previews on style page'
 */
 @-moz-document domain("userstyles.world") {
 	if enableColorScheme {
@@ -248,7 +249,7 @@
 		}
 	}
 	if uncrop {
-		.preview-img {
+		.preview .card figure {
 			padding: 0 !important;
 			background-color: var(--bg-2);
 			border-radius: 8px;
@@ -369,6 +370,21 @@
 				opacity: .7;
 				z-index: -1;
 			}
+		}
+	}
+	
+	if owo {
+		@keyframes uwu {
+			from { transform: rotateZ(0deg) skewX(0deg);
+				   filter: hue-Rotate(0deg)                }
+			to {   transform: rotateZ(360deg) skewX(360deg);
+				   filter: hue-Rotate(360deg) }
+		}
+		nav > .wrapper {
+			overflow: hidden;
+		}
+		.mascot svg {
+			animation: uwu 50s linear 1s infinite !important;
 		}
 	}
 	
