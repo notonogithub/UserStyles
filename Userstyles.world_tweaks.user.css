@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Userstyles.World Tweaks!
-@version        1.0.5
+@version        1.0.6
 @description    Tweaks for Userstyles.World!
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/Userstyles.world_tweaks.user.css
 @preprocessor   stylus
@@ -34,10 +34,10 @@
 @var color colorScheme "Color Scheme" #101010
 @var color colorText "Color Text" #ddd
 
-@var checkbox owo "Make Gopher suffer." 0
 ==/UserStyle== */
-/* 1.0.5
-- Fix to 'Uncrop image previews on style page'
+/* 1.0.6
+- Fixes to header
+- Removed 'Make Gopher Suffer' option.
 */
 @-moz-document domain("userstyles.world") {
 	if enableColorScheme {
@@ -67,7 +67,7 @@
 			z-index: 100;
 			min-height: 70px;
 			display: flex;
-			align-items: center;
+			padding-top: 16px !important;
 			& > .wrapper {
 				margin: 0 auto !important;
 				height: min-content;
@@ -77,11 +77,14 @@
 				position: sticky;
 				top: 10px;
 				min-height: 40px;
+				align-items: center;
 				// align-items: center;
 				.mascot {
-					height: 50px;
+					height: 50px !important;
 					margin-top: -5px;
 					margin-bottom: -5px;
+					margin-right: 0;
+					padding: 0 !important;
 				}
 				.mascot svg {
 					position: sticky;
@@ -94,11 +97,39 @@
 					bottom: 18px !important;
 					// height: 100% !important;
 				}
-				.menu li {
-					height: auto !important;
-					a {
-						width: 80%;
-						white-space: nowrap !important;
+				.menu {
+					flex-grow: 1;
+					padding-top: 0;
+					padding-bottom: 0;
+					width: 100%;
+					li:first-child {
+						flex-grow: 1;
+						margin: 0 20px;
+						.search {
+							flex-grow: 1;
+							// max-height: 100% !important;
+							margin: 0;
+							input {
+								background: none !important;
+								width: 100%;
+							}
+							button {
+								height: unset !important;
+								background: none;
+							}
+						}
+					}
+					li {
+						height: auto !important;
+						min-height: 35px !important;
+						flex-direction: column;
+						a, input {
+							width: 80%;
+							flex-grow: 1;
+							display: flex !important;
+							align-items: center !important;
+							white-space: nowrap !important;
+						}
 					}
 				}
 				
@@ -127,7 +158,6 @@
 				background: none;
 				border: 0;
 				pointer-events: none !important;
-				top: -1.2em;
 				.wrapper {
 					max-width: 100rem;
 					padding: 30px 40px !important;
@@ -135,15 +165,58 @@
 						pointer-events: all !important;
 						margin-top: 0 !important;
 						background: var(--bg-2);
-						padding: 0 20px;
+						padding: 0 20px !important;
 						border-radius: 32px;
 						height: 35px !important;
 						position: relative;
+						&.mascot {
+							margin-right: auto;
+							
+						}
+						&.menu {
+							width: max-content !important;
+							flex: unset !important;
+							padding-left: 0 !important;
+							margin-left: 20px;
+							li {
+								margin-bottom: -1px !important;
+							}
+							li:first-child {
+								margin: 0;
+								width: 200px;
+								transition: width .3s;
+								form {
+									display: flex;
+									flex-direction: column;
+								}
+								input {
+									border: 0;
+									padding: 0 20px;
+									width: 100%;
+									transition: width .3s;
+									height: 100%;
+									box-shadow: none !important;
+									outline: none !important;
+								}
+								button {
+									display: none;
+									border: 0;
+									margin-bottom: -1px;
+								}
+								&:focus-within {
+									width: 500px;
+									button {
+										display: block;
+									}
+								}
+							}
+						}
+						
 						li:first-child a {
 							margin-left: 0;
 						}
 						a::before {
-							bottom: -6px !important;
+							bottom: 0px !important;
 						}
 						a:hover:before {
 							height: 4px !important;
@@ -373,20 +446,19 @@
 		}
 	}
 	
-	if owo {
-		@keyframes uwu {
-			from { transform: rotateZ(0deg) skewX(0deg);
-				   filter: hue-Rotate(0deg)                }
-			to {   transform: rotateZ(360deg) skewX(360deg);
-				   filter: hue-Rotate(360deg) }
-		}
-		nav > .wrapper {
-			overflow: hidden;
-		}
-		.mascot svg {
-			animation: uwu 50s linear 1s infinite !important;
-		}
-	}
+	// smile :)
+// 		@keyframes uwu {
+// 			from { transform: rotateZ(0deg) skewX(0deg);
+// 				   filter: hue-Rotate(0deg)                }
+// 			to {   transform: rotateZ(360deg) skewX(360deg);
+// 				   filter: hue-Rotate(360deg) }
+// 		}
+// 		nav > .wrapper {
+// 			overflow: hidden;
+// 		}
+// 		.mascot svg {
+// 			animation: uwu 50s linear 1s infinite !important;
+// 		}
 	
 	footer {
 		background: none;
