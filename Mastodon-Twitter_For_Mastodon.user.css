@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Twitter for Mastodon
-@version        1.0.2
+@version        1.0.3
 @description    Makes Mastodon look like Twitter.
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/Mastodon-Twitter_For_Mastodon.user.css
 @preprocessor   stylus
@@ -13,11 +13,15 @@
 
 @var select theme "Theme" ["dim:Dim", "light:Light", "black:Lights out", "custom:Custom - Edit inside script"]
 @var color themeColor "Theme Color" rgb(32, 160, 239)
+@var checkbox noBorders "No Borders" 0
 
 ==/UserStyle== */
-
+/* 1.0.3
+- Removed a thing that was meant for testing oh no how long did I leave that in there
+*/
 @-moz-document domain("If you aren't on any of the instance's below, replace this with your instance URL"),
 domain("mstdn.social"), domain("mastodon.social"), domain("mastodon.online") {	
+	
 	:root {
 		
 		/* OTHER SETTINGS */
@@ -98,6 +102,10 @@ domain("mstdn.social"), domain("mastodon.social"), domain("mastodon.online") {
 			--shadow: rgba(255, 255, 255, 0.2) 0px 0px 15px, rgba(255, 255, 255, 0.15) 0px 0px 3px 1px;
 			
 			
+		}
+		
+		if noBorders {
+			--border: none !important;
 		}
 		
 	}
@@ -335,7 +343,7 @@ domain("mstdn.social"), domain("mastodon.social"), domain("mastodon.online") {
 	/*** MAIN SECTION ***/
 	.columns-area__panels__main {
 		padding: 0;
-		margin: 0 15px;
+		margin: 0 20px;
 		width: var(--column-width);
 		max-width: calc(100vw - 17px);
 		border: var(--border);
@@ -407,8 +415,29 @@ domain("mstdn.social"), domain("mastodon.social"), domain("mastodon.online") {
 		padding-left: 72px !important;
 		border-bottom: var(--border) !important;
 	}
+	.status__info {
+		display: flex;
+	}
+	.status__relative-time {
+		order: 2;
+		flex-grow: 1;
+		display: flex;
+		color: var(--color-text-muted);
+	}
+	.status__relative-time::before {
+		content: "·";
+		margin-right: 5px;
+		margin-left: 5px;
+	}
+	.status__display-name {
+		padding-right: 0 !important;
+	}
 	.status__display-name strong {
 		color: var(--color-text) !important;
+	}
+	.status__visibility-icon {
+		order: 2;
+		margin-left: auto;
 	}
 	.status__prepend {
 		padding-top: 8px !important;
@@ -442,6 +471,10 @@ domain("mstdn.social"), domain("mastodon.social"), domain("mastodon.online") {
 	}
 	.status__content {
 		color: var(--color-text);
+		margin-left: -75px;
+		padding-left: 75px;
+		margin-right: -15px;
+		padding-right: 15px;
 	}
 	.status__content a {
 		color: var(--theme);
@@ -486,8 +519,34 @@ domain("mstdn.social"), domain("mastodon.social"), domain("mastodon.online") {
 		color: var(--color-text);
 		background: transparent;
 		border: var(--border);
-		font-weight: 700;
+		font-weight: 600;
+		padding: 0 6px !important;
+		font-size: 11px;
+		text-decoration: none !important;
+		text-transform: uppercase;
+		margin-top: -2px;
 	}
+	.status__content__read-more-button {
+		margin-top: 6px;
+		padding: 0 !important;
+		padding-left: 75px !important;
+		margin-left: -75px;
+		border-radius: 0 !important;
+		width: calc(100% + 90px);
+		height: 40px;
+		text-decoration: none !important;
+		font-size: 15px !important;
+		line-height: 1.3125 !important;
+		font-weight: 400 !important;
+		text-align: left !important;
+		transition: background-color .2s;
+	}
+	.status__content__read-more-button:hover {
+		background-color: var(--color-hover);
+	}
+	
+
+	
 	
 	/* Account Header */
 	.account__header > div, .account__section-headline {
@@ -655,7 +714,7 @@ domain("mstdn.social"), domain("mastodon.social"), domain("mastodon.online") {
 		content: "";
 		position: absolute;
 		top: -10px;
-		left: -50px;
+		left: -55px;
 		bottom: -10px;
 		right: -20px;
 		border-radius: 100px;
@@ -665,7 +724,7 @@ domain("mstdn.social"), domain("mastodon.social"), domain("mastodon.online") {
 		background-color: var(--theme-transparent);
 	}
 	.column-link__icon {
-		margin-right: 15px !important;
+		margin-right: 20px !important;
 	}
 	.column-link.active .column-link__icon {
 		color: var(--theme);
@@ -686,6 +745,9 @@ domain("mstdn.social"), domain("mastodon.social"), domain("mastodon.online") {
 		text-transform: capitalize;
 		padding: 10px 15px;
 		border-bottom: none;
+		line-height: 1.3125;
+		font-weight: 800;
+		color: var(--color-text);
 	}
 	.getting-started__trends .trends__item {
 		padding: 10px 15px;
@@ -830,16 +892,5 @@ domain("mstdn.social"), domain("mastodon.social"), domain("mastodon.online") {
 	.layout-multiple-columns .getting-started__trends {
 		margin: 10px;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 }
