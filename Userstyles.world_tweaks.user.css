@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Userstyles.World Tweaks!
-@version        1.0.6
+@version        1.0.7
 @description    Tweaks for Userstyles.World!
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/Userstyles.world_tweaks.user.css
 @preprocessor   stylus
@@ -20,6 +20,7 @@
 
 
 @var checkbox fullWidth "Full-width grid" 1
+@var select   widthType "Width type" ["Regular", "Full-Width", "Responsive*"]
 
 @var checkbox altCards "Alternative Cards" 1
 
@@ -35,11 +36,13 @@
 @var color colorText "Color Text" #ddd
 
 ==/UserStyle== */
-/* 1.0.6
-- Fixes to header
-- Removed 'Make Gopher Suffer' option.
+/* 1.0.7
+- Properly aligned pill headers
+- Added option for responsive full-width
+- Width type support on Search page
 */
 @-moz-document domain("userstyles.world") {
+	
 	if enableColorScheme {
 		:root {
 			--bg-1: colorScheme;
@@ -171,7 +174,7 @@
 						position: relative;
 						&.mascot {
 							margin-right: auto;
-							
+							margin-bottom: 0 !important;
 						}
 						&.menu {
 							width: max-content !important;
@@ -197,6 +200,10 @@
 									height: 100%;
 									box-shadow: none !important;
 									outline: none !important;
+									&::placeholder {
+										color: var(--fg-1) !important;
+										opacity: 1;
+									}
 								}
 								button {
 									display: none;
@@ -261,24 +268,30 @@
 	}
 	
 	
-	if fullWidth {
+	if widthType == "Full-Width" || widthType == "Responsive" {
 		// ewie bad selectors
-		.wrapper > section[class="mt:m ta:c"] + section[class="mt:l"] {
+		.wrapper > section[class="mt:m ta:c"] + section[class="mt:l"],
+ 		.wrapper > section[class="mt:l"] + section[class="mt:l"] {
 			display: flex;
 			// flex-direction: column;
 			align-content: center;
 			justify-content: center;
 			& > .grid {
-				min-width: calc(100vw - 80px);
-				display: grid;
-				grid-template-columns: repeat(auto-fill,minmax(250px,1fr));
-				.card {
-					// flex: 0 1 320px;
-					// // max-width: 350px;
+				if widthType == "Full-Width" {
+					min-width: calc(100vw - 80px);
+					display: grid;
+					grid-template-columns: repeat(auto-fill,minmax(250px,1fr));
+				}
+				if widthType == "Responsive" {
+					min-width: calc(100vw - 80px);
+					display: grid;
+					grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+					padding: 0 calc(15vw - 100px);
 				}
 			}
 		}
 	}
+
 	html body > * > .wrapper {
 		margin: 0 auto;
 	}
@@ -303,10 +316,13 @@
 					}
 
 					&::before {
-						background-color: rgba(0,0,0,0.8);
+						background-color: rgba(0,0,0,0.8) !important;
+						transition: opacity .5s 0s !important;
 					}
 					&::after {
 						color: #eee !important;
+						transform: scale(1.04);
+						transition: .2s 0s;
 					}
 				}
 			}
@@ -316,6 +332,13 @@
 					transform: scale(1.02);
 					img {
 						transform: scale(1.02);
+					}
+					&::before {
+						transition: opacity .5s .5s !important;
+					}
+					&::after {
+						transform: none !important;
+						transition: .5s .5s;
 					}
 				}
 			}
@@ -446,21 +469,25 @@
 		}
 	}
 	
-	// smile :)
-// 		@keyframes uwu {
-// 			from { transform: rotateZ(0deg) skewX(0deg);
-// 				   filter: hue-Rotate(0deg)                }
-// 			to {   transform: rotateZ(360deg) skewX(360deg);
-// 				   filter: hue-Rotate(360deg) }
-// 		}
-// 		nav > .wrapper {
-// 			overflow: hidden;
-// 		}
-// 		.mascot svg {
-// 			animation: uwu 50s linear 1s infinite !important;
-// 		}
 	
 	footer {
 		background: none;
 	}
 }
+
+
+	// Uncomment below to torture Gopher :)
+/*
+		@keyframes uwu {
+			from { transform: rotateZ(0deg) skewX(0deg);
+				   filter: hue-Rotate(0deg)                }
+			to {   transform: rotateZ(360deg) skewX(360deg);
+				   filter: hue-Rotate(360deg) }
+		}
+		nav > .wrapper {
+			overflow: hidden;
+		}
+		.mascot svg {
+			animation: uwu 20s linear 1s infinite !important;
+		}
+*/
