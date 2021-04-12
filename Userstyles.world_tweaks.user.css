@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Userstyles.World Tweaks!
-@version        1.0.7
+@version        1.0.8
 @description    Tweaks for Userstyles.World!
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/Userstyles.world_tweaks.user.css
 @preprocessor   stylus
@@ -18,8 +18,6 @@
 
 @var checkbox blurEffects "Blur Effects" 1
 
-
-@var checkbox fullWidth "Full-width grid" 1
 @var select   widthType "Width type" ["Regular", "Full-Width", "Responsive*"]
 
 @var checkbox altCards "Alternative Cards" 1
@@ -36,10 +34,8 @@
 @var color colorText "Color Text" #ddd
 
 ==/UserStyle== */
-/* 1.0.7
-- Properly aligned pill headers
-- Added option for responsive full-width
-- Width type support on Search page
+/* 1.0.8
+- Forgot to remove full-width grid option woops
 */
 @-moz-document domain("userstyles.world") {
 	
