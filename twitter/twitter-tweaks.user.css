@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Twitter Tweaks
-@version        1.0.0
+@version        1.0.1
 @description    A collection of tweaks for: Uncropping images, hiding trends, Avatar roundness, moving header aside, and more!!
 updateURL       https://codeberg.org/Freeplay/UserStyles/raw/branch/main/twitter/twitter-tweaks.user.css
 @preprocessor   stylus
@@ -31,6 +31,9 @@ updateURL       https://codeberg.org/Freeplay/UserStyles/raw/branch/main/twitter
 
 ==/UserStyle== */
 
+/* Update 1.0.1
+- Added background blur for "Set max height to viewport size"
+*/
 @-moz-document domain("twitter.com") {
 	
 	[data-testid="sidebarColumn"] > .css-1dbjc4n > [class*="css-1dbjc4n r-1xcajam r-ipm5af"]::before {
@@ -107,6 +110,10 @@ updateURL       https://codeberg.org/Freeplay/UserStyles/raw/branch/main/twitter
 			max-width: 100%;
 			min-height: 100%;
 			margin: auto !important;
+			opacity: .8 !important;
+			background-size: cover !important;
+			filter: blur(30px);
+			transform: scale(1.2);
 		}
 	}
 	if resizeSidebar {
@@ -169,7 +176,7 @@ updateURL       https://codeberg.org/Freeplay/UserStyles/raw/branch/main/twitter
 			width: 100vw !important;
 			top: 0;
 			left: 0;
-			opacity: .1;
+			opacity: .1 !important;
 			z-index: -99999;
 			pointer-events: none;
 			filter: blur(10px);
