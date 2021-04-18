@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Userstyles.World Tweaks!
-@version        1.0.8
+@version        1.0.9
 @description    Tweaks for Userstyles.World!
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/Userstyles.world_tweaks.user.css
 @preprocessor   stylus
@@ -34,8 +34,8 @@
 @var color colorText "Color Text" #ddd
 
 ==/UserStyle== */
-/* 1.0.8
-- Forgot to remove full-width grid option woops
+/* 1.0.9
+- Quick fixes due to site update
 */
 @-moz-document domain("userstyles.world") {
 	
@@ -182,16 +182,18 @@
 							}
 							li:first-child {
 								margin: 0;
-								width: 200px;
+								width: 250px;
 								transition: width .3s;
 								form {
 									display: flex;
 									flex-direction: column;
+									min-width: 100%;
+									flex-grow: 1;
 								}
 								input {
 									border: 0;
 									padding: 0 20px;
-									width: 100%;
+									width: 100% !important;
 									transition: width .3s;
 									height: 100%;
 									box-shadow: none !important;
@@ -199,10 +201,10 @@
 									&::placeholder {
 										color: var(--fg-1) !important;
 										opacity: 1;
+										transition: opacity .5s;
 									}
 								}
 								button {
-									display: none;
 									border: 0;
 									margin-bottom: -1px;
 								}
@@ -210,6 +212,10 @@
 									width: 500px;
 									button {
 										display: block;
+									}
+									input::placeholder {
+										color: var(--fg-1) !important;
+										opacity: .5;
 									}
 								}
 							}
@@ -284,6 +290,9 @@
 					grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
 					padding: 0 calc(15vw - 100px);
 				}
+				.card {
+					min-width: unset !important;
+				}
 			}
 		}
 	}
@@ -341,7 +350,7 @@
 		}
 	}
 	if uncrop {
-		.preview .card figure {
+		.preview .card picture {
 			padding: 0 !important;
 			background-color: var(--bg-2);
 			border-radius: 8px;
@@ -487,3 +496,55 @@
 			animation: uwu 20s linear 1s infinite !important;
 		}
 */
+
+// @-moz-document regexp("[\\s\\S]+userstyles.world/?$") {
+
+// 	if homepageStyle == full-width {
+// 		body {
+// 			overflow-x: hidden;
+// 		}
+// 		body > main > .wrapper {
+// 			max-width: unset;
+// 			padding: 60px;
+// 			.hero {
+// 				flex-direction: row;
+// 				flex-wrap: wrap;
+// 				min-height: unset;
+// 				justify-content: flex-start;
+// 				position: relative;
+// 				.mascot svg {
+// 					height: 80px;
+// 					width: 80px;
+// 					margin-top: -10px;
+// 					margin-right: 20px;
+// 				}
+// 				h1 {
+// 					width: calc(100% - 100px);
+// 				}
+// 				span {
+// 					margin: 0 -.5rem;
+// 					margin-left: auto;
+// 				}
+// 				&::before {
+// 					content: "";
+// 					position: absolute;
+// 					bottom: -13px;
+// 					left: -100vw;
+// 					right: -100vw;
+// 					top: -100vw;
+// 					background: var(--bg-1);
+// 					z-index: -1;
+// 					border-bottom: 1px solid var(--bg-3);
+// 				}
+// 			}
+// 			h2[class="ta:c fg:3"] {
+// 				color: var(--fg-1);
+// 			}
+// 			.grid {
+// 				min-width: calc(100vw - 80px);
+// 				display: grid;
+// 				grid-template-columns: repeat(auto-fill,minmax(250px,1fr));
+// 			}
+// 		}
+// 	}
+// }
