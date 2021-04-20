@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Twitter Tweaks
-@version        1.0.1
+@version        1.0.2
 @description    A collection of tweaks for: Uncropping images, hiding trends, Avatar roundness, moving header aside, and more!!
 updateURL       https://codeberg.org/Freeplay/UserStyles/raw/branch/main/twitter/twitter-tweaks.user.css
 @preprocessor   stylus
@@ -31,15 +31,14 @@ updateURL       https://codeberg.org/Freeplay/UserStyles/raw/branch/main/twitter
 
 ==/UserStyle== */
 
-/* Update 1.0.1
-- Added background blur for "Set max height to viewport size"
+/* Update 1.0.3
+- Fixes to responsiveness
+- Fixed jumping sidebar
+- Fixed media query inside of a media query, causing the style to display on sites that isn't Twitter.
+- Not fixed me regretting to make this style, Twitter is a p a i n .
 */
 @-moz-document domain("twitter.com") {
 	
-	[data-testid="sidebarColumn"] > .css-1dbjc4n > [class*="css-1dbjc4n r-1xcajam r-ipm5af"]::before {
-		content: "";
-		padding-top: 0;
-	}
 	if moveHeader {
 		@media only screen and (min-width: 1001px) {
 			main .css-1dbjc4n [class="css-1dbjc4n r-1h3ijdo r-136ojw6"] {
@@ -54,20 +53,19 @@ updateURL       https://codeberg.org/Freeplay/UserStyles/raw/branch/main/twitter
 			}
 			
 			// Sidebar padding
-			[data-testid="sidebarColumn"] > .css-1dbjc4n > [class*="css-1dbjc4n r-1xcajam r-ipm5af"]::before {
-				content: "";
-				padding-top: 50px !important;
+			[data-testid="sidebarColumn"] [class="css-1dbjc4n r-vacyoi r-ttdzmv"] {
+				padding-top: 60px !important;
 			}
 			// Search Bar 
-			[data-testid="sidebarColumn"] [class*="r-1xcajam r-ipm5af r-1hycxz r-136ojw6"] {
-				top: 52px;
-				height: 20px;
-				min-height: unset !important;
-				align-items: flex-start !important;
-				overflow: visible;
-				z-index: 2;
-			}
-			[data-testid="sidebarColumn"] > .css-1dbjc4n > .r-1hycxz [class*="r-ipm5af r-1hycxz r-136ojw6"]::before {
+			// [data-testid="sidebarColumn"] [class*="r-1xcajam r-ipm5af r-1hycxz r-136ojw6"] {
+			// 	top: 52px !important;
+			// 	height: 20px;
+			// 	min-height: unset !important;
+			// 	align-items: flex-start !important;
+			// 	overflow: visible;
+			// 	z-index: 2;
+			// }
+			[data-testid="sidebarColumn"] > .css-1dbjc4n > .css-1dbjc4n [class*="r-15ysp7h r-1xcajam r-ipm5af"]::before {
 				content: "";
 				background-color: inherit;
 				width: 100%;
@@ -77,13 +75,21 @@ updateURL       https://codeberg.org/Freeplay/UserStyles/raw/branch/main/twitter
 				border-bottom-left-radius: 20px;
 				border-bottom-right-radius: 20px;
 			}
+		}
+			[data-testid="sidebarColumn"] [class*="r-15ysp7h r-1xcajam r-ipm5af"] {
+				top: 52px !important;
+				height: 20px;
+				min-height: unset !important;
+				align-items: flex-start !important;
+				overflow: visible;
+				z-index: 2;
+			}
 			@media only screen and (max-width: 1090px) {
 				.css-1dbjc4n [class="css-1dbjc4n r-1h3ijdo r-136ojw6"] {
-					width: 290px;
-					margin-right: -311px;
+					width: 290px !important;
+					margin-right: -311px !important;
 				}
 			}
-		}
 	}
 	if uncrop {
 		a.css-4rbku5 {
