@@ -1,8 +1,8 @@
 /* ==UserStyle==
 @name           Twitter Tweaks
-@version        1.0.2
+@version        1.0.4
 @description    A collection of tweaks for: Uncropping images, hiding trends, Avatar roundness, moving header aside, and more!!
-updateURL       https://codeberg.org/Freeplay/UserStyles/raw/branch/main/twitter/twitter-tweaks.user.css
+@updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/twitter/twitter-tweaks.user.css
 @preprocessor   stylus
 
  -- AUTHOR STUFF --
@@ -31,11 +31,8 @@ updateURL       https://codeberg.org/Freeplay/UserStyles/raw/branch/main/twitter
 
 ==/UserStyle== */
 
-/* Update 1.0.3
-- Fixes to responsiveness
-- Fixed jumping sidebar
-- Fixed media query inside of a media query, causing the style to display on sites that isn't Twitter.
-- Not fixed me regretting to make this style, Twitter is a p a i n .
+/* Update 1.0.4
+- FIXED THE UPDATE URL WOOPS
 */
 @-moz-document domain("twitter.com") {
 	
