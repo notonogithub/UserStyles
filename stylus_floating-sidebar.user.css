@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Stylus Editor - Floating Sidebar
-@version        1.0.0
+@version        1.0.1
 @description    A floating sidebar for Stylus! Useful when working in a small window.
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/twitter/stylus_floating-sidebar.user.css
 @preprocessor   stylus
@@ -51,7 +51,7 @@
 		overflow: visible;
 		flex-wrap: nowrap;
 	}
-	#actions > div {
+	#stylus-edit #actions > div {
 		margin-top: 1rem;
 	}
 	#stylus-edit #details-wrapper {
