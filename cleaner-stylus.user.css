@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Cleaner Stylus
-@version        1.0.0
+@version        1.1.0
 @description    Tweaks for Userstyles.World!
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/cleaner-stylus.user.css
 @preprocessor   stylus
@@ -12,58 +12,183 @@
 @supportURL     https://codeberg.org/Freeplay/UserStyles/issues
 
 ==/UserStyle== */
-
+/* 1.1.0 - May 1 / 2021
+- Added support for manage page!
+*/
 @-moz-document url-prefix("moz-extension://"), url-prefix("chrome-extension://") {
-	
-	button, #find-styles-link {
-		border-color: rgba(0,0,0,0.1) !important;
-		border-radius: 4px !important;
-		padding: 6px 16px !important;
-		background-image: none;
-		height: auto !important;
-	}
-	input, select {
-		border: 1px solid rgba(0,0,0,0.1) !important;
-		border-radius: 4px !important;
-	}
-	.filter-selection .select-resizer > select {
-		border: none !important;
-	}
-	.svg-icon.checked {
-		transform: scale(1.7) translate(1px,-1.5px) !important;
-	}
-	
-	#header {
-		box-shadow: none !important;
-	}
-	
-	.menu-items-wrapper, #message-box > div, #confirm, #stylus-options {
-		border: none;
-		border-radius: 6px;
-		overflow: hidden;
-		#options-title {
-			border-top-left-radius: 6px;
-			border-top-right-radius: 6px;
+	#stylus-manage, #stylus-popup, #stylus {
+		button, #find-styles-link {
+			border-color: rgba(0,0,0,0.1) !important;
+			border-radius: 4px !important;
+			padding: 6px 16px !important;
+			background-image: none;
+			height: auto !important;
+		}
+		input, select {
+			border: 1px solid rgba(0,0,0,0.1) !important;
+			border-radius: 4px !important;
+		}
+		.filter-selection .select-resizer > select {
+			border: none !important;
+		}
+		.svg-icon.checked {
+			transform: scale(1.7) translate(1px,-1.5px) !important;
+		}
+		#header {
+			box-shadow: 2px 0 24px rgba(0,0,0,0.07);
+			border-right: none;
+		}
+
+		.menu-items-wrapper, #message-box > div, #confirm, #stylus-options {
+			border: none;
+			border-radius: 6px;
 			overflow: hidden;
+			#options-title {
+				border-top-left-radius: 6px;
+				border-top-right-radius: 6px;
+				overflow: hidden;
+			}
+			#options {
+				border-bottom-left-radius: 6px;
+				border-bottom-right-radius: 6px;
+			}
 		}
-		#options {
-			border-bottom-left-radius: 6px;
-			border-bottom-right-radius: 6px;
+		.colorview-swatch {
+			border: 1px solid rgba(0, 0, 0, 0.1) !important;
+			border-radius: 4px !important;
 		}
+		a.color-swatch {
+			border: none;
+			border-radius: 4px !important;
+			margin: 4px;
+			box-sizing: border-box;
+			bottom: 0;
+			right: 0;
+			height: 12px !important;
+			width: 52px !important;
+		}
+		
+		.select-resizer > select, #only-updates > span {
+			margin-left: 4px !important;
+		}
+		
+		
+		#installed {
+			padding-top: 4px;
+			padding-bottom: 4px;
+			width: 120%;
+			border-bottom: none;
+			box-shadow: 0 1px 0px rgba(0,0,0,.1);
+			.entry {
+				margin: 0 4px;
+				background-color: transparent;
+				border-radius: 6px;
+				overflow: hidden;
+				&:hover {
+					background-color: hsla(180, 50%, 30%, 0.1);
+				}
+				.entry-content {
+					height: auto;
+					.style-name {
+						padding: 0px;
+						padding-left: 30px;
+						&::before {
+							background: transparent;
+						}
+						.checker, .svg-icon.checked {
+							top: 7.5px !important;
+						}
+					}
+				}
+			}
+		}
+		
 	}
-	.colorview-swatch {
-		border: 1px solid rgba(0, 0, 0, 0.1) !important;
-		border-radius: 4px !important;
-	}
-	a.color-swatch {
-		border: none;
-		border-radius: 4px !important;
-		margin: 4px;
-		box-sizing: border-box;
-		bottom: 0;
-		right: 0;
-		height: 12px !important;
-		width: 52px !important;
+	
+	#stylus-manage {		
+		overflow-x: hidden;
+		height: auto;
+		#header {
+			display: flex;
+			flex-direction: column;
+			padding: 25px 0;
+			background: inherit;
+			#manage-heading {
+				margin: 0 25px;
+				font-weight: 500 !important;
+			}
+			.filter-selection {
+				margin-bottom: 7px;
+			}
+		}
+		#manage-settings {
+			& > .settings-column {
+				padding: 20px 0;
+				margin: 0 25px;
+				border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+				margin-top: 0;
+				summary {
+					margin: 0;
+					margin-left: 1px;
+					
+					h2 {
+						font-weight: 500;
+						margin: 0 !important;
+						margin-left: 2px !important;
+						border: none !important;
+					}
+				}
+				#search-wrapper, #sort-wrapper {
+					flex-wrap: wrap;
+					input {
+						width: 100% !important;
+						flex: unset;
+						margin: 0 !important;
+						margin-top: 4px !important;
+						margin-bottom: 6px !important; 
+						padding: 10px !important;
+						border-radius: 4px !important;
+						height: 30px !important;
+					}
+					.select-wrapper, .sorter-selection {
+						flex-grow: 1;
+						max-width: calc(100% - 28px);
+						margin-right: 5px;
+						select {
+							height: 30px;
+							padding-left: 5px;
+							flex: 1 1 100px;
+							
+						}
+						svg {
+							top: 8px;
+							right: 8px;
+						}
+					}
+				}
+				#sort-wrapper {
+					margin-bottom: 0;
+				}
+			}
+		}
+		#installed {
+			border: 0 !important;
+			.entry {
+				border-radius: 8px;
+				transition: background .2s;
+				border-radius: 0;
+				// height: 50px;
+				box-shadow: 0 1px 1px rgba(0,0,0,0.05);
+				.style-name {
+					padding: 15px 10px;
+					padding-left: 35px;
+				}
+				.style-name::before {
+					content: unset !important;
+				}
+			}
+			border: none !important;
+		}
 	}
 	
 	#stylus-popup {
@@ -87,35 +212,7 @@
 			}
 		}
 		
-		#installed {
-			padding: 4px 0 !important;
-			width: 120%;
-			border-bottom: none;
-			box-shadow: 0 1px 0px rgba(0,0,0,.1);
-		}
 		
-		.entry {
-			margin: 0 4px;
-			background-color: transparent;
-			border-radius: 6px;
-			overflow: hidden;
-			&:hover {
-				background-color: hsla(180, 50%, 30%, 0.1);
-			}
-			.entry-content {
-				height: auto;
-				.style-name {
-					padding: 0px;
-					padding-left: 30px;
-					&::before {
-						background: transparent;
-					}
-					.checker, .svg-icon.checked {
-						top: 7.5px !important;
-					}
-				}
-			}
-		}
 		
 		& > .actions {
 			margin: 0;
@@ -197,11 +294,24 @@
 			margin-right: auto !important;
 			width: 100%;
 			order: 3;
-			padding-top: 15px;
+			padding-top: 30px;
 			background-color: inherit;
+			.search-results-nav[data-type="top"] {
+				display: none;
+			}
 			#search-params {
 				padding: 8px 4px;
 				margin-bottom: 8px;
+				justify-content: space-between;
+				& > input {
+					width: 100% !important;
+					flex: unset;
+					margin: 0 !important;
+					margin-bottom: 6px !important; 
+					padding: 10px !important;
+					border-radius: 4px !important;
+					height: 30px !important;
+				}
 				& > * {
 					margin-top: 0 !important;
 				}
@@ -209,6 +319,18 @@
 					margin-left: 10px !important;
 					align-items: center;
 					display: flex;
+				}
+				.select-resizer {
+					flex-grow: 1;
+					select {
+						height: 30px;
+						padding-left: 5px;
+						flex-grow: 1;
+					}
+					svg {
+						top: 8px;
+						right: 8px;
+					}
 				}
 			}
 			.search-results-nav {
