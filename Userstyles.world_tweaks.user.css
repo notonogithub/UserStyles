@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Userstyles.World Tweaks!
-@version        1.1.1
+@version        1.1.2
 @description    Tweaks for Userstyles.World!
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/Userstyles.world_tweaks.user.css
 @preprocessor   stylus
@@ -37,7 +37,7 @@
 @var color colorText "Color Text" #ddd
 
 ==/UserStyle== */
-/* 1.1.1
+/* 1.1.2
 - Added new style page styles
 - More fixes
 - Too lazy to list the rest... What else did I do?
@@ -1052,117 +1052,4 @@
 	}
 	 
 	
-}
-@-moz-document regexp("[\\s\\S]+userstyles.world/?$") {
-
-	// if homepageStyle == full-width {
-		body {
-			overflow-x: hidden;
-		}
-		body > main > .wrapper {
-			max-width: 90rem;
-			padding: 80px 80px;
-			
-			.hero {
-				flex-direction: row;
-				flex-wrap: wrap;
-				min-height: unset;
-				justify-content: space-between;
-				position: relative;
-				margin-bottom: 70px !important;
-				.mascot {
-					transform: rotate(-8deg);
-					background: var(--bg-3);
-					padding: 4px;
-					border-radius: 12px;
-					box-sizing: border-box !important;
-					height: 80px;
-					width: 80px;
-					margin-bottom: 10px;
-				}
-				.mascot svg {
-					height: 80px;
-					width: 80px;
-					margin-top: -10px;
-					margin-right: 20px;
-					transform: rotate(8deg);
-				}
-				h1 {
-					// width: calc(100% - 100px);
-					// margin: 0;
-					width: 50%;
-					margin-right: calc(50% - 100px);
-				}
-				p {
-					width: 50%;
-					// max-width: unset;
-				}
-				.stats {
-					// opacity: .9;
-					// background: var(--bg-2);
-					text-align: right;
-					margin-top: -75px;
-					margin-bottom: -35px;
-					border-radius: 10px;
-					padding: 30px;
-					width: 450px;
-					margin-left: calc(50% - 450px);
-					position: relative;
-					font-size: 1em;
-					font-weight: 400;
-					color: var(--fg-1);
-					// transform: rotate(1deg);
-					box-shadow: 4px 10px 20px rgba(0,0,0,0.2);
-					// &::before {
-					// 	content: "";
-					// 	position: absolute;
-					// 	top: 0;
-					// 	left: 0;
-					// 	right: 0;
-					// 	bottom: 0;
-					// 	background: var(--bg-2);
-					// 	border-radius: 20px;
-					// 	z-index: -2;
-					// 	opacity: .5;
-					// 	transform: rotate(2deg) scale(1.02) translate(6px, 10px);
-					// }
-					&::after {
-						content: "";
-						position: absolute;
-						top: 0;
-						left: 0;
-						right: 0;
-						bottom: 0;
-						background: var(--bg-2);
-						border-radius: 16px;
-						z-index: -1;
-						opacity: 1;
-						filter: brightness(.35);
-						
-					}
-				}
-				span {
-					margin: 0 -.5rem;
-					margin-top: 20px;
-					// margin-left: auto;
-				}
-				// &::before {
-				// 	content: "";
-				// 	position: absolute;
-				// 	bottom: -20px;
-				// 	left: -100vw;
-				// 	right: -100vw;
-				// 	top: -100vw;
-				// 	background: var(--bg-1);
-				// 	z-index: -1;
-				// 	border-bottom: 1px solid var(--bg-3);
-				// }
-			}
-			h2[class="ta:c fg:3"] {
-				color: var(--fg-1);
-				margin-bottom: 30px;
-				font-weight: 800;
-			}
-		// }
-	}
 }
