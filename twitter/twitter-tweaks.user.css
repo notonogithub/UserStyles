@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Twitter Tweaks
-@version        1.0.4
+@version        1.0.5
 @description    A collection of tweaks for: Uncropping images, hiding trends, Avatar roundness, moving header aside, and more!!
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/twitter/twitter-tweaks.user.css
 @preprocessor   stylus
@@ -20,10 +20,13 @@
 @var checkbox removeImageBar "⛔ Hide image preview interaction bar" 1
 
 @var checkbox noTrends       "⛔ Hide 'What's Happening' box" 1
-@var checkbox noFollowBox    "⛔ Hide 'Who to follow' box" 0
+@var checkbox noFollowBox    "⛔ Hide Sidebar 'Who to follow' box" 0
+
 @var checkbox noMessagesBox  "⛔ Hide 'Messages' box" 1
 
-@var checkbox noBorder       "⛔ Hide Borders" 0
+@var checkbox hideTweetBoxTL "⛔ Hide Timeline Tweet box" 1
+
+@var select   noBorder       "⛔ Border Style" ["Default*", "Hide", "keep:Only Timeline Separators"]
 @var checkbox columnBG       "💡 Contrast between background and feed" 1
 @var checkbox bgBanner       "🖼 Use banners as background" 1
 
@@ -31,8 +34,9 @@
 
 ==/UserStyle== */
 
-/* Update 1.0.4
-- FIXED THE UPDATE URL WOOPS
+/* Update 1.0.5
+- Added option to keep border separators in timeline
+- Fixed Hide Messages box option, just hoping that it doesn't hide anything else.
 */
 @-moz-document domain("twitter.com") {
 	
@@ -140,20 +144,34 @@
 			display: none !important;
 		}
 	}
+	
+	
+	
 	if noMessagesBox {
-		[class="css-1dbjc4n r-173mn98 r-yfoy6g r-c67a83 r-1qk6wnv r-xnswec r-1mf7evn r-hvns9x r-1jte41z"] {
+		[class*="css-1dbjc4n r-173mn98"][class*="r-c67a83 r-1qk6wnv"][class*="r-1mf7evn r-hvns9x"] {
 			display: none;
 		}
 	}
-	if noBorder {
-		*:not(.r-1xl5njo) {
-			border-color: transparent !important
+	
+	if hideTweetBoxTL {
+		
+	}
+	
+	if noBorder == "keep" || noBorder == "Hide" {
+		*:not(.r-1xl5njo):not(.css-1dbjc4n[aria-label] > div > div > div) {
+			border-color: transparent !important;
 		}
 		a.css-4rbku5 > .r-1adg3ll .css-9pa8cd {
 			border-bottom-left-radius: 16px;
 			border-bottom-right-radius: 16px;
 		}
 	}
+	if noBorder == "Hide" {
+		*:not(.r-1xl5njo) {
+			border-color: transparent !important;
+		}
+	}
+	
 	if columnBG {
 		body[style*="background-color: rgb(21"],
  		body[style*="background-color: rgb(21"] [data-testid="sidebarColumn"] > .css-1dbjc4n > .r-1hycxz [class*="r-ipm5af r-1hycxz r-136ojw6"],
