@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Twitter Tweaks
-@version        1.0.5
+@version        1.0.6
 @description    A collection of tweaks for: Uncropping images, hiding trends, Avatar roundness, moving header aside, and more!!
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/twitter/twitter-tweaks.user.css
 @preprocessor   stylus
@@ -24,7 +24,7 @@
 
 @var checkbox noMessagesBox  "⛔ Hide 'Messages' box" 1
 
-@var checkbox hideTweetBoxTL "⛔ Hide Timeline Tweet box" 1
+@var checkbox hideTweetBoxTL "⛔ Hide Timeline Tweet box" 0
 
 @var select   noBorder       "⛔ Border Style" ["Default*", "Hide", "keep:Only Timeline Separators"]
 @var checkbox columnBG       "💡 Contrast between background and feed" 1
@@ -34,9 +34,8 @@
 
 ==/UserStyle== */
 
-/* Update 1.0.5
-- Added option to keep border separators in timeline
-- Fixed Hide Messages box option, just hoping that it doesn't hide anything else.
+/* Update 1.0.6
+- Actually added 'hide timeline tweet box'. Sorry, I forgot to remove the placeholder from last update.
 */
 @-moz-document domain("twitter.com") {
 	
@@ -154,7 +153,9 @@
 	}
 	
 	if hideTweetBoxTL {
-		
+		[data-testid="primaryColumn"] > div > [class="css-1dbjc4n r-yfoy6g r-184en5c"]:nth-child(2) {
+			display: none;
+		}
 	}
 	
 	if noBorder == "keep" || noBorder == "Hide" {
