@@ -1,0 +1,326 @@
+/* ==UserStyle==
+@name           Cleaner BookWyrm
+@version        1.0.0
+@description    Makes BookWyrm look a bit better.
+@updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/Cleaner-BookWyrm.user.css
+@preprocessor   stylus
+
+ -- AUTHOR STUFF --
+@namespace      Freeplay
+@author         Freeplay (https://freeplay.codeberg.page/)
+@homepageURL    https://codeberg.org/Freeplay/UserStyles
+@supportURL     https://codeberg.org/Freeplay/UserStyles/issues
+
+
+@var checkbox darkMode "Dark Mode" 0
+
+==/UserStyle== */
+
+
+@-moz-document domain("bookwyrm.social") {
+	
+	
+	
+	input, button, a:not([href*="/search?q="]), select {
+		border-radius: 100px !important;
+	}
+	input {
+		padding: 0 15px !important;
+	}
+	input::placeholder {
+		opacity: .7 !important;
+		color: inherit !important;
+	}
+	
+	body {
+		background: inherit;
+	}
+	body > .section {
+		z-index: 2;
+		background: inherit !important;
+		border-top: 1px solid rgba(0,0,0,0.1);
+	}
+	
+	/* Header */
+	.navbar {
+		max-width: unset !important;
+		padding: 0 20px;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		// position: sticky;
+		// top: 0;
+		// z-index: 1;
+		.navbar-start {
+			width: 1px;
+			background-color: rgba(0,0,0,0.1);
+			margin: 10px 0;
+			margin-left: -4px;
+			transform: rotateZ(15deg) !important;
+		}
+		& > .container {
+			display: flex;
+			justify-content: center;
+			flex-wrap: wrap;
+			max-width: unset;
+		}
+		.navbar-brand {
+			flex-grow: 9999;
+			flex-shrink: 1;
+			.field.has-addons, .field .control:first-child {
+				flex-grow: 1;
+				margin-right: .5rem;
+			}
+		}
+		.navbar-item {
+			padding: 20px !important;
+			display: flex !important;
+			align-content: center;
+			align-items: center;
+			margin: auto;
+		}
+		.navbar-menu {
+			flex-grow: 1;
+			justify-content: center;
+			display: flex;
+			box-shadow: none !important;
+		}
+		.navbar-end {
+			margin: 0;
+			width: 100%;
+			.columns {
+				width: 100%;
+			}
+		}
+		[name="login"] p.help {
+			position: absolute;
+			left: 20px;
+		}
+	}
+	
+	/* Grid */
+	.level.is-mobile {
+		margin-bottom: 3rem;
+	}
+	
+	.columns > .content {
+		padding: 20px;
+	}
+	
+	.box {
+		transition: box-shadow .2s, transform .2s;
+		// padding: 20px !important;
+		background: inherit !important;
+		box-shadow: none;
+		border: 1px solid rgba(0,0,0,0.1);
+		overflow: hidden;
+	}
+	.box:hover, .tile.is-7.is-parent .box {
+		box-shadow: 0 12px 30px rgba(0,0,0.0.1);
+	}
+	.box:hover {
+		transform: translateY(-1px);
+	}
+	.box:active {
+		transform: translateY(0px);
+	}
+	.cover-container.is-large {
+		box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+	}
+	
+	.is-6 .tile.is-child .cover-container {
+		width: calc(100% + 40px) !important;
+		max-width: unset !important;
+		height: auto !important;
+		margin: -20px;
+		margin-bottom: 15px;
+		img {
+			width: calc(100% + 40px) !important;
+			object-fit: contain;
+		}
+	}
+	
+	
+	
+	/*** Book Details Page ***/
+	.container > .block {
+		display: flex;
+		flex-wrap: wrap;
+		& > * {
+			width: 100%;
+		}
+		& > .columns:nth-child(2) {
+			display: contents;
+			& > .column.is-one-fifth:first-child {
+				min-width: 200px;
+				// padding: 0 !important;
+				// padding-right: 20px !important;
+				border: 1px solid rgba(0,0,0,0.1);
+				border-radius: 6px;
+				margin-bottom: 1rem;
+				height: min-content;
+				max-height: calc(100vh - 40px);
+				overflow-y: auto;
+				position: sticky;
+				top: 20px;
+				
+				.is-clipped {
+					overflow: visible !important;
+				}
+				.book-cover {
+					box-shadow: 0 4px 8px rgba(0,0,0,0.1) !important;
+					max-height: 80vh;
+				}
+				& > .is-clipped > p:last-child {
+					position: sticky;
+					bottom: 0;
+					a {
+						padding: 10px 15px;
+						background: blue;
+						display: flex;
+						text-align: center;
+						justify-content: center;
+						color: white;
+						font-weight: 700;
+						// margin: 0 -10px;
+						margin-bottom: 1rem;
+						box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+						transition: transform .5s, font-size .2s, box-shadow .2s;
+						&:hover {
+							transform: scale(1.02);
+							font-size: 1.05rem;
+							box-shadow: 0 8px 12px rgba(0,0,0,0.4);
+						}
+						&:active {
+							font-size: .92rem;
+							transform: scale(1.07);
+						}
+					}
+				}
+			}
+			& > .column.is-three-fifths {
+				// padding-left: 30px; 
+				min-width: 400px;
+				padding: 0 30px;
+				flex-grow: 1;
+			}
+			& > .column.is-one-fifth:last-child {
+				// flex: 0 1 20%;
+				max-width: 20%;
+				width: auto !important;
+				padding: 0 !important;
+				flex-grow: 0;
+				& > .content {
+					padding: .75rem !important;
+				}
+			}
+		}
+	}
+	
+	/*** SEARCH PAGE ***/
+	[action="/search"] .field.has-addons {
+			flex-grow: 1;
+			display: flex;
+			flex-wrap: wrap;
+			& > .control {
+				margin-right: 1rem !important;
+				margin-bottom: 1rem;
+			}
+			& > .control:first-child {
+				flex-grow: 1;
+			}
+		}
+	[action="/search"] ~ .block > .block {
+		display: flex !important;
+		flex-wrap: wrap;
+		& > li {
+			flex: 1 0 250px;
+			margin: 4px;
+			border: 1px solid rgba(0,0,0,0.1);
+			border-radius: 6px;
+			overflow: hidden;
+			transition: transform .2s, box-shadow .3s;
+			height: min-content;
+			height: 80px;
+			// box-sizing: border-box;
+			.is-cover, .cover-container {
+				width: 53px !important;
+			}
+			.columns.is-mobile > .column.is-10 {
+				padding: 6px !important;
+				margin-left: 6px !important;
+				box-sizing: border-box;
+				width: 40px !important;
+				flex-grow: 1;
+			}
+			&:hover {
+				transform: translateY(-1px);
+				box-shadow: 0 .5em 1em -.125em rgba(10,10,10,.1),0 0 0 1px rgba(10,10,10,.02);
+			}
+			&:active {
+				transform: none;
+			}
+		}
+		
+	}
+	
+	
+	
+	.footer {
+		position: sticky;
+		bottom: 0;
+		filter: brightness(.95);
+		padding-bottom: 1rem;
+		&:focus-within {
+			z-index: 3;
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+if darkMode {
+	html, body, .navbar {
+		background-color: #131320 !important;
+		scrollbar-color: #181829 #131320;
+	}
+	input, button, .box, .card, select {
+		background-color: #181829 !important;
+		border: none !important;
+		color: white !important;
+		&::placeholder {
+			color: white !important;
+			opacity: .8;
+		}
+	}
+	.has-background-white-ter, .has-background-white-bis, .footer {
+		background-color: #1c1c30 !important;
+		border: none;
+	}
+	input, button {
+		border-radius: 100px !important
+	}
+	body, h1, h2, h3, h4, h5, h6, label, p,
+	.title, .subtitle {
+		color: white !important;
+	}
+	p {
+		opacity: .9;
+	}
+}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+}
