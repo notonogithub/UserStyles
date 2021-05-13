@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Twitter Tweaks
-@version        1.0.6
+@version        1.0.7
 @description    A collection of tweaks for: Uncropping images, hiding trends, Avatar roundness, moving header aside, and more!!
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/twitter/twitter-tweaks.user.css
 @preprocessor   stylus
@@ -10,6 +10,8 @@
 @author         Freeplay (https://freeplay.codeberg.page/)
 @homepageURL    https://codeberg.org/Freeplay/UserStyles
 @supportURL     https://codeberg.org/Freeplay/UserStyles/issues
+
+@var text notice 'Make sure you are using the "Stylus" browser extension, not "Stylish!"' "'https://add0n.com/stylus.html'"
 
 @var checkbox moveHeader     "➡ Move header to sidebar" 1
 
@@ -32,10 +34,25 @@
 
 @var range    avatarRadius   "⚫ Avatar Border Radius" [30, 5, 50, 5, '%']
 
+@var checkbox moreAnim       "🎞️ More Animations" 1
+
+@var text noticeMobile "Below are options meant for Mobile Devices" '"Okay!"'
+
+@var checkbox centerTweet    "Center Tweet Button" 1
+@var checkbox largerBottomBar "Larger Bottom Bar" 0
+@var checkbox bottomHeader    "Move header to bottom" 1
+
 ==/UserStyle== */
 
-/* Update 1.0.6
-- Actually added 'hide timeline tweet box'. Sorry, I forgot to remove the placeholder from last update.
+/* Update 1.0.7
+- Added options for mobile webapp
+- New animations and transitions! (Togglable, ofcourse.)
+- Rounded tweet corners when having no borders enabled and add contrast disabled.
+- Added notice to use "Stylus" instead of "Stylish"!!!
+- Rej, you're a heccin cutie!!
+- Everyone's a cutie :)
+- More tweaks
+- More fixes
 */
 @-moz-document domain("twitter.com") {
 	
@@ -84,7 +101,7 @@
 				overflow: visible;
 				z-index: 2;
 			}
-			@media only screen and (max-width: 1090px) {
+			@media only screen and (max-width: 1090px) and (min-width: 991px) {
 				.css-1dbjc4n [class="css-1dbjc4n r-1h3ijdo r-136ojw6"] {
 					width: 290px !important;
 					margin-right: -311px !important;
@@ -156,6 +173,9 @@
 		[data-testid="primaryColumn"] > div > [class="css-1dbjc4n r-yfoy6g r-184en5c"]:nth-child(2) {
 			display: none;
 		}
+		[data-testid="primaryColumn"] > div > [class="css-1dbjc4n r-yfoy6g r-184en5c"]:nth-child(2) + div {
+			background: none !important;
+		}
 	}
 	
 	if noBorder == "keep" || noBorder == "Hide" {
@@ -209,22 +229,157 @@
 			opacity: 1;
 		}
 	}
+// 	if pfpPosts {
+//  		article [class*="css-1dbjc4n r-18kxxzh r-1wbh5a2 r-13qz1uu"] * {
+// 			overflow: visible;
+// 		}
+// 		article [class*="css-1dbjc4n r-18kxxzh r-1wbh5a2 r-13qz1uu"] [style*='background-image: url("https://pbs.twimg.com/profile_images/']::before {
+// 			content: "";
+// 			background-image: inherit;
+// 			position: absolute;
+// 			top: -9000px;
+// 			left: -9000px;
+// 			right: -9000px;
+// 			bottom: -9000px;
+// 			pointer-events: none;
+// 			opacity: .1;
+// 			filter: blur(25px) !important;
+// 			z-index: -10;
+// 		}
+// 		a.css-4rbku5 > .r-1adg3ll .css-9pa8cd {
+// 			opacity: 1;
+// 		}
+// 	}
 	
-	[class="css-1dbjc4n r-1wbh5a2 r-dnmrzs"] .r-sdzlij,
+	if centerTweet {
+		[class="css-1dbjc4n r-12vffkv"]:first-child {
+			// position: absolute;
+			z-index: 2;
+			[class="css-1dbjc4n r-173mn98 r-18rd0c5 r-1ff5aok"] {
+				bottom: -50px;
+				right: unset;
+				left: unset;
+				margin: auto;
+			}
+		}
+		[class="css-1dbjc4n r-12vffkv"] nav > a:nth-child(2) {
+			margin-right: 80px;
+		}
+	}
+	if largerBottomBar {
+		[class*="r-18u37iz r-drjvcx r-ripixn r-13qz1uu"] {
+			height: 70px !important;
+		}
+		if centerTweet {
+			[class="css-1dbjc4n r-12vffkv"]:first-child {
+				[class="css-1dbjc4n r-173mn98 r-18rd0c5 r-1ff5aok"] {
+					bottom: -66px;
+				}
+			}
+		}
+	}
+	if bottomHeader {
+		header[class="css-1dbjc4n r-lrvibr r-1g40b8q"] > [class*="r-o4zss7 r-rull8r r-qklmqi r-1d2f490 r-1xcajam r-zchlnj r-1gn8etr"] {
+			bottom: 50px;
+			top: unset;
+			animation: none !important;
+			transition: bottom .2s, top .5s !important;
+			transform: none !important;
+			if largerBottomBar {
+				bottom: 70px;
+			}
+			&.r-1yse23k {
+				bottom: -55px;
+				if largerBottomBar {
+					bottom: 20px;
+				}
+			}
+			if not centerTweet {
+				padding-right: 95px !important;
+			}
+			[class="css-1dbjc4n r-150rngu r-yfoy6g r-1p0dtai r-1d2f490 r-1rnoaur r-1r851ge r-1xcajam r-zchlnj r-hbs49y"] {
+				top: 0 !important;
+				margin-bottom: 155px;
+			}
+		}
+		header[class="css-1dbjc4n r-lrvibr r-1g40b8q"] {
+			order: 2;
+		}
+		
+	}
+	
+	[class="css-1dbjc4n r-1wbh5a2 r-dnmrzs"] .r-sdzlij, [class="css-1dbjc4n r-1wbh5a2 r-dnmrzs"] .r-sdzlij img,
 	[class*="r-f6ebdl r-sdzlij r-1phboty r-14f9gny r-1loqt21 r-1gzrgec r-cnkkqs r-zjg7tu r-mtrfb5 r-1ny4l3l r-1udh08x r-o7ynqc r-6416eg r-1xce0ei"],
  	[class="css-1dbjc4n r-sdzlij r-1p0dtai r-1mlwlqe r-1d2f490 r-1udh08x r-u8s1d r-zchlnj r-ipm5af r-417010"] {
 		border-radius: avatarRadius !important;
-		transition: border-radius .5s;
+		transition: border-radius .5s, transform .5s;
 	}
 	
+	if moreAnim {
+		@keyframes fadeIn {
+			from { opacity: 0 }
+			to   { opacity: 1 }
+		}
+		@keyframes slideUp {
+			from { transform: translateY(10px); opacity: 0 }
+			to   { transform: translateY(0px); opacity: 1 }
+		}
+		@keyframes scaleIn {
+			0% { transform: scale(1.1); opacity: 0 }
+			30% { transform: scale(.99); opacity: 1 }
+			60% { transform: scale(1.005); opacity: 1 }
+			100%   { transform: scale(1); opacity: 1 }
+		}
+		
+		article > * {
+			animation: fadeIn .7s;
+		}
+		[data-testid="primaryColumn"] > div > div > div:not([data-testid="titleContainer"]){
+			animation: slideUp .7s;
+		}
+		
+		.r-g6jmlv,
+ 		[class="css-1dbjc4n r-1p0dtai r-1mlwlqe r-1d2f490 r-1udh08x r-u8s1d r-zchlnj r-ipm5af r-417010"] > .css-1dbjc4n.r-1niwhzg.r-vvn4in.r-u6sd8q.r-4gszlv.r-1p0dtai.r-1pi2tsx.r-1d2f490.r-u8s1d.r-zchlnj.r-ipm5af.r-13qz1uu.r-1wyyakw[style*="https://pbs.twimg.com/profile_banners"] {
+			animation: scaleIn .5s;
+		}
+		
+		
+		*:not(.r-1xl5njo) {
+			transition: border .5s, transform .2s;
+		}
+		body,
+		.css-1dbjc4n [class="css-1dbjc4n r-1h3ijdo r-136ojw6"], .css-1dbjc4n [class="css-1dbjc4n r-1h3ijdo r-136ojw6"] > div > .r-yfoy6g,
+		[data-testid="sidebarColumn"] > .css-1dbjc4n > [class*="css-1dbjc4n r-1xcajam r-ipm5af"]::before,
+		[data-testid="sidebarColumn"] [class*="r-1xcajam r-ipm5af r-1hycxz r-136ojw6"],
+		[class="css-1dbjc4n r-173mn98 r-18rd0c5 r-1ff5aok"],
+		[class="css-1dbjc4n r-yfoy6g r-18u37iz r-drjvcx r-ripixn r-13qz1uu"],
+		[class="css-1dbjc4n r-12vffkv"] nav > a:nth-child(2),
+		[class*="r-o4zss7 r-rull8r r-qklmqi r-1d2f490 r-1xcajam r-zchlnj r-1gn8etr"],
+ 		article, button, a {
+			transition: background .3s, margin .3s, padding .5s, width .5s, top .3s, left .3s, bottom, .3s, right .3s, height .5s, transform .5s !important;
+		}
+		
+		
+		div[style*="position: absolute; width: 100%; transform: "] > div:active,
+ 		img:active, [style*="background-image: url"]:active {
+			transform: scale(.995) !important;
+			transition: transform .2s !important;
+		}
+		
+		
+	}
+	
+	
+	
+	if noBorder == "Hide" && ! columnBG {
+		div[style*="position: absolute; width: 100%; transform: "] > div {
+			border-radius: 16px !important;
+			overflow: hidden;
+		}
+	}
+	
+	
+	
 
-	*:not(.r-1xl5njo) {
-		transition: border .5s;
-	}
-	body,
-	.css-1dbjc4n [class="css-1dbjc4n r-1h3ijdo r-136ojw6"], .css-1dbjc4n [class="css-1dbjc4n r-1h3ijdo r-136ojw6"] > div > .r-yfoy6g,
-	[data-testid="sidebarColumn"] > .css-1dbjc4n > [class*="css-1dbjc4n r-1xcajam r-ipm5af"]::before,
- 	[data-testid="sidebarColumn"] [class*="r-1xcajam r-ipm5af r-1hycxz r-136ojw6"] {
-		transition: background .5s, margin .3s, padding .5s, width .5s, top .3s, height .5s !important;
-	}
+	
 }
