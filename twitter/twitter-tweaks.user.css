@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Twitter Tweaks
-@version        1.0.7
+@version        1.0.8
 @description    A collection of tweaks for: Uncropping images, hiding trends, Avatar roundness, moving header aside, and more!!
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/twitter/twitter-tweaks.user.css
 @preprocessor   stylus
@@ -44,20 +44,16 @@
 
 ==/UserStyle== */
 
-/* Update 1.0.7
-- Added options for mobile webapp
-- New animations and transitions! (Togglable, ofcourse.)
-- Rounded tweet corners when having no borders enabled and add contrast disabled.
-- Added notice to use "Stylus" instead of "Stylish"!!!
-- Rej, you're a heccin cutie!!
-- Everyone's a cutie :)
-- More tweaks
-- More fixes
+/* Update 1.0.8
+- Fixes plus polishing!
 */
 @-moz-document domain("twitter.com") {
 	
 	if moveHeader {
 		@media only screen and (min-width: 1001px) {
+			[data-testid="primaryColumn"] > div > div:first-child {
+				border: 0 !important;
+			}
 			main .css-1dbjc4n [class="css-1dbjc4n r-1h3ijdo r-136ojw6"] {
 				width: 352px;
 				margin-left: auto;
@@ -73,15 +69,7 @@
 			[data-testid="sidebarColumn"] [class="css-1dbjc4n r-vacyoi r-ttdzmv"] {
 				padding-top: 60px !important;
 			}
-			// Search Bar 
-			// [data-testid="sidebarColumn"] [class*="r-1xcajam r-ipm5af r-1hycxz r-136ojw6"] {
-			// 	top: 52px !important;
-			// 	height: 20px;
-			// 	min-height: unset !important;
-			// 	align-items: flex-start !important;
-			// 	overflow: visible;
-			// 	z-index: 2;
-			// }
+			// Search Bar
 			[data-testid="sidebarColumn"] > .css-1dbjc4n > .css-1dbjc4n [class*="r-15ysp7h r-1xcajam r-ipm5af"]::before {
 				content: "";
 				background-color: inherit;
@@ -109,9 +97,6 @@
 			}
 	}
 	if uncrop {
-		a.css-4rbku5 {
-			justify-content: center !important;
-		}
 		a.css-4rbku5 > .r-1adg3ll .r-13qz1uu,
 		a.css-4rbku5 > .r-1adg3ll .r-13qz1uu .r-u8s1d,
 		a.css-4rbku5 > .r-1adg3ll .css-9pa8cd {
@@ -140,7 +125,7 @@
 		}
 	}
 	if resizeSidebar {
-		[class="css-1dbjc4n r-18u37iz r-1pi2tsx r-11yh6sk r-buy8e9 r-bnwqim r-13qz1uu"] > div:last-of-type {
+		[class="css-1dbjc4n r-18u37iz r-1pi2tsx r-11yh6sk r-buy8e9 r-bnwqim r-13qz1uu"] > div:last-of-type:not(:first-child) {
 			flex-grow: 1;
 			max-width: 600px;
 		}
@@ -153,11 +138,17 @@
 	if noTrends {
 		[data-testid="sidebarColumn"] section.css-1dbjc4n > .css-4rbku5.css-901oao.r-4iw3lz.r-1xk2f4g.r-109y4c4.r-1udh08x.r-wwvuq4.r-u8s1d.r-92ng3h + .css-1dbjc4n {
 			display: none;
+			& + .r-1uaug3w {
+				display: none;
+			}
 		}
 	}
 	if noFollowBox {
 		[data-testid="sidebarColumn"] [class*="r-1bro5k0 r-1udh08x"] {
 			display: none !important;
+			& + .r-1uaug3w {
+				display: none;
+			}
 		}
 	}
 	
@@ -170,11 +161,13 @@
 	}
 	
 	if hideTweetBoxTL {
+		
 		[data-testid="primaryColumn"] > div > [class="css-1dbjc4n r-yfoy6g r-184en5c"]:nth-child(2) {
 			display: none;
-		}
-		[data-testid="primaryColumn"] > div > [class="css-1dbjc4n r-yfoy6g r-184en5c"]:nth-child(2) + div {
-			background: none !important;
+			+ div {
+				background: none !important;
+				border: none !important;
+			}
 		}
 	}
 	
@@ -359,11 +352,14 @@
 			transition: background .3s, margin .3s, padding .5s, width .5s, top .3s, left .3s, bottom, .3s, right .3s, height .5s, transform .5s !important;
 		}
 		
-		
-		div[style*="position: absolute; width: 100%; transform: "] > div:active,
- 		img:active, [style*="background-image: url"]:active {
-			transform: scale(.995) !important;
+
+ 		img:active, [style*="background-image: url"]:active, {
+			transform: scale(.99) !important;
 			transition: transform .2s !important;
+			border-radius: 16px;
+		}
+		[role="button"]:active {
+			transform: scale(.95) !important;
 		}
 		
 		
