@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Cleaner Stylus
-@version        1.1.0
+@version        1.1.1
 @description    Tweaks for Userstyles.World!
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/cleaner-stylus.user.css
 @preprocessor   stylus
@@ -12,15 +12,13 @@
 @supportURL     https://codeberg.org/Freeplay/UserStyles/issues
 
 ==/UserStyle== */
-/* 1.1.0 - May 1 / 2021
-- Added support for manage page!
-*/
+
 @-moz-document url-prefix("moz-extension://"), url-prefix("chrome-extension://") {
 	#stylus-manage, #stylus-popup, #stylus {
 		button, #find-styles-link {
 			border-color: rgba(0,0,0,0.1) !important;
 			border-radius: 4px !important;
-			padding: 6px 16px !important;
+			padding: 8px 16px !important;
 			background-image: none;
 			height: auto !important;
 		}
@@ -37,6 +35,8 @@
 		#header {
 			box-shadow: 2px 0 24px rgba(0,0,0,0.07);
 			border-right: none;
+			border-bottom: none;
+			padding-bottom: 0 !important;
 		}
 
 		.menu-items-wrapper, #message-box > div, #confirm, #stylus-options {
@@ -84,6 +84,16 @@
 				background-color: transparent;
 				border-radius: 6px;
 				overflow: hidden;
+				// border-bottom: 1px solid rgba(0,0,0,.07);
+				&::after {
+					content: "";
+					position: absolute;
+					left: 10px;
+					right: 10px;
+					bottom: 0px;
+					border-bottom: 1px solid rgba(0,0,0,.07);
+					
+				}
 				&:hover {
 					background-color: hsla(180, 50%, 30%, 0.1);
 				}
@@ -116,17 +126,46 @@
 			#manage-heading {
 				margin: 0 25px;
 				font-weight: 500 !important;
+				display: unset !important;
 			}
 			.filter-selection {
 				margin-bottom: 7px;
+				display: flex;
+				& > * {
+					flex-grow: 1;
+				}
 			}
+			
 		}
 		#manage-settings {
+			flex-direction: column !important;
 			& > .settings-column {
 				padding: 20px 0;
 				margin: 0 25px;
 				border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 				margin-top: 0;
+				flex-direction: row;
+				flex-wrap: wrap;
+				& > * {
+					flex-grow: 1;
+					min-width: 100%;
+				}
+				details, #update-check {
+					display: flex !important;
+					flex-direction: row !important;
+					a {
+						flex-grow: 0;
+						width: auto;
+						display: flex;
+						align-items: center;
+						
+					}
+					& > * {
+						flex-grow: 1 !important;
+						max-width: unset;
+						width: 100%;
+					}
+				}
 				summary {
 					margin: 0;
 					margin-left: 1px;
@@ -169,26 +208,75 @@
 				#sort-wrapper {
 					margin-bottom: 0;
 				}
+				#check-all-updates {
+					margin-right: 8px;
+				}
+				#add-style-wrapper a, #backup-buttons {
+					flex-grow: 1;
+					button {
+						flex-grow: 1;
+					}
+				}
+				#manage-text span a {
+					text-decoration: none;
+					font-size: .8rem;
+					opacity: .8;
+					text-underline-offset: 4px;
+				}
+				#manage-text span::after {
+					content: "/";
+					margin-left: 8px;
+				}
 			}
 		}
-		#installed {
-			border: 0 !important;
-			.entry {
-				border-radius: 8px;
-				transition: background .2s;
-				border-radius: 0;
-				// height: 50px;
-				box-shadow: 0 1px 1px rgba(0,0,0,0.05);
-				.style-name {
-					padding: 15px 10px;
-					padding-left: 35px;
+		
+	}
+	.oldUI #stylus-manage #installed {
+		max-width: 100%;
+		.entry {
+			margin: 20px;
+			max-width: 100%;
+			box-sizing: border-box;
+			// border-radius: 0;
+			border: 1px solid rgba(0,0,0,0.07);
+			background: none !important;
+			transition: box-shadow .2s;
+			&:hover {
+				box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+			}
+			p {
+				padding: 0;
+			}
+			.actions {
+				max-width: 100%;
+				button, a {
+					flex-grow: 1;
+					display: flex;
+					justify-content: center;
 				}
-				.style-name::before {
-					content: unset !important;
+				button {
+					padding: 10px 16px !important;
+					border-radius: 6px !important;
 				}
 			}
-			border: none !important;
 		}
+	}
+	.newUI #stylus-manage #installed {
+		border: 0 !important;
+		.entry {
+			border-radius: 8px;
+			transition: background .2s;
+			border-radius: 0;
+			box-shadow: 0 1px 1px rgba(0,0,0,0.05);
+			.style-name {
+				padding: 15px 10px;
+				padding-left: 35px;
+			}
+			.style-name::before {
+				content: unset !important;
+			}
+		}
+		border: none !important;
 	}
 	
 	#stylus-popup {
@@ -225,6 +313,7 @@
 			display: flex;
 			flex-direction: column;
 			background: inherit;
+
 			
 			#disable-all-wrapper {
 				background-color: inherit;
