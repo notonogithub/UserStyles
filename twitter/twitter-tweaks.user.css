@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Twitter Tweaks
-@version        1.0.9
+@version        1.1.0
 @description    A collection of tweaks for: Uncropping images, hiding trends, Avatar roundness, moving header aside, and more!!
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/twitter/twitter-tweaks.user.css
 @preprocessor   stylus
@@ -11,30 +11,35 @@
 @homepageURL    https://codeberg.org/Freeplay/UserStyles
 @supportURL     https://codeberg.org/Freeplay/UserStyles/issues
 
-@var text notice 'Make sure you are using the "Stylus" browser extension, not "Stylish!"' "'https://add0n.com/stylus.html'"
+@var text notice 'Make sure you are using the "Stylus" browser extension, not "Stylish"!' "'https://add0n.com/stylus.html'"
 
-@var checkbox moveHeader     "➡ Move header to sidebar" 1
+@var checkbox moveHeader     "↔ Move header to sidebar" 1
 
-@var checkbox uncrop         "🖼 Uncrop Images" 1
-@var checkbox maxHeight      "🖼 Uncrop Images: Set max height to viewport size" 1
+@var checkbox hideTweetBoxTL "⛔ Timeline: Compose " 1
+@var checkbox uncrop         "🖼 Timeline: Uncrop Images" 1
+@var checkbox maxHeight      "🖼 Timeline: Uncrop Images: Set max height to viewport size" 1
+@var range    avatarRadius   "⚫ Timeline: Avatar Roundness" [30, 5, 50, 5, '%']
 
-@var checkbox resizeSidebar  "↔ Resize image preview sidebar depending on image size" 1
-@var checkbox removeImageBar "⛔ Hide image preview interaction bar" 1
+@var checkbox resizeSidebar  "↔ Image Preview: Resize sidebar depending on image size" 1
+@var checkbox removeImageBar "⛔ Image Preview: interaction bar" 0
 
-@var checkbox noTrends       "⛔ Hide 'What's Happening' box" 1
-@var checkbox noFollowBox    "⛔ Hide Sidebar 'Who to follow' box" 0
+@var checkbox noTrends       "⛔ Sidebar: What's Happening " 1
+@var checkbox noFollowBox    "⛔ Sidebar: Who to follow " 1
 
-@var checkbox noMessagesBox  "⛔ Hide 'Messages' box" 1
-
-@var checkbox hideTweetBoxTL "⛔ Hide Timeline Tweet box" 0
+@var checkbox noMessagesBox  "⛔ Sidebar: Messages " 1
 
 @var select   noBorder       "⛔ Border Style" ["Default*", "Hide", "keep:Only Timeline Separators"]
 @var checkbox columnBG       "💡 Contrast between background and feed" 1
 @var checkbox bgBanner       "🖼 Use banners as background" 1
 
-@var range    avatarRadius   "⚫ Avatar Border Radius" [30, 5, 50, 5, '%']
-
 @var checkbox moreAnim       "🎞️ More Animations" 1
+
+@var checkbox followersCount  "🖤 Wellbeing: Follower Count" 1
+@var checkbox likesCount  "🖤 Wellbeing: Likes Count" 1
+@var checkbox retweetsCount  "🖤 Wellbeing: Retweets Count" 1
+@var checkbox commentsCount  "🖤 Wellbeing: Comments Count" 1
+@var checkbox analyticsButton"🖤 Wellbeing: Analytics Button" 1
+
 
 @var text noticeMobile "Below are options meant for Mobile Devices" '"Okay!"'
 
@@ -42,10 +47,12 @@
 @var checkbox largerBottomBar "Larger Bottom Bar" 0
 @var checkbox bottomHeader    "Move header to bottom" 1
 
+
 ==/UserStyle== */
 
-/* Update 1.0.9
-- Fixed images being blurred with uncrop enabled and 'Use banners as background' enabled.
+/* Update 1.1.0
+- Renamed a bunch of settings to make it less messy, sadly this means you'll probably have to toggle your settings again.
+- Added wellbeing options.
 */
 @-moz-document domain("twitter.com") {
 	
@@ -134,12 +141,12 @@
 			max-width: 600px;
 		}
 	}
-	if removeImageBar {
+	if not removeImageBar {
 		.css-1dbjc4n.r-1pi2tsx.r-11yh6sk.r-buy8e9.r-bnwqim.r-13qz1uu > .css-1dbjc4n.r-13awgt0.r-184en5c + .css-1dbjc4n.r-1kihuf0.r-13qz1uu {
 			display: none;
 		}
 	}
-	if noTrends {
+	if not noTrends {
 		[data-testid="sidebarColumn"] section.css-1dbjc4n > .css-4rbku5.css-901oao.r-4iw3lz.r-1xk2f4g.r-109y4c4.r-1udh08x.r-wwvuq4.r-u8s1d.r-92ng3h + .css-1dbjc4n {
 			display: none;
 			& + .r-1uaug3w {
@@ -147,7 +154,7 @@
 			}
 		}
 	}
-	if noFollowBox {
+	if not noFollowBox {
 		[data-testid="sidebarColumn"] [class*="r-1bro5k0 r-1udh08x"] {
 			display: none !important;
 			& + .r-1uaug3w {
@@ -158,13 +165,13 @@
 	
 	
 	
-	if noMessagesBox {
+	if not noMessagesBox {
 		[class*="css-1dbjc4n r-173mn98"][class*="r-c67a83 r-1qk6wnv"][class*="r-1mf7evn r-hvns9x"] {
 			display: none;
 		}
 	}
 	
-	if hideTweetBoxTL {
+	if not hideTweetBoxTL {
 		[data-testid="primaryColumn"] > div > [class="css-1dbjc4n r-yfoy6g r-184en5c"]:nth-child(2) {
 			display: none;
 			+ div {
@@ -225,27 +232,37 @@
 			opacity: 1;
 		}
 	}
-// 	if pfpPosts {
-//  		article [class*="css-1dbjc4n r-18kxxzh r-1wbh5a2 r-13qz1uu"] * {
-// 			overflow: visible;
-// 		}
-// 		article [class*="css-1dbjc4n r-18kxxzh r-1wbh5a2 r-13qz1uu"] [style*='background-image: url("https://pbs.twimg.com/profile_images/']::before {
-// 			content: "";
-// 			background-image: inherit;
-// 			position: absolute;
-// 			top: -9000px;
-// 			left: -9000px;
-// 			right: -9000px;
-// 			bottom: -9000px;
-// 			pointer-events: none;
-// 			opacity: .1;
-// 			filter: blur(25px) !important;
-// 			z-index: -10;
-// 		}
-// 		a.css-4rbku5 > .r-1adg3ll .css-9pa8cd {
-// 			opacity: 1;
-// 		}
-// 	}
+
+	
+	if not followersCount {
+		[href$="/followers"] {
+			display: none !important;
+		}
+	}
+	if not likesCount {
+		[data-testid="like"] span, [data-testid="unlike"] span,
+ 		[href$="/likes"] {
+			display: none !important;
+		}
+	}
+	if not retweetsCount {
+		[data-testid="retweet"] span, [data-testid="unretweet"] span,
+ 		[href$="/retweets"], [href$="retweets/with_comments"] {
+			display: none !important;
+		}
+	}
+	if not commentsCount {
+		[data-testid="reply"] span {
+			display: none !important;
+		}
+	}
+	if not analyticsButton {
+		[href$="/analytics"] {
+			display: none;
+		}
+	}
+	
+	
 	
 	if centerTweet {
 		[class="css-1dbjc4n r-12vffkv"]:first-child {
