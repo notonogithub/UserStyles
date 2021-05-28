@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Cleaner Stylus
-@version        1.1.1
+@version        1.1.2
 @description    Tweaks for Userstyles.World!
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/cleaner-stylus.user.css
 @preprocessor   stylus
@@ -283,6 +283,7 @@
 		display: flex;
 		flex-wrap: wrap;
 		margin-top: 45px;
+		overflow: hidden auto;
 		.blocked-info {
 			border-bottom: 0 !important;
 			padding: 8px 16px !important;
@@ -299,6 +300,8 @@
 				padding-bottom: 20px;
 			}
 		}
+		
+		
 		
 		
 		
@@ -461,6 +464,41 @@
 		}
 		#search-results-error {
 			width: 100%
+		}
+	}
+	
+	#message-box #message-box-close-icon, #options-close-icon {
+		width: 30px;
+		height: 30px;
+		top: 6px;
+		right: 6px;
+		svg {
+			width: 30px !important;
+			height: 30px !important;
+		}
+	}
+	
+	#message-box.config-dialog {
+		background: inherit;
+		z-index: 9999999;
+		& > div {
+			max-height: 100vh;
+			box-shadow: none;
+			max-width: unset;
+			width: 100%;
+			#message-box-title {
+				background: none;
+				box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+			}
+			#message-box-contents {
+				.config-body > label:not(:first-child) {
+					border-top: 1px solid rgba(0,0,0,0.07) !important;
+				}
+			}
+			#message-box-buttons {
+				background: none;
+				border-top: 1px solid rgba(0,0,0,0.1);
+			}
 		}
 	}
 	
