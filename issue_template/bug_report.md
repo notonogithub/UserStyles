@@ -8,14 +8,17 @@ labels:
 
 ---
 
+**Describe the issue:**
+
+
+---
+
 **Link to style:**
 
 
 **Browser + Version:**
 
 
-**Describe the issue:**
-
-
 - [x] I have made sure this issue hasn't already been posted.
 - [x] I have made sure I am on the latest version of my Browser.
+- [x] I am using the [Stylus](https://add0n.com/stylus.html) browser extension, not 'Stylish'.
