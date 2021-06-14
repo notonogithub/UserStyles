@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Twitter Tweaks
-@version        1.1.0
+@version        1.2.0
 @description    A collection of tweaks for: Uncropping images, hiding trends, Avatar roundness, moving header aside, and more!!
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/twitter/twitter-tweaks.user.css
 @preprocessor   stylus
@@ -15,10 +15,14 @@
 
 @var checkbox moveHeader     "↔ Move header to sidebar" 1
 
-@var checkbox hideTweetBoxTL "⛔ Timeline: Compose " 1
 @var checkbox uncrop         "🖼 Timeline: Uncrop Images" 1
 @var checkbox maxHeight      "🖼 Timeline: Uncrop Images: Set max height to viewport size" 1
+@var checkbox fullWidthMedia "🖼 Timeline: Full-width Media" 1
 @var range    avatarRadius   "⚫ Timeline: Avatar Roundness" [30, 5, 50, 5, '%']
+@var checkbox hideTweetBoxTL "⛔ Timeline: Compose " 1
+@var checkbox hideTLFollow   "⛔ Timeline: Who to follow AND Topics to follow" 1
+@var checkbox hideSpacers    "⛔ Timeline: Spacers " 0
+
 
 @var checkbox resizeSidebar  "↔ Image Preview: Resize sidebar depending on image size" 1
 @var checkbox removeImageBar "⛔ Image Preview: interaction bar" 0
@@ -34,8 +38,8 @@
 
 @var checkbox moreAnim       "🎞️ More Animations" 1
 
-@var checkbox followersCount  "🖤 Wellbeing: Follower Count" 1
-@var checkbox likesCount  "🖤 Wellbeing: Likes Count" 1
+@var checkbox followersCount "🖤 Wellbeing: Follower Count" 1
+@var checkbox likesCount     "🖤 Wellbeing: Likes Count" 1
 @var checkbox retweetsCount  "🖤 Wellbeing: Retweets Count" 1
 @var checkbox commentsCount  "🖤 Wellbeing: Comments Count" 1
 @var checkbox analyticsButton"🖤 Wellbeing: Analytics Button" 1
@@ -50,23 +54,45 @@
 
 ==/UserStyle== */
 
-/* Update 1.1.0
-- Renamed a bunch of settings to make it less messy, sadly this means you'll probably have to toggle your settings again.
-- Added wellbeing options.
+/* Update 1.2.0
+- Fixed 'Move header to sidebar' option applying to pages it shouldn't.
+- Added '🖼 Timeline: Full-width Media'
+- Added '⛔ Timeline: Compose'
+- Added '⛔ Timeline: Who to follow AND Topics to follow'
+- More tweaks & fixes
+- Probably some other stuff I forgot to list.
 */
 @-moz-document domain("twitter.com") {
+	
+	html {
+		scrollbar-color: rgba(155,155,155,0.5) transparent;
+	}
+	
+	if fullWidthMedia {
+		article [class="css-1dbjc4n r-1iusvr4 r-16y2uox r-1777fci r-kzbkwu"] > .css-1dbjc4n:last-child > .css-1dbjc4n:nth-last-child(2)  {
+			[class*=" r-1867qdf r-1phboty r-rs99b7 r-1s2bzr4 r-1ny4l3l r-1udh08x"],
+			[class*=" r-1867qdf r-1phboty r-rs99b7 r-1s2bzr4 r-1ny4l3l r-1udh08x r-o7ynqc r-6416eg"] {
+				margin-left: -60px;
+			}
+			
+		}
+	}
+	
 	
 	if moveHeader {
 		@media only screen and (min-width: 1001px) {
 			[data-testid="primaryColumn"] > div > div:first-child {
 				border: 0 !important;
+				border-radius: 0 0 16px 16px !important;
 			}
-			main .css-1dbjc4n [class="css-1dbjc4n r-1h3ijdo r-136ojw6"] {
+			main > div > div > div.r-1wtj0ep .css-1dbjc4n [class="css-1dbjc4n r-1h3ijdo r-136ojw6"] {
 				width: 352px;
 				margin-left: auto;
 				margin-right: -382px;
 				margin-bottom: -54px;
 				background: none !important;
+				border-radius: 0 0 16px 16px !important;
+				overflow: hidden;
 			}
 			.css-1dbjc4n [class="css-1dbjc4n r-1h3ijdo r-136ojw6"] > div > [class*="r-1h3ijdo r-ymttw5"] {
 				background: none !important;
@@ -149,19 +175,22 @@
 	if not noTrends {
 		[data-testid="sidebarColumn"] section.css-1dbjc4n > .css-4rbku5.css-901oao.r-4iw3lz.r-1xk2f4g.r-109y4c4.r-1udh08x.r-wwvuq4.r-u8s1d.r-92ng3h + .css-1dbjc4n {
 			display: none;
-			& + .r-1uaug3w {
-				display: none;
-			}
+		}
+		[data-testid="sidebarColumn"] [class*="r-1bro5k0 r-1udh08x"] ~ .r-1uaug3w {
+			border-top: 0;
+			border-bottom: 0;
 		}
 	}
 	if not noFollowBox {
 		[data-testid="sidebarColumn"] [class*="r-1bro5k0 r-1udh08x"] {
 			display: none !important;
-			& + .r-1uaug3w {
-				display: none;
+			& ~ .r-1uaug3w {
+				border-top: 0;
+				border-bottom: 0;
 			}
 		}
 	}
+	
 	
 	
 	
@@ -181,6 +210,31 @@
 		}
 	}
 	
+	if not hideTLFollow {
+		[class*=" r-qklmqi r-1adg3ll r-1ny4l3l"] {
+			// border-width: 0 !important;
+			// margin-bottom: -1px !important;
+		}
+		main [class*=" r-qklmqi r-1adg3ll r-1ny4l3l"] > [data-testid="UserCell"], // Who To Follow Items
+		main [class*=" r-qklmqi r-1adg3ll r-1ny4l3l"] > [class*="css-1dbjc4n r-1wtj0ep r-ymttw5 r-1f1sjgu"], // Who To Follow/Topics heading
+		main [class*=" r-qklmqi r-1adg3ll r-1ny4l3l"] > section[aria-labelledby="accessible-list-12"], // Topics List
+		main [class*=" r-qklmqi r-1adg3ll r-1ny4l3l"] > a[href="/i/topics/picker/home"],
+		main [class*=" r-qklmqi r-1adg3ll r-1ny4l3l"] > section[role="region"] > [id*="accessible-list-"][role="heading"] + div.css-1dbjc4n[aria-label] > [class="css-1dbjc4n r-13hce6t r-1p6iasa r-1udh08x"], // Carousel
+		main [class*=" r-qklmqi r-1adg3ll r-1ny4l3l"] > a[href*="/i/connect_people?user_id="], // Show More Button
+		{
+			display: none;
+			opacity: .5; // Testing
+		}
+		
+	}
+	
+	if not hideSpacers {
+		.r-tbmifm {
+			display: none;
+		}
+	}
+	
+	
 	if noBorder == "keep" || noBorder == "Hide" {
 		*:not(.r-1xl5njo):not(.css-1dbjc4n[aria-label] > div > div > div) {
 			border-color: transparent !important;
@@ -188,18 +242,20 @@
 		a.css-4rbku5 > .r-1adg3ll .css-9pa8cd {
 			border-bottom-left-radius: 16px;
 			border-bottom-right-radius: 16px;
+			
 		}
 	}
 	if noBorder == "Hide" {
 		*:not(.r-1xl5njo) {
 			border-color: transparent !important;
+			border-bottom: 0 !important;
 		}
 	}
 	
 	if columnBG {
 		body[style*="background-color: rgb(21"],
- 		body[style*="background-color: rgb(21"] [data-testid="sidebarColumn"] > .css-1dbjc4n > .r-1hycxz [class*="r-ipm5af r-1hycxz r-136ojw6"],
- 		body[style*="background-color: rgb(21"] [data-testid="sidebarColumn"] > .css-1dbjc4n > .r-1hycxz [class*="r-ipm5af r-1hycxz r-136ojw6"]::before{ 
+		body[style*="background-color: rgb(21"] [data-testid="sidebarColumn"] > .css-1dbjc4n > .r-1hycxz [class*="r-ipm5af r-1hycxz r-136ojw6"],
+		body[style*="background-color: rgb(21"] [data-testid="sidebarColumn"] > .css-1dbjc4n > .r-1hycxz [class*="r-ipm5af r-1hycxz r-136ojw6"]::before{ 
 			background-color: #10171e !important;
 		}
 		
@@ -347,12 +403,18 @@
 		article > * {
 			animation: fadeIn .7s;
 		}
-		[data-testid="primaryColumn"] > div > div > div:not([data-testid="titleContainer"]){
+		[data-testid="primaryColumn"] > div > div > div:not([data-testid="titleContainer"]),
+		{
 			animation: slideUp .7s;
 		}
 		
+		.r-xnswec {
+			animation: slideUp .3s;
+		}
+		
 		.r-g6jmlv,
- 		[class="css-1dbjc4n r-1p0dtai r-1mlwlqe r-1d2f490 r-1udh08x r-u8s1d r-zchlnj r-ipm5af r-417010"] > .css-1dbjc4n.r-1niwhzg.r-vvn4in.r-u6sd8q.r-4gszlv.r-1p0dtai.r-1pi2tsx.r-1d2f490.r-u8s1d.r-zchlnj.r-ipm5af.r-13qz1uu.r-1wyyakw[style*="https://pbs.twimg.com/profile_banners"] {
+ 		[class="css-1dbjc4n r-1p0dtai r-1mlwlqe r-1d2f490 r-1udh08x r-u8s1d r-zchlnj r-ipm5af r-417010"] > .css-1dbjc4n.r-1niwhzg.r-vvn4in.r-u6sd8q.r-4gszlv.r-1p0dtai.r-1pi2tsx.r-1d2f490.r-u8s1d.r-zchlnj.r-ipm5af.r-13qz1uu.r-1wyyakw[style*="https://pbs.twimg.com/profile_banners"],
+		{
 			animation: scaleIn .5s;
 		}
 		
