@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Twitter Tweaks
-@version        1.2.0
+@version        1.2.1
 @description    A collection of tweaks for: Uncropping images, hiding trends, Avatar roundness, moving header aside, and more!!
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/twitter/twitter-tweaks.user.css
 @preprocessor   stylus
@@ -15,7 +15,7 @@
 
 @var checkbox moveHeader     "↔ Move header to sidebar" 1
 
-@var checkbox uncrop         "🖼 Timeline: Uncrop Images" 1
+@var checkbox uncrop         "🖼 Timeline: Uncrop Images (Content jumps may occur)" 1
 @var checkbox maxHeight      "🖼 Timeline: Uncrop Images: Set max height to viewport size" 1
 @var checkbox fullWidthMedia "🖼 Timeline: Full-width Media" 1
 @var range    avatarRadius   "⚫ Timeline: Avatar Roundness" [30, 5, 50, 5, '%']
@@ -54,13 +54,8 @@
 
 ==/UserStyle== */
 
-/* Update 1.2.0
-- Fixed 'Move header to sidebar' option applying to pages it shouldn't.
-- Added '🖼 Timeline: Full-width Media'
-- Added '⛔ Timeline: Compose'
-- Added '⛔ Timeline: Who to follow AND Topics to follow'
-- More tweaks & fixes
-- Probably some other stuff I forgot to list.
+/* Update 1.2.1
+- Minor Fixes
 */
 @-moz-document domain("twitter.com") {
 	
@@ -130,13 +125,14 @@
 			}
 	}
 	if uncrop {
-		a.css-4rbku5 > .r-1adg3ll .r-13qz1uu,
-		a.css-4rbku5 > .r-1adg3ll .r-13qz1uu .r-u8s1d,
-		a.css-4rbku5 > .r-1adg3ll .css-9pa8cd {
+		article a.css-4rbku5 > .r-1adg3ll .r-13qz1uu,
+		article a.css-4rbku5 > .r-1adg3ll .r-13qz1uu .r-u8s1d,
+		article a.css-4rbku5 > .r-1adg3ll .css-9pa8cd {
 			padding-bottom: 0 !important;
 			position: relative !important;
 			height: auto !important;
 			width: 100%;
+			
 			max-width: 100%;
 			margin: auto !important;
 			opacity: 1;
@@ -146,7 +142,10 @@
 				object-fit: contain !important;
 			}
 		}
-		a.css-4rbku5 .r-1adg3ll .r-13qz1uu [style*="background-image: url"] {
+		article .r-1867qdf > div > a.css-4rbku5 > .r-1adg3ll .r-13qz1uu .r-u8s1d[data-testid="tweetPhoto"] {
+			min-height: 283px;
+		}
+		article a.css-4rbku5 .r-1adg3ll .r-13qz1uu [style*="background-image: url"] {
 			position: absolute !important;
 			width: 100%;
 			max-width: 100%;
@@ -211,16 +210,12 @@
 	}
 	
 	if not hideTLFollow {
-		[class*=" r-qklmqi r-1adg3ll r-1ny4l3l"] {
-			// border-width: 0 !important;
-			// margin-bottom: -1px !important;
-		}
-		main [class*=" r-qklmqi r-1adg3ll r-1ny4l3l"] > [data-testid="UserCell"], // Who To Follow Items
-		main [class*=" r-qklmqi r-1adg3ll r-1ny4l3l"] > [class*="css-1dbjc4n r-1wtj0ep r-ymttw5 r-1f1sjgu"], // Who To Follow/Topics heading
-		main [class*=" r-qklmqi r-1adg3ll r-1ny4l3l"] > section[aria-labelledby="accessible-list-12"], // Topics List
-		main [class*=" r-qklmqi r-1adg3ll r-1ny4l3l"] > a[href="/i/topics/picker/home"],
-		main [class*=" r-qklmqi r-1adg3ll r-1ny4l3l"] > section[role="region"] > [id*="accessible-list-"][role="heading"] + div.css-1dbjc4n[aria-label] > [class="css-1dbjc4n r-13hce6t r-1p6iasa r-1udh08x"], // Carousel
-		main [class*=" r-qklmqi r-1adg3ll r-1ny4l3l"] > a[href*="/i/connect_people?user_id="], // Show More Button
+		main [data-testid="primaryColumn"] [class*=" r-qklmqi r-1adg3ll r-1ny4l3l"] > [data-testid="UserCell"], // Who To Follow Items
+		main [data-testid="primaryColumn"] [class*=" r-qklmqi r-1adg3ll r-1ny4l3l"] > [class*="css-1dbjc4n r-1wtj0ep r-ymttw5 r-1f1sjgu"], // Who To Follow/Topics heading
+		main [data-testid="primaryColumn"] [class*=" r-qklmqi r-1adg3ll r-1ny4l3l"] > section[aria-labelledby="accessible-list-12"], // Topics List
+		main [data-testid="primaryColumn"] [class*=" r-qklmqi r-1adg3ll r-1ny4l3l"] > a[href="/i/topics/picker/home"],
+		main [data-testid="primaryColumn"] [class*=" r-qklmqi r-1adg3ll r-1ny4l3l"] > section[role="region"] > [id*="accessible-list-"][role="heading"] + div.css-1dbjc4n[aria-label] > [class="css-1dbjc4n r-13hce6t r-1p6iasa r-1udh08x"], // Carousel
+		main [data-testid="primaryColumn"] [class*=" r-qklmqi r-1adg3ll r-1ny4l3l"] > a[href*="/i/connect_people?user_id="], // Show More Button
 		{
 			display: none;
 			opacity: .5; // Testing
@@ -236,7 +231,7 @@
 	
 	
 	if noBorder == "keep" || noBorder == "Hide" {
-		*:not(.r-1xl5njo):not(.css-1dbjc4n[aria-label] > div > div > div) {
+		*:not(.r-1xl5njo):not(.css-1dbjc4n[aria-label] > div > div > div):not(.r-6t5ypu) {
 			border-color: transparent !important;
 		}
 		a.css-4rbku5 > .r-1adg3ll .css-9pa8cd {
@@ -246,7 +241,7 @@
 		}
 	}
 	if noBorder == "Hide" {
-		*:not(.r-1xl5njo) {
+		*:not(.r-1xl5njo):not(.r-6t5ypu) {
 			border-color: transparent !important;
 			border-bottom: 0 !important;
 		}
@@ -379,7 +374,7 @@
 	
 	[class="css-1dbjc4n r-1wbh5a2 r-dnmrzs"] .r-sdzlij, [class="css-1dbjc4n r-1wbh5a2 r-dnmrzs"] .r-sdzlij img,
 	[class*="r-f6ebdl r-sdzlij r-1phboty r-14f9gny r-1loqt21 r-1gzrgec r-cnkkqs r-zjg7tu r-mtrfb5 r-1ny4l3l r-1udh08x r-o7ynqc r-6416eg r-1xce0ei"],
- 	[class="css-1dbjc4n r-sdzlij r-1p0dtai r-1mlwlqe r-1d2f490 r-1udh08x r-u8s1d r-zchlnj r-ipm5af r-417010"] {
+	[class="css-1dbjc4n r-sdzlij r-1p0dtai r-1mlwlqe r-1d2f490 r-1udh08x r-u8s1d r-zchlnj r-ipm5af r-417010"] {
 		border-radius: avatarRadius !important;
 		transition: border-radius .5s, transform .5s;
 	}
@@ -393,12 +388,17 @@
 			from { transform: translateY(10px); opacity: 0 }
 			to   { transform: translateY(0px); opacity: 1 }
 		}
-		@keyframes scaleIn {
+		@keyframes bounceIn {
 			0% { transform: scale(1.1); opacity: 0 }
 			30% { transform: scale(.99); opacity: 1 }
 			60% { transform: scale(1.005); opacity: 1 }
 			100%   { transform: scale(1); opacity: 1 }
 		}
+		@keyframes scaleIn {
+			from { transform: scale(.98); opacity: 0; }
+			to { transform: none; opacity: 1; }
+		}
+		
 		
 		article > * {
 			animation: fadeIn .7s;
@@ -408,14 +408,14 @@
 			animation: slideUp .7s;
 		}
 		
-		.r-xnswec {
-			animation: slideUp .3s;
+		.r-xnswec, .r-qo02w8, .r-1upvrn0 {
+			animation: scaleIn .3s;
 		}
 		
 		.r-g6jmlv,
  		[class="css-1dbjc4n r-1p0dtai r-1mlwlqe r-1d2f490 r-1udh08x r-u8s1d r-zchlnj r-ipm5af r-417010"] > .css-1dbjc4n.r-1niwhzg.r-vvn4in.r-u6sd8q.r-4gszlv.r-1p0dtai.r-1pi2tsx.r-1d2f490.r-u8s1d.r-zchlnj.r-ipm5af.r-13qz1uu.r-1wyyakw[style*="https://pbs.twimg.com/profile_banners"],
 		{
-			animation: scaleIn .5s;
+			animation: bounceIn .5s;
 		}
 		
 		
