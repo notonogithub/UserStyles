@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Discord - Server-List Drawer
-@version        1.0.3
+@version        1.0.4
 @description    A server-list drawer for Discord.
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/discord_server-list-drawer.user.css
 
@@ -17,15 +17,15 @@
 
  * @name        Server-list Drawer
  * @author      Freeplay#5676
- * @version     1.0.3
+ * @version     1.0.4
  * @description A server-list drawer for Discord!
  * @authorId    158296466119458816
  * @source      https://github.com/Freeplayg/discord-serverlist-drawer
 
 **/
 
-/* 1.0.3
-- Finally, Fixes!
+/* 1.0.4
+- Fixed server labels not appearing until hover.
  */
 
 [class*="wrapper-"][class*="guilds-"] {
@@ -199,6 +199,7 @@
 [class*="wrapper-"][class*="guilds-"] [class*="listItem-"] [class*="placeholderMask-"] {
     margin: 0 12px;
     border-radius: 15px;
+    overflow: visible !important;
 }
 [class*="wrapper-"][class*="guilds-"] [class*="wrapper"] foreignObject {
     overflow: visible !important;
@@ -323,5 +324,7 @@
 [class*="notice-"] + [class*="content-"] [class*="discoverHeader"] {
     padding-left: 16px !important;
 }
+
+
 
 }
