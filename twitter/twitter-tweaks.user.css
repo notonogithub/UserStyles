@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Twitter Tweaks
-@version        1.2.2
+@version        1.2.3
 @description    A collection of tweaks for: Uncropping images, hiding trends, Avatar roundness, moving header aside, and more!!
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/twitter/twitter-tweaks.user.css
 @preprocessor   stylus
@@ -59,10 +59,8 @@
 
 ==/UserStyle== */
 
-/* Update 1.2.2
-- Added Custom Backgrounds (Image links MUST be from Twitter due to Content Security Policy.)
-- Added Revert to old font
-- More fixes probably
+/* Update 1.2.3
+- Full-Width Media: Pushed media down to not cover PFP
 */
 @-moz-document domain("twitter.com") {
 	
@@ -93,12 +91,16 @@
 	}
 	
 	if fullWidthMedia {
-		article [class="css-1dbjc4n r-1iusvr4 r-16y2uox r-1777fci r-kzbkwu"] > .css-1dbjc4n:last-child > .css-1dbjc4n:nth-last-child(2)  {
-			[class*=" r-1867qdf r-1phboty r-rs99b7 r-1s2bzr4 r-1ny4l3l r-1udh08x"],
-			[class*=" r-1867qdf r-1phboty r-rs99b7 r-1s2bzr4 r-1ny4l3l r-1udh08x r-o7ynqc r-6416eg"] {
-				margin-left: -60px;
+		article [class="css-1dbjc4n r-1iusvr4 r-16y2uox r-1777fci r-kzbkwu"] > .css-1dbjc4n:last-child > .css-1dbjc4n {
+			&:first-child { // Set a min-height to the text so the images don't cover PFP's
+				min-height: 1em;
 			}
-			
+			&:nth-last-child(2) { // Media
+				[class*=" r-1867qdf r-1phboty r-rs99b7 r-1s2bzr4 r-1ny4l3l r-1udh08x"],
+				[class*=" r-1867qdf r-1phboty r-rs99b7 r-1s2bzr4 r-1ny4l3l r-1udh08x r-o7ynqc r-6416eg"] {
+					margin-left: -60px;
+				}
+			}
 		}
 	}
 	
