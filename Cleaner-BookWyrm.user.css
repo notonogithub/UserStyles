@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Cleaner BookWyrm
-@version        1.0.0
+@version        1.0.1
 @description    Makes BookWyrm look a bit better.
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/Cleaner-BookWyrm.user.css
 @preprocessor   stylus
@@ -17,7 +17,7 @@
 ==/UserStyle== */
 
 
-@-moz-document domain("bookwyrm.social") {
+@-moz-document domain("bookwyrm.social"), domain("cutebook.club"), domain("wyrms.de"), domain("book.dansmonorage.blue") {
 	
 	
 	
@@ -48,9 +48,6 @@
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: center;
-		// position: sticky;
-		// top: 0;
-		// z-index: 1;
 		.navbar-start {
 			width: 1px;
 			background-color: rgba(0,0,0,0.1);
@@ -115,10 +112,10 @@
 		border: 1px solid rgba(0,0,0,0.1);
 		overflow: hidden;
 	}
-	.box:hover, .tile.is-7.is-parent .box {
+	.box:hover, .box:focus-within, .tile.is-7.is-parent .box {
 		box-shadow: 0 12px 30px rgba(0,0,0.0.1);
 	}
-	.box:hover {
+	.box:hover, .box:focus-within {
 		transform: translateY(-1px);
 	}
 	.box:active {
