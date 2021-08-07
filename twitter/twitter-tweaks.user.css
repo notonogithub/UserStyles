@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitter Tweaks
-@version        1.2.3
-@description    A collection of tweaks for: Uncropping images, hiding trends, Avatar roundness, moving header aside, and more!!
+@version        1.2.4
+@description    A collection of tweaks like: Uncrop images, hide trends, Avatar roundness, move header aside, and more!!
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/twitter/twitter-tweaks.user.css
 @preprocessor   stylus
 
@@ -11,7 +11,7 @@
 @homepageURL    https://codeberg.org/Freeplay/UserStyles
 @supportURL     https://codeberg.org/Freeplay/UserStyles/issues
 
-@var text notice 'Make sure you are using the "Stylus" browser extension, not "Stylish"!' "'https://add0n.com/stylus.html'"
+@var text notice 'Make sure you are using the "Stylus" browser extension, not "Stylish"! — Style created by @FreeplayG' "'https://add0n.com/stylus.html'"
 
 @var checkbox moveHeader     "↔ Timeline: Move header to sidebar" 1
 
@@ -59,8 +59,9 @@
 
 ==/UserStyle== */
 
-/* Update 1.2.3
-- Full-Width Media: Pushed media down to not cover PFP
+/* Update 1.2.4
+- Fixed some popups not displaying
+- Other small fixes
 */
 @-moz-document domain("twitter.com") {
 	
@@ -82,6 +83,12 @@
 		opacity: customBGOpacity;
 		filter: blur(customBGBlur);
 		z-index: -100;
+	}
+	
+	// Hide "Don't Miss What's Happening" SignUp banner. 
+	// Not making it an option, there is already an non-intrusive card that asks you sign-up anyways.
+	#layers > [class="css-1dbjc4n r-aqfbo4 r-1p0dtai r-1d2f490 r-12vffkv r-1xcajam r-zchlnj"]:first-child {
+		display: none;
 	}
 	
 	if revertFont {
@@ -439,6 +446,11 @@
 		[data-testid="primaryColumn"] > div > div > div:not([data-testid="titleContainer"]),
 		{
 			animation: slideUp .7s;
+			if moveHeader {
+				&.r-136ojw6.r-1loqt21 {
+					animation: none !important;
+				}
+			}
 		}
 		
 		.r-xnswec, .r-qo02w8, .r-1upvrn0 {
