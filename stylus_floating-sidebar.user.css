@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Stylus Editor - Floating Sidebar
-@version        1.0.2
+@version        1.0.3
 @description    A floating sidebar for Stylus! Useful when working in a small window.
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/twitter/stylus_floating-sidebar.user.css
 @preprocessor   stylus
@@ -22,6 +22,7 @@
 			right: 0px !important;
 			top: 0 !important;
 			margin: 15px;
+			padding: 1em !important;
 			height: auto !important;
 			box-sizing: border-box;
 			border-radius: 8px;
@@ -54,9 +55,12 @@
 				transition: max-height .2s;
 			}
 			#basic-info {
-				margin: -10px -6px;
-				margin-bottom: -12px;
+				margin: -10px -6px !important;
+				margin-bottom: -12px !important;
 				transition: margin .2s;
+				& > div {
+					margin: 0 !important;
+				}
 			}
 			
 			#actions > div {
@@ -70,6 +74,10 @@
 					margin-bottom: .5rem !important;
 				}
 			}
+			& > section, & > div {
+				margin: 0 !important;
+				padding: 0 !important;
+			}
 			
 			#lint {
 				width: 100%;
@@ -81,7 +89,7 @@
 				max-height: calc(100vh - 30px) !important;
 				// padding: 15px;
 				#basic-info {
-					margin: 0;
+					margin: 0 !important;
 				}
 				& > :not(#basic-info) {
 					max-height: calc(100vh - 30px);
