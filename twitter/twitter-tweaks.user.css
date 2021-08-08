@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Twitter Tweaks
-@version        1.2.4
+@version        1.2.5
 @description    A collection of tweaks like: Uncrop images, hide trends, Avatar roundness, move header aside, and more!!
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/twitter/twitter-tweaks.user.css
 @preprocessor   stylus
@@ -16,7 +16,7 @@
 @var checkbox moveHeader     "↔ Timeline: Move header to sidebar" 1
 
 @var checkbox uncrop         "🖼 Timeline: Uncrop Images (Content jumps may occur)" 1
-@var checkbox maxHeight      "🖼 Timeline: Uncrop Images: Set max height to viewport size" 1
+@var checkbox maxHeight      "🖼 Timeline: Uncrop Images: Set max height to screen size" 1
 @var checkbox fullWidthMedia "🖼 Timeline: Full-width Media" 1
 @var range    avatarRadius   "⚫ Timeline: Avatar Roundness" [30, 5, 50, 5, '%']
 @var checkbox hideTweetBoxTL "⛔ Timeline: Compose " 1
@@ -32,11 +32,12 @@
 
 @var checkbox noMessagesBox  "⛔ Sidebar: Messages " 1
 
+@var color    themeColor     "🌈 Custom Theme Color" #1da1f2
 @var select   noBorder       "⛔ Border Style" ["Default*", "Hide", "keep:Only Timeline Separators"]
 @var checkbox columnBG       "💡 Contrast between background and feed" 1
-@var checkbox bgBanner       "🖼 Use banners as background" 1
+@var checkbox bgBanner       "🖼 Use profile banners as background" 1
 
-@var text     customBG 	     "🖼 Custom Background (Place image link in quotes, image MUST be from Twitter due to Content Security Policy)" '""'
+@var text     customBG 	     "🖼 Custom Background (Place image link in quotes, image MUST be uploaded from Twitter due to Content Security Policy)" '""'
 @var range    customBGOpacity"🖼 Custom Background: Opacity" [1, 0.05, 1, .05]
 @var range    customBGBlur   "🖼 Custom Background: Blur" [0, 0, 30, 5, 'px']
 
@@ -52,16 +53,16 @@
 
 @var text noticeMobile "Below are options meant for Mobile Devices" '"Okay!"'
 
-@var checkbox centerTweet    "Center Tweet Button" 1
+@var checkbox centerTweet     "Center Tweet Button" 1
 @var checkbox largerBottomBar "Larger Bottom Bar" 0
 @var checkbox bottomHeader    "Move header to bottom" 1
 
 
 ==/UserStyle== */
 
-/* Update 1.2.4
-- Fixed some popups not displaying
-- Other small fixes
+/* Update 1.2.5
+- Added Custom Theme Color
+- Other fixes idk I forget
 */
 @-moz-document domain("twitter.com") {
 	
@@ -90,6 +91,28 @@
 	#layers > [class="css-1dbjc4n r-aqfbo4 r-1p0dtai r-1d2f490 r-12vffkv r-1xcajam r-zchlnj"]:first-child {
 		display: none;
 	}
+	
+	if not themeColor == #1da1f2 {
+		.r-18z3xeu, // Orange
+ 		.r-urgr8i,  // Blue 
+		.r-1vkxrha, // Yellow
+		.r-1dgebii, // Pink
+		.r-1qqlz1x, // Purple
+		.r-b5skir   // Green
+		{
+			background-color: themeColor;
+		}
+		.r-1qkqhnw, // Orange
+		.r-1n1174f, // Blue
+		.r-61mi1v,  // Yellow
+		.r-daml9f,  // Pink
+		.r-xfsgu1,  // Purple
+		.r-nw8l94,  // Green
+ 		{
+			color: themeColor;
+		}
+	}
+	
 	
 	if revertFont {
 		.r-37j5jr {
@@ -238,7 +261,7 @@
 	}
 	
 	if not hideTweetBoxTL {
-		[data-testid="primaryColumn"] > div > [class="css-1dbjc4n r-yfoy6g r-184en5c"]:nth-child(2) {
+		[data-testid="primaryColumn"] > div > .css-1dbjc4n.r-184en5c:nth-child(2) {
 			display: none;
 			+ div {
 				background: none !important;
