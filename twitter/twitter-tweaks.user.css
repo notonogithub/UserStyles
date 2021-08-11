@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Twitter Tweaks
-@version        1.2.5
+@version        1.2.6
 @description    A collection of tweaks like: Uncrop images, hide trends, Avatar roundness, move header aside, and more!!
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/twitter/twitter-tweaks.user.css
 @preprocessor   stylus
@@ -17,7 +17,7 @@
 
 @var checkbox uncrop         "🖼 Timeline: Uncrop Images (Content jumps may occur)" 1
 @var checkbox maxHeight      "🖼 Timeline: Uncrop Images: Set max height to screen size" 1
-@var checkbox fullWidthMedia "🖼 Timeline: Full-width Media" 1
+@var select   fullWidthMedia "🖼 Timeline: Media Size" ["Default", "Larger*", "Full-Width"]
 @var range    avatarRadius   "⚫ Timeline: Avatar Roundness" [30, 5, 50, 5, '%']
 @var checkbox hideTweetBoxTL "⛔ Timeline: Compose " 1
 @var checkbox hideTLFollow   "⛔ Timeline: Who to follow AND Topics to follow" 1
@@ -60,9 +60,9 @@
 
 ==/UserStyle== */
 
-/* Update 1.2.5
-- Added Custom Theme Color
-- Other fixes idk I forget
+/* Update 1.2.6
+- New Media Size options
+- Also changed font-weight in 'Revert Font' option, not sure if there's a way to bring back the theme color.
 */
 @-moz-document domain("twitter.com") {
 	
@@ -118,9 +118,12 @@
 		.r-37j5jr {
 			font-family:  -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;;
 		}
+		header .r-16dba41 { // I don't think I can change it back to the theme color, this is the best I can do for now.
+			font-weight: 600;
+		}
 	}
 	
-	if fullWidthMedia {
+	if fullWidthMedia != "Default" {
 		article [class="css-1dbjc4n r-1iusvr4 r-16y2uox r-1777fci r-kzbkwu"] > .css-1dbjc4n:last-child > .css-1dbjc4n {
 			&:first-child { // Set a min-height to the text so the images don't cover PFP's
 				min-height: 1em;
@@ -128,7 +131,17 @@
 			&:nth-last-child(2) { // Media
 				[class*=" r-1867qdf r-1phboty r-rs99b7 r-1s2bzr4 r-1ny4l3l r-1udh08x"],
 				[class*=" r-1867qdf r-1phboty r-rs99b7 r-1s2bzr4 r-1ny4l3l r-1udh08x r-o7ynqc r-6416eg"] {
-					margin-left: -60px;
+					if fullWidthMedia == "Larger" {
+						margin-left: -60px;
+					}
+					if fullWidthMedia == "Full-Width" {
+						margin-left: -78px;
+						margin-right: -18px;
+						border-radius: 0;
+						img {
+							border-radius: 0;
+						}
+					}
 				}
 			}
 		}
