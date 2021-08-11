@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Twitter Tweaks
-@version        1.2.6
+@version        1.2.7
 @description    A collection of tweaks like: Uncrop images, hide trends, Avatar roundness, move header aside, and more!!
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/twitter/twitter-tweaks.user.css
 @preprocessor   stylus
@@ -60,9 +60,8 @@
 
 ==/UserStyle== */
 
-/* Update 1.2.6
-- New Media Size options
-- Also changed font-weight in 'Revert Font' option, not sure if there's a way to bring back the theme color.
+/* Update 1.2.7
+- Quick Fix for 'Revert Font' font weight
 */
 @-moz-document domain("twitter.com") {
 	
@@ -118,7 +117,7 @@
 		.r-37j5jr {
 			font-family:  -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;;
 		}
-		header .r-16dba41 { // I don't think I can change it back to the theme color, this is the best I can do for now.
+		header nav .r-16dba41 { // I don't think I can change it back to the theme color, this is the best I can do for now.
 			font-weight: 600;
 		}
 	}
@@ -137,10 +136,13 @@
 					if fullWidthMedia == "Full-Width" {
 						margin-left: -78px;
 						margin-right: -18px;
-						border-radius: 0;
-						img {
+						if columnBG {
 							border-radius: 0;
+							img {
+								border-radius: 0;
+							}
 						}
+						
 					}
 				}
 			}
