@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Twitter Tweaks
-@version        1.2.7
+@version        1.2.8
 @description    A collection of tweaks like: Uncrop images, hide trends, Avatar roundness, move header aside, and more!!
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/twitter/twitter-tweaks.user.css
 @preprocessor   stylus
@@ -60,8 +60,9 @@
 
 ==/UserStyle== */
 
-/* Update 1.2.7
-- Quick Fix for 'Revert Font' font weight
+/* Update 1.2.8
+- Added backgrounds around text when a custom BG is applied for better readability
+- Centered custom backgrounds
 */
 @-moz-document domain("twitter.com") {
 	
@@ -70,19 +71,84 @@
 		
 		
 	}
+	
+	if customBG != "" {
+		body::before {
+			content: "";
+			background-image: url(customBG);
+			background-size: cover;
+			background-position: center;
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			opacity: customBGOpacity;
+			filter: blur(customBGBlur);
+			z-index: -100;
+		}
+// 		[data-testid="primaryColumn"] {
+// 			--opacity: customBGOpacity; // Stylus variables acted weird when puting the var directly in Calc.
+// 		}
+		
+		// ATTEMPT 1
+		// [data-testid="primaryColumn"]::before {
+		// 	content: "";
+		// 	position: absolute;
+		// 	right: 100%;
+		// 	top: 0;
+		// 	bottom: 0;
+		// 	background: inherit;
+		// 	width: 275px;
+		// 	// backdrop-filter: blur(50px);
+		// 	width: 300px;
+		// 	opacity: calc( var(--opacity) / 2 );
+		// }
+		
+		// ATTEMPT 2
+		// [data-testid="primaryColumn"]::before {
+		// 	content: "";
+		// 	position: sticky;
+		// 	top: 55px;
+		// 	bottom: 0;
+		// 	background: inherit;
+		// 	width: 230px;
+		// 	margin-left: -270px;
+		// 	height: calc(100vh - 310px);
+		// 	border-radius: 16px;
+		// 	opacity: calc( var(--opacity) / 1.5 );
+		// }
+		
+		nav, [data-testid="SideNav_AccountSwitcher_Button"] {
+			border-radius: 16px;
+			&:not([data-testid="SideNav_AccountSwitcher_Button"]) {
+				padding: 8px 12px;
+			}
+			
+			header & {
+				padding: 6px !important;
+				max-width: 225px;
+				transition: padding .2s !important;
+				@media only screen and (max-width: 1278px) {
+					padding: 0 !important;
+					border-radius: 100px !important;
+					transition: padding .2s, border-radius .2s !important;
+				}
+			}
+			body[style*="background-color: rgb(21"] & {
+				background-color: alpha(rgb(21, 32, 43), customBGOpacity * 1.5 - .7); // No, I cannot math.
+			}
 
-	body::before {
-		content: "";
-		background-image: url(customBG);
-		background-size: cover;
-		position: fixed;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		opacity: customBGOpacity;
-		filter: blur(customBGBlur);
-		z-index: -100;
+			body[style*="background-color: rgb(255"] & {
+				background-color: alpha(white, customBGOpacity * 1.5 - .7 );
+			}
+			body[style*="background-color: rgb(0"] & {
+				background-color: alpha(black, customBGOpacity * 1.5 - .7 );
+			}
+		}
+		
+		
+		
 	}
 	
 	// Hide "Don't Miss What's Happening" SignUp banner. 
