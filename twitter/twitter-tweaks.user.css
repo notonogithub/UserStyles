@@ -57,12 +57,13 @@
 @var checkbox largerBottomBar "Larger Bottom Bar" 0
 @var checkbox bottomHeader    "Move header to bottom" 1
 
+@var text     haha            "💸 Haha, maybe?" '"https://www.patreon.com/freeplayg"'
+
 
 ==/UserStyle== */
 
-/* Update 1.2.8
-- Added backgrounds around text when a custom BG is applied for better readability
-- Centered custom backgrounds
+/* Update 1.2.9
+- Fixed Media Type option.
 */
 @-moz-document domain("twitter.com") {
 	
@@ -194,8 +195,9 @@
 				min-height: 1em;
 			}
 			&:nth-last-child(2) { // Media
-				[class*=" r-1867qdf r-1phboty r-rs99b7 r-1s2bzr4 r-1ny4l3l r-1udh08x"],
-				[class*=" r-1867qdf r-1phboty r-rs99b7 r-1s2bzr4 r-1ny4l3l r-1udh08x r-o7ynqc r-6416eg"] {
+				[class*=" r-1867qdf r-1phboty r-rs99b7 r-1ny4l3l r-1udh08x"],
+				[class*=" r-1867qdf r-1phboty r-rs99b7 r-1ny4l3l r-1udh08x r-o7ynqc r-6416eg"] {
+					margin-top: .5em;
 					if fullWidthMedia == "Larger" {
 						margin-left: -60px;
 					}
