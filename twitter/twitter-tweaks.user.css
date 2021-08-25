@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Twitter Tweaks
-@version        1.2.12
+@version        1.2.13
 @description    Uncrop images, hide trends, Avatar roundness, move header aside, and more!!
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/twitter/twitter-tweaks.user.css
 @preprocessor   stylus
@@ -62,10 +62,8 @@
 
 ==/UserStyle== */
 
-/* Update 1.2.12
-- More adjustments
-- (Image Preview: Resize sidebar depending on image size) Carousels now push sidebar aside
-- FIxed 'Who to follow AND Topics to follow' option!
+/* Update 1.2.13
+- Quick fixes
 */
 @-moz-document domain("twitter.com") {
 	
@@ -336,13 +334,15 @@
 		}
 	}
 	
-	if not hideTLFollow {        
-        main [data-testid="primaryColumn"] [style*="position: absolute; width: 100%; transform: translateY("] {
-            .r-1wtj0ep.r-1f1sjgu, // Headings
-            [data-testid="UserCell"], // Users
-            [aria-labelledby*="accessible-list-"], // Topics to follow
-            [href*="/i/"], // Show More
-            .r-1p6iasa.r-109y4c4 // Spacers
+	if not hideTLFollow {
+        // I hope the style attribute is consistent. From what I see, it is. If you find and issue with it, create an issue on Codeberg.
+        // The style attribute only shows in pages that show who's following, etc.
+        [style*="overflow-y: scroll;"] main [data-testid="primaryColumn"] h1[aria-level="1"] + div [style*="position: absolute; width: 100%; transform: translateY("] {
+            .r-1wtj0ep.r-1f1sjgu,                   // Headings
+            [data-testid="UserCell"],               // Users
+            [aria-labelledby*="accessible-list-"],  // Topics to follow
+            [href*="/i/c"],                         // Show More
+            .r-1p6iasa.r-109y4c4                    // Spacers
             {
                 display: none;
                 // opacity: .5; // Testing
