@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitter Tweaks
-@version        1.2.10
-@description    A collection of tweaks like: Uncrop images, hide trends, Avatar roundness, move header aside, and more!!
+@version        1.2.12
+@description    Uncrop images, hide trends, Avatar roundness, move header aside, and more!!
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/twitter/twitter-tweaks.user.css
 @preprocessor   stylus
 
@@ -42,7 +42,7 @@
 @var range    customBGBlur   "🖼 Custom Background: Blur" [0, 0, 30, 5, 'px']
 
 @var checkbox moreAnim       "🎞️ More Animations" 1
-@var checkbox revertFont     "🇦 Revert Font" 1
+@var checkbox revertFont     "🇦 Revert Font" 0
 
 @var checkbox followersCount "🖤 Wellbeing: Follower Count" 1
 @var checkbox likesCount     "🖤 Wellbeing: Likes Count" 1
@@ -62,8 +62,10 @@
 
 ==/UserStyle== */
 
-/* Update 1.2.10
-- ACTUALLY FIX MEDIA TYPE OPTION
+/* Update 1.2.12
+- More adjustments
+- (Image Preview: Resize sidebar depending on image size) Carousels now push sidebar aside
+- FIxed 'Who to follow AND Topics to follow' option!
 */
 @-moz-document domain("twitter.com") {
 	
@@ -88,54 +90,25 @@
 			filter: blur(customBGBlur);
 			z-index: -100;
 		}
-// 		[data-testid="primaryColumn"] {
-// 			--opacity: customBGOpacity; // Stylus variables acted weird when puting the var directly in Calc.
-// 		}
-		
-		// ATTEMPT 1
-		// [data-testid="primaryColumn"]::before {
-		// 	content: "";
-		// 	position: absolute;
-		// 	right: 100%;
-		// 	top: 0;
-		// 	bottom: 0;
-		// 	background: inherit;
-		// 	width: 275px;
-		// 	// backdrop-filter: blur(50px);
-		// 	width: 300px;
-		// 	opacity: calc( var(--opacity) / 2 );
-		// }
-		
-		// ATTEMPT 2
-		// [data-testid="primaryColumn"]::before {
-		// 	content: "";
-		// 	position: sticky;
-		// 	top: 55px;
-		// 	bottom: 0;
-		// 	background: inherit;
-		// 	width: 230px;
-		// 	margin-left: -270px;
-		// 	height: calc(100vh - 310px);
-		// 	border-radius: 16px;
-		// 	opacity: calc( var(--opacity) / 1.5 );
-		// }
 		
 		nav, [data-testid="SideNav_AccountSwitcher_Button"] {
-			border-radius: 16px;
-			&:not([data-testid="SideNav_AccountSwitcher_Button"]) {
-				padding: 8px 12px;
-			}
-			
-			header & {
-				padding: 6px !important;
-				max-width: 225px;
-				transition: padding .2s !important;
-				@media only screen and (max-width: 1278px) {
-					padding: 0 !important;
-					border-radius: 100px !important;
-					transition: padding .2s, border-radius .2s !important;
-				}
-			}
+            if (customBGOpacity * 1.5 - .7) > 0 {
+                border-radius: 16px;
+                &:not([data-testid="SideNav_AccountSwitcher_Button"]) {
+                    padding: 8px 12px;
+                }
+
+                header & {
+                    padding: 6px !important;
+                    max-width: 225px;
+                    transition: padding .2s !important;
+                    @media only screen and (max-width: 1278px) {
+                        padding: 0 !important;
+                        border-radius: 100px !important;
+                        transition: padding .2s, border-radius .2s !important;
+                    }
+                }
+            }
 			body[style*="background-color: rgb(21"] & {
 				background-color: alpha(rgb(21, 32, 43), customBGOpacity * 1.5 - .7); // No, I cannot math.
 			}
@@ -236,6 +209,11 @@
 				background: none !important;
 			}
 			
+			// Fix tweet padding from top of page 
+			[style*="position: absolute; width: 100%; transform: translateY(0px);"] article {
+				// padding-top: 15px;
+			}
+			
 			// Sidebar padding
 			[data-testid="sidebarColumn"] [class="css-1dbjc4n r-vacyoi r-ttdzmv"] {
 				padding-top: 60px !important;
@@ -304,10 +282,16 @@
 		}
 	}
 	if resizeSidebar {
-		[class="css-1dbjc4n r-18u37iz r-1pi2tsx r-11yh6sk r-buy8e9 r-bnwqim r-13qz1uu"] > div:last-of-type:not(:first-child) {
-			flex-grow: 1;
-			max-width: 600px;
-		}
+        [class="css-1dbjc4n r-18u37iz r-1pi2tsx r-11yh6sk r-buy8e9 r-bnwqim r-13qz1uu"] {
+            [aria-roledescription="carousel"] {
+                width: 100vw;
+                max-width: 100%;
+            }
+            & > div:last-of-type:not(:first-child) {
+                flex-grow: 1;
+                max-width: 600px;
+            }
+        }
 	}
 	if not removeImageBar {
 		.css-1dbjc4n.r-1pi2tsx.r-11yh6sk.r-buy8e9.r-bnwqim.r-13qz1uu > .css-1dbjc4n.r-13awgt0.r-184en5c + .css-1dbjc4n.r-1kihuf0.r-13qz1uu {
@@ -352,17 +336,19 @@
 		}
 	}
 	
-	if not hideTLFollow {
-		main [data-testid="primaryColumn"] [class*=" r-qklmqi r-1adg3ll r-1ny4l3l"] > [data-testid="UserCell"], // Who To Follow Items
-		main [data-testid="primaryColumn"] [class*=" r-qklmqi r-1adg3ll r-1ny4l3l"] > [class*="css-1dbjc4n r-1wtj0ep r-ymttw5 r-1f1sjgu"], // Who To Follow/Topics heading
-		main [data-testid="primaryColumn"] [class*=" r-qklmqi r-1adg3ll r-1ny4l3l"] > section[aria-labelledby="accessible-list-12"], // Topics List
-		main [data-testid="primaryColumn"] [class*=" r-qklmqi r-1adg3ll r-1ny4l3l"] > a[href="/i/topics/picker/home"],
-		main [data-testid="primaryColumn"] [class*=" r-qklmqi r-1adg3ll r-1ny4l3l"] > section[role="region"] > [id*="accessible-list-"][role="heading"] + div.css-1dbjc4n[aria-label] > [class="css-1dbjc4n r-13hce6t r-1p6iasa r-1udh08x"], // Carousel
-		main [data-testid="primaryColumn"] [class*=" r-qklmqi r-1adg3ll r-1ny4l3l"] > a[href*="/i/connect_people?user_id="], // Show More Button
-		{
-			display: none;
-			// opacity: .5; // Testing
-		}
+	if not hideTLFollow {        
+        main [data-testid="primaryColumn"] [style*="position: absolute; width: 100%; transform: translateY("] {
+            .r-1wtj0ep.r-1f1sjgu, // Headings
+            [data-testid="UserCell"], // Users
+            [aria-labelledby*="accessible-list-"], // Topics to follow
+            [href*="/i/"], // Show More
+            .r-1p6iasa.r-109y4c4 // Spacers
+            {
+                display: none;
+                // opacity: .5; // Testing
+            }
+        }
+        
 		
 	}
 	
@@ -569,7 +555,7 @@
 		}
 		
 		
-		*:not(.r-1xl5njo) {
+		*:not(.r-1xl5njo):not(.r-1pi2tsx) {
 			transition: border .5s, transform .2s;
 		}
 		body,
@@ -604,7 +590,9 @@
 			border-radius: 16px !important;
 			overflow: hidden;
 		}
+        
 	}
+    
 	
 	
 	
