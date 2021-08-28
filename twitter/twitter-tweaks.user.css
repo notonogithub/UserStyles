@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Twitter Tweaks
-@version        1.2.13
+@version        1.3.0
 @description    Uncrop images, hide trends, Avatar roundness, move header aside, and more!!
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/twitter/twitter-tweaks.user.css
 @preprocessor   stylus
@@ -62,8 +62,9 @@
 
 ==/UserStyle== */
 
-/* Update 1.2.13
-- Quick fixes
+/* Update 1.3.0
+- Better Mobile Support
+- Improvements to uncrop images + other things
 */
 @-moz-document domain("twitter.com") {
 	
@@ -125,7 +126,7 @@
 	
 	// Hide "Don't Miss What's Happening" SignUp banner. 
 	// Not making it an option, there is already an non-intrusive card that asks you sign-up anyways.
-	#layers > [class="css-1dbjc4n r-aqfbo4 r-1p0dtai r-1d2f490 r-12vffkv r-1xcajam r-zchlnj"]:first-child {
+	#layers:first-child > [class="css-1dbjc4n r-aqfbo4 r-1p0dtai r-1d2f490 r-12vffkv r-1xcajam r-zchlnj"]:first-child {
 		display: none;
 	}
 	
@@ -161,12 +162,12 @@
 	}
 	
 	if fullWidthMedia != "Default" {
-		article [class="css-1dbjc4n r-1iusvr4 r-16y2uox r-1777fci r-kzbkwu"] > div:last-child > div {
+		article [class*="css-1dbjc4n r-1iusvr4 r-16y2uox r-1777fci"] > div:last-child > div {
 			&:first-child { // Set a min-height to the text so the images don't cover PFP's
 				min-height: 1em;
 			}
 			&:nth-last-child(2) { // Media
-				.r-1s2bzr4.r-1ny4l3l {
+				& > div > div > .r-1ny4l3l.r-1867qdf.r-1udh08x:not([data-testid="card.wrapper"]) {
 					// margin-top: .5em;
 					if fullWidthMedia == "Larger" {
 						margin-left: -60px;
@@ -244,40 +245,43 @@
 			}
 	}
 	if uncrop {
-		article a.css-4rbku5 > .r-1adg3ll .r-13qz1uu,
-		article a.css-4rbku5 > .r-1adg3ll .r-13qz1uu .r-u8s1d,
-		article a.css-4rbku5 > .r-1adg3ll .css-9pa8cd {
-			padding-bottom: 0 !important;
-			position: relative !important;
-			height: auto !important;
-			width: 100%;
-			
-			max-width: 100%;
-			margin: auto !important;
-			opacity: 1;
-			if maxHeight {
-				max-height: calc(90vh - 55px) !important; /* -55px is height of the header */
-				background-size: contain !important;
-				object-fit: contain !important;
-			}
-		}
-		article .r-1867qdf > div > a.css-4rbku5 > .r-1adg3ll .r-13qz1uu .r-u8s1d[data-testid="tweetPhoto"] {
-			min-height: 283px;
-		}
-		article a.css-4rbku5 .r-1adg3ll .r-13qz1uu [style*="background-image: url"] {
-			position: absolute !important;
-			width: 100%;
-			max-width: 100%;
-			min-height: 100%;
-			margin: auto !important;
-			opacity: .8 !important;
-			background-size: cover !important;
-			filter: blur(30px);
-			transform: scale(1.2);
-			+ img {
-				opacity: 1 !important;
-			}
-		}
+        article [class*="css-1dbjc4n r-1iusvr4 r-16y2uox r-1777fci"] > div:last-child > div:nth-last-child(2) > [id] > [class="css-1dbjc4n"] a.css-4rbku5 > .r-1adg3ll {
+            &, .r-u8s1d[data-testid="tweetPhoto"] {
+                min-height: 283px; // Prevent *some* of the content jumping
+            }
+            .r-13qz1uu,
+            .r-13qz1uu .r-u8s1d,
+            .css-9pa8cd {
+                padding-bottom: 0 !important;
+                position: relative !important;
+                height: auto !important;
+                width: 100%;
+
+                max-width: 100%;
+                margin: auto !important;
+                opacity: 1;
+                if maxHeight {
+                    max-height: calc(90vh - 55px) !important; /* -55px is height of the header */
+                    background-size: contain !important;
+                    object-fit: contain !important;
+                }
+            }
+            .r-13qz1uu [style*="background-image: url"] {
+                position: absolute !important;
+                width: 100%;
+                max-width: 100%;
+                min-height: 100%;
+                margin: auto !important;
+                opacity: .8 !important;
+                background-size: cover !important;
+                filter: blur(30px);
+                transform: scale(1.2);
+                + img {
+                    opacity: 1 !important;
+                }
+            }
+            
+        }
 	}
 	if resizeSidebar {
         [class="css-1dbjc4n r-18u37iz r-1pi2tsx r-11yh6sk r-buy8e9 r-bnwqim r-13qz1uu"] {
@@ -335,9 +339,7 @@
 	}
 	
 	if not hideTLFollow {
-        // I hope the style attribute is consistent. From what I see, it is. If you find and issue with it, create an issue on Codeberg.
-        // The style attribute only shows in pages that show who's following, etc.
-        [style*="overflow-y: scroll;"] main [data-testid="primaryColumn"] h1[aria-level="1"] + div [style*="position: absolute; width: 100%; transform: translateY("] {
+        main [data-testid="primaryColumn"] h1[aria-level="1"] + div [style*="position: absolute; width: 100%; transform: translateY("] {
             .r-1wtj0ep.r-1f1sjgu,                   // Headings
             [data-testid="UserCell"],               // Users
             [aria-labelledby*="accessible-list-"],  // Topics to follow
@@ -444,62 +446,7 @@
 	
 	
 	
-	if centerTweet {
-		[class="css-1dbjc4n r-12vffkv"]:first-child {
-			// position: absolute;
-			z-index: 2;
-			[class="css-1dbjc4n r-173mn98 r-18rd0c5 r-1ff5aok"] {
-				bottom: -50px;
-				right: unset;
-				left: unset;
-				margin: auto;
-			}
-		}
-		[class="css-1dbjc4n r-12vffkv"] nav > a:nth-child(2) {
-			margin-right: 80px;
-		}
-	}
-	if largerBottomBar {
-		[class*="r-18u37iz r-drjvcx r-ripixn r-13qz1uu"] {
-			height: 70px !important;
-		}
-		if centerTweet {
-			[class="css-1dbjc4n r-12vffkv"]:first-child {
-				[class="css-1dbjc4n r-173mn98 r-18rd0c5 r-1ff5aok"] {
-					bottom: -66px;
-				}
-			}
-		}
-	}
-	if bottomHeader {
-		header[class="css-1dbjc4n r-lrvibr r-1g40b8q"] > [class*="r-o4zss7 r-rull8r r-qklmqi r-1d2f490 r-1xcajam r-zchlnj r-1gn8etr"] {
-			bottom: 50px;
-			top: unset;
-			animation: none !important;
-			transition: bottom .2s, top .5s !important;
-			transform: none !important;
-			if largerBottomBar {
-				bottom: 70px;
-			}
-			&.r-1yse23k {
-				bottom: -55px;
-				if largerBottomBar {
-					bottom: 20px;
-				}
-			}
-			if not centerTweet {
-				padding-right: 95px !important;
-			}
-			[class="css-1dbjc4n r-150rngu r-yfoy6g r-1p0dtai r-1d2f490 r-1rnoaur r-1r851ge r-1xcajam r-zchlnj r-hbs49y"] {
-				top: 0 !important;
-				margin-bottom: 155px;
-			}
-		}
-		header[class="css-1dbjc4n r-lrvibr r-1g40b8q"] {
-			order: 2;
-		}
-		
-	}
+	
 	
 	[class="css-1dbjc4n r-1wbh5a2 r-dnmrzs"] .r-sdzlij, [class="css-1dbjc4n r-1wbh5a2 r-dnmrzs"] .r-sdzlij img,
 	[class*="r-f6ebdl r-sdzlij r-1phboty r-14f9gny r-1loqt21 r-1gzrgec r-cnkkqs r-zjg7tu r-mtrfb5 r-1ny4l3l r-1udh08x r-o7ynqc r-6416eg r-1xce0ei"],
@@ -592,10 +539,95 @@
 		}
         
 	}
-    
-	
-	
-	
-
 	
 }
+
+
+@-moz-document domain("mobile.twitter.com") {
+    if centerTweet {
+        #layers > div > .r-12vffkv:first-child {
+            z-index: 2;
+            aside.r-12vffkv:first-child {
+                & > .r-emu48i.r-yajhfi {
+                    bottom: -45px;
+                    right: unset;
+                    left: unset;
+                    margin: auto;
+                    if largerBottomBar {
+                        bottom: -65px;
+                    }
+                }
+            }
+        }
+		
+		[class="css-1dbjc4n r-12vffkv"] nav > a:nth-child(2) {
+			margin-right: 80px;
+		}
+	}
+	if largerBottomBar {
+		[class*="r-18u37iz r-drjvcx r-ripixn r-13qz1uu"] {
+			height: 70px !important;
+		}
+	}
+	if bottomHeader {
+        [data-testid="primaryColumn"] {
+            padding-top: 50vh;
+        }
+
+        header {
+            .r-yfoy6g {
+                background: none;
+            }
+        }
+        header > div::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            bottom: -100px;
+            top: -40px;
+            background: linear-gradient(transparent, #15202b, #15202b);
+            z-index: -2;
+        }
+		header[class="css-1dbjc4n r-lrvibr r-1g40b8q"] > [class*="r-o4zss7 r-rull8r r-qklmqi r-1d2f490 r-1xcajam r-zchlnj r-1gn8etr"] {
+			bottom: 50px;
+			top: unset;
+			animation: none !important;
+			transition: bottom .2s, top .5s !important;
+			transform: none !important;
+			if largerBottomBar {
+				bottom: 70px;
+			}
+			&.r-1yse23k {
+				bottom: -55px;
+				if largerBottomBar {
+					bottom: 20px;
+				}
+			}
+			if not centerTweet {
+				padding-right: 95px !important;
+			}
+			[class="css-1dbjc4n r-150rngu r-yfoy6g r-1p0dtai r-1d2f490 r-1rnoaur r-1r851ge r-1xcajam r-zchlnj r-hbs49y"] {
+				top: 0 !important;
+				margin-bottom: 155px;
+			}
+		}
+		header[class="css-1dbjc4n r-lrvibr r-1g40b8q"] {
+			order: 2;
+		}
+	}
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
