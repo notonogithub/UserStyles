@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Google Docs Tweaks
-@version        1.0.0
-@description    Vertical Toolbar, Hide buttons & borders, Compact Comments, Fill BG, & More!
+@version        1.0.1
+@description    Vertical Sidebar, Hide buttons & borders, Compact Comments, Fill BG, & More!
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/google/Google-Docs-Tweaks.user.css
 @preprocessor   stylus
 
@@ -32,6 +32,10 @@
 @var text     donate           "💸 Donate!" "'https://www.patreon.com/freeplayg'"
 
 ==/UserStyle== */
+
+/* Sep 24 / 20
+- Quick fix for vertical toolbar on Chromium browsers
+*/
 
 @-moz-document domain("docs.google.com") {
     // I started this a while ago, but recently decided to finish it (Also why it's a bit messy...)
@@ -292,9 +296,14 @@ if verticalToolbar {
 	.jfk-tooltip {
 		pointer-events: none !important;
 	}
-    body > .goog-menu-vertical[style*="user-select: none; visibility: visible;"][style*=": 6."] {
-        margin-left: 60px;
-        transition: top .5s ease-out;
+    body > .goog-menu-vertical[style*="user-select: none; visibility: visible;"] {
+        
+        &[style*=": 6."],
+        &[style*="left: 0px;"],
+        &[style*="left: -"]{
+               margin-left: 60px;
+            transition: top .5s ease-out;
+        }
     }
     .kix-appview-editor {
         scrollbar-color: rgba(100,100,100,0.5) transparent !important;
@@ -363,15 +372,32 @@ if verticalToolbar {
         border-top-color: transparent !important;
 		top: 0px !important;
 		bottom: 0 !important;
-		overflow: hidden auto;
+		overflow: hidden auto;s
 		scrollbar-width: none;
+        &::-webkit-scrollbar {
+            display: none;
+        }
 		scrollbar-color: rgba(100,100,100,0.2) transparent;
-		// box-shadow: 0 0 6px rgba(0,0,0,0.1) !important;
-		// border-right: 1px solid rgba(100,100,100,0.1) !important;
 		scroll-snap-type: y proximity;
 		scroll-padding: 70px;
 		&:hover {
 			scrollbar-width: thin;
+            &::-webkit-scrollbar {
+                display: block;
+                width: 4px;
+                padding: 0;
+            }
+            .faq-body::-webkit-scrollbar-track-piece:start {
+                background: transparent;
+            }
+
+            .faq-body::-webkit-scrollbar-track-piece:end {
+                 background: transparent;
+            }
+            &::-webkit-scrollbar-thumb {
+                margin: 0;
+                border: 1px solid rgba(100,100,100,0.2);
+            }
 		}
 		&::after {
             content: "";
@@ -387,6 +413,10 @@ if verticalToolbar {
 			max-width: 100% !important;
 			background: inherit;
 		}
+        #docs-primary-toolbars {
+            position: sticky;
+            left: 0;
+        }
 		
 		#docs-omnibox-toolbar {
             position: fixed;
