@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Stylus Editor - Floating Sidebar
-@version        1.0.4
+@version        1.0.5
 @description    A floating sidebar for Stylus! Useful when working in a small window.
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/twitter/stylus_floating-sidebar.user.css
 @preprocessor   stylus
@@ -12,11 +12,13 @@
 @supportURL     https://codeberg.org/Freeplay/UserStyles/issues
 
 @var select animation  "Expand Animation Type" ["Default", "Reduced", "None"]
+@var checkbox issues "Pin Issues (Expand to show)" 0
+
 
 ==/UserStyle== */
 
-/* Update 1.0.4
-- Fixes + smaller sidebar on smaller screams
+/* Update 1.0.5
+- Added option to pin issues
 */
 @-moz-document regexp("^(moz|chrome)-extension://.*$") { 
 	#stylus-edit {
@@ -34,7 +36,7 @@
 			width: 30vw;
 			min-width: 160px;
 			max-width: 300px;
-			overflow: hidden scroll;
+			overflow: visible;
 			flex-direction: column !important;
 			backdrop-filter: blur(10px);
 			background-color: rgba(250,250,250,.7); // Sadly, some color themes may not work well with this. Better rely on it overriding the background-color.
@@ -100,6 +102,32 @@
                         margin-left: 0;
                     }
                 }
+				if issues {
+					^[1..1]:not(:hover):not(:focus-within) #lint {
+						position: absolute !important;
+						top: calc(100% + 5px);
+						left: 0;
+						min-width: 100% !important;
+						border-radius: 8px;
+						background-color: rgba(255,255,255,0.6);
+						backdrop-filter: blur(10px);
+						min-height: unset !important;
+						transition: position 0s .5s;
+						z-index: -1;
+						pointer-events: none;
+						summary {
+							display: none;
+						}
+						.lint-scroll-container {
+							position: relative;
+							margin: 0 !important;
+							padding: 0 !important;
+							padding: 0px 10px !important;
+							padding-bottom: 4px !important;
+						}
+					}
+				}
+				
 			}
 			& > section, & > div {
 				margin: 0 !important;
@@ -117,6 +145,7 @@
 				max-height: calc(100vh - 30px) !important;
 				// padding: 15px;
                 min-width: 220px;
+				overflow: hidden scroll;
 				#basic-info {
 					margin: 0 !important;
 				}
