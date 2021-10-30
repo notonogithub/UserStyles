@@ -1,0 +1,365 @@
+/* ==UserStyle==
+@name           Proton Suite Alternative Layout
+@version        1.0.0
+@description    A better, more compact, nicer looking layout for ProtonMail, ProtonCalendar, and ProtonDrive.
+@updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/proton/better-layout.user.css
+@preprocessor   stylus
+
+ -- AUTHOR STUFF --
+@namespace      Freeplay
+@author         Freeplay (https://freeplay.codeberg.page/)
+@homepageURL    https://codeberg.org/Freeplay/UserStyles
+@supportURL     https://codeberg.org/Freeplay/UserStyles/issues
+
+@var range sidebarWidth "Sidebar Width" [220, 220, 300, 1, "px"]
+@var range toolbarHeight "Toolbar Height" [50, 35, 50, 5, "px"]
+
+==/UserStyle== */
+
+@-moz-document domain("mail.protonmail.com"), domain("calendar.protonmail.com"), domain("drive.protonmail.com"), domain("account.protonmail.com"), domain("account.protonvpn.com") {
+	
+	@keyframes scaleIn {
+		0% { transform: scale(1.1); opacity: 0 }
+		30% { transform: scale(.99); opacity: 1 }
+		60% { transform: scale(1.002); opacity: 1 }
+		100%   { transform: scale(1); opacity: 1 }
+	}
+
+	
+	:root {
+		--sidebar-width: sidebarWidth;
+	}
+	
+	.button-large {
+		border-radius: 100px;
+	}
+	
+	.navigation-link {
+		margin-right: 8px;
+		border-radius: 0 100px 100px 0;
+		padding-right: 12px;
+	}
+	
+	.file-preview {
+		z-index: 99999999 !important;
+		animation: scaleIn .5s;
+	}
+	.file-preview > div:first-child {
+		padding: 0px 5px;
+		padding-left: 10px;
+	}
+	
+@media only screen and (min-width: 680px) {
+	.content {
+		display: flex;
+		flex-direction: column;
+		flex-wrap: wrap;
+		max-height: 100vh;
+	}
+	.content > [class="flex flex-item-fluid flex-nowrap"] {
+		display: contents;
+	}
+	.main {
+		height: 100vh;
+		flex: none;
+		// max-width: 100%;
+		min-width: unset;
+		width: auto;
+	}
+	.header {
+		flex-direction: column;
+		width: var(--sidebar-width);
+		min-width: 200px;
+		height: auto;
+		padding: 0;
+		box-shadow: none !important;
+		border: 0 !important;
+		padding-bottom: 8px;
+        transition: width .4s;
+		& > * {
+			width: auto;
+			box-sizing: border-box !important;
+			// margin-top: 10px !important;
+		}
+		.logo-container {
+			padding: 0 14px;
+			margin-top: 10px;
+		}
+		& > form {
+			margin: 10px 14px;
+			margin-top: 4px !important;
+			box-sizing: border-box;
+			border-radius: 100px;
+			overflow: hidden;
+			input {
+				border-radius: 100px;
+			}
+			&:not(.searchbox-container--reset-advanced) {
+				input {
+					padding-right: 30px !important;
+				}
+			}
+			button {
+				border-radius: 100px !important;
+			}
+		}
+		.topnav-container {
+			flex: none;
+			display: flex;
+			// flex-wrap: wrap;
+			padding: 0 14px;
+			// overflow-x: auto;
+			width: 100%;
+			.topnav-list {
+				// flex-wrap: wrap;
+				overflow-x: auto;
+				margin: 0 !important;
+				width: 100% !important;
+				li {
+					min-width: 35px;
+					flex-grow: 1;
+					margin: 0 1px;
+					button, a {
+						width: 100% !important;
+						justify-content: center;
+						border: none !important;
+						box-shadow: none;
+						border-radius: 4px;
+						span {
+							width: 100%;
+							border: none !important;
+						}
+					}
+				}
+				li:not(.relative) {
+					flex: 1 1 auto;
+					margin: 0;
+					button, a {
+						padding: 10px;
+					}
+				}
+				.relative button {
+					margin: 0;
+				}
+				.topnav-vr {
+					display: none;
+				}
+				.topnav-link {
+					svg {
+						margin: 0;
+					}
+					span {
+						display: none;
+					}
+				}
+				.text-right {
+					display: none;
+				}
+			}
+		}
+	}
+	
+	.sidebar {
+		width: var(--sidebar-width) !important;
+		min-width: 220px;
+		// background-color: rgba(0,0,0,0.1);
+		z-index: 1;
+		flex-grow: 1;
+		& > [class="pl1 pr1 pb1 flex-item-noshrink"] {
+			padding-bottom: 0;
+			z-index: 3;
+		}
+		& > .scroll-if-needed {
+			margin-top: -20px;
+			background: linear-gradient(200deg, transparent, var(--background-weak) );
+			scrollbar-color: transparent transparent;
+			transition: scrollbar-color .2s;
+			overflow-y: scroll;
+			&:hover, &:focus-within {
+				scrollbar-color: unset;
+			}
+		}
+		& > .scroll-if-needed::before {
+			content: "";
+			position: sticky;
+			top: 0;
+			height: 40px;
+			width: 100%;
+			background: linear-gradient(var(--background-norm),  transparent);
+			z-index: 2;
+			pointer-events: none;
+		}
+	}
+}
+	
+	.main {
+		transition: margin .2s;
+		border-radius: 0 !important;
+		z-index: 2;
+		border-top: 0;
+		border-left: 0;
+		max-width: unset !important;
+		flex-wrap: nowrap;
+		width: calc(100% - var(--sidebar-width));
+		background-color: var(--background-norm);
+		transition: width .4s !important;
+		.toolbar {
+			// width: 30px;
+			// width: 400px;
+			height: 36px;
+			height: toolbarHeight;
+			min-height: 36px;
+			// margin-bottom: -35px;
+			border-bottom: 0;
+			// background: none;
+			// margin-right: 280px !important;
+			box-shadow: var(--shadow-norm) !important;
+			background: var(--background-norm);
+			z-index: 100;
+			overflow-x: auto;
+			flex-wrap: nowrap;
+			transition: height .2s
+			& > div {
+				// display: contents;
+				// display: flex;
+				// flex-wrap: nowrap;
+				min-width: max-content;
+			}
+			.vr, .toolbar-separator {
+				margin: 10px 4px;
+			}
+			button {
+				margin-bottom: 3px;
+				margin-top: 3px;
+				border-radius: 4px;
+				min-height: 30px;
+			}
+		}
+		
+		.items-column-list-inner .sticky-top:first-child {
+			// position: fixed;
+			// top: 0;
+			// right: 0;
+			// height: 36px;
+			// align-items: center;
+			// background: none;
+			// border: 0 !important;
+			// z-index: 2 !important;
+			position: relative;
+			overflow-x: auto;
+			flex-wrap: nowrap;
+			border: 0;
+			// background-color: var(--background-norm);
+			// box-shadow: var(--shadow-norm);
+			& > * {
+				// flex-wrap: nowrap;
+				min-width: max-content;
+			}
+		}
+		.items-column-list {
+			// max-width: 400px;
+			scrollbar-color: transparent transparent;
+			transition: scrollbar-color .2s, flex .7s;
+			overflow-y: scroll;
+			&:hover, &:focus, &:focus-within {
+				scrollbar-color: unset;
+			}
+		}
+		.items-column-list-inner {
+			// margin: 7px 6px !important;
+			// margin-top: 0 !important;
+			// margin-right: 0 !important;
+			border: 0;
+			background: var(--background-weak);
+			.item-container {
+				transition: color .2s, box-shadow .3s;
+				// box-shadow: inset 0px 0 0 var(--email-item-selected-background-color,var(--interaction-norm));
+				&::after {
+					transition: all .1s;
+					border-left-width: 0px;
+				}
+			}
+			.item-container.item-is-focused {
+				// opacity: 0;
+				&::after {
+					transition: all .2s, margin-left .4s !important;
+					// border-right-width: 6px; !important;
+					border-left-width: 6px !important;
+					margin-left: 4px;
+					margin-top: 16px;
+					margin-bottom: 16px;
+					box-sizing: border-box;
+					box-shadow: none !important;
+				}
+			}
+			.item-container:hover {
+				// color: var(--text-norm);
+			}
+			.item-container.item-is-selected {
+				background: none;
+				box-shadow: inset 350px 0 100px var(--email-item-selected-background-color,var(--interaction-norm));
+			}
+			
+		}
+		
+		.flex-item-fluid {
+			padding: 0 !important;
+		}
+		.message-container {
+			border-left: 0;
+			border-right: 0;
+			border-radius: 0 !important;
+			margin-top: -1px !important;
+			// border: 0;
+			border-color: var(--border-weak) !important;
+			margin: 0 0 !important;
+			// padding-top: 10px;
+			.border-top {
+				border: none;
+				padding-top: 0;
+			}
+		}
+		// Header
+		.message-conversation-summary {
+			margin: 0 !important;
+			padding: 0px 10px;
+			padding-top: 10px;
+			border-bottom: 0;
+			box-shadow: var(--shadow-norm) !important;
+			&::after {
+				content: "";
+				position: absolute;
+				bottom: -10px;
+				left: 0px;
+				width: 10px;
+				height: 10px;
+				border-top-left-radius: 100px;
+				box-shadow: -10px -10px 0 10px var(--background-norm);
+			}
+			
+			.text-left.no-scroll.mt0-5 {
+				display: none;
+			}
+		}
+		
+	}
+	
+}
+@-moz-document domain("calendar.protonmail.com") {
+	.calendar-grid-heading {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		// height: auto !important;
+		padding: 8px 0 !important;
+		height: 2em;
+		& > span:first-child {
+			// margin-top: 4px;
+			margin-right: 6px;
+			& + span {
+				margin-top: 0;
+				font-size: 1em;
+			}
+		}
+	}
+}
