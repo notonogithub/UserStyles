@@ -1,7 +1,7 @@
 /* ==UserStyle==
  -- THEME STUFF --
 @name           GreasyFork | Modernized ( Optional Dark Theme )
-@version        1.3.12
+@version        1.3.13
 @description    A much cleaner and more modern version of GreasyFork!
 @updateURL     	https://codeberg.org/Freeplay/UserStyles/raw/branch/main/GreasyFork-Modernised.user.css
 
@@ -17,10 +17,10 @@
 @var checkbox darkmode "Dark Mode" 0 
 
 ==/UserStyle== */
-/* Btw I didn't know how version numbers properly worked before when I first started making this so... */
+/* Nov, 20 / 21
+- Quick lil' fix to details page & header.
 /* Dec, 16 / 20
 - Fixed codeblocks being barely visable https://codeberg.org/Freeplay/UserStyles/issues/4
-- Other minor fixes
 /* Nov, 15 / 20
 - Added borders to sections
 - More fixes
@@ -335,8 +335,8 @@
 		}
 		#site-name {
 			position: absolute;
-			width: 150px;
-			min-width: 150px;
+			width: 200px;
+			min-width: 200px;
 			height: 30px;
 			margin-top: auto;
 			margin-bottom: auto;
@@ -728,7 +728,7 @@
 		#script-meta {
 			order: 2;
 			max-width: none;
-			flex: 1 1 400px;
+			flex: 1 1 600px;
 		}
 		#script-meta dt {
 			max-width: none !important;
