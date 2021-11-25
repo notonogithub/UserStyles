@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Roblox Galaxy
-@version        1.0.0
+@version        1.0.1
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/roblox/roblox-galaxy.user.css
 @preprocessor   stylus
 
@@ -92,14 +92,21 @@
 			opacity: .8;
 		}
 		.container-header, .game-home-page-carousel-title {
-			display: flex;
+			// display: flex;
+			// flex-wrap: wrap;
+			// justify-content: space-between;
+			// align-items: center;
 			margin-bottom: 12px !important;
 			margin-top: 10px;
 			text-transform: uppercase;
-			opacity: .6;
 			transition: opacity .2s;
 			animation: fadeIn 1s;
 			font-size: .9em;
+			position: relative;
+			z-index: 2;
+			& > .ng-scope {
+				display: contents;
+			}
 			h3, a:first-child {
 				flex-grow: 1;
 				padding-bottom: 0 !important;
@@ -114,21 +121,21 @@
 					margin-top: -1px;
 				}
 			}
-			&::before {
-				content: ""
-				display: flex;
-				width: 0px;
-				border-top: 1px solid currentcolor;
-				margin: auto 0;
-				opacity: 0;
-				transition: width .3s, margin .2s, opacity .2s;
-			}
-			a:focus &::before, a:hover &::before {
-				width: 10px;
-				border-top: 1px solid currentcolor;
-				margin: auto 10px;
-				opacity: 1;
-			}
+			// &::before {
+			// 	content: ""
+			// 	display: flex;
+			// 	width: 0px;
+			// 	border-top: 1px solid currentcolor;
+			// 	margin: auto 0;
+			// 	opacity: 0;
+			// 	transition: width .3s, margin .2s, opacity .2s;
+			// }
+			// a:focus &::before, a:hover &::before {
+			// 	width: 10px;
+			// 	border-top: 1px solid currentcolor;
+			// 	margin: auto 10px;
+			// 	opacity: 1;
+			// }
 		}
 		
 		
@@ -746,11 +753,11 @@
 	
 	
 	/* Cards */
-	.game-cards, .multi-row {
+	.game-cards:not(.group-list), .multi-row {
 		overflow: visible !important;
 		justify-content: center;
 		display: flex;
-		margin: 0 -8px;
+		margin: 0 -13px;
 		for row in (1..50) {
 			.game-card:nth-child({row}) {
 				animation: slideUpIn .7s .02s * row
@@ -760,12 +767,13 @@
 			flex-wrap: wrap;
 			justify-content: flex-start;
 		}
+		
 	}
 	.game-tile {
 		width: auto !important;
 		padding: 0 !important;
 	}
-	.game-card-container {
+	.game-card-container:not([href*="roblox.com/groups/"]) {
 		perspective: 100px;
 		outline: none !important;
 		position: relative;
