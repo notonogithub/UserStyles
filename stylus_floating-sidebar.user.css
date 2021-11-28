@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Stylus Editor - Floating Sidebar
-@version        1.0.5
+@version        1.0.6
 @description    A floating sidebar for Stylus! Useful when working in a small window.
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/twitter/stylus_floating-sidebar.user.css
 @preprocessor   stylus
@@ -17,8 +17,8 @@
 
 ==/UserStyle== */
 
-/* Update 1.0.5
-- Added option to pin issues
+/* Update 1.0.6
+- Fixed padding with Word Wrapping on.
 */
 @-moz-document regexp("^(moz|chrome)-extension://.*$") { 
 	#stylus-edit {
@@ -162,15 +162,13 @@
 			.CodeMirror {
 				.CodeMirror-scroll {
 					max-height: 100vh !important;
-					
 					/* Add right padding due to width of popup */
-					pre.CodeMirror-line, pre.CodeMirror-line-like {
-						& > span {
-							padding-right: 400px !important;
-							box-sizing: content-box;	
+					.CodeMirror-code {
+						min-width: calc(100% + 400px);
+						pre.CodeMirror-line, pre.CodeMirror-line-like {
+							max-width: calc(100% - 400px);
 						}
 					}
-					
 				}
 			}
 		}
