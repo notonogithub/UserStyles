@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Stylus Editor - Floating Sidebar
-@version        1.0.6
+@version        1.1.0
 @description    A floating sidebar for Stylus! Useful when working in a small window.
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/twitter/stylus_floating-sidebar.user.css
 @preprocessor   stylus
@@ -11,14 +11,15 @@
 @homepageURL    https://codeberg.org/Freeplay/UserStyles
 @supportURL     https://codeberg.org/Freeplay/UserStyles/issues
 
+@var checkbox hide "Appear as a tab" 0
 @var select animation  "Expand Animation Type" ["Default", "Reduced", "None"]
 @var checkbox issues "Pin Issues (Expand to show)" 0
 
 
 ==/UserStyle== */
 
-/* Update 1.0.6
-- Fixed padding with Word Wrapping on.
+/* Update 1.1.0
+- Added the option to make sidebar appear as a tab
 */
 @-moz-document regexp("^(moz|chrome)-extension://.*$") { 
 	#stylus-edit {
@@ -40,7 +41,32 @@
 			flex-direction: column !important;
 			backdrop-filter: blur(10px);
 			background-color: rgba(250,250,250,.7); // Sadly, some color themes may not work well with this. Better rely on it overriding the background-color.
-			transition: opacity .3s, transform .5s, max-height .3s, min-width .2s, max-width .2s, padding .2s;
+			transition: opacity .3s, transform .5s, max-height .3s, min-width .2s, max-width .2s, padding .2s, right .2s, top .2s;
+			
+			if hide {
+				width: 160px !important;
+				right: -140px !important;
+				top: 24px !important;
+				border-radius: 12px;
+				background-color: white;
+				max-height: 35px !important;
+				overflow: hidden;
+				&::before {
+					content: "";
+					position: absolute;
+					top: 0;
+					left: 0;
+					bottom: 0;
+					width: 100px;
+					background-color: inherit;
+					z-index: 100;
+					border-radius: 12px;
+					background-image: url("https://raw.githubusercontent.com/lucide-icons/lucide/master/icons/edit.svg");
+					background-size: 22px;
+					background-position: 8px;
+					background-repeat: no-repeat;
+				}
+			}
 			if animation == "Default" {
 				transform: scale(.98);
 			}
@@ -145,7 +171,13 @@
 				max-height: calc(100vh - 30px) !important;
 				// padding: 15px;
                 min-width: 220px;
+				right: -16px !important;
+				top: 0 !important;
+				width: 30vw !important;
 				overflow: hidden scroll;
+				&::before {
+					content: unset;
+				}
 				#basic-info {
 					margin: 0 !important;
 				}
@@ -164,9 +196,11 @@
 					max-height: 100vh !important;
 					/* Add right padding due to width of popup */
 					.CodeMirror-code {
-						min-width: calc(100% + 400px);
-						pre.CodeMirror-line, pre.CodeMirror-line-like {
-							max-width: calc(100% - 400px);
+						if not hide {
+							min-width: calc(100% + 400px);
+							pre.CodeMirror-line, pre.CodeMirror-line-like {
+								max-width: calc(100% - 400px);
+							}
 						}
 					}
 				}
