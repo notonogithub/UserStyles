@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Twitter Tweaks by @FreeplayG
-@version        1.3.8
+@version        1.3.9
 @description    Uncrop images, hide trends, Avatar roundness, move header aside, and more!!
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/twitter/twitter-tweaks.user.css
 @preprocessor   stylus
@@ -13,41 +13,41 @@
 
 @var text notice 'Make sure you are using the "Stylus" browser extension, not "Stylish"! — Style created by @FreeplayG' "'https://add0n.com/stylus.html'"
 
-@var checkbox moveHeader     "↔ Timeline: Move header to sidebar" 1
+@var checkbox moveHeader     "↔ Timeline: Move header to sidebar" 1
 
-@var select   fullWidthMedia "🖼 Timeline: Media Size" ["Default", "Larger*", "Full-Width"]
-@var range    avatarRadius   "⚫ Timeline: Avatar Roundness" [30, 5, 50, 5, '%']
-@var number   TLWidth        "↔ Timeline: Timeline Width (pixels)" [600, 600, 9999, 1, "px"]
-@var checkbox hideTweetBoxTL "⛔ Timeline: Compose " 1
-@var checkbox hideTLFollow   "⛔ Timeline: Who to follow, Topics to follow, AND adverts" 1
-@var checkbox hideSpacers    "⛔ Timeline: Spacers " 0
+@var select   fullWidthMedia "🖼 Timeline: Media Size" ["Default", "Larger*", "Full-Width"]
+@var range    avatarRadius   "⚫ Timeline: Avatar Roundness" [30, 5, 50, 5, '%']
+@var number   TLWidth        "↔ Timeline: Timeline Width (pixels)" [600, 600, 9999, 1, "px"]
+@var checkbox hideTweetBoxTL "⛔ Timeline: Compose " 1
+@var checkbox hideTLFollow   "⛔ Timeline: Who to follow, Topics to follow, AND adverts" 1
+@var checkbox hideSpacers    "⛔ Timeline: Spacers " 0
 
 
-@var checkbox resizeSidebar  "↔ Image Preview: Resize sidebar depending on image size" 1
-@var checkbox removeImageBar "⛔ Image Preview: interaction bar" 0
+@var checkbox resizeSidebar  "↔ Image Preview: Resize sidebar depending on image size" 1
+@var checkbox removeImageBar "⛔ Image Preview: interaction bar" 0
 
-@var checkbox noTrends       "⛔ Sidebar: What's Happening " 1
-@var checkbox noFollowBox    "⛔ Sidebar: Who to follow " 1
+@var checkbox noTrends       "⛔ Sidebar: What's Happening " 1
+@var checkbox noFollowBox    "⛔ Sidebar: Who to follow " 1
 
-@var checkbox noMessagesBox  "⛔ Sidebar: Messages " 1
+@var checkbox noMessagesBox  "⛔ Sidebar: Messages " 1
 
-@var color    themeColor     "🌈 Custom Theme Color" #1da1f2
-@var select   noBorder       "⛔ Border Style" ["Default*", "Hide", "keep:Only Timeline Separators"]
-@var checkbox columnBG       "💡 Contrast between background and feed" 1
-@var checkbox bgBanner       "🖼 Use profile banners as background" 1
+@var color    themeColor     "🌈 Custom Theme Color" #1da1f2
+@var select   noBorder       "⛔ Border Style" ["Default*", "Hide", "keep:Only Timeline Separators"]
+@var checkbox columnBG       "💡 Contrast between background and feed" 1
+@var checkbox bgBanner       "🖼 Use profile banners as background" 1
 
-@var text     customBG 	     "🖼 Custom Background (Place image link in quotes, image MUST be uploaded from Twitter due to Content Security Policy)" '""'
-@var range    customBGOpacity"🖼 Custom Background: Opacity" [1, 0.05, 1, .05]
-@var range    customBGBlur   "🖼 Custom Background: Blur" [0, 0, 30, 5, 'px']
+@var text     customBG 	     "🖼 Custom Background (Place image link in quotes, image MUST be uploaded from Twitter due to Content Security Policy)" '""'
+@var range    customBGOpacity"🖼 Custom Background: Opacity" [1, 0.05, 1, .05]
+@var range    customBGBlur   "🖼 Custom Background: Blur" [0, 0, 30, 5, 'px']
 
-@var checkbox moreAnim       "🎞️ More Animations" 1
-@var checkbox revertFont     "🇦 Revert Font" 0
+@var checkbox moreAnim       "🎞️ More Animations" 1
+@var checkbox revertFont     "🇦 Revert Font" 0
 
-@var checkbox followersCount "🖤 Wellbeing: Follower Count" 1
-@var checkbox likesCount     "🖤 Wellbeing: Likes Count" 1
-@var checkbox retweetsCount  "🖤 Wellbeing: Retweets Count" 1
-@var checkbox commentsCount  "🖤 Wellbeing: Comments Count" 1
-@var checkbox analyticsButton"🖤 Wellbeing: Analytics Button" 1
+@var checkbox followersCount "🖤 Wellbeing: Follower Count" 1
+@var checkbox likesCount     "🖤 Wellbeing: Likes Count" 1
+@var checkbox retweetsCount  "🖤 Wellbeing: Retweets Count" 1
+@var checkbox commentsCount  "🖤 Wellbeing: Comments Count" 1
+@var checkbox analyticsButton"🖤 Wellbeing: Analytics Button" 1
 
 
 @var text noticeMobile "Below are options meant for Mobile Devices" '"Okay!"'
@@ -56,12 +56,12 @@
 @var checkbox largerBottomBar "Larger Bottom Bar" 0
 @var checkbox bottomHeader    "Move header to bottom" 1
 
-@var text     haha            "💸 Donate" '"https://www.patreon.com/freeplayg"'
+@var text     haha            "📣 Try Roblox Galaxy!" '"https://userstyles.world/style/1979/roblox-galaxy"'
 
 
 ==/UserStyle== */
 /* Update 1.3.8
-- Removed uncrop images option, Twitter added it themselves!
+- MORE NOTICEABLE REPLY MENTION SELECTION THING DAMNIT
 */
 @-moz-document domain("twitter.com") {
 	
@@ -69,6 +69,43 @@
 		scrollbar-color: rgba(155,155,155,0.5) transparent;
 	}
     
+	[class="css-1dbjc4n r-18u37iz r-16y2uox r-1wbh5a2"] {
+		& > [class="css-1dbjc4n r-1iusvr4 r-16y2uox"]:last-child > [role="button"] {
+			font-size: 0 !important;
+			padding-bottom: 0;
+			margin-bottom: 0px;
+			width: max-content !important;
+			max-width: 100%;
+			&:hover span::after {
+				opacity: .1 !important;
+			}
+			& > span {
+				font-size: 15px;
+				background-color: rgba(100,100,100,0.2);
+				padding: 6px 12px;
+				border-radius: 100px;
+				display: inline-flex;
+				align-items: center;
+				position: relative;
+				&::before {
+					content: "✏ ";
+					font-size: 1.6em;
+				}
+				&::after {
+					content: "";
+					position: absolute;
+					inset: 0;
+					background-color: currentColor;
+					border-radius: 100px;
+					z-index: -1;
+					opacity: 0;
+					transition: opacity .1s;
+				}
+			}
+		}
+	}
+	
+	
     // Column Width
     @media not screen and (max-width: 1278px) and (min-width: 987px) {
         main > .r-rthrr5, main > .r-33ulu8 {
