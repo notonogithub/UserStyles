@@ -1,0 +1,530 @@
+/* ==UserStyle==
+@name           Tutanota Modern
+@version        1.0.0
+@description    A more modern, compact layout for Tutanota!
+@updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/tutanota/tutanotamodern.user.css
+@preprocessor   stylus
+
+ -- AUTHOR STUFF --
+@namespace      Freeplay
+@author         Freeplay (https://freeplay.codeberg.page/)
+@homepageURL    https://codeberg.org/Freeplay/UserStyles
+@supportURL     https://codeberg.org/Freeplay/UserStyles/issues
+
+
+@var range sidebarWidth "Sidebar Width" [220, 190, 300, 1, "px"]
+@var range emailsWidth "Sidebar Width" [300, 300, 600, 1, "px"]
+@var checkbox miniSide "[WORK IN PROGRESS] Collapse Sidebar" 0
+
+==/UserStyle== */
+
+@-moz-document domain("mail.tutanota.com") {
+	body[data-darkreader-inline-bgcolor] {
+		background-color: inherit !important;
+		// --darkreader-inline-bgcolor: var(--darkreader-neutral-background) !important;
+	}
+	// Animations
+	@keyframes fadeIn {
+		from { opacity: 0; }
+		to { opacity: 1 }t
+	}
+	@keyframes slideIn {
+		from { opacity: 0; transform: translateY(2px) }
+		to { opacity: 1 }
+	}
+	@keyframes slideInBig {
+		from { opacity: 0; transform: translateY(2px) }
+		to { opacity: 1 }
+	}
+	@keyframes slideLeftIn {
+		from { opacity: 0; transform: translateX(4px) }
+		to { opacity: 1 }
+	}
+	.dialog {
+		animation: slideIn .4s .15s backwards;
+	}
+	.dropdown-panel {
+		// width: 600px;
+		animation: fadeIn .2s .12s backwards;
+	}
+	.dropdown-content {
+		padding-inline: 8px;
+	}
+	.dropdown-shadow.dropdown-panel {
+		box-shadow: 0 8px 24px rgba(0,0,0,0),
+			0 0px 12px rgba(0,0,0, .05),
+			0 0 0 100vw rgba(0,0,0,0.1);
+		border-radius: 12px;
+	}
+	
+@media only screen and (min-width: 1140px) {
+    /*** HEADER ***/
+	.header-nav {
+		position: absolute;
+		height: 93px;
+		width: sidebarWidth;
+		// display: flex;
+		// flex-direction: column;
+		display: block;
+		padding: 20px;
+		padding-bottom: 0;
+		box-shadow: none !important;
+		border: none !important;
+		background: none !important;
+		.abs.full-width {
+			top: 0;
+			left: 0;
+			overflow: hidden;
+			position: fixed;
+			height: 5px;
+			& > div {
+				// height: 100px;
+				filter: blur(200px);
+				transform: scale(50);
+				animation-duration: 1s;
+			}
+		}
+		.header-right, .header-left {
+			position: static;
+			padding: 0 !important;
+			margin: 0 !important;
+			.logo {
+				margin: 0 !important;
+				padding: 0 !important;
+				margin-bottom: 5px !important;
+				svg {
+					height: 30px;
+				}
+			}
+			&.header-right {
+				.button-height {
+					height: 30px;
+				}
+				.nav-bar-spacer {
+					display: none;
+				}
+				.nav-bar, & > .flex {
+					display: contents;
+				}
+				.plr-nav-button, .search-bar {
+					padding: 0;
+					flex: unset !important;
+					&:not(.search-bar) {
+						width: 0 !important;
+						flex-grow: 2 !important;
+					}
+					max-width: sidebarWidth - 40px !important;
+					flex-grow: 1 !important;
+					padding: 0 !important;
+					margin: 0 !important;
+					justify-content: center;
+					.nav-button {
+						padding: 0 !important;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						.label {
+							display: none;
+						}
+						
+					}
+					svg {
+						height: 20px;
+						max-width: 90%;
+					}
+					& > button {
+						flex-grow: 1;
+						display: flex;
+						justify-content: center;
+					}
+				}
+			}
+			
+		}
+	}
+	/*** COLUMNS ***/
+	// Layout
+	.view-columns {
+		display: flex;
+		// z-index: 2;
+		position: static;
+		transform: none !important;
+		& > div {
+			position: static !important;
+			width: unset !important;
+			&.view-column:first-child {
+				transition: width .2s;
+				width: sidebarWidth !important;
+				if miniSide {
+					width: 70px !important;
+					&:hover, &:focus, &:focus-within, .header-nav:hover ~ & {
+						width: sidebarWidth !important;
+					}
+					.folder-row > a {
+						padding-inline: 30px !important;
+					}
+					[class*="button-"] {
+						transition: margin .2s, width .2s, height .2s, min-width .2s;
+					}
+					button.button-width-fixed {
+						overflow: visible;
+					}
+					&:not(:hover), .header-nav:not(:hover) ~ &:not(:hover) {
+						.button-content {
+							padding: 0;
+							min-width: unset;
+							display: flex !important;
+							justify-content: center;
+							// margin-left: -4px;
+						}
+						drawer-menu {
+							opacity: 0;
+							height: 0 !important;
+						}
+					}
+				}
+			}
+			&.view-column:nth-child(2) {
+				width: emailsWidth !important;
+			}
+			#mail-viewer {
+				& > div, & > .header > div {
+					padding-left: 10px !important;
+				}
+			}
+		}
+	}
+}
+
+	.view-columns {
+		& > div {
+			& > div {
+				transition: width .2s, flex .2s;
+			}
+			drawer-menu {
+				height: 35px !important;
+				opacity: 1;
+				overflow: hidden;
+				transition: opacity .2s, height .3s !important;
+			}
+			drawer-menu + div {
+				padding-top: 88px;
+				.scroll {
+					margin-top: 10px;
+				}
+				.mlr-l + .scroll {
+					margin-top: -18px;
+					padding-top: 20px;
+					transition: scrollbar-color .2s;
+					&:not(:hover) {
+						scrollbar-color: transparent transparent;
+					}
+				}
+			}
+			&.view-column:first-child {
+				border: 0;
+				& > .flex {
+					flex-direction: column;
+				}
+				[class="mlr-l mt mb"] {
+					margin: 16px 18px;
+					margin-bottom: 0;
+					background-color: inherit;
+					z-index: 2;
+					border-radius: 100px !important;
+					button {
+						border-radius: 100px !important;
+						height: 38px;
+						& > div {
+							max-height: 100%;
+						}
+					}
+				}
+				.folder-row {
+					&.flex-row {
+						padding-inline: 0;
+						& > a {
+							padding-inline: 26px;
+						}
+					}
+					
+					small {
+						max-width: 100%;
+						text-overflow: ellipsis;
+						overflow: hidden;
+						text-transform: lowercase !important;
+						white-space: nowrap;
+						&:first-letter {
+							text-transform: uppercase !important;
+						}
+					}
+				}
+				drawer-menu {
+					width: auto;
+					height: auto;
+					border: 0;
+					order: 2;
+					& > .flex {
+						flex-direction: row;
+						padding: 0;
+						& > div:first-child {
+							max-width: 15px !important;
+						}
+						button {
+							width: auto !important;
+							height: 35px;
+							& > div {
+								width: auto !important;
+								min-width: unset !important;
+								max-height: 100%;
+								padding: 0;
+								.text-ellipsis {
+									display: none;
+								}
+							}
+						}
+						svg {
+							width: 18px;
+							height: 18px;
+						}
+					}
+				}
+			}
+			
+			.list-alternate-background {
+				background: none;
+			}
+			&.view-column:nth-child(2) {
+				flex-grow: 1;
+				border: 0;
+				z-index: 100;
+				#settings & {
+					width: 400px !important;
+				}	
+			}
+			// EMAILS LIST
+			.list-bg {
+				background: none;
+			}
+			.list-header {
+				border: 0;
+				box-shadow: 0 12px 12px -12px rgba(0,0,0,0.1);
+			}
+			
+			.list-container {
+				transition: scrollbar-color .2s;
+				&:not(:hover) {
+					scrollbar-color: transparent transparent !important;
+				}
+			}
+			.list {
+				margin-top: 10px;
+				display: flex !important;
+				flex-direction: column;
+				justify-content: flex-start;
+				min-height: 100%;
+				background: none !important;
+				position: relative;
+				overflow: visible;
+				&::before {
+					content: "";
+					position: absolute;
+					inset: -20px;
+					background-color: rgba(255,255,255,0.05);
+					opacity: .2;
+					z-index: -1;
+				}
+				.list-row, .row-selected {
+					background: none !important;
+					border-left: 0;
+					padding-inline: 14px !important;
+					& > div {
+						margin-left: 0 !important;
+					}
+					& > .flex {
+						margin-left: -4px !important;
+					}
+					&::after, &::before {
+						content: "";
+						opacity: 0;
+						background: transparent;
+						border: 0px solid transparent;
+						transition: opacity .2s, inset .1s .1s, background .2s !important;
+						pointer-events: none;
+					}
+					&::after {
+						content: "";
+						position: absolute;
+						border-top-color: currentColor;
+						border-top: .1px solid;
+						inset: 0 12px;
+						opacity: .1;
+					}
+					&.row-selected::before {
+						content: "";
+						position: absolute;
+						inset: 24px 0px;
+						border-left-color: inherit;
+						opacity: 1;
+						border-left: 3px solid;
+					}
+					.text-ellipsis.b, &.row-selected .text-ellipsis, &:hover {
+						&:not(:hover), &.row-selected {
+							font-weight: 600;
+						}
+						&::after {
+							content: "";
+							position: absolute;
+							inset: 5px 6px;
+							border-radius: 6px;
+							background-color: currentColor;
+							opacity: .05;
+							transition: opacity .2s, inset .1s, background .2s !important;
+						}
+						& + .list-row::after {
+							// border: 0 !important;
+							opacity: 0;
+							top: -5px;
+							left: 12px;
+							right: 12px;
+						}
+					}
+					&:hover + div::after {
+
+					}
+					.dot {
+						display: none;
+					}
+				}
+				.list-loading {
+					position: absolute;
+					height: 100%;
+				}
+			}
+			
+
+			// EMAIL VIEWER	
+			&.view-column:nth-child(3) {
+				flex-grow: 99999;
+				overflow: hidden;
+			}
+			#mail-viewer {
+				overflow-y: scroll !important;
+				&::before {
+					content: "";
+					position: fixed;
+					background-color: inherit;
+					top: 0;
+					height: 100%;
+					width: 10px;
+					z-index: 2;
+					mask: linear-gradient(to right, black, transparent) !important;
+				}
+				.bg-white {
+					animation: slideIn .2s .2s backwards; // Sometimes flashes occur while the email loads in, so I delayed it a little to fix
+				}
+				.header {
+					display: contents;
+					background: inherit;
+					& > div {
+						padding-inline: 20px;
+						border: 0 !important;
+					}
+					.subject-actions {
+						order: -1;
+						position: sticky;
+						top: 0;
+						left: 0;
+						margin: 0;
+						padding: 16px 20px;
+						padding-bottom: 12px;
+						background-color: inherit;
+						opacity: .95;
+						box-shadow: 24px 0px 24px rgba(0,0,0,0.1);
+						z-index: 2;
+						backdrop-filter: blur(20px);
+						.left {
+							animation: slideLeftIn .2s;
+						}
+						.pt-m {
+							padding: 0;
+							button {
+								height: 1em !important;
+							}
+						}
+
+					}
+					.button-min-height, .flex-space-between.button-min-height button {
+						// min-height: 30px;
+						// height: 30px;
+					}
+					.flex-column-reverse {
+						flex-direction: column-reverse;
+					}
+					.small, button {
+						padding-top: 0 !important;
+						align-self: center;
+					}
+					.expander {
+						align-items: flex-end;
+					}
+					.hr {
+						border-top: 1px solid rgba(255,255,255,0.1);
+						background: none;
+						border-bottom: 0 !important;
+						height: 0 !important;
+						order: -1;
+						margin: 0 20px;
+					}
+				}
+				.scroll-no-overlay {
+					margin-top: 20px;
+					flex: unset;
+					height: max-content !important;
+					overflow: visible !important;
+				}
+			}
+			/*** CALENDAR ***/
+			.fill-absolute > .mt-s {
+				margin: 8px;
+				margin-bottom: 0;
+				& > h1 {
+					display: flex;
+					height: 44px;
+					align-items: center;
+				}
+			}
+			.mt-s, .mb-s, h1 {
+				animation: slideIn .4s;
+			}
+			h1 {
+				font-size: 1.2em;
+				font-weight: 600;
+				margin-left: 10px;
+			}
+			.calendar-long-events-header {
+				border: 0;
+			}
+			[style*="border-bottom:"] {
+				border: 0 !important;
+				& ~ .scroll {
+					box-shadow inset 0 16px 24px -24px rgba(0,0,0,0.2);
+				}
+			}
+			.pt-s {
+				padding-top: 4px !important;
+				margin-bottom: -2.5px;
+				& > div > div {
+					border-radius: 100px !important;
+				}
+			}
+		}
+	}
+	#root, #mail, .fill-absolute.flex.col, .view-columns, .view-column, .mail, #mail-viewer {
+		background-color: inherit; !important
+	}
+	
+	
+	
+	
+}
