@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Google Docs Tweaks
-@version        1.0.1
+@version        1.0.2
 @description    Vertical Sidebar, Hide buttons & borders, Compact Comments, Fill BG, & More!
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/google/Google-Docs-Tweaks.user.css
 @preprocessor   stylus
@@ -33,8 +33,8 @@
 
 ==/UserStyle== */
 
-/* Sep 24 / 20
-- Quick fix for vertical toolbar on Chromium browsers
+/* Dec 11 / 20
+- Some fixes that I forgot to publish
 */
 
 @-moz-document domain("docs.google.com") {
@@ -46,6 +46,9 @@ if transitions {
     .kix-lineview-content {
         transition: all .3s !important;
     }
+	.kix-appview-editor {
+		scroll-behavior: smooth;
+	}
 }
 
 if centerToolbar {
@@ -83,9 +86,21 @@ if bgFill {
 	.kix-page-compact-box-shadow, 
 	.kix-paginateddocumentplugin-compact-mode-box-shadow {
 		box-shadow: none !important;
+		.kix-page-column > div:not(.kix-page-column-bottom) {
+			// margin-inline: 10px !important;
+		}
 	}
-	.kix-page-paginated {
+	.kix-page-paginated-box-shadow {
+		box-shadow: 0px 3.3px 20px rgba(0, 0, 0, 0.02),
+		 			 0px 26px 51px rgba(0, 0, 0, 0.04) !important;
+	}
+	.kix-page-canvas-compact-mode {
 		box-shadow: 0 0 0 1px rgba(0,0,0,0.07), 0px 0 0 1px rgba(0,0,0,0.07);
+		box-shadow: none !important;
+		.kix-stacked-tile-page-shadow {
+			display: none;
+		}
+		
 	}
 }
 
@@ -231,6 +246,11 @@ if collapseMenu {
     #docs-bars {
         z-index: 2;
         margin-left: 64px;
+		margin-right: 64px !important;
+		box-sizing: border-box;
+		#docs-toolbar-wrapper {
+			max-width: 100% !important;
+		}
     }
     #docs-menubar {
         margin-left: 0 !important;
@@ -276,12 +296,6 @@ if collapseMenu {
 
 
 
-
-}
-
-
-@-moz-document url-prefix("https://docs.google.com/document") {
-	/* Move toolbar aside */
 if verticalToolbar {
     if not hideBorders {
         #docs-chrome {
@@ -301,7 +315,7 @@ if verticalToolbar {
         &[style*=": 6."],
         &[style*="left: 0px;"],
         &[style*="left: -"]{
-               margin-left: 60px;
+            margin-left: 60px;
             transition: top .5s ease-out;
         }
     }
@@ -325,7 +339,7 @@ if verticalToolbar {
         
 	}
     if not hideBorders {
-        .kix-appview {
+        .kix-appview, .two-panel-layout {
             border-left: 1px solid rgba(100,100,100,0.1);
             border-top-left-radius: 8px;
             &::before {
@@ -347,9 +361,12 @@ if verticalToolbar {
         }
         #docs-chrome {
             padding-left: 45px !important;
+			box-sizing: border-box;
         }
     }
-    
+	#editor-p {
+		max-width: calc(100% - 400px) !important;
+	}
 	.kix-document-top-shadow-inner {
 		margin-right: -60px;
         if not collapseMenu {
@@ -487,7 +504,8 @@ if verticalToolbar {
                 display: none;
             }
 			
-			.goog-toolbar-select {
+			.goog-toolbar-select, 
+			.docs-toolbar-text-button {
 				min-height: 70px;
 				max-width: 100%;
 				display: flex;
@@ -507,6 +525,19 @@ if verticalToolbar {
                     font-weight: 400;
 				}
 			}
+			.goog-flat-menu-button {
+				width: 42px !important;
+				min-width: unset !important;
+				margin: 4px 0;
+				.goog-flat-menu-button-caption {
+					font-size: 0;
+					margin-right: 6px !important;
+					.docs-icon {
+						margin: 0 !important;
+					}
+				}
+			}
+			
 			
 			#fontSizeDecrement, #fontSizeIncrement {
 				border-bottom: 0;
@@ -599,14 +630,14 @@ if verticalToolbar {
             }
 		}
 	}
-    #titlebar-mode-indicator-container {
+    #titlebar-mode-indicator-container .kix-titlebar-mode-switcher {
         position: fixed;
-        left: 2.5px;
+        left: 8px;
         top: 5px;
-        width: 50px;
+        width: 40px;
         height: auto !important;
         margin: 0;
-        .docs-material-menu-button-flat-primary {
+        &.docs-material-menu-button-flat-primary {
             display: flex !important;
             flex-direction: column !important;
             padding: 5px 0;
@@ -628,16 +659,9 @@ if verticalToolbar {
 		padding-left: 55px;
 	}
 }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
 }
