@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Roblox Galaxy
-@version        1.0.1
+@version        1.1.0
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/roblox/roblox-galaxy.user.css
 @preprocessor   stylus
 
@@ -15,6 +15,9 @@
 @var text customBG "Background Image: (link in quotes)" '""'
 @var range customBGblur "Background Image: Blur" [0, 0, 30, 5, "px"]
 @var range customBGopacity "Background Image: Opacity" [0.2, .1, 1, .1]
+@var text boop "𝘿𝙞𝙨𝙖𝙗𝙡𝙞𝙣𝙜 𝙩𝙝𝙚 𝙤𝙥𝙩𝙞𝙤𝙣𝙨 𝙗𝙚𝙡𝙤𝙬 𝙘𝙖𝙣 𝙝𝙚𝙡𝙥 𝙬𝙞𝙩𝙝 𝙥𝙚𝙧𝙛𝙤𝙧𝙢𝙖𝙣𝙘𝙚" '"Okay!"'
+@var checkbox cards "Full card hover animation" 1
+@var checkbox blur  "Blur Effects" 1
 ==/UserStyle== */
 
 @-moz-document domain("roblox.com") {
@@ -42,10 +45,11 @@
 	* {
 		transition: border .05s, background-color .2s, color .2s, opacity .2s;
 	}
+	noBlurColor = rgba(#190f18, .9);
+	noBlurColor = rgba(darken(desaturate(bgColor, 20%), 20%), .9);
 	#rbx-body {
-		margin-bottom: 0;
 		--bg: bgColor;
-		transition: background-color .2s;
+		
 		&:not([data-internal-page-name="Create"]) {
 			background-color: var(--bg) !important;
 		}
@@ -65,7 +69,6 @@
 		&:hover:before {
 			transform: scale(1);
 		}
-		
 		&:not([data-internal-page-name="GameDetail"]):not(.light-theme)::after {
 			content: "";
 			position: fixed;
@@ -82,6 +85,45 @@
 		&:hover:after {
 			transform: scale(1);
 		}
+		footer {
+			background: none;
+			z-index: 5;
+			position: relative;
+			.copyright-container {
+				border: 0;
+				padding-top: 0;
+				display: flex;
+				align-items: center;
+				p {
+					text-align: right;
+					color: white !important;
+				}
+			}
+			a {
+				color: white !important;
+			}
+		}
+	}
+	
+	#rbx-body.dark-theme {
+		margin-bottom: 0;
+		transition: background-color .2s;
+
+		
+		.section-content:not(.remove-panel), .stack-row {
+			background-color: rgba(0,0,0,0.2) !important;
+			animation: slideUpIn 1s;
+		}
+		.btn-control-sm {
+			background-color: rgba(0,0,0,0.4) !important;
+			border-color: rgba(255,255,255,.2) !important;
+			border: 0;
+			padding: 16px !important;
+		}
+		.thumbnail-2d-container, .section-content-off, .nav-tabs, .nav-tabs > li a {
+			background: none !important;
+		}
+		
 		
 		h2 {
 			font-weight: 300 !important;
@@ -137,22 +179,6 @@
 			// 	opacity: 1;
 			// }
 		}
-		
-		
-		footer {
-			background: none;
-			z-index: 5;
-			position: relative;
-			.copyright-container {
-				border: 0;
-				padding-top: 0;
-				display: flex;
-				align-items: center;
-				p {
-					text-align: right;
-				}
-			}
-		}
 	}
 	
 	
@@ -183,6 +209,10 @@
 			
 			& > .container-fluid {
 				display: flex;
+			}
+			
+			#header-menu-icon {
+				outline: none !important;
 			}
 			
 			.rbx-navbar-header, .navbar-left, .navbar-right {
@@ -226,7 +256,12 @@
 				padding: 0 4px;
 				align-items: center;
 				border: 0;
-				backdrop-filter: blur(10px);
+				if blur {
+					backdrop-filter: blur(10px);
+				} else {
+					background-color: noBlurColor;
+				}
+				
 				margin: 0;
 				
 			}
@@ -354,11 +389,17 @@
 			max-height: 100vh;
 			height: 100vh;
 			overflow: hidden scroll;
-			scrollbar-color: rgba(0,0,0,0.2) transparent;
+			scrollbar-color: transparent transparent;
+			&:hover, &:focus-within {
+				scrollbar-color: rgba(0,0,0,0.2) transparent;
+			}
 			box-shadow: none;
-			background-color: rgba(10,20,50,0.5) - 50%;
 			background-color: rgba(0,0,0,0.2);
-			transition: width .3s, margin .5s, opacity .2s, padding .7s !important;
+			if not blur {
+				background-color: noBlurColor;
+			}
+			
+			transition: width .3s cubic-bezier(0.55, 0.1, 0, 1), margin .5s, opacity .2s, padding .7s, scroll !important;
 			// padding-left: 5px;
 			box-sizing: border-box !important;
 			opacity: 0;
@@ -382,7 +423,10 @@
 				width: 190px;
 				padding-left: 6px;
 				opacity: 1;
-				backdrop-filter: blur(40px);
+				if blur {
+					backdrop-filter: blur(40px);
+				}
+				
 			}
 			.rbx-divider {
 				display: none;
@@ -588,23 +632,50 @@
 	
 	
 	/* Games Page */
-	[data-internal-page-name="GameDetail"] {
-
-
+	#rbx-body[data-internal-page-name="GameDetail"] {
+		overflow-x: hidden;
+		.game-main-content {
+			background: none !important;
+		}
 		#game-details-carousel-container {
-			border-radius: 12px;
+			border-radius: 8px;
+			background-color: rgba(0,0,0,0.4);
+			overflow: visible !important;
+			img, iframe {
+				border-radius: 8px;
+			}
+			.shimmer {
+				opacity: .2;
+				background-color: transparent !important;
+			}
 			// Use inactive slides as background
 			.thumbnail-2d-container:not(.carousel-item-active) {
 				&:last-child, &:nth-last-child(2) {
 					opacity: 1 !important;
 					pointer-events: none;
 					// z-index: 9999;
+					position: absolute;
+					left: -1500px;
+					top: -160px;
+					right: -2020px;
+					bottom: -400px;
+					
 					img {
-						position: fixed;
+						// background-position: ;
+						// position: fixed;
+						// mask: linear-gradient(black, rgba(0,0,0,0.5), rgba(0,0,0,0), transparent);
+						// mask: -webkit-radial-gradient(circle closest-side top, #010101, #DE30F100, transparent);
+						// mask: -moz-radial-gradient(circle closest-side top, #010101, #DE30F100, transparent);
+						mask: radial-gradient(at 50% 0%, black, rgba(0,0,0,0.1), transparent, transparent) !important;
 						inset: 0;
-						opacity: .1 !important;
-						filter: blur(10px);
-						transform: scale(1.02) rotate(-1deg);
+						// background: radial-gradient(at 50% 0%, black, white) !important;
+						opacity: .8 !important;
+						// opacity: 0 !important
+						// object-fit: contain;
+						// object-position: 1200px 1200px;
+						object-fit: cover;
+						filter: blur(4px);
+						transform: scale(1.01) translateY(0%) rotate(-.2deg);
 						visibility: visible !important;
 						z-index: 100;
 						transition: transform 1s !important;
@@ -612,13 +683,194 @@
 				}
 			}
 		}
+		.game-calls-to-action {
+			background-color: rgba(0,0,0,0.4) !important;
+			border-radius: 8px;
+			padding: 25px !important;
+			width: calc(100% - 670px);
+			height: 360px;
+			// backdrop-filter: blur(10px);
+			
+			.game-title-container {
+				display: flex;
+				flex-direction: column;
+				h2 {
+					padding: 0 !important;
+					font-weight: 700 !important;
+				}
+				.game-creator {
+					order: -1;
+					span, a {
+						font-weight: 300 !important;
+					}
+					
+				}
+			}
+			.game-buttons-container {
+				// position: relative;
+				inset: 25px;
+				top: unset;
+				width: unset !important;
+				padding: 0;
+				.favorite-follow-vote-share {
+					padding-top: 20px;
+				}
+				.social-media-share {
+					display: none;
+				}
+			}
+			
+			
+		}
 		.content {
-			&::before {
-				content: "";
-				position: absolute;
-				inset: 0;
-				z-index: -1;
-				background-color: black;
+			display: grid;
+			grid-template-columns: calc(100% - 240px) 200px;
+			// grid-template-columns: calc(100% - 525px) 475px;
+			grid-column-gap: 40px;
+			* {
+				grid-column: 1;
+			}
+			#game-detail-page {
+				display: contents;
+			}
+			#Leaderboard-Abp {
+				grid-row: 6 !important;
+				margin: 0 !important;
+				// grid-column: 1 / span 2;
+			}
+			.game-main-content {
+				grid-column: 1 / span 2;
+				grid-row: 2;
+			}
+			#Skyscraper-Abp-Right {
+				position: static;
+				grid-row: 5 / span 10;
+				grid-column: 2;
+				height: max-content;
+				margin: 0 !important;
+				width: 200px;
+				transform: unset !important;
+				max-width: unset !important;
+				margin-top: 3em !important;
+				padding: 20px;
+				iframe {
+					border-radius: inherit !important;
+				}
+			}
+			.text {
+				color: white;
+			}
+			.rbx-tabs-horizontal {
+				display: contents;
+				#horizontal-tabs {
+					grid-column: 2;
+					display: flex;
+					flex-direction: column;
+					grid-row: 3;
+					background: none !important;
+					li {
+						width: 100%;
+						margin-bottom: .5em;
+						background: none !important;
+						a {
+							background-color: rgba(0,0,0,0.3) !important;
+							border-radius: 8px;
+							box-shadow: none !important;
+							
+							span {
+								font-weight: 400 !important;
+								opacity: .9;
+							}
+							&::before {
+								content: unset !important;
+							}
+						}
+						&.active a {
+							background: linear-gradient(25deg, #396bde90, #313c9f90) !important;
+							span {
+								font-weight: 900 !important;
+								opacity: 1 !important;
+							}
+						}
+					}
+				}
+				.tab-content {
+					display: contents;
+				}
+				#store, #game-instances {
+					grid-row: 3;
+				}
+				.container-header {
+					grid-row: 3;
+					height: max-content;
+					h3 {
+						color: white !important;
+						opacity: 1 !important;
+						font-size: 1.2em;
+						text-transform: capitalize;
+					}
+
+				}
+				#about.active {
+					display: contents;
+					& > * {
+						grid-column: 1;
+					}
+					.section-content, .section {
+						&::before, &::after {
+							content: unset !important;
+						}
+					}
+					.game-about-container {
+						display: contents;
+						.container-header {
+							display: none;
+						}
+						&::before {
+							content: unset !important;
+						}
+						
+						& > * {
+							grid-column: 1;
+						}
+						& > .section-content {
+							display: contents;
+							.game-description {
+								margin-top: 5px;
+								grid-row: 3 / span 3;
+								&:first-line {
+									font-size: 1.2em;
+									// font-weight: 700;
+									line-height: 2em;
+								}
+							}
+							& > * {
+								grid-column: 1;
+							}
+							.game-stats-container {
+								grid-row: 4;
+								background-color: rgba(0,0,0,0.4);
+								border-radius: 8px;
+								border: 0 !important;
+								padding: 20px;
+							}
+							.game-stat-footer {
+								grid-row: 5;
+							}
+							.game-stats-container, .game-stat-footer {
+								grid-column: 2;
+								display: flex;
+								flex-direction: column;
+								li {
+									width: 100%;
+									display: flex;
+									flex-direction: row;
+									justify-content: space-between;
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 		.hlist {
@@ -710,6 +962,8 @@
 			padding: 0 15px;
 			width: max-content !important;
 			max-width: unset !important;
+			z-index: 10;
+			background-color: var(--bg) !important;
 			transition: padding .2s, opacity .2s, margin .4s;
 			
 			.arrow {
@@ -727,6 +981,7 @@
 			
 			&:not(.disabled):hover, &:not(.disabled):focus {
 				padding: 0 25px;
+				background-color: noBlurColor !important;
 			}
 			&.prev {
 				margin-left: -10px;
@@ -774,7 +1029,10 @@
 		padding: 0 !important;
 	}
 	.game-card-container:not([href*="roblox.com/groups/"]) {
-		perspective: 100px;
+		if cards {
+			perspective: 100px;
+		}
+		
 		outline: none !important;
 		position: relative;
 		height: 220px !important;
@@ -797,11 +1055,12 @@
 			transition: transform .5s, width .2s, height .2s, min-height .2s, margin .2s, margin-top .5s !important;
 			background: rgba(0,0,0,0.2);
 			overflow: hidden;
+			border-radius: 6px;
 			max-height: unset !important;
 			
 			.game-card-thumb-container,
 			.game-card-thumb-container img, 
- 			.game-card-thumb-container, .game-card-thumb {
+			.game-card-thumb-container, .game-card-thumb {
 				object-fit: cover !important;
 				transition: height .3s, width .2s !important;
 				background-color: transparent !important;
@@ -878,14 +1137,22 @@
 			z-index: 1 !important;
 			.game-card-link {
 				// transform: scale(1.1) translate3d(0,-5px,0) rotateX(1deg);
-				transform: translate3d(0,-10px,0) rotateX(1deg);
+				if cards {
+					transform: translate3d(0,-10px,0) rotateX(1deg);
+				}
+				
 				box-shadow: 0 8px 24px rgba(0,0,0,0.6);
 				margin: 0 -12px !important;
 				margin-top: -8px !important;
 				height: 255px !important;
 				min-height: 255px !important;
 				width: 174px;
-				backdrop-filter: blur(10px);
+				if blur {
+					backdrop-filter: blur(10px);
+				} else {
+					background-color: noBlurColor;
+				}
+				
 				.game-card-thumb-container,
 				.game-card-thumb-container img, 
 				.game-card-thumb-container, .game-card-thumb {
@@ -917,13 +1184,18 @@
 		}
 		&:active {
 			.game-card-link {
-				transform: translate3d(0,-12px,0) scale(.95) !important;
+				if cards {
+					transform: translate3d(0,-12px,0) scale(.95) !important;
+				} else {
+					transform: scale(.98) !important;
+				}
+				
 				margin-top: 0;
 				transition: transform .1s !important;
 			}
 		}
 	}
-
+	
 	/*** STORE ***/
 	[data-internal-page-name="Catalog"] {
 		.hlist {
@@ -1043,76 +1315,19 @@
 	
 	
 	
-	#rbx-body.light-theme {
-		overflow: hidden;
+	#rbx-body.light-theme:not([data-internal-page-name="Login"]) {
 		&::after {
-			content: "Switch to Dark mode in order for this style to work properly!\a Cog icon above > Settings";
-			white-space: pre;
-			line-height: 30px;
-			text-align: center;
-			margin: 20px;
-			color: white;
-			position: fixed;
-			inset: -20px;
-			top: 50px;
-			display: flex;
-			justify-content: center;
-			// align-items: center;
-			z-index: 9999;
-		}
-		&[data-internal-page-name="Settings"]::after {
-			content: "Switch to Dark mode in order for this style to work properly!\a Set the dropdown below to 'Dark'";
-		}
-		#settings-icon {
-			position: fixed;
-			z-index: 9999;
-			display: flex;
-			inset: -1000px;
-			align-items: center;
-			justify-content: center;
-			// filter: brightness(100);
-			backdrop-filter: blur(20px);
-			background: rgba(0,0,0,0.5);
-			#nav-settings {
-				filter: brightness(100);
-			}
-		}
-		&[data-internal-page-name="Settings"] #nav-settings {
-			display: none;
-		}
-		#container-main {
-			z-index: 99999;
-		}
-		#settings-popover {
-			position: fixed;
-			inset: unset !important;
-			top: 70px !important;
-			left: calc(50% - 52px) !important;
-			z-index: 99999;
-			a {
-				text-align: center;
-				color: white;
-			}
-			a:not([href*="my/account"]) {
-				display: none;
-			}
-		}
-		#themes-list {
+			content: "Please switch to Dark Mode in Roblox's settings, then re-enable the style.";
 			position: fixed;
 			inset: 0;
-			padding-top: 140px;
-			z-index: 99999;
-			width: unset;
+			z-index: 999999;
+			backdrop-filter: blur(100px);
 			display: flex;
 			justify-content: center;
-			cursor: unset;
-			select {
-				width: 300px;
-				color: white;
-				position: fixed;
-				z-index: 999999;
-			}
-			
+			align-items: center;
+			color: white !important;
+			font-weight: 600;
+			font-size: 2vw;
 		}
 	}
 	
