@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Tutanota Modern
-@version        1.0.0
+@version        1.0.1
 @description    A more modern, compact layout for Tutanota!
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/tutanota/tutanotamodern.user.css
 @preprocessor   stylus
@@ -13,7 +13,7 @@
 
 
 @var range sidebarWidth "Sidebar Width" [220, 190, 300, 1, "px"]
-@var range emailsWidth "Sidebar Width" [300, 300, 600, 1, "px"]
+@var range emailsWidth "Emails Width" [300, 300, 600, 1, "px"]
 @var checkbox miniSide "[WORK IN PROGRESS] Collapse Sidebar" 0
 
 ==/UserStyle== */
