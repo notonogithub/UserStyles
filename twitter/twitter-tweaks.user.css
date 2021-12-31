@@ -1,6 +1,14 @@
+/* Update 1.3.12
+- Minor Adjustments
+- Fixed custom theme color
+- Fixed hiding adverts
+- m o r e f i x e s
+- I hope this didn't bring in any new bugs...
+*/
+
 /* ==UserStyle==
 @name           Twitter Tweaks by @FreeplayG
-@version        1.3.10
+@version        1.3.12
 @description    Uncrop images, hide trends, Avatar roundness, move header aside, and more!!
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/twitter/twitter-tweaks.user.css
 @preprocessor   stylus
@@ -23,12 +31,11 @@
 @var checkbox hideSpacers    "⛔ Timeline: Spacers " 0
 
 
-@var checkbox resizeSidebar  "↔ Image Preview: Resize sidebar depending on image size" 1
+@var checkbox resizeSidebar  "↔ Image Preview: Dynamic Sidebar Width" 1
 @var checkbox removeImageBar "⛔ Image Preview: interaction bar" 0
 
 @var checkbox noTrends       "⛔ Sidebar: What's Happening " 1
 @var checkbox noFollowBox    "⛔ Sidebar: Who to follow " 1
-
 @var checkbox noMessagesBox  "⛔ Sidebar: Messages " 1
 
 @var color    themeColor     "🌈 Custom Theme Color" #1da1f2
@@ -36,9 +43,9 @@
 @var checkbox columnBG       "💡 Contrast between background and feed" 1
 @var checkbox bgBanner       "🖼 Use profile banners as background" 1
 
-@var text     customBG 	     "🖼 Custom Background (Place image link in quotes, image MUST be uploaded from Twitter due to Content Security Policy)" '""'
-@var range    customBGOpacity"🖼 Custom Background: Opacity" [1, 0.05, 1, .05]
-@var range    customBGBlur   "🖼 Custom Background: Blur" [0, 0, 30, 5, 'px']
+@var text     customBG 	     "🖼 Custom Background (Place image link in quotes, image MUST be uploaded to Twitter due to Content Security Policy)" '""'
+@var range    customBGOpacity"  ↳ Opacity" [1, 0.05, 1, .05]
+@var range    customBGBlur   "  ↳ Blur" [0, 0, 30, 5, 'px']
 
 @var checkbox moreAnim       "🎞️ More Animations" 1
 @var checkbox revertFont     "🇦 Revert Font" 0
@@ -60,15 +67,13 @@
 
 
 ==/UserStyle== */
-/* Update 1.3.10
-- Quick fix for blurred images (again)
-*/
 @-moz-document domain("twitter.com") {
 	
 	html {
 		scrollbar-color: rgba(155,155,155,0.5) transparent;
 	}
-    
+	
+	// Make 'replying to' appear as an actually clickable button! 
 	[class="css-1dbjc4n r-18u37iz r-16y2uox r-1wbh5a2"] {
 		& > [class="css-1dbjc4n r-1iusvr4 r-16y2uox"]:last-child > [role="button"] {
 			font-size: 0 !important;
@@ -106,19 +111,19 @@
 	}
 	
 	
-    // Column Width
-    @media not screen and (max-width: 1278px) and (min-width: 987px) {
-        main > .r-rthrr5, main > .r-33ulu8 {
-            // min-width: 390px;
-            width: 390px + TLWidth;
-            &.r-rthrr5 {
-                max-width: calc(100vw - 330px);
-                [data-testid="primaryColumn"] {
-                    max-width: calc(100% - 390px);
-                }
-            }
-            &.r-33ulu8 {
-                max-width: calc(100vw - 90px);
+	// Column Width
+	@media not screen and (max-width: 1278px) and (min-width: 987px) {
+		main > .r-rthrr5, main > .r-33ulu8 {
+			// min-width: 390px;
+			width: 390px + TLWidth;
+			&.r-rthrr5 {
+				max-width: calc(100vw - 330px);
+				[data-testid="primaryColumn"] {
+					max-width: calc(100% - 390px);
+				}
+			}
+			&.r-33ulu8 {
+				max-width: calc(100vw - 90px);
                 width: TLWidth;
                 [data-testid="primaryColumn"] {
                     max-width: 100%;
@@ -141,14 +146,17 @@
                 }
             }
 			// Fix Images
-			.r-k200y {
+			.r-k200y, .r-1s2bzr4 {
 				align-self: unset;
+				[role="link"] > div > div > .r-1awozwy {
+					align-items: unset !important;
+				}
 				a[href*="/photo/"] > div {
-					width: 100% !important;
+					min-width: 100% !important;
 					div[style^="background-image: url("] {
 						filter: blur(10px);
 						transform: scale(1.1);
-						opacity: .9;
+						opacity: .8;
 					}
 					img {
 						object-fit: contain !important;
@@ -158,6 +166,7 @@
 			}
         }
     }
+
 	
 	if customBG != "" {
 		body::before {
@@ -243,26 +252,73 @@
 	}
 	
 	if not themeColor == #1da1f2 {
-		.r-18z3xeu, // Orange
- 		.r-urgr8i,  // Blue 
-		.r-1vkxrha, // Yellow
-		.r-1dgebii, // Pink
-		.r-1qqlz1x, // Purple
-		.r-b5skir   // Green
+		// Alternates by the color, then when hovered over
+		.r-l5o3uw,  // Blue
+		.r-1vtznih,
+		[href="/compose/tweet"][style^="background-color: rgb(29"],
+		.r-1to6hqq, // Yellow
+		.r-m5n1nr,
+		[href="/compose/tweet"][style^="background-color: rgb(255"],
+		.r-4nw3r4,  // Violet
+		.r-1r4f3zc,
+		[href="/compose/tweet"][style^="background-color: rgb(249"],
+		.r-168457u, // Purple
+		.r-8g4rmw,
+		[href="/compose/tweet"][style^="background-color: rgb(120"],
+		.r-2r9icm,  // Orange
+		.r-oo8a77,
+		.r-s224ru,  // Green
+		.r-1iwjfv5,
+		[href="/compose/tweet"][style^="background-color: rgb(0"],
 		{
-			background-color: themeColor;
+			background-color: themeColor !important;
+			if luminosity(themeColor) < .3 {
+				color: white !important;
+				* {
+					color: white !important;
+				}
+			} else {
+				color: black !important;
+				* {
+					color: black !important;
+				}
+			}
+			&:hover, &:focus {
+				background-color: darken(themeColor, 10) !important;
+			}
 		}
-		.r-1qkqhnw, // Orange
-		.r-1n1174f, // Blue
-		.r-61mi1v,  // Yellow
-		.r-daml9f,  // Pink
-		.r-xfsgu1,  // Purple
-		.r-nw8l94,  // Green
+		.r-o6sn0f,  // GReen
+		.r-vkub15,  // Violet
+		.r-1gfgf0w, // Yellow
+		.r-1cvl2hr, .r-kpws4y // Blue
+		.r-5c1b6u,  // Orage
+		[style^="color: rgb(0"], // I guess this works? Comma's somehow break the stylus preprocessor.
+		[style^="color: rgb(255"],
+		[style^="color: rgb(120"],
  		{
-			color: themeColor;
+			if luminosity(themeColor) < .2 {
+				// color: lighten(themeColor, 30) !important;
+				newColor = lighten(themeColor, 30)
+			} else {
+				newColor = themeColor;
+			}
+			color: newColor !important;
+			&:hover, &:focus {
+				color: darken(newColor, 10) !important;
+			}
 		}
 	}
 	
+	// hehe
+	[href="/settings/deactivate"][role="tab"] {
+		div:last-child > span::after {
+			content: " And use Misskey or Mastodon instead :)";
+			font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+			// margin-left: 64px;
+			color: inherit;
+			opacity: .4;
+		}
+	}
 	
 	if revertFont {
 		.r-37j5jr {
@@ -425,17 +481,18 @@
 	}
 	
 	if not hideTLFollow {
-        main [data-testid="primaryColumn"] h1[aria-level="1"] + div [style*="position: absolute; width: 100%; transform: translateY("] {
-            .css-1dbjc4n > [data-testid="placementTracking"],   // Adverts
-            .r-1wtj0ep.r-1f1sjgu:not(.r-s1qlax.r-1f1sjgu),      // Headings
-            [data-testid="UserCell"],                           // Users
-            [aria-labelledby*="accessible-list-"],              // Topics to follow
-            [href*="/i/c"],                                     // Show More
-            .r-1p6iasa.r-109y4c4                                // Spacers
-            {
-                display: none;
-                opacity: .5; // Testing
-            }
+        main [data-testid="primaryColumn"] {
+			[data-testid="placementTracking"] > div > article,      // Adverts
+			.r-1wtj0ep.r-1f1sjgu:not(.r-s1qlax.r-1f1sjgu),          // Headings
+			[data-testid="UserCell"],                               // Users
+			section[aria-labelledby*="accessible-list-"] > h1,      // Topics to follow
+			section[aria-labelledby*="accessible-list-"] > h1 + div nav,
+			[href*="/i/c"], [href*="/i/topics"],                    // Show More
+			.r-1p6iasa.r-109y4c4,                                   // Spacers
+			{
+			display: none !important;
+			// opacity: .2 !important; // Testing
+			}
         }
         
 		
@@ -463,23 +520,6 @@
 	}
 	
 	if columnBG {
-// 		body[style*="background-color: rgb(21"],
-// 		body[style*="background-color: rgb(21"] [data-testid="sidebarColumn"] > .css-1dbjc4n > .r-1hycxz [class*="r-ipm5af r-1hycxz r-136ojw6"],
-// 		body[style*="background-color: rgb(21"] [data-testid="sidebarColumn"] > .css-1dbjc4n > .r-1hycxz [class*="r-ipm5af r-1hycxz r-136ojw6"]::before,
-//         {
-// 			background-color: #10171e !important;
-// 		}
-		
-// 		body[style*="background-color: rgb(255"],
-//  		body[style*="background-color: rgb(255"] [data-testid="sidebarColumn"] > .css-1dbjc4n > .r-1hycxz [class*="r-ipm5af r-1hycxz r-136ojw6"],
-//  		body[style*="background-color: rgb(255"] [data-testid="sidebarColumn"] > .css-1dbjc4n > .r-1hycxz [class*="r-ipm5af r-1hycxz r-136ojw6"]::before {
-// 			background-color: #e6ecf0 !important;
-// 		}
-// 		body[style*="background-color: rgb(0"],
-//  		body[style*="background-color: rgb(0"] [data-testid="sidebarColumn"] > .css-1dbjc4n > .r-1hycxz [class*="r-ipm5af r-1hycxz r-136ojw6"],
-// 		body[style*="background-color: rgb(0"] [data-testid="sidebarColumn"] > .css-1dbjc4n > .r-1hycxz [class*="r-ipm5af r-1hycxz r-136ojw6"]::before {
-// 			background-color: rgb(8,8,8) !important;
-// 		}
         main > div::before,
         main > div::after {
             content: "";
