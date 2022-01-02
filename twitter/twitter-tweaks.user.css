@@ -1,14 +1,10 @@
-/* Update 1.3.12
-- Minor Adjustments
-- Fixed custom theme color
-- Fixed hiding adverts
-- m o r e f i x e s
-- I hope this didn't bring in any new bugs...
+/* Update 1.3.14
+- Hide that huge annoying "Promote" button from your own tweets when professional account is enabled that you can already do from the analytics button.
 */
 
 /* ==UserStyle==
 @name           Twitter Tweaks by @FreeplayG
-@version        1.3.13
+@version        1.3.14
 @description    Uncrop images, hide trends, Avatar roundness, move header aside, and more!!
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/twitter/twitter-tweaks.user.css
 @preprocessor   stylus
@@ -26,9 +22,9 @@
 @var select   fullWidthMedia "🖼 Timeline: Media Size" ["Default", "Larger*", "Full-Width"]
 @var range    avatarRadius   "⚫ Timeline: Avatar Roundness" [30, 5, 50, 5, '%']
 @var number   TLWidth        "↔ Timeline: Timeline Width (pixels)" [600, 600, 9999, 1, "px"]
-@var checkbox hideTweetBoxTL "⛔ Timeline: Compose " 1
+@var checkbox hideTweetBoxTL "⛔ Timeline: Compose" 1
 @var checkbox hideTLFollow   "⛔ Timeline: Who to follow, Topics to follow, AND adverts" 1
-@var checkbox hideSpacers    "⛔ Timeline: Spacers " 0
+@var checkbox hideSpacers    "⛔ Timeline: Spacers" 0
 
 
 @var checkbox resizeSidebar  "↔ Image Preview: Dynamic Sidebar Width" 1
@@ -72,6 +68,8 @@
 	html {
 		scrollbar-color: rgba(155,155,155,0.5) transparent;
 	}
+	
+	
 	
 	// Make 'replying to' appear as an actually clickable button! 
 	[class="css-1dbjc4n r-18u37iz r-16y2uox r-1wbh5a2"] {
@@ -494,8 +492,10 @@
 			// opacity: .2 !important; // Testing
 			}
         }
-        
-		
+	}
+	// Annoying huge "Promote" button on your own tweets when professional account is enabled. You can already do it from the analytics button.
+	[data-testid="primaryColumn"] a[href$="/quick_promote_web/intro"] {
+		display: none;
 	}
 	
 	if not hideSpacers {
