@@ -1,10 +1,11 @@
-/* Update 1.3.14
-- Hide that huge annoying "Promote" button from your own tweets when professional account is enabled that you can already do from the analytics button.
+/* Update 1.3.15
+- Hopefully easier to understand options?
+- Some fixes
 */
 
 /* ==UserStyle==
 @name           Twitter Tweaks by @FreeplayG
-@version        1.3.14
+@version        1.3.15
 @description    Uncrop images, hide trends, Avatar roundness, move header aside, and more!!
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/twitter/twitter-tweaks.user.css
 @preprocessor   stylus
@@ -21,36 +22,36 @@
 
 @var select   fullWidthMedia "🖼 Timeline: Media Size" ["Default", "Larger*", "Full-Width"]
 @var range    avatarRadius   "⚫ Timeline: Avatar Roundness" [30, 5, 50, 5, '%']
-@var number   TLWidth        "↔ Timeline: Timeline Width (pixels)" [600, 600, 9999, 1, "px"]
-@var checkbox hideTweetBoxTL "⛔ Timeline: Compose" 1
-@var checkbox hideTLFollow   "⛔ Timeline: Who to follow, Topics to follow, AND adverts" 1
-@var checkbox hideSpacers    "⛔ Timeline: Spacers" 0
+@var range   TLWidth        "↔ Timeline: Timeline Width" [600, 600, 1000, 20, "px"]
+@var checkbox hideTweetBoxTL "⛔ Timeline: Show Compose Box" 1
+@var checkbox hideTLFollow   "⛔ Timeline: Show Who to follow, Topics to follow, & Ads" 0
+@var checkbox hideSpacers    "⛔ Timeline: Show Spacers" 0
 
 
-@var checkbox resizeSidebar  "↔ Image Preview: Dynamic Sidebar Width" 1
-@var checkbox removeImageBar "⛔ Image Preview: interaction bar" 0
+@var checkbox resizeSidebar  "↔ Image Preview: Enable Dynamic Sidebar Width" 1
+@var checkbox removeImageBar "⛔ Image Preview: Show Interaction Bar" 0
 
-@var checkbox noTrends       "⛔ Sidebar: What's Happening " 1
-@var checkbox noFollowBox    "⛔ Sidebar: Who to follow " 1
-@var checkbox noMessagesBox  "⛔ Sidebar: Messages " 1
+@var checkbox noTrends       "⛔ Sidebar: Show What's Happening " 1
+@var checkbox noFollowBox    "⛔ Sidebar: Show Who to follow " 1
+@var checkbox noMessagesBox  "⛔ Sidebar: Show Messages" 1
 
 @var color    themeColor     "🌈 Custom Theme Color" #1da1f2
 @var select   noBorder       "⛔ Border Style" ["Default*", "Hide", "keep:Only Timeline Separators"]
-@var checkbox columnBG       "💡 Contrast between background and feed" 1
-@var checkbox bgBanner       "🖼 Use profile banners as background" 1
+@var checkbox columnBG       "💡 Add Contrast between background and feed" 0
+@var checkbox bgBanner       "🖼 Use profile banners as background" 0
 
-@var text     customBG 	     "🖼 Custom Background (Place image link in quotes, image MUST be uploaded to Twitter due to Content Security Policy)" '""'
+@var text     customBG 	     "🖼 Custom Background (Link in quotes, image MUST be uploaded to Twitter due to Content Security Policy)" '""'
 @var range    customBGOpacity"  ↳ Opacity" [1, 0.05, 1, .05]
 @var range    customBGBlur   "  ↳ Blur" [0, 0, 30, 5, 'px']
 
 @var checkbox moreAnim       "🎞️ More Animations" 1
 @var checkbox revertFont     "🇦 Revert Font" 0
 
-@var checkbox followersCount "🖤 Wellbeing: Follower Count" 1
-@var checkbox likesCount     "🖤 Wellbeing: Likes Count" 1
-@var checkbox retweetsCount  "🖤 Wellbeing: Retweets Count" 1
-@var checkbox commentsCount  "🖤 Wellbeing: Comments Count" 1
-@var checkbox analyticsButton"🖤 Wellbeing: Analytics Button" 1
+@var checkbox followersCount "🖤 Wellbeing: Show Follower Count" 1
+@var checkbox likesCount     "🖤 Wellbeing: Show Likes Count" 1
+@var checkbox retweetsCount  "🖤 Wellbeing: Show Retweets Count" 1
+@var checkbox commentsCount  "🖤 Wellbeing: Show Comments Count" 1
+@var checkbox analyticsButton"🖤 Wellbeing: Show Analytics Button" 1
 
 
 @var text noticeMobile "Below are options meant for Mobile Devices" '"Okay!"'
@@ -111,6 +112,9 @@
 	
 	// Column Width
 	@media not screen and (max-width: 1278px) and (min-width: 987px) {
+		if TLWidth == 1000px {
+			TLWidth = 9999px
+		}
 		main > .r-rthrr5, main > .r-33ulu8 {
 			// min-width: 390px;
 			width: 390px + TLWidth;
@@ -485,7 +489,7 @@
 			[data-testid="UserCell"],                               // Users
 			section[aria-labelledby*="accessible-list-"] > h1,      // Topics to follow
 			section[aria-labelledby*="accessible-list-"] > h1 + div nav,
-			[href*="/i/c"], [href*="/i/topics"],                    // Show More
+			[href*="/i/c"], [href*="/i/topics/picker"],             // Show More
 			.r-1p6iasa.r-109y4c4,                                   // Spacers
 			{
 			display: none !important;
