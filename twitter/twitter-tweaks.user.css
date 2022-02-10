@@ -1,7 +1,5 @@
-/* Update 1.3.16
-- Goodbye mobile options :(
-- Fixed border radiuses
-- Also doing my part :)
+/* Update 1.3.17
+- Added options to remove Explore, Community buttons in the navbar, and footer in the sidebar. Now you can make Twitter more minimal than before!
 */
 
 /* ==UserStyle==
@@ -23,16 +21,20 @@
 
 @var select   fullWidthMedia "🖼 Timeline: Media Size" ["Default", "Larger*", "Full-Width"]
 @var range    avatarRadius   "⚫ Timeline: Avatar Roundness" [30, 5, 50, 5, '%']
-@var range   TLWidth        "↔ Timeline: Timeline Width" [600, 600, 1000, 20, "px"]
+@var range    TLWidth        "↔ Timeline: Timeline Width" [600, 600, 1000, 20, "px"]
 @var checkbox hideTweetBoxTL "⛔ Timeline: Show Compose Box" 1
 @var checkbox hideTLFollow   "⛔ Timeline: Show Who to follow, Topics to follow, & Ads" 0
 
 @var checkbox resizeSidebar  "↔ Image Preview: Enable Dynamic Sidebar Width" 1
 @var checkbox removeImageBar "⛔ Image Preview: Show Interaction Bar" 0
 
+@var checkbox noExplore      "⛔ Left Sidebar: Show Explore" 1
+@var checkbox noCommunities  "⛔ Left Sidebar: Show Communities" 1
+
 @var checkbox noTrends       "⛔ Right Sidebar: Show What's Happening " 1
 @var checkbox noFollowBox    "⛔ Right Sidebar: Show Who to follow " 1
 @var checkbox noMessagesBox  "⛔ Right Sidebar: Show Messages" 1
+@var checkbox noFooter       "⛔ Right Sidebar: Footer" 0
 
 @var color    themeColor     "🌈 Custom Theme Color" #1da1f2
 @var select   noBorder       "⛔ Border Style" ["Default*", "Hide", "keep:Only Timeline Separators"]
@@ -41,7 +43,7 @@
 
 @var text     customBG 	     "🖼 Custom Background (Link in quotes, image MUST be uploaded to Twitter due to Content Security Policy)" '""'
 @var range    customBGOpacity"  ↳ Opacity" [1, 0.05, 1, .05]
-@var range    customBGBlur   "  ↳ Blur" [0, 0, 30, 5, 'px']
+@var range    customBGBlur   "  ↳ Blur"    [0, 0, 30, 5, 'px']
 
 @var checkbox moreAnim       "🎞️ More Animations" 1
 @var checkbox revertFont     "🇦 Revert Font" 0
@@ -430,7 +432,16 @@
 		}
 	}
     
-    
+	if not noExplore {
+		nav > [href="/explore"] {
+			display: none;
+		}
+	}
+	if not noCommunities {
+		nav > [href$="/communities"] {
+			display: none;
+		}
+	}
     
 	if not noTrends {
 		[data-testid="sidebarColumn"] section.css-1dbjc4n > .css-4rbku5.css-901oao.r-4iw3lz.r-1xk2f4g.r-109y4c4.r-1udh08x.r-wwvuq4.r-u8s1d.r-92ng3h + .css-1dbjc4n {
@@ -456,6 +467,11 @@
 	
 	if not noMessagesBox {
 		[class*="css-1dbjc4n r-173mn98"][class*="r-c67a83 r-1qk6wnv"][class*="r-1mf7evn r-hvns9x"] {
+			display: none;
+		}
+	}
+	if not noFooter {
+		[data-testid="sidebarColumn"] nav {
 			display: none;
 		}
 	}
