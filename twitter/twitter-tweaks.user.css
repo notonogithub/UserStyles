@@ -1,10 +1,12 @@
-/* Update 1.3.17
+/* Update 1.3.18
+- Added new notes at the bottom of the style's options.
+Below was included in the last update, but since I forgot to change the version number, nobody received it. OOPS.
 - Added options to remove Explore, Community buttons in the navbar, and footer in the sidebar. Now you can make Twitter more minimal than before!
 */
 
 /* ==UserStyle==
 @name           Twitter Tweaks by @FreeplayG
-@version        1.3.16
+@version        1.3.18
 @description    Uncrop images, hide trends, Avatar roundness, move header aside, and more!!
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/twitter/twitter-tweaks.user.css
 @preprocessor   stylus
@@ -56,6 +58,8 @@
 
 @var text     hehe            "💸 Donate!" '"https://www.patreon.com/freeplayg"'
 
+@var text     Weeeeeeeeeeee   "Want EVEN MORE control? Try out this Twitter Tweaks browser extension alongside this style created by an unaffiliated individual!" '"https://github.com/insin/tweak-new-twitter"'
+@var text     hehe2           "Tired of Twitter?" '"https://twitter.com/FreeplayG/status/1489407495244333071"'
 
 ==/UserStyle== */
 @-moz-document domain("twitter.com") {
