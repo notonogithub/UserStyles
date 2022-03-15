@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Accessibility Tools
-@version        1.0.0
+@version        1.0.1
 @description    More noticable focus, space out text, disable animations, and more!
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/accessibility-tools.user.css
 @preprocessor   stylus
@@ -11,27 +11,33 @@
 @homepageURL    https://codeberg.org/Freeplay/UserStyles
 @supportURL     https://codeberg.org/Freeplay/UserStyles/issues
 
-@var text notice "Note: If this style breaks a site, you can disable this style for that site by clicking the 3 dots next to the cog icon, and check exclude domains or URL. It's recommended to use the 'Stylus' browser extension instead of 'Stylish'!" "'https://add0n.com/stylus.html'"
+@var text notice "Note: If this style breaks a site, you can disable this style for that site by clicking the 3 dots next to the cog icon, and check "exclude domains or URL". It's recommended to use the 'Stylus' browser extension instead of 'Stylish'!" "'https://add0n.com/stylus.html'"
 
 @var checkbox disableAnim "Disable all animations" 0
 
-@var checkbox betterFocus   "╔ More noticable focus outline" 1
-@var color focusColor       "╚ More noticable focus outline: Outline Color" orange
+@var checkbox betterFocus   "More noticable focus outline" 1
+@var color focusColor       "More noticable focus outline: Outline Color" orange
 
-@var checkbox enableSpacing "╔ Override text spacing" 0
-@var number wordSpacing     "╠ Override text spacing: Word Spacing (em suffix recommended)" [.1, 0, 2, .1,'em']
-@var number charSpacing     "╚ Override text spacing: Character" [.1, 0, 2, .1,'em']
+@var checkbox enableSpacing "Override text spacing" 0
+@var number wordSpacing     "Override text spacing: Word Spacing" [.1, 0, 2, .1,'em']
+@var number charSpacing     "Override text spacing: Character" [.1, 0, 2, .1,'em']
 
-@var checkbox enableFontSize "╔ Override Font Size (Only works well on sites that use em and rem font sizes properly.)" 0
-@var text fontSize           "╚ Override Font Size: Size" "16px"
+@var checkbox enableFontSize "Override Font Size (Only works well on sites that use em and rem font sizes properly.)" 0
+@var text fontSize           "Override Font Size: Size" "16px"
 
-@var checkbox enableFontWeight "╔ Override Font Weight" 0
-@var number fontWeight         "╚ Override Font Weight: Weight (no suffix)" [600, 100, 900, 100]
+@var checkbox enableFontWeight "Override Font Weight" 0
+@var number fontWeight         "Override Font Weight: Weight (no suffix)" [600, 100, 900, 100]
 
-@var checkbox enableFont "╔ Override font" 0
-@var text fontName       "╚ Override font: Font Name (The font you type must be installed on your computer or browser, case sensitive.)" '"Arial"'
+@var checkbox enableFont "Override font" 0
+@var text fontName       "Override font: Font Name (The font you type must be installed on your computer or browser, case sensitive.)" '"Arial"'
 
 ==/UserStyle== */
+/*
+Change option names
+Disable All Animations:
+- Removed removing animations entirely, as it may break some sites using animation fill-mode's
+- Added disabling CSS smooth-scrolling
+*/
 
 
 if betterFocus {
@@ -87,8 +93,7 @@ if disableAnim {
 	p, span, h1, h2, h3, h4, h5, h6, input, button, li, ul, a, button, select, label,
 	html::after, html::before, html *::after, html::before {
 		transition: unset !important;
-		animation: unset !important;
-		animation-name: unset !important;
 		animation-duration: 0s !important;
+		scroll-behavior: unset !important;
 	}
 }
