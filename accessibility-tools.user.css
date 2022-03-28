@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Accessibility Tools
-@version        1.0.1
+@version        1.0.2
 @description    More noticable focus, space out text, disable animations, and more!
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/accessibility-tools.user.css
 @preprocessor   stylus
@@ -11,34 +11,40 @@
 @homepageURL    https://codeberg.org/Freeplay/UserStyles
 @supportURL     https://codeberg.org/Freeplay/UserStyles/issues
 
-@var text notice "Note: If this style breaks a site, you can disable this style for that site by clicking the 3 dots next to the cog icon, and check "exclude domains or URL". It's recommended to use the 'Stylus' browser extension instead of 'Stylish'!" "'https://add0n.com/stylus.html'"
+@var text notice 'Please use the "Stylus" browser extension instead of "Stylish"!' "'https://add0n.com/stylus.html'"
 
-@var checkbox disableAnim "Disable all animations" 0
+@var checkbox disableAnim "Disable Animations" 1
 
-@var checkbox betterFocus   "More noticable focus outline" 1
-@var color focusColor       "More noticable focus outline: Outline Color" orange
+@var checkbox betterFocus   "Focus Outline" 1
+@var color focusColor       "  ↳ Outline Color" #00a4f8
 
-@var checkbox enableSpacing "Override text spacing" 0
-@var number wordSpacing     "Override text spacing: Word Spacing" [.1, 0, 2, .1,'em']
-@var number charSpacing     "Override text spacing: Character" [.1, 0, 2, .1,'em']
+@var checkbox enableSpacing "Override Text Horizontal spacing" 1
+@var number wordSpacing     "  ↳ Word Spacing" [.15, 0, 2, .05,'em']
+@var number charSpacing     "  ↳ Character Spacing" [.1, 0, 2, .05,'em']
 
-@var checkbox enableFontSize "Override Font Size (Only works well on sites that use em and rem font sizes properly.)" 0
-@var text fontSize           "Override Font Size: Size" "16px"
+@var checkbox enableLineHeight "Override Text Vertical Spacing" 1
+@var number lineHeight         "  ↳ Vertical Spacing" [1.5, 1, 2, .1]
+
+@var checkbox enableFontSize "Override Font Size (May not work well on some sites)" 0
+@var text fontSize           "  ↳ Size" "16px"
 
 @var checkbox enableFontWeight "Override Font Weight" 0
-@var number fontWeight         "Override Font Weight: Weight (no suffix)" [600, 100, 900, 100]
+@var number fontWeight         "  ↳ Weight (no suffix)" [600, 100, 900, 100]
 
-@var checkbox enableFont "Override font" 0
-@var text fontName       "Override font: Font Name (The font you type must be installed on your computer or browser, case sensitive.)" '"Arial"'
+@var select fontStyle    "Font Style" [
+	"Website default",
+	"System: System Font",
+	"Custom: Use a custom font set below"
+]
+@var text fontName       "  ↳ Custom Font Name: Font must be installed on your computer, and is case sensitive. Place in quotes" '"Arial"'
 
 ==/UserStyle== */
 /*
-Change option names
-Disable All Animations:
-- Removed removing animations entirely, as it may break some sites using animation fill-mode's
-- Added disabling CSS smooth-scrolling
+- Better Defaults
+- Added Line Height
 */
 
+textList = "*, p, span, h1, h2, h3, h4, h5, h6, input, button, li, ul, a, button, select, label"
 
 if betterFocus {
 	* {
@@ -51,22 +57,29 @@ if betterFocus {
 	:focus-visible {
 		outline: 1px solid focusColor !important;
 		outline-offset: 10px !important;
-		border: 2px solid focusColor !important;
+		box-shadow: 0 0 4px 2px focusColor !important;
 		opacity: 1 !important;
 		if not disableAnim {
 			transition: outline .3s, outline-offset .7s, border .2s !important;
 		}
 	}
-	:focus-within {
-		opacity: 1;
-	}
 }
 
 if enableSpacing {
-	*, p, span, h1, h2, h3, h4, h5, h6, input, button, li, ul, a, button, select, label {
-		transition: letter-spacing .7s, word-spacing 1s;
+	{textList} {
 		letter-spacing: charSpacing !important;
 		word-spacing: wordSpacing !important;
+		if not disableAnim {
+			transition: letter-spacing .7s, word-spacing 1s;
+		}
+	}
+}
+if enableLineHeight {
+	{textList} {
+		line-height lineHeight !important
+		if not disableAnim {
+			transition line-height .2s
+		}
 	}
 }
 
@@ -77,20 +90,24 @@ if enableFontSize {
 }
 
 if enableFontWeight {
-	*, p, span, h1, h2, h3, h4, h5, h6, input, button, li, ul, a, button, select, label {
+	{textList} {
 		font-weight: fontWeight !important;
 	}
 }
-
-if enableFont {
-	*, p, span, h1, h2, h3, h4, h5, h6, input, button, li, ul, a, button, select, label {
+if fontStyle == System {
+	{textList} {
+		font-family: system-ui !important;
+	}
+}
+if fontStyle == Custom {
+	{textList} {
 		font-family: fontName !important;
 	}
 }
 
 if disableAnim {
 	html, html *, div, div *, 
-	p, span, h1, h2, h3, h4, h5, h6, input, button, li, ul, a, button, select, label,
+	{textList},
 	html::after, html::before, html *::after, html::before {
 		transition: unset !important;
 		animation-duration: 0s !important;
