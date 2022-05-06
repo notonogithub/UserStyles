@@ -1,6 +1,12 @@
+/* Update 1.1.2
+- The create page has caused me too much pain, so now I've excluded that page with a regex that has also caused me pain trying to create.
+- More fixes.
+*/
+
+
 /* ==UserStyle==
 @name           Roblox Galaxy
-@version        1.1.1
+@version        1.1.2
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/roblox/roblox-galaxy.user.css
 @preprocessor   stylus
 
@@ -20,7 +26,7 @@
 @var checkbox blur  "Blur Effects" 1
 ==/UserStyle== */
 
-@-moz-document domain("roblox.com") {
+@-moz-document regexp(".+roblox.com\\/(?!.*develop).*") {
 
 	@keyframes fadeIn {
 		from { transform: scale(.98); opacity: 0; }
@@ -47,12 +53,11 @@
 	}
 	noBlurColor = rgba(#190f18, .9);
 	noBlurColor = rgba(darken(desaturate(bgColor, 20%), 20%), .9);
+	
+	
 	#rbx-body {
 		--bg: bgColor;
-		
-		&:not([data-internal-page-name="Create"]) {
-			background-color: var(--bg) !important;
-		}
+
 		&::before {
 			content: "";
 			position: fixed;
@@ -180,7 +185,7 @@
 			// }
 		}
 	}
-	
+
     &::-webkit-scrollbar {
         // opacity: 0;
         // transition: opacity .2s;
@@ -223,10 +228,20 @@
 		position: sticky;
 		z-index: 6;
 		left: 0;
+		#skip-to-main-content:not(:focus) {
+			transform translateY(-300%)
+		}
 		#header {
 			background: none;
 			border: 0;
 			margin: 18px 18px;
+			/ [data-internal-page-name="Create"] & {
+				filter: invert(1)
+				bgColor = white !important
+				img {
+					filter invert(1)
+				}
+			}
 			
 			& > .container-fluid {
 				display: flex;
@@ -250,6 +265,9 @@
 				opacity: .7;
 				z-index: -1;
 				bottom: calc(100% + 20px);
+				/ [data-internal-page-name="Create"] & {
+					filter: brightness(0)
+				}
 			}
 			.navbar-right::before {
 				box-shadow: 0 80px 100px #33173a !important;
@@ -285,6 +303,10 @@
 				
 				margin: 0;
 				
+				/ [data-internal-page-name="Create"] & {
+					filter saturate(0)
+				}
+				
 			}
 			
 			.rbx-navbar {
@@ -293,6 +315,8 @@
 				overflow: auto hidden;
 				scrollbar-width: none;
 				li {
+					text-align unset !important
+					// display: contents;
 					a {
 						font-weight: 400 !important;
 						font-size: .95em;
@@ -411,6 +435,14 @@
 			height: 100vh;
 			overflow: hidden scroll;
 			scrollbar-color: transparent transparent;
+			/ [data-internal-page-name="Create"] & {
+				filter: invert(1)
+				--bg: white
+				--noBlurColor: rgba(10,10,10, 1) !important;
+				img {
+					filter invert(1)
+				}
+			}
 			&:hover, &:focus-within {
 				scrollbar-color: rgba(0,0,0,0.2) transparent;
 			}
@@ -518,9 +550,13 @@
 		margin-left: auto;
 		margin-right: auto;
 		margin-top: 80px;
+		width 100%
 	}
 	#BodyWrapper, #Body, #MyCreationsTab {
 		background: none !important;
+	}
+	.alert-system-feedback .alert.alert {
+		top: -100vh
 	}
 	
 	
@@ -657,6 +693,10 @@
 		overflow-x: hidden;
 		.game-main-content {
 			background: none !important;
+			justify-content space-between
+			&::before, &::after {
+				content unset !important
+			}
 		}
 		#game-details-carousel-container {
 			border-radius: 8px;
