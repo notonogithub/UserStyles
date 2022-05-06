@@ -1,0 +1,51 @@
+/* ==UserStyle==
+@name           Larger Codepen Preview
+@version        1.0.0
+@description    Makes that pen preview thing full screen.
+@updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/Codepen-larger-pen-preview.user.css
+@preprocessor   stylus
+
+ -- AUTHOR STUFF --
+@namespace      Freeplay
+@author         Freeplay (https://freeplay.codeberg.page/)
+@homepageURL    https://codeberg.org/Freeplay/UserStyles
+@supportURL     https://codeberg.org/Freeplay/UserStyles/issues
+
+@var checkbox thumbClick "Make entire thumbnail open pen in details popup" 1
+==/UserStyle== */
+
+@-moz-document domain("codepen.io") {
+    /* Insert code here... */
+	[class*="ItemPreviewModalPopupAd_adSpace"] {
+		display none
+	}
+	[class*="ItemPreviewModalBody_modal"] {
+		max-width unset !important
+		margin-top 0 !important
+		width calc(100vw - 120px)
+	}
+	[class*="ItemPreviewModalHeader"] {
+		border-radius 0
+	}
+	[class*="ItemDetailsPreview_preview"] {
+		width 100%
+		height 90vh
+	}
+	[class*="_nextPenButton"] {
+		right 0
+	}
+	[class*="_prevPenButton"] {
+		left 0
+	}
+	
+	if thumbClick {
+		[class*=ItemPreviewPopOutButton_root] {
+			left 0
+			> button {
+				margin-left auto
+			}
+		}
+	}
+	
+	
+}
