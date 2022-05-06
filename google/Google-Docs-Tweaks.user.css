@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Google Docs Tweaks
-@version        1.0.2
+@version        1.0.3
 @description    Vertical Sidebar, Hide buttons & borders, Compact Comments, Fill BG, & More!
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/google/Google-Docs-Tweaks.user.css
 @preprocessor   stylus
@@ -15,7 +15,7 @@
 @var text     notice           "!! REFRESH AFTER CHANGING SETTINGS !! " '"Okay!"'
 
 @var checkbox collapseMenu     "⤴️ Collapse menubar until hovering header"           1
-@var checkbox hideBorders      "➖ Hide Header Borders"                              0
+@var checkbox hideBorders      "➖ Hide Header Borders"                              1
 @var checkbox hideUndo         "↩️ Hide Undo Buttons (ctrl+z) & Redo (ctrl+shift+z)" 1
 @var checkbox hideOther        "➕ Hide other buttons"                               1
 
@@ -33,8 +33,9 @@
 
 ==/UserStyle== */
 
-/* Dec 11 / 20
-- Some fixes that I forgot to publish
+/* May 6 / 22
+- Improved Vertical Toolbar
+- More fixes
 */
 
 @-moz-document domain("docs.google.com") {
@@ -332,9 +333,12 @@ if verticalToolbar {
                 top: 0;
                 bottom: 0;
                 width: 55px;
-                box-shadow: 0 0 6px rgba(0,0,0,0.1) !important;
+                // box-shadow: 0 0 6px rgba(0,0,0,0.1) !important;
                 pointer-events: none;
             }
+			#docs-toolbar-wrapper {
+				filter invert(.02)
+			}
         }
         
 	}
@@ -389,7 +393,7 @@ if verticalToolbar {
         border-top-color: transparent !important;
 		top: 0px !important;
 		bottom: 0 !important;
-		overflow: hidden auto;s
+		overflow: hidden auto;
 		scrollbar-width: none;
         &::-webkit-scrollbar {
             display: none;
@@ -659,8 +663,6 @@ if verticalToolbar {
 		padding-left: 55px;
 	}
 }
-
-
 
 
 
