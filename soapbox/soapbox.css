@@ -1,6 +1,12 @@
 @media (min-width: 976px) {
   #soapbox nav.bg-white {
     height: 64px;
+    pointer-events: none;
+  }
+  #soapbox nav.bg-white button,
+  #soapbox nav.bg-white input,
+  #soapbox nav.bg-white a {
+    pointer-events: all;
   }
   #soapbox nav.bg-white [class="flex-1 flex items-center lg:items-stretch space-x-4 justify-center lg:justify-start"] {
     display: contents;
