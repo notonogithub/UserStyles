@@ -1,0 +1,47 @@
+/* ==UserStyle==
+@name           Soapbox - Move header buttons aside
+@version        1.0.0
+@description    More room for the timeline :)
+@updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/soapbox/soapbox.user.css
+@preprocessor   stylus
+
+ -- AUTHOR STUFF --
+@namespace      Freeplay
+@author         Freeplay (https://freeplay.codeberg.page/)
+@homepageURL    https://codeberg.org/Freeplay/UserStyles
+@supportURL     https://codeberg.org/Freeplay/UserStyles/issues
+
+==/UserStyle== */
+@media (min-width 976px) {
+	#soapbox {
+		nav.bg-white {
+			height 64px
+			@media (prefers-reduced-motion: no-preference) {
+				transition height .2s cubic-bezier(0,0,0,1.2), background .2s, box-shadow .2s, transform .3s cubic-bezier(0,0,0,1.4)
+			}
+			@media (min-width 1440px) {
+				background none !important
+				box-shadow none
+				transform translateY(10px)
+				height 10px !important
+			}
+			[class="flex-1 flex items-center lg:items-stretch space-x-4 justify-center lg:justify-start"] {
+				display contents
+				> a {
+					width 44px
+					justify-content center
+				}
+			}
+			[class="flex-1 hidden lg:flex justify-center px-2 lg:ml-6 lg:justify-start items-center"] {
+				justify-content flex-end
+				// padding-right 0
+				[class="max-w-xl w-full lg:max-w-xs hidden lg:block"] {
+					width 230px
+				}
+			}
+			[class="absolute inset-y-0 right-0 flex items-center pr-2 lg:static lg:inset-auto lg:ml-6 lg:pr-0 space-x-3"] {
+				margin-left 10px !important
+			}
+		}
+	}
+}
