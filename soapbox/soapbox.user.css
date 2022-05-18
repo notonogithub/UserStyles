@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Soapbox - Move header buttons aside
-@version        1.0.0
+@version        1.0.1
 @description    More room for the timeline :)
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/soapbox/soapbox.user.css
 @preprocessor   stylus
@@ -16,6 +16,10 @@
 	#soapbox {
 		nav.bg-white {
 			height 64px
+			pointer-events none
+			button, input, a {
+				pointer-events all
+			}
 			@media (prefers-reduced-motion: no-preference) {
 				transition height .2s cubic-bezier(0,0,0,1.2), background .2s, box-shadow .2s, transform .3s cubic-bezier(0,0,0,1.4)
 			}
