@@ -8,7 +8,7 @@
 
 /* ==UserStyle==
 @name           Mastodon Modern
-@version        1.0.1
+@version        1.0.2
 @description    Gives Mastodon a nicer look :)
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/mastodon/modern.user.css
 @preprocessor   stylus
@@ -20,7 +20,7 @@
 @supportURL     https://codeberg.org/Freeplay/UserStyles/issues
 ==/UserStyle== */
 
-@-moz-document domain("mastodon.coffee"), domain("mstdn.social") {
+@-moz-document domain("mastodon.coffee"), domain("mstdn.social"), domain("mastodon.art") {
     /* Insert code here... */
 #mastodon, .public-layout { // Wrapped in this so it doesn't mess with other front ends the instance probably has
 	responsiveW1 = 1320px
@@ -589,7 +589,7 @@
 			}
 			&.column {
 				flex-grow 1
-				max-width var(--tl-width)
+				max-width 600px
 			}
 		}
 		.drawer {
