@@ -1,0 +1,634 @@
+/*** 
+
+
+	!!! MAKE SURE TO ADD YOUR INSTANCE DOMAIN IN THE APPLIES TO SECTION BELOW !!!
+
+
+***/
+
+/* ==UserStyle==
+@name           Mastodon Modern
+@version        1.0.0
+@description    Gives Mastodon a nicer look :)
+@updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/mastodon/modern.user.css
+@preprocessor   stylus
+
+ -- AUTHOR STUFF --
+@namespace      Freeplay
+@author         Freeplay (https://freeplay.codeberg.page/)
+@homepageURL    https://codeberg.org/Freeplay/UserStyles
+@supportURL     https://codeberg.org/Freeplay/UserStyles/issues
+==/UserStyle== */
+
+@-moz-document domain("mastodon.coffee"), domain("mstdn.social") {
+    /* Insert code here... */
+#mastodon, .public-layout { // Wrapped in this so it doesn't mess with other front ends the instance probably has
+	responsiveW1 = 1320px
+	responsiveW2 = 1191px
+	
+	transBounce1 = .2s cubic-bezier(0,0,0,1.1)
+	
+	/:root {
+		--tl-width 750px
+		--radius 12px
+		--radius-round 24px
+		--hover-color rgba(170,170,170, 0.07)
+		--border-color rgba(120,120,120, 0.2)
+		--shadow 0 10px 40px -10px rgba(0,0,0,0.15)
+		--shadow-low 0 8px 16px -10px rgba(0,0,0,0.4)
+	}
+	
+	button, video, input, .privacy-dropdown__dropdown, .react-toggle-track {
+		border-radius var(--radius) !important
+		
+	}
+	* {
+		border-color var(--border-color) !important
+		font-display swap !important
+	}
+	.media-gallery__item, .column-link, select {
+		transition transform .4s cubic-bezier(0,0,0,3) !important
+		&:active {
+			transform scale(.99)
+			transition transform .4s cubic-bezier(0,0,0,1) !important
+		}
+	}
+	.react-toggle-track, .button, .icon-button {
+		transition transform .4s cubic-bezier(0,0,0,4) !important
+		&:active {
+			transform scale(.95)
+			transition transform .4s cubic-bezier(0,0,0,1) !important
+		}
+	}
+	.react-toggle-thumb {
+		pointer-events: none
+	}
+	.account__avatar {
+		border-radius 30%
+	}
+	
+	.detailed-status__action-bar,
+	.column-header__collapsible-inner,
+	.compose-form__buttons-wrapper,
+	.audio-player, .box-widget input[type="email"], .box-widget input[type="password"], .box-widget input[type="text"], .box-widget textarea, .compose-form .spoiler-input__input, .compose-form__autosuggest-wrapper, .compose-form__poll-wrapper select, .poll__option input[type="text"], .report-dialog-modal__textarea, .search__input, .setting-text, .statuses-grid .detailed-status {
+		border 0 !important
+	}
+	
+	.columns-area__panels__pane__inner {
+		margin-top 30px
+	}
+	.compose-panel {
+		margin-top 0
+	}
+	.search {
+		&, /.search-popout {
+			margin-inline 5px
+			border-radius var(--radius)
+		}
+		label {
+			// padding-inline 20px
+			box-sizing border-box
+		}
+		input {
+			border-radius var(--radius-round) !important
+			padding-left 20px
+		}
+		.search__icon > i {
+			right 15px
+		}
+	}
+	.compose-form {
+		.compose-form__autosuggest-wrapper, .autosuggest-textarea__textarea { 
+			border-radius var(--radius) var(--radius) 0 0 !important
+		}
+		.compose-form__buttons-wrapper {
+			border-radius 0 0 var(--radius) var(--radius) !important
+		}
+		.compose-form__autosuggest-wrapper,
+ 		.compose-form__buttons-wrapper {
+			// background rgba(255,255,255,.1) !important
+		}
+		textarea, .compose-form__modifiers {
+			// background none !important
+		}
+		.icon-button.inverted, .text-icon-button, .character-counter, textarea {
+			// filter saturate(0) invert()
+			
+		}
+	}
+	.getting-started__footer {
+		opacity .5
+		transition opacity .4s
+		a {
+			text-decoration none
+		}
+		> p {
+			font-size 0
+			line-height 0
+			opacity 0
+			transition font-size .2s, line-height .2s
+			transition-duration .2s
+		}
+		&:hover, &:focus-within {
+			opacity 1
+			> p {
+				font-size 1em
+				line-height 1.5
+				opacity 1
+				transform translateY(0px)
+				transition font-size .1s, line-height .25s cubic-bezier(0,0,0,1.3), opacity .2s .1s
+			}
+		}
+	}
+	
+	.columns-area__panels__main {
+		margin 0 10px
+		// border-inline 1px solid rgba(150,150, 150,.2)
+		@media (min-width: responsiveW1) {
+			max-width var(--tl-width) !important
+			// margin 0 15px
+			padding 0 15px
+		}
+		padding-top 30px !important
+		overflow visible !important
+		transition max-width transBounce1, margin transBounce1
+		> div {
+			border-radius var(--radius)
+		}
+		[style*="overflow-x: hidden; height: 100%;"], .columns-area {
+			// box-shadow 0 10px 40px -10px rgba(0,0,0,0.15)
+		}
+	}
+	.scrollable,
+	.column-back-button, .column-header {
+		border 0
+		border-radius var(--radius)
+	}
+	.scrollable:not(.scrollable--flex), .activity-stream {
+		// background none !important
+		&:not(.activity-stream) {
+			padding 10px
+		}
+		
+		border 0 !important
+		contain unset !important
+		> [tabindex]:first-child > .focusable {
+			margin-top 0
+		}
+		> div > [tabindex]:last-child {
+			.status {
+				border 0
+			}
+		}
+	}
+	.column, .columns-area {
+		overflow visible !important
+	}
+	.account-timeline__header {
+		margin -10px
+		margin-bottom 10px
+		.account__header {
+			overflow visible !important
+		}
+		.account__header__image {
+			height 0
+			padding-bottom 35%
+			position sticky
+			top calc(0px - var(--radius)) 
+			border-radius var(--radius) var(--radius) 0 0
+			img {
+				position absolute
+			}
+		}
+		.account__header__bar {
+			padding 10px
+			border 0
+			border-radius var(--radius) var(--radius) 0 0
+			margin-top calc(0px - var(--radius)) !important
+		}
+		.account__header__tabs__name {
+			h1 {
+				display flex
+				flex-wrap wrap
+				span {
+					margin-right .4em
+				}
+			}
+		}
+		.account__header__bio {
+			margin 0
+			margin-top 10px
+			> div {
+				padding-inline 10px !important
+			}
+		}
+		
+	}
+	.account__header__fields, .account__header__account-note {
+		display flex
+		flex-wrap wrap
+		align-items center
+		border 0
+		gap 10px
+		/ .public-account-bio .account__header__fields {
+			padding 20px !important
+			padding-bottom 0 !important
+		}
+		dl, &.account__header__account-note.account__header__account-note {
+			border 0
+			border-radius var(--radius-round)
+			overflow hidden
+			background-color var(--border-color)
+			padding 0 !important
+			dt, dd {
+				width unset
+				padding-block .5em
+			}
+			dt {
+				background none
+			}
+			dd {
+				border 0
+				&:not(.verified) {
+					padding-left 0
+				}
+			}
+		}
+		&.account__header__account-note {
+			margin 10px
+			margin-bottom 0
+			gap 0
+			background none !important
+			border 1px solid var(--border-color) !important
+		}
+		textarea {
+			width 0
+			flex-grow 1
+			margin 0 !important
+			border-radius 0
+		}
+		label {
+			margin 0
+			font-weight 600
+			padding-inline 14px
+		}
+	}
+	.account__section-headline {
+		background none
+		/.with-modals & {
+			border 0 !important
+		}
+		// border 0 !important
+		a {
+			span {
+				font-weight 400
+			}
+			&.active span {
+				font-weight 700
+			}
+		}
+	}
+	.notification__filter-bar {
+		border 0 !important
+		margin-bottom calc(0px - var(--radius))
+		padding-bottom var(--radius)
+	}
+	
+	
+	.focusable, .entry {
+		overflow clip
+		border-radius var(--radius) !important
+		transition background .2s, box-shadow .4s, margin .2s, border .2s
+		animation fadeUp .4s forwards cubic-bezier(0,1,1,1)
+		// border 1px solid
+		// border 1px solid transparent !important
+		// border-top unset !important
+		&.entry {
+			margin-bottom 10px
+			.status {
+				border 0 !important
+			}
+		}
+		&:hover {
+			// background-color var(--hover-color)
+			box-shadow var(--shadow)
+			// border-color var(--border-color) !important
+			.status {
+				// border-color transparent !important
+			}
+		}
+	}
+	.detailed-status__wrapper, .detailed-status {
+		&.detailed-status__wrapper {
+			margin-block 15px
+		}
+		box-shadow var(--shadow)
+		&:first-child {
+			// margin-top 0
+		}
+		.media-gallery {
+			margin-left 0 !important
+		}
+	}
+	:not(.detailed-status__wrapper) {
+		.status__info {
+			margin-top 5px
+			.status__avatar {
+				top 15px
+				left 15px !important
+			}
+		}
+		.status__content {
+			min-height 1.4em
+			padding-top 2px
+		}
+		.media-gallery, .video-player {
+			margin-left -62px
+			width unset
+			box-shadow var(--shadow-low)
+			border-radius var(--radius)
+			margin-block 15px !important
+			animation scaleIn .4s
+			max-width unset !important
+		}
+	}
+	.status__action-bar, .detailed-status__action-bar {
+		padding-top 0
+		.icon-button {
+			display inline-flex
+			align-items center
+			width unset !important
+			padding .3em .5em !important
+			height unset !important
+			&::after {
+				content attr(aria-label)
+				font-size .7em
+				margin-left .5em
+			}
+		}
+		.status__action-bar-dropdown, .detailed-status__action-bar-dropdown, .detailed-status__button {
+			display contents
+		}
+		&.detailed-status__action-bar {
+			padding-right 15px !important
+			padding-left 15px !important
+			.icon-button {
+				flex-grow 1 !important
+				// width 0 !important
+				justify-content center
+			}
+		}
+		.detailed-status__button .icon-button, .detailed-status__action-bar-dropdown .icon-button {
+			
+		}
+	}
+	.status {
+		// border 0
+		overflow visible !important
+		padding 15px 15px 15px 78px !important
+	}
+	.detailed-status {
+		padding 15px !important
+	}
+	
+	
+	
+	.tabs-bar__wrapper {
+		@media (min-width: responsiveW2) {
+			position fixed
+			width 285px
+			margin-left 600px
+			@media (min-width: responsiveW1) {
+				margin-left calc(var(--tl-width) - 5px)
+			}
+			padding-top 0
+			margin-top 30px
+			overflow clip
+			border-radius var(--radius) var(--radius) !important
+			box-shadow 0 12px 12px -12px rgba(0,0,0,0.1)
+			.column-header, .column-header__buttons button {
+				background none !important
+			}
+			.column-header {
+				font-weight 600
+			}
+		}
+		@media (min-width: 895px) and (max-width: responsiveW2) {
+			padding-top 0
+			.tabs-bar {
+				margin-bottom 0
+				border 0 !important
+			}
+			#tabs-bar__portal {
+				border-radius 0 !important
+				.column-header, button {
+					border-radius 0 !important
+				}
+			}
+			& ~ .columns-area .scrollable {
+				border-radius 0 !important
+			}
+		}
+		transition margin-left transBounce1
+	}
+	
+	
+	.navigation-panel {
+		// padding 10px
+		padding-top 50px
+		padding-bottom 20px
+		// margin-top 46px
+		height calc(100% - 30px)
+		box-sizing border-box
+		
+		.flex-spacer {
+			// display none
+		}
+	}
+	.column-link {
+		flex-grow 2 !important
+		display flex !important
+		align-items center !important
+		align-content center
+		max-height 3.3em
+		min-height 2.7em !important
+		padding-block 0
+		position relative
+		box-sizing border-box
+		// font-weight 600
+		// opacity .8
+		.column-link__icon, /.column-header__icon {
+			margin-right 1em !important
+		}
+		&::before {
+			content: "" !important;
+			position absolute
+			border-radius: 100px !important;
+			width unset !important
+			height unset !important
+			inset 0px 0px !important
+			// min-height 43px
+			opacity 0 !important
+			background-color rgba(150,150,150,0.1)
+			transition opacity .2s
+		}
+		&:hover, &:focus {
+			&:before {
+				opacity 1 !important
+			}
+		}
+	}
+	
+	// Public layout
+	&.public-layout {
+		.header {
+			border-radius var(--radius)
+		}
+		.public-account-header {
+			border-radius var(--radius)
+			--border-color transparent !important
+			border 0 !important
+			.public-account-header__bar::before {
+				border 0
+			}
+		}
+		.grid {
+			gap 20px
+		}
+		.public-account-header + .grid .column-1 {
+			position sticky
+			align-self flex-end
+			bottom 0
+			min-height calc(100vh - 80px)
+			> * {
+				border-radius var(--radius)
+				overflow hidden
+				border 0 !important
+			}
+			a, .hero-widget__text {
+				border 0 !important
+			}
+		}
+	}
+	
+	// Mobile
+	@media (max-width: 895px) {
+		.columns-area__panels__main {
+			padding 0 !important
+		}
+		.tabs-bar__wrapper {
+			order 2
+			position sticky
+			bottom 0
+			display flex
+			flex-direction column
+			box-shadow none !important
+			padding 0
+			background none
+			border-radius 0 !important
+			pointer-events none
+			filter brightness(.95)
+			> * {
+				pointer-events all
+			}
+			.tabs-bar {
+				order 2
+				margin 0
+				border 0
+				// height 60px
+				border-radius var(--radius) var(--radius) 0 0
+				color white !important
+				a {
+					flex-grow 1 !important
+					padding-block 20px
+					i {
+						font-size 22px
+					}
+				}
+			}
+			#tabs-bar__portal {
+				margin 10px 20px !important
+				width max-content !important
+				box-shadow var(--shadow) !important
+				> button {
+					padding-inline 20px
+					
+				}
+				button {
+					min-width 60px
+				}
+				.column-header__collapsible {
+					&:not(.collapsed) {
+						width calc(100vw - 40px)
+					}
+				}
+			}
+			/.floating-action-button {
+				bottom 70px
+			}
+		}
+		.icon-button:after {
+			content unset !important
+		}
+	}
+	
+	// Fix up multi-columns
+	.columns-area {
+		> div {
+			border 0 !important
+			padding 0 !important
+			&:not(:last-child):not(.drawer) {
+				padding-right 2px !important
+			}
+			&.column {
+				flex-grow 1
+				max-width var(--tl-width)
+			}
+		}
+		.drawer {
+			padding-inline 10px !important
+			padding-top 20px !important
+			.drawer__header {
+				border-radius var(--radius-round)
+				margin-inline 5px
+				overflow hidden
+				border 0 !important
+			}
+		}
+		.drawer__inner:not(.darker), .drawer__inner__mastodon {
+			background-color transparent
+			border 0 !important
+		}
+		.drawer__inner.darker {
+			border-radius var(--radius) var(--radius) 0 0
+			margin-inline 5px
+			width calc(100% - 10px)
+		}
+	}
+	
+	
+	.modal-root__container {
+		animation bounceIn .7s
+	}
+	@media (prefers-reduced-motion: no-preference) {
+		@keyframes bounceIn {
+			0% { transform: scale(1.1); opacity: 0 }
+			30% { transform: scale(.99); opacity: 1 }
+			60% { transform: scale(1.005); opacity: 1 }
+			100% { transform: scale(1); opacity: 1 }
+		}
+		@keyframes fadeUp {
+			from { 
+				transform translateY(20px) 
+			}
+		}
+		@keyframes scaleIn {
+			from {
+				transform scale(.98)
+				opacity 0
+			}
+		}
+	}
+}
+	
+}
