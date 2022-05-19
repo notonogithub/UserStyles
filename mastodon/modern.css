@@ -765,7 +765,7 @@
 #mastodon .columns-area > div.column,
 .public-layout .columns-area > div.column {
   flex-grow: 1;
-  max-width: var(--tl-width);
+  max-width: 600px;
 }
 #mastodon .columns-area .drawer,
 .public-layout .columns-area .drawer {
