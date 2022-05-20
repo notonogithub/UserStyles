@@ -237,6 +237,10 @@
 .public-layout .account-timeline__header .account__header {
   overflow: visible !important;
 }
+#mastodon .account-timeline__header .account__header__info,
+.public-layout .account-timeline__header .account__header__info {
+  z-index: 2;
+}
 #mastodon .account-timeline__header .account__header__image,
 .public-layout .account-timeline__header .account__header__image {
   height: 0;
@@ -746,7 +750,11 @@
 #mastodon .columns-area .column-header,
 .public-layout .columns-area .column-header,
 #mastodon .columns-area .scrollable,
-.public-layout .columns-area .scrollable {
+.public-layout .columns-area .scrollable,
+#mastodon .columns-area .column-back-button,
+.public-layout .columns-area .column-back-button,
+#mastodon .columns-area .account__header__image,
+.public-layout .columns-area .account__header__image {
   border-radius: 0 !important;
 }
 #mastodon .columns-area .icon-button:after,
@@ -766,6 +774,14 @@
 .public-layout .columns-area > div.column {
   flex-grow: 1;
   max-width: 600px;
+}
+#mastodon .columns-area > div:first-child,
+.public-layout .columns-area > div:first-child {
+  margin-left: auto !important;
+}
+#mastodon .columns-area > div:last-child,
+.public-layout .columns-area > div:last-child {
+  margin-right: auto !important;
 }
 #mastodon .columns-area .drawer,
 .public-layout .columns-area .drawer {
