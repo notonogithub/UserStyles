@@ -8,7 +8,7 @@
 
 /* ==UserStyle==
 @name           Mastodon Modern
-@version        1.0.4
+@version        1.0.5
 @description    Gives Mastodon a nicer look :)
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/mastodon/modern.user.css
 @preprocessor   stylus
@@ -576,7 +576,7 @@
 	}
 	
 	// Fix up multi-columns
-	.columns-area {
+	/.layout-multiple-columns #mastodon .columns-area {
 		overflow auto hidden !important
 		.column-header, .scrollable, .column-back-button, .account__header__image {
 			border-radius 0 !important	
