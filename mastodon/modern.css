@@ -741,7 +741,7 @@
 }
 #mastodon .columns-area,
 .public-layout .columns-area {
-  overflow: hidden !important;
+  overflow: auto hidden !important;
 }
 #mastodon .columns-area .column-header,
 .public-layout .columns-area .column-header,
