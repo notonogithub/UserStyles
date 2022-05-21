@@ -8,7 +8,7 @@
 
 /* ==UserStyle==
 @name           Mastodon Modern
-@version        1.0.5
+@version        1.0.6
 @description    Gives Mastodon a nicer look :)
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/mastodon/modern.user.css
 @preprocessor   stylus
@@ -38,7 +38,7 @@
 		--shadow-low 0 8px 16px -10px rgba(0,0,0,0.4)
 	}
 	
-	button, video, input, .privacy-dropdown__dropdown, .react-toggle-track {
+	button, video, input, iframe, .privacy-dropdown__dropdown, .react-toggle-track {
 		border-radius var(--radius) !important
 		
 	}
@@ -512,17 +512,43 @@
 				border 0 !important
 			}
 		}
+		
+		// Login & About page
+		.box-widget, .directory__tag > a, .hero-widget,
+ 		.landing-page__call-to-action, .table-of-contents, .rules-list {
+			border-radius var(--radius)
+			overflow hidden
+		}
+		
+		// Footer
+		.footer {
+			// Was just something that annoyed me a lil', now it's even :)
+			.column-3, .column-4 {
+				text-align right
+			}
+		}
 	}
 	
 	// Mobile
 	@media (max-width: 895px) {
 		.columns-area__panels__main {
 			padding 0 !important
+			padding-bottom 150px !important
+			~/ .is-composing .columns-area__panels__main {
+				padding-bottom 40px !important
+			}
+			.scrollable, .account__header__image {
+				border-radius 0 !important
+			}
 		}
 		.tabs-bar__wrapper {
-			order 2
-			position sticky
-			bottom 0
+			// order 2
+			// position sticky
+			position fixed !important
+			top unset !important
+			bottom 0 !important
+			left 0 !important
+			right 0 !important
 			display flex
 			flex-direction column
 			box-shadow none !important
@@ -531,6 +557,7 @@
 			border-radius 0 !important
 			pointer-events none
 			filter brightness(.95)
+			
 			> * {
 				pointer-events all
 			}
@@ -539,13 +566,53 @@
 				margin 0
 				border 0
 				// height 60px
-				border-radius var(--radius) var(--radius) 0 0
+				border-radius var(--radius-round) var(--radius-round) 0 0
 				color white !important
+				overflow visible !important
+				padding-inline 5px
 				a {
 					flex-grow 1 !important
 					padding-block 20px
+					position relative
+					border 0
+					background none !important
+					transition transform .4s cubic-bezier(0,0,0,4), filter .1s
+					> i {
+						font-size 18px
+						filter opacity(.7)
+						.icon-with-badge__badge {
+							font-size .5em
+							border-radius var(--radius-round)
+						}
+						transition transform .2s cubic-bezier(0,0,0,1.2)
+					}
+					&::before {
+						content ""
+						position absolute
+						bottom -10px
+						width 5px
+						height 10px
+						border-radius 100px
+						background-color currentColor
+						left 50%
+						margin-left -2.5px
+						transition bottom .2s cubic-bezier(0,0,0,4), width .2s, margin-left .2s
+					}
+					&:active {
+						transform translateY(5px)
+						transition transform 1s
+					}
+				}
+				a.active {
+					transform translateY(-2px)
 					i {
-						font-size 22px
+						// transform scale(1.2) translateY(0px)
+						filter none !important
+					}
+					&::before {
+						bottom -6px
+						width 10px
+						margin-left -5px
 					}
 				}
 			}
@@ -553,6 +620,7 @@
 				margin 10px 20px !important
 				width max-content !important
 				box-shadow var(--shadow) !important
+				max-width calc(100vw - 130px)
 				> button {
 					padding-inline 20px
 					
@@ -561,9 +629,13 @@
 					min-width 60px
 				}
 				.column-header__collapsible {
+					transition margin-top .2s cubic-bezier(0,0,0,2)
 					&:not(.collapsed) {
 						width calc(100vw - 40px)
+						margin-top 5px
 					}
+					max-width 100%
+					border-radius var(--radius)
 				}
 			}
 			/.floating-action-button {
@@ -572,6 +644,23 @@
 		}
 		.icon-button:after {
 			content unset !important
+		}
+		
+		.status__action-bar {
+			margin-left -78px + 15px
+			margin-bottom -10px
+			.icon-button {
+				flex-grow 1
+				margin 0 !important
+				justify-content center
+				padding .7em !important
+			}
+		}
+		
+		// Fix dropdown note preview
+		.modal-root__modal .status.light {
+			overflow hidden !important
+			padding-left 70px !important
 		}
 	}
 	
@@ -609,6 +698,15 @@
 				margin-inline 5px
 				overflow hidden
 				border 0 !important
+				a {
+					border 0
+					&:first-child {
+						padding-left 15px !important
+					}
+					&:last-child {
+						padding-right 15px !important
+					}
+				}
 			}
 		}
 		.drawer__inner:not(.darker), .drawer__inner__mastodon {
