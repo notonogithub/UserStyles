@@ -8,7 +8,7 @@
 
 /* ==UserStyle==
 @name           Mastodon Modern
-@version        1.0.6
+@version        1.0.7
 @description    Gives Mastodon a nicer look :)
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/mastodon/modern.user.css
 @preprocessor   stylus
@@ -155,8 +155,8 @@
 		> div {
 			border-radius var(--radius)
 		}
-		[style*="overflow-x: hidden; height: 100%;"], .columns-area {
-			// box-shadow 0 10px 40px -10px rgba(0,0,0,0.15)
+		.scrollable {
+			padding-bottom 40vh !important
 		}
 	}
 	.scrollable,
@@ -165,7 +165,6 @@
 		border-radius var(--radius)
 	}
 	.scrollable:not(.scrollable--flex), .activity-stream {
-		// background none !important
 		&:not(.activity-stream) {
 			padding 10px
 		}
@@ -183,6 +182,9 @@
 	}
 	.column, .columns-area {
 		overflow visible !important
+	}
+	.scrollable--flex .account-timeline__header {
+		margin 0 !important
 	}
 	.account-timeline__header {
 		margin -10px
@@ -321,6 +323,29 @@
 			}
 		}
 	}
+	
+	.status__info {
+		margin-top 5px
+		.status__avatar {
+			top 15px
+			left 15px !important
+		}
+	}
+	.status__content {
+		min-height 1.4em
+		padding-top 2px
+	}
+	.media-gallery, .video-player {
+		margin-left -62px
+		width unset
+		box-shadow var(--shadow-low)
+		border-radius var(--radius)
+		margin-block 15px !important
+		animation scaleIn .4s
+		max-width unset !important
+		max-height 80vh !important
+	}
+	
 	.detailed-status__wrapper, .detailed-status {
 		&.detailed-status__wrapper {
 			margin-block 15px
@@ -331,30 +356,10 @@
 		}
 		.media-gallery, .video-player {
 			margin-left 0 !important
+			max-height unset !important
 		}
 	}
-	:not(.detailed-status__wrapper) {
-		.status__info {
-			margin-top 5px
-			.status__avatar {
-				top 15px
-				left 15px !important
-			}
-		}
-		.status__content {
-			min-height 1.4em
-			padding-top 2px
-		}
-		.media-gallery, .video-player {
-			margin-left -62px
-			width unset
-			box-shadow var(--shadow-low)
-			border-radius var(--radius)
-			margin-block 15px !important
-			animation scaleIn .4s
-			max-width unset !important
-		}
-	}
+	
 	.status__action-bar, .detailed-status__action-bar {
 		padding-top 0
 		.icon-button {
@@ -363,10 +368,17 @@
 			width unset !important
 			padding .3em .5em !important
 			height unset !important
+			flex 0 1 auto !important
+			min-width 0
 			&::after {
 				content attr(aria-label)
 				font-size .7em
 				margin-left .5em
+				white-space nowrap
+				overflow hidden
+				text-overflow ellipsis
+				// width 0
+				// flex-grow 1
 			}
 		}
 		.status__action-bar-dropdown, .detailed-status__action-bar-dropdown, .detailed-status__button {
@@ -533,7 +545,7 @@
 	@media (max-width: 895px) {
 		.columns-area__panels__main {
 			padding 0 !important
-			padding-bottom 150px !important
+			
 			~/ .is-composing .columns-area__panels__main {
 				padding-bottom 40px !important
 			}
