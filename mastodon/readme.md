@@ -1,5 +1,5 @@
 # Mastodon Modern
-Makes Mastodon look a bit better nicer :)
+Makes Mastodon look a bit nicer :)
 
 | ![](https://codeberg.org/Freeplay/UserStyles/raw/branch/main/mastodon/images/mastodon-modern.png) | ![](https://codeberg.org/Freeplay/UserStyles/raw/branch/main/mastodon/images/mastodon-modern-multicolumn.png) | ![](https://codeberg.org/Freeplay/UserStyles/raw/branch/main/mastodon/images/mastodon-modern-post.png) | ![](https://codeberg.org/Freeplay/UserStyles/raw/branch/main/mastodon/images/mastodon-modern-post-dark.png) |
 | --- | --- | --- | --- |
