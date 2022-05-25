@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Proton Suite Alternative Layout
-@version        1.0.1
+@version        1.0.4
 @description    A better, more compact, nicer looking layout for ProtonMail, ProtonCalendar, and ProtonDrive.
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/proton/better-layout.user.css
 @preprocessor   stylus
@@ -13,13 +13,17 @@
 
 @var range sidebarWidth "Sidebar Width" [220, 170, 300, 5, "px"]
 @var range toolbarHeight "Toolbar Height" [50, 35, 50, 5, "px"]
-@var text  image       "Sidebar Background (Place in quotes)" '"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fsite-547756.mozfiles.com%2Ffiles%2F547756%2Fmedium%2FRed_Fox3-1.jpg&f=1&nofb=1"'
+@var checkbox footer    "Hide Sidebar Footer" 1
+@var text  image       "Sidebar Background (Place in quotes)" '""'
 @var range allignment  "Sidebar Background: Alignment" [0, 0, 100, "%"]
 @var range blur        "Sidebar Background: Blur"      [0, 0, 20, 2]
 @var range opac        "Sidebar Background: Opacity"   [.5, .1, 1, 0.1]
+
+@var checkbox collapseSidebar "[WIP] Collapse Sidebar" 1
+
 ==/UserStyle== */
 
-@-moz-document domain("mail.protonmail.com"), domain("calendar.protonmail.com"), domain("drive.protonmail.com"), domain("account.protonmail.com"), domain("account.protonvpn.com") {
+@-moz-document domain("mail.protonmail.com"), domain("calendar.protonmail.com"), domain("drive.protonmail.com"), domain("account.protonmail.com"), domain("account.protonvpn.com"), domain("proton.me") {
 	
 	@keyframes scaleIn {
 		0% { transform: scale(1.1); opacity: 0 }
@@ -33,7 +37,12 @@
 		--sidebar-width: sidebarWidth;
 	}
 	
-	.button-group, .bordered {
+	html {
+		position: sticky;
+		top: 0;
+	}
+	
+	.bordered {
 		border: none !important;
 	}
 	
@@ -62,6 +71,7 @@
 		flex-direction: column;
 		flex-wrap: wrap;
 		max-height: 100vh;
+		overflow: hidden;
 		&::before {
 			content: "";
 			position: absolute;
@@ -88,44 +98,57 @@
 		flex: none;
 		min-width: unset;
 		width: auto;
+		transition margin .2s
 	}
 	.header {
 		flex-direction: column;
+		justify-content flex-start;
 		width: var(--sidebar-width);
 		height: auto;
 		padding: 0;
 		box-shadow: none !important;
 		border: 0 !important;
+		
 		background: none;
+		--background-norm transparent
 		padding-bottom: 8px;
 		z-index: 1;
-        transition: width .4s;
+        transition: width .4s, transform .2s cubic-bezier(0,0,0,1.5);
 		& > * {
 			width: auto;
 			box-sizing: border-box !important;
 		}
 		.logo-container {
 			padding: 0 14px;
-			margin-top: 10px;
-		}
-		& > form {
-			margin: 10px 14px;
-			margin-top: 4px !important;
-			box-sizing: border-box;
-			border-radius: 100px;
-			overflow: hidden;
-			input {
-				border-radius: 100px;
-			}
-			&:not(.searchbox-container--reset-advanced) {
-				input {
-					padding-right: 30px !important;
-				}
-			}
-			button {
-				border-radius: 100px !important;
+			margin: 20px 0;
+			.apps-dropdown-button svg {
+				transform scale(.8)
 			}
 		}
+		
+		.searchbox-container {
+			width calc(100% - 30px)
+			border-radius 100px
+			margin-bottom 10px
+			// margin-top 5px
+		}
+		/[id*=advanced-search-overlay] {
+			--width 600 !important
+			--left 29 !important
+			margin-top -5px
+			&,.overlay-content {
+				transform-origin top left
+				animation popupIn .2s cubic-bezier(0,0,0,1)
+			}
+		}
+		@keyframes popupIn {
+			from {
+				border-radius 18px
+				transform scale(.9)
+				opacity 0
+			}
+		}
+		
 		.topnav-container {
 			flex: none;
 			display: flex;
@@ -142,12 +165,13 @@
 					min-width: 35px;
 					flex-grow: 1;
 					margin: 0 1px;
-					button, a {
+					--button-hover-background-color: var(--interaction-default-hover);
+					button, a, span {
 						width: 100% !important;
 						justify-content: center;
 						border: none !important;
 						box-shadow: none;
-						border-radius: 4px;
+						border-radius: 4px !important;
 						span {
 							width: 100%;
 							border: none !important;
@@ -197,6 +221,9 @@
 			padding-bottom: 0;
 			z-index: 3;
 		}
+		.flex.flex-align-items-center {
+			flex-wrap nowrap
+		}
 		& > .scroll-if-needed {
 			margin-top: -20px;
 			background: linear-gradient(200deg, transparent, var(--background-weak) );
@@ -217,11 +244,15 @@
 			z-index: 2;
 			pointer-events: none;
 		}
+		if footer {
+			.app-infos {
+				display: none;
+			}
+		}
 	}
 }
 	
 	.main {
-		transition: margin .2s;
 		border-radius: 0 !important;
 		z-index: 2;
 		border-top: 0;
@@ -230,27 +261,19 @@
 		flex-wrap: nowrap;
 		width: calc(100% - var(--sidebar-width));
 		background-color: var(--background-norm);
-		transition: width .4s !important;
+		transition: width .2s, margin .2s !important;
 		.toolbar {
-			// width: 30px;
-			// width: 400px;
 			height: 36px;
 			height: toolbarHeight;
 			min-height: 36px;
-			// margin-bottom: -35px;
 			border-bottom: 0;
-			// background: none;
-			// margin-right: 280px !important;
+			background: none;
 			box-shadow: var(--shadow-norm) !important;
-			background: var(--background-norm);
 			z-index: 100;
 			overflow-x: auto;
 			flex-wrap: nowrap;
 			transition: height .2s
 			& > div {
-				// display: contents;
-				// display: flex;
-				// flex-wrap: nowrap;
 				min-width: max-content;
 			}
 			.vr, .toolbar-separator {
@@ -265,22 +288,11 @@
 		}
 		
 		.items-column-list-inner .sticky-top:first-child {
-			// position: fixed;
-			// top: 0;
-			// right: 0;
-			// height: 36px;
-			// align-items: center;
-			// background: none;
-			// border: 0 !important;
-			// z-index: 2 !important;
 			position: relative;
 			overflow-x: auto;
 			flex-wrap: nowrap;
 			border: 0;
-			// background-color: var(--background-norm);
-			// box-shadow: var(--shadow-norm);
 			& > * {
-				// flex-wrap: nowrap;
 				min-width: max-content;
 			}
 		}
@@ -346,15 +358,17 @@
 				border: none;
 				padding-top: 0;
 			}
+			
 		}
 		// Header
 		.message-conversation-summary {
 			margin: 0 !important;
-			padding: 0px 10px;
-			padding-top: 8px;
+			padding: 8px 10px;
+			// padding-top: 8px;
 			padding-bottom: 8px;
 			border-bottom: 0;
 			box-shadow: var(--shadow-norm) !important;
+			position: relative;
 			&::after {
 				content: "";
 				position: absolute;
@@ -371,6 +385,67 @@
 			}
 		}
 		
+	}
+	if collapseSidebar {
+		.header {
+			transform translate(3px, 2px)
+			&:hover, &:focus-within {
+				z-index 100
+				transform translate(4px, 4px)
+				border-radius 12px
+				box-shadow 0 4px 12px rgba(0,0,0,0.2) !important
+				border 1px solid var(--border-norm) !important
+				background inherit !important
+			}
+		}
+		.sidebar {
+			transition width .2s
+			.navigation-link-header-group, svg ~ span, .navigation-link, svg, .navigation-sublist > li {
+				transition opacity .2s, min-width .2s, padding .2s, width .4s, margin .4s
+			}
+			.navigation-sublist {
+				> li {
+					width 100%
+				}
+				span {
+					// white-space nowrap !important
+					min-width sidebarWidth - 50px
+					transition opacity .2s
+				}
+			}
+			&:not(:hover) {
+				width 70px !important
+				.navigation-link {
+					padding-left 1em
+					svg {
+						min-width 40px
+					}
+				}
+				.navigation-link-header-group, svg ~ span {
+					opacity 0
+				}
+				.navigation-sublist {
+					margin-left 1em !important
+					margin-right 8px !important
+					padding-right 8px !important
+					> li {
+						width 2px !important
+						margin 0 auto
+						overflow hidden
+						span {
+							opacity 0
+						}
+					}
+				}
+				button {
+					color transparent
+				}
+				& ~ .main {
+					margin-left -150px
+					width calc(100% - 70px)
+				}
+			}
+		}
 	}
 	
 }
