@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Proton Suite Alternative Layout
-@version        1.0.4
+@version        1.0.5
 @description    A better, more compact, nicer looking layout for ProtonMail, ProtonCalendar, and ProtonDrive.
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/proton/better-layout.user.css
 @preprocessor   stylus
@@ -19,7 +19,7 @@
 @var range blur        "Sidebar Background: Blur"      [0, 0, 20, 2]
 @var range opac        "Sidebar Background: Opacity"   [.5, .1, 1, 0.1]
 
-@var checkbox collapseSidebar "[WIP] Collapse Sidebar" 1
+@var checkbox collapseSidebar "[WIP] Collapse Sidebar" 0
 
 ==/UserStyle== */
 
