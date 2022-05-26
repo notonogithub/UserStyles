@@ -8,3 +8,5 @@ Makes Mastodon look a bit nicer :)
 https://github.com/Coffeedon/Cofffee-Assets#to-use-a-pre-made-theme
 
 **For light theme, you may need to include `@import 'modern/light';`**
+
+While not tested thoroughly, could work well with other color themes, as well. 
