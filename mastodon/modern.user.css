@@ -6,9 +6,16 @@
 
 ***/
 
+/* Update 1.1.0
+- Styled content warning buttons
+- Fixed explore page tabs
+- Lots and lots of very minor fixes and improvements
+- Mobile improvements
+*/
+
 /* ==UserStyle==
 @name           Mastodon Modern
-@version        1.0.8
+@version        1.1.0
 @description    Gives Mastodon a nicer look :)
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/mastodon/modern.user.css
 @preprocessor   stylus
@@ -25,12 +32,14 @@
 #mastodon, .public-layout { // Wrapped in this so it doesn't mess with other front ends the instance probably has
 	responsiveW1 = 1320px
 	responsiveW2 = 1191px
+	mobileW = 895px
 	
 	transBounce1 = .2s cubic-bezier(0,0,0,1.1)
 	
 	/:root {
 		--tl-width 750px
 		--radius 12px
+		// --radius 0px
 		--radius-round 24px
 		--hover-color rgba(170,170,170, 0.07)
 		--border-color rgba(120,120,120, 0.2)
@@ -38,9 +47,16 @@
 		--shadow-low 0 8px 16px -10px rgba(0,0,0,0.4)
 	}
 	
-	button, video, input, iframe, .privacy-dropdown__dropdown, .react-toggle-track {
+	button, video, input, iframe, .privacy-dropdown__dropdown, .react-toggle-track,
+ 	.reply-indicator, .compose-form__warning {
 		border-radius var(--radius) !important
-		
+	}
+	button, .focusable, a, .media-gallery__item-thumbnail {
+		&:focus-visible {
+			box-shadow inset 0 0 0 2px #dc7b18
+			outline 2px #dc7b18 solid
+			outline-offset -2px
+		}
 	}
 	* {
 		border-color var(--border-color) !important
@@ -58,6 +74,17 @@
 		&:active {
 			transform scale(.95)
 			transition transform .4s cubic-bezier(0,0,0,1) !important
+		}
+	}
+	.status__content__spoiler-link {
+		span {
+			display inline-block
+			transition transform .4s cubic-bezier(0,0,0,4) !important
+		}
+		
+		&:active span {
+			transition transform .4s cubic-bezier(0,0,0,1) !important
+			transform translateY(1px)
 		}
 	}
 	.react-toggle-thumb {
@@ -116,27 +143,29 @@
 			
 		}
 	}
-	.getting-started__footer {
-		opacity .5
-		transition opacity .4s
-		a {
-			text-decoration none
-		}
-		> p {
-			font-size 0
-			line-height 0
-			opacity 0
-			transition font-size .2s, line-height .2s
-			transition-duration .2s
-		}
-		&:hover, &:focus-within {
-			opacity 1
+	@media (min-width: mobileW) {
+		.getting-started__footer {
+			opacity .5
+			transition opacity .4s
+			a {
+				text-decoration none
+			}
 			> p {
-				font-size 1em
-				line-height 1.5
+				font-size 0
+				line-height 0
+				opacity 0
+				transition font-size .2s, line-height .3s cubic-bezier(1, 0, 0, 0)
+				transition-duration .2s
+			}
+			&:hover, &:focus-within {
 				opacity 1
-				transform translateY(0px)
-				transition font-size .1s, line-height .25s cubic-bezier(0,0,0,1.3), opacity .2s .1s
+				> p {
+					font-size 1em
+					line-height 1.5
+					opacity 1
+					transform translateY(0px)
+					transition font-size .1s, line-height .3s cubic-bezier(0.8, 0, 0, 1.2), opacity .2s .1s
+				}
 			}
 		}
 	}
@@ -283,8 +312,9 @@
 		/.with-modals & {
 			border 0 !important
 		}
-		// border 0 !important
-		a {
+		a, button {
+			background none
+			border-radius 0 !important
 			span {
 				font-weight 400
 			}
@@ -305,6 +335,7 @@
 		border-radius var(--radius) !important
 		transition background .2s, box-shadow .4s, margin .2s, border .2s
 		animation fadeUp .4s forwards cubic-bezier(0,1,1,1)
+		background none
 		// border 1px solid
 		// border 1px solid transparent !important
 		// border-top unset !important
@@ -314,28 +345,53 @@
 				border 0 !important
 			}
 		}
-		&:hover {
+		&:hover, &:focus-within {
 			background-color var(--hover-color)
-			// box-shadow var(--shadow)
-			// border-color var(--border-color) !important
-			.status {
-				// border-color transparent !important
-			}
 		}
 	}
 	
+	.status__prepend {
+		padding-top 15px !important
+	}
 	.status__info {
 		margin-top 5px
 		.status__avatar {
 			top 15px
 			left 15px !important
 		}
+		.display-name {
+			// font-weight 700
+			strong {
+				font-weight 600
+			}
+		}
 	}
 	.status__content {
 		min-height 1.4em
 		padding-top 2px
+		margin-inline -100px
+		padding-inline 100px
+		p {
+			margin-bottom 0
+		}
 	}
-	.media-gallery, .video-player {
+	.status__content__spoiler-link {
+		display block
+		width unset
+		padding 1em
+		color inherit
+		font-weight 700
+		background none
+		margin-left -100px
+		padding-left 100px
+		width calc(100% + 150px)
+		text-align left
+		font-size .8em
+		&:hover, &:focus {
+			background-color var(--hover-color)
+		}
+	}
+	.media-gallery, .video-player, .status-card.horizontal.interactive {
 		margin-left -62px
 		width unset
 		box-shadow var(--shadow-low)
@@ -346,7 +402,7 @@
 		max-height 80vh !important
 	}
 	
-	.detailed-status__wrapper, .detailed-status {
+	.detailed-status__wrapper, .detailed-status, .picture-in-picture {
 		&.detailed-status__wrapper {
 			margin-block 15px
 		}
@@ -354,14 +410,29 @@
 		&:first-child {
 			// margin-top 0
 		}
-		.media-gallery, .video-player {
+		.media-gallery, .video-player, .status-card.horizontal.interactive {
 			margin-left 0 !important
 			max-height unset !important
 		}
+		.status__content {
+			min-height unset !important
+		}
+	}
+	.picture-in-picture {
+		.picture-in-picture__header {
+			border-radius var(--radius) var(--radius) 0 0
+		}
+		.video-player {
+			margin 0 !important
+			border-radius 0 !important
+		}
+		.picture-in-picture__footer {
+			border-radius 0 0 var(--radius) var(--radius)
+		}
 	}
 	
-	.status__action-bar, .detailed-status__action-bar {
-		padding-top 0
+	.status__action-bar, .detailed-status__action-bar, .picture-in-picture__footer {
+		// padding-top 0
 		.icon-button {
 			display inline-flex
 			align-items center
@@ -370,6 +441,9 @@
 			height unset !important
 			flex 0 1 auto !important
 			min-width 0
+			&:last-child {
+				margin-right 0 !important
+			}
 			&::after {
 				content attr(aria-label)
 				font-size .7em
@@ -377,14 +451,12 @@
 				white-space nowrap
 				overflow hidden
 				text-overflow ellipsis
-				// width 0
-				// flex-grow 1
 			}
 		}
 		.status__action-bar-dropdown, .detailed-status__action-bar-dropdown, .detailed-status__button {
 			display contents
 		}
-		&.detailed-status__action-bar {
+		&.detailed-status__action-bar, &.picture-in-picture__footer {
 			padding-right 15px !important
 			padding-left 15px !important
 			.icon-button {
@@ -393,8 +465,10 @@
 				justify-content center
 			}
 		}
-		.detailed-status__button .icon-button, .detailed-status__action-bar-dropdown .icon-button {
-			
+		&.picture-in-picture__footer {
+			.icon-button::after {
+				content unset !important
+			}
 		}
 	}
 	.status {
@@ -408,40 +482,70 @@
 	
 	
 	
-	.tabs-bar__wrapper {
+	.tabs-bar__wrapper, .column-back-button--slim .column-back-button {
+		/.column-header {
+			font-weight 600
+			&, button {
+				// border-radius 0 !important
+				border-bottom-left-radius 0 !important
+				border-bottom-right-radius 0 !important
+			}
+			& ~ .scrollable {
+				border-top-left-radius 0 !important
+				border-top-right-radius 0 !important
+			}
+		}
 		@media (min-width: responsiveW2) {
 			position fixed
 			width 285px
 			margin-left 600px
+			top 0 !important
+			left unset !important
+			right unset !important
+			min-height 48px !important
 			@media (min-width: responsiveW1) {
 				margin-left calc(var(--tl-width) - 5px)
 			}
-			padding-top 0
+			&:not(.column-back-button) {
+				padding-top 0
+			}
 			margin-top 30px
 			overflow clip
 			border-radius var(--radius) var(--radius) !important
 			box-shadow 0 12px 12px -12px rgba(0,0,0,0.1)
 			.column-header, .column-header__buttons button {
 				background none !important
-			}
-			.column-header {
-				font-weight 600
-			}
+			}			
 		}
-		@media (min-width: 895px) and (max-width: responsiveW2) {
-			padding-top 0
-			.tabs-bar {
-				margin-bottom 0
-				border 0 !important
-			}
-			#tabs-bar__portal {
+		@media (min-width: mobileW) and (max-width: responsiveW2) {
+			&.column-back-button {
 				border-radius 0 !important
-				.column-header, button {
+			}
+			&:not(.column-back-button) {
+				padding-top 0
+				.tabs-bar {
+					margin-bottom 0
+					border 0 !important
+				}
+				#tabs-bar__portal {
+					border-radius 0 !important
+					.column-header, button {
+						border-radius 0 !important
+					}
+				}
+
+				& ~ .columns-area .scrollable {
 					border-radius 0 !important
 				}
-			}
-			& ~ .columns-area .scrollable {
-				border-radius 0 !important
+				/ #mastodon .columns-area__panels__main {
+					&, .columns-area {
+						padding-top 0 !important
+					}
+
+					> div, .scrollable {
+						border-radius 0 !important
+					}
+				}
 			}
 		}
 		transition margin-left transBounce1
@@ -542,14 +646,46 @@
 	}
 	
 	// Mobile
-	@media (max-width: 895px) {
+	@media (max-width: mobileW) {
+		.columns-area--mobile > .column > .column-header__wrapper {
+			height 100vh
+			width 100vw
+			position fixed
+			top 0
+			.column-header {
+				height 100%
+				background none
+				button {
+					display flex
+					flex-direction column
+					justify-content center
+					align-items center
+					padding 0 !important
+					i {
+						font-size 2em
+						margin 0 !important
+						margin-bottom 1em !important
+					}
+				}
+			}
+		}
 		.columns-area__panels__main {
 			padding 0 !important
-			
+			max-width unset
+			.scrollable {
+				&::before {
+					content ""
+					position absolute
+					inset 0
+					background-color inherit
+					z-index -1
+				}
+			}
+
 			~/ .is-composing .columns-area__panels__main {
 				padding-bottom 40px !important
 			}
-			.scrollable, .account__header__image {
+			.scrollable, .account__header__image, > div {
 				border-radius 0 !important
 			}
 		}
@@ -640,10 +776,14 @@
 				button {
 					min-width 60px
 				}
+				.column-header > button {
+					padding-right 15px
+				}
 				.column-header__collapsible {
 					transition margin-top .2s cubic-bezier(0,0,0,2)
 					&:not(.collapsed) {
-						width calc(100vw - 40px)
+						width auto !important
+						max-width calc(100vw - 40px)
 						margin-top 5px
 					}
 					max-width 100%
@@ -674,6 +814,22 @@
 			overflow hidden !important
 			padding-left 70px !important
 		}
+		.getting-started {
+			padding-bottom 60px
+			margin-top auto
+			border-radius var(--radius) var(--radius) 0 0
+		}
+		
+		
+		
+		/.search-popout {
+			max-width unset !important
+			width calc(100vw - 70px) !important
+			position fixed
+			left 15px
+			
+		}
+		
 	}
 	
 	// Fix up multi-columns
@@ -754,7 +910,14 @@
 				opacity 0
 			}
 		}
+		@keyframes fadeLeft {
+			from {
+				transform: translateX(20px) opacity(0)
+			}
+		}
 	}
+	
+	
 }
 	
 }
