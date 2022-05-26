@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Cleaner Stylus
-@version        1.1.2
+@version        1.2.0
 @description    Tweaks for Userstyles.World!
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/cleaner-stylus.user.css
 @preprocessor   stylus
@@ -10,21 +10,25 @@
 @author         Freeplay (https://freeplay.codeberg.page/)
 @homepageURL    https://codeberg.org/Freeplay/UserStyles
 @supportURL     https://codeberg.org/Freeplay/UserStyles/issues
-
 ==/UserStyle== */
 
 @-moz-document url-prefix("moz-extension://"), url-prefix("chrome-extension://") {
 	#stylus-manage, #stylus-popup, #stylus {
+		transition background-color .2s
 		button, #find-styles-link {
 			border-color: rgba(0,0,0,0.1) !important;
 			border-radius: 4px !important;
 			padding: 8px 16px !important;
 			background-image: none;
 			height: auto !important;
+			transition background-color .2s
 		}
 		input, select {
 			border: 1px solid rgba(0,0,0,0.1) !important;
 			border-radius: 4px !important;
+		}
+		.checkbox-container {
+			margin-right .5em
 		}
 		.filter-selection .select-resizer > select {
 			border: none !important;
@@ -36,7 +40,6 @@
 			box-shadow: 2px 0 24px rgba(0,0,0,0.07);
 			border-right: none;
 			border-bottom: none;
-			padding-bottom: 0 !important;
 		}
 
 		.menu-items-wrapper, #message-box > div, #confirm, #stylus-options {
@@ -76,26 +79,29 @@
 		#installed {
 			padding-top: 4px;
 			padding-bottom: 4px;
-			width: 120%;
 			border-bottom: none;
-			box-shadow: 0 1px 0px rgba(0,0,0,.1);
 			.entry {
+				position relative
 				margin: 0 4px;
 				background-color: transparent;
 				border-radius: 6px;
 				overflow: hidden;
 				// border-bottom: 1px solid rgba(0,0,0,.07);
-				&::after {
+				transition background-color .2s
+				&:not(:first-of-type)::after {
 					content: "";
 					position: absolute;
 					left: 10px;
 					right: 10px;
-					bottom: 0px;
+					top: 0px;
 					border-bottom: 1px solid rgba(0,0,0,.07);
 					
 				}
 				&:hover {
 					background-color: hsla(180, 50%, 30%, 0.1);
+					&::after, & + .entry::after {
+						opacity 0
+					}
 				}
 				.entry-content {
 					height: auto;
@@ -114,7 +120,29 @@
 		}
 		
 	}
-	
+	#stylus-install-usercss {
+		#header {
+			padding 20px
+		}
+		#header-content-wrapper {
+			.actions {
+				display flex
+				flex-wrap wrap
+				align-items center
+				margin 0
+				.install {
+					flex-grow 1
+					margin-right 1em
+					padding-right 3em !important
+				}
+			}
+			.meta-description {
+				font-size 1.1em
+				margin 0
+			}
+		}
+		
+	}
 	#stylus-manage {		
 		overflow-x: hidden;
 		height: auto;
@@ -123,6 +151,8 @@
 			flex-direction: column;
 			padding: 25px 0;
 			background: inherit;
+			// box-shadow none
+			background rgba(150,150,150,0.05)
 			#manage-heading {
 				margin: 0 25px;
 				font-weight: 500 !important;
@@ -163,7 +193,7 @@
 					& > * {
 						flex-grow: 1 !important;
 						max-width: unset;
-						width: 100%;
+						// width: 100%;
 					}
 				}
 				summary {
@@ -210,12 +240,6 @@
 				}
 				#check-all-updates {
 					margin-right: 8px;
-				}
-				#add-style-wrapper a, #backup-buttons {
-					flex-grow: 1;
-					button {
-						flex-grow: 1;
-					}
 				}
 				#manage-text span a {
 					text-decoration: none;
@@ -280,9 +304,6 @@
 	}
 	
 	#stylus-popup {
-		display: flex;
-		flex-wrap: wrap;
-		margin-top: 45px;
 		overflow: hidden auto;
 		.blocked-info {
 			border-bottom: 0 !important;
@@ -307,50 +328,70 @@
 		
 		& > .actions {
 			margin: 0;
-			margin-left: 0 !important;
+			// margin-left: 4px !important;
 			margin-right: 0 !important;
 			position: relative;
 			flex-grow: 1;
-			padding-top: 16px;
-			padding-bottom: 16px;
+			// padding-top: 16px;
+			// padding-bottom: 16px;
+			padding var(--inner-padding)
 			display: flex;
-			flex-direction: column;
+			flex-wrap wrap
+			align-items center
+			justify-content space-between
+			// flex-direction: column;
 			background: inherit;
+			background rgba(150,150,150,0.07)
 
-			
+			.main-controls {
+				display contents
+			}
+			#disable-all-wrapper, #find-styles {
+				margin-bottom calc(var(--inner-padding) / 2) !important
+			}
 			#disable-all-wrapper {
 				background-color: inherit;
-				padding: 15px 13px;
-				box-shadow: 0 1px 0px rgba(0,0,0,.1), 0 -1px 0px rgba(0,0,0,.1);
+				// padding: 15px 13px;
+				// box-shadow: 0 1px 0px rgba(0,0,0,.1), 0 -1px 0px rgba(0,0,0,.1);
 				// margin-bottom: 15px;
-				position: fixed;
-				top: 0;
-				left: 0;
-				width: 100%;
-				order: 2;
+				// position: fixed;
+				// top: 0;
+				// left: 0;
+				// width: 100%;
+				// order: 2;
 				// margin: 0 -9px !important;
 				// margin-top: 16px !important;
+				padding 0
+				margin-left calc(var(--inner-padding) / 2)
 				box-sizing: border-box;
 				border: none !important;
 			}
 			#find-styles {
-				position: fixed;
+				// position: fixed;
 				// position: absolute;
-				top: 15px;
+				// top: 15px;
 				// bottom: 14px;
-				right: 16px;
+				// right: 16px;
 				margin: 0;
+				margin-right var(--inner-padding)
 				z-index: 2;
+				// padding-block 4px
 				#find-styles-link {
-					border: 1px solid rgba(0,0,0,0.1);
+					// border: 1px solid rgba(0,0,0,0.1);
 					margin: -8px 0;
 					text-decoration: none;
 					margin-right: 8px;
+					font-weight 700
+					// background-color rgba(145, 208, 198, .4)
 				}
 			}
 			#write-style {
 				display: flex;
 				flex-wrap: wrap;
+				width 100%
+				// margin-top calc(var(--inner-padding) / 4)
+				padding 8px calc(var(--inner-padding) / 2)
+				// border-top 1px solid rgba(0,0,0,.1)
 				#write-style-for {
 					font-size: 16px;
 					font-weight: 1000;
@@ -375,10 +416,8 @@
 				}
 			}
 			#popup-options {
-				padding: 16px;
-				padding-top: 12px;
-				padding-top: 0;
-				padding-bottom: 0;
+				padding 0 calc(var(--inner-padding) / 2)
+				flex-grow 1
 			}
 		}
 		#search-results {
@@ -388,6 +427,7 @@
 			order: 3;
 			padding-top: 30px;
 			background-color: inherit;
+			box-sizing border-box
 			.search-results-nav[data-type="top"] {
 				display: none;
 			}
@@ -418,6 +458,7 @@
 						height: 30px;
 						padding-left: 5px;
 						flex-grow: 1;
+						margin-left 0 !important
 					}
 					svg {
 						top: 8px;
@@ -429,6 +470,9 @@
 				position: sticky;
 				bottom: 0;
 				background: inherit;
+				filter invert(.05)
+				margin-inline calc(0px - var(--inner-padding))
+				margin-top 1em
 			}
 			#search-results-list {
 				display: flex;
@@ -465,6 +509,22 @@
 		#search-results-error {
 			width: 100%
 		}
+		
+		
+		#message-box.config-dialog {
+			> div {
+				max-height: 100vh;
+				min-height 100vh
+				// max-height unset
+				box-shadow: none;
+				max-width: unset;
+				width: 100%;
+			}
+			#message-box-title {
+				pointer-events none !important
+
+			}
+		}
 	}
 	
 	#message-box #message-box-close-icon, #options-close-icon {
@@ -482,13 +542,10 @@
 		background: inherit;
 		z-index: 9999999;
 		& > div {
-			max-height: 100vh;
-			box-shadow: none;
-			max-width: unset;
-			width: 100%;
 			#message-box-title {
 				background: none;
-				box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+				box-shadow: 0 2px 8px rgba(0,0,0,0.1)
+				padding-right 50px !important
 			}
 			#message-box-contents {
 				.config-body > label:not(:first-child) {
@@ -498,6 +555,12 @@
 			#message-box-buttons {
 				background: none;
 				border-top: 1px solid rgba(0,0,0,0.1);
+				display flex
+				align-items center
+				label {
+					margin 0 1em
+					margin-left auto
+				}
 			}
 		}
 	}
