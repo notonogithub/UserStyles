@@ -6,11 +6,9 @@
 
 ***/
 
-/* Update 1.1.0
-- Styled content warning buttons
-- Fixed explore page tabs
-- Lots and lots of very minor fixes and improvements
-- Mobile improvements
+/* Update 1.1.1
+- Fix bot tag
+- Fix no white-space in posts
 */
 
 /* ==UserStyle==
@@ -212,6 +210,8 @@
 	.column, .columns-area {
 		overflow visible !important
 	}
+	
+	// ACCOUNT PAGE
 	.scrollable--flex .account-timeline__header {
 		margin 0 !important
 	}
@@ -247,6 +247,12 @@
 				span {
 					margin-right .4em
 				}
+			}
+		}
+		.account-role {
+			margin-right .4em
+			> span {
+				margin 0 !important
 			}
 		}
 		.account__header__bio {
@@ -360,7 +366,6 @@
 			left 15px !important
 		}
 		.display-name {
-			// font-weight 700
 			strong {
 				font-weight 600
 			}
@@ -371,7 +376,7 @@
 		padding-top 2px
 		margin-inline -100px
 		padding-inline 100px
-		p {
+		&.status__content--with-spoiler > p:first-child {
 			margin-bottom 0
 		}
 	}
