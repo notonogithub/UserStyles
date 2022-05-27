@@ -6,9 +6,8 @@
 
 ***/
 
-/* Update 1.1.1
-- Fix bot tag
-- Fix no white-space in posts
+/* Update 1.1.2
+- Fix no background on posts in public view
 */
 
 /* ==UserStyle==
@@ -341,7 +340,9 @@
 		border-radius var(--radius) !important
 		transition background .2s, box-shadow .4s, margin .2s, border .2s
 		animation fadeUp .4s forwards cubic-bezier(0,1,1,1)
-		background none
+		&.focusable {
+			background none
+		}
 		// border 1px solid
 		// border 1px solid transparent !important
 		// border-top unset !important
