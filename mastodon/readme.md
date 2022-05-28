@@ -7,6 +7,8 @@ Makes Mastodon look a bit nicer :)
 ## Tutorial + Example for adding a Mastodon theme:
 https://github.com/Coffeedon/Cofffee-Assets#to-use-a-pre-made-theme
 
-**For light theme, you may need to include `@import 'modern/light';`**
+**For light theme, you may need to include `@import 'mastodon-light/diff';`**
+
+**Same goes for the High Contrast theme `@import 'contrast/diff';`**
 
 While not tested thoroughly, could work well with other color themes, as well. 
