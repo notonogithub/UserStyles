@@ -6,13 +6,13 @@
 
 ***/
 
-/* Update 1.1.2
-- Fix no background on posts in public view
+/* Update 1.1.3
+- Mobile fixes, tweaks, and improvements
 */
 
 /* ==UserStyle==
 @name           Mastodon Modern
-@version        1.1.0
+@version        1.1.3
 @description    Gives Mastodon a nicer look :)
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/mastodon/modern.user.css
 @preprocessor   stylus
@@ -44,7 +44,7 @@
 		--shadow-low 0 8px 16px -10px rgba(0,0,0,0.4)
 	}
 	
-	button, video, input, iframe, .privacy-dropdown__dropdown, .react-toggle-track,
+	button:not(.column-header__button), video, input, iframe, .privacy-dropdown__dropdown, .react-toggle-track,
  	.reply-indicator, .compose-form__warning {
 		border-radius var(--radius) !important
 	}
@@ -357,14 +357,27 @@
 		}
 	}
 	
-	.status__prepend {
+	.status__prepend, .notification__message {
 		padding-top 15px !important
+		padding-bottom 0 !important
+		margin-bottom -10px !important
 	}
 	.status__info {
 		margin-top 5px
 		.status__avatar {
 			top 15px
 			left 15px !important
+			.account__avatar-overlay-base {
+				width 100%
+				height 100%
+				background-size cover
+				border-radius var(--radius)
+			}
+			.account__avatar-overlay-overlay {
+				border-radius var(--radius-round)
+				bottom -10%
+				right -10%
+			}
 		}
 		.display-name {
 			strong {
@@ -398,7 +411,8 @@
 		}
 	}
 	.media-gallery, .video-player, .status-card.horizontal.interactive {
-		margin-left -62px
+		// margin-left -62px
+		margin-left calc(15px - var(--status-left-padding))
 		width unset
 		box-shadow var(--shadow-low)
 		border-radius var(--radius)
@@ -479,8 +493,9 @@
 	}
 	.status {
 		// border 0
+		--status-left-padding 78px
 		overflow visible !important
-		padding 15px 15px 15px 78px !important
+		padding 15px 15px 15px var(--status-left-padding) !important
 	}
 	.detailed-status {
 		padding 15px !important
@@ -661,6 +676,7 @@
 			.column-header {
 				height 100%
 				background none
+				border-radius var(--radius) !important
 				button {
 					display flex
 					flex-direction column
@@ -679,12 +695,16 @@
 			padding 0 !important
 			max-width unset
 			.scrollable {
+				padding 5px !important
 				&::before {
 					content ""
 					position absolute
 					inset 0
 					background-color inherit
 					z-index -1
+				}
+				.account-timeline__header {
+					margin -5px !important
 				}
 			}
 
@@ -695,6 +715,33 @@
 				border-radius 0 !important
 			}
 		}
+		.status__prepend, .notification__message {
+			margin-bottom -5px !important
+		}
+		.status {
+			--status-left-padding 70px !important
+			// padding-left 72px !important
+			padding-top 14px !important
+			.status__avatar {
+				left 14px !important
+				width 45px !important
+				height 45px !important
+				background-size 45px !important
+				> div {
+					width 100% !important
+					height 100% !important
+					background-size cover !important
+				}
+			}
+			.status__expand {
+				// width 50px !important
+			}
+			.media-gallery, .video-player, .status-card.horizontal.interactive {
+				margin-bottom 0 !important
+			}
+		}
+		
+		
 		.tabs-bar__wrapper {
 			// order 2
 			// position sticky
@@ -710,7 +757,6 @@
 			background none
 			border-radius 0 !important
 			pointer-events none
-			filter brightness(.95)
 			
 			> * {
 				pointer-events all
@@ -721,9 +767,11 @@
 				border 0
 				// height 60px
 				border-radius var(--radius-round) var(--radius-round) 0 0
+				// border-top 1px solid var(--border-color)
 				color white !important
 				overflow visible !important
 				padding-inline 5px
+				box-shadow 0 0 24px rgba(0,0,0,0.1)
 				a {
 					flex-grow 1 !important
 					padding-block 20px
@@ -775,6 +823,8 @@
 				width max-content !important
 				box-shadow var(--shadow) !important
 				max-width calc(100vw - 130px)
+				border-radius var(--radius-round) !important
+				overflow hidden
 				> button {
 					padding-inline 20px
 					
@@ -786,15 +836,19 @@
 					padding-right 15px
 				}
 				.column-header__collapsible {
-					transition margin-top .2s cubic-bezier(0,0,0,2)
-					&:not(.collapsed) {
-						width auto !important
-						max-width calc(100vw - 40px)
-						margin-top 5px
-					}
-					max-width 100%
-					border-radius var(--radius)
+					max-width calc(100vw - 40px) !important
+					opacity 1 !important
 				}
+				// .column-header__collapsible {
+				// 	transition margin-top .2s cubic-bezier(0,0,0,2)
+				// 	overflow-y auto !important
+				// 	&:not(.collapsed) {
+				// 		// width auto !important
+				// 		max-width calc(100vw - 40px)
+				// 		// margin-top 5px
+				// 	}
+				// 	max-width 100%
+				// }
 			}
 			/.floating-action-button {
 				bottom 70px
