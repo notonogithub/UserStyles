@@ -1,12 +1,6 @@
-/* Update 1.3.18
-- Added new notes at the bottom of the style's options.
-Below was included in the last update, but since I forgot to change the version number, nobody received it. OOPS.
-- Added options to remove Explore, Community buttons in the navbar, and footer in the sidebar. Now you can make Twitter more minimal than before!
-*/
-
 /* ==UserStyle==
 @name           Twitter Tweaks by @FreeplayG
-@version        1.3.18
+@version        1.3.19
 @description    Uncrop images, hide trends, Avatar roundness, move header aside, and more!!
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/twitter/twitter-tweaks.user.css
 @preprocessor   stylus
@@ -17,6 +11,7 @@ Below was included in the last update, but since I forgot to change the version 
 @homepageURL    https://codeberg.org/Freeplay/UserStyles
 @supportURL     https://codeberg.org/Freeplay/UserStyles/issues
 
+@var text hehe "As I start to phase out of Twitter, and on to the Fediverse instead, I will be focusing more on other styles. So why not check out Mastodon Modern, too? :)" '"https://twitter.com/FreeplayG/status/1528077571900035074"'
 @var text notice 'Make sure you are using the "Stylus" browser extension, not "Stylish"! — Style created by @FreeplayG' "'https://add0n.com/stylus.html'"
 
 @var checkbox moveHeader     "↔ Timeline: Move header to sidebar" 1
@@ -55,11 +50,6 @@ Below was included in the last update, but since I forgot to change the version 
 @var checkbox retweetsCount  "🖤 Wellbeing: Show Retweets Count" 1
 @var checkbox commentsCount  "🖤 Wellbeing: Show Comments Count" 1
 @var checkbox analyticsButton"🖤 Wellbeing: Show Analytics Button" 1
-
-@var text     hehe            "💸 Donate!" '"https://www.patreon.com/freeplayg"'
-
-@var text     Weeeeeeeeeeee   "Want EVEN MORE control? Try out this Twitter Tweaks browser extension alongside this style created by an unaffiliated individual!" '"https://github.com/insin/tweak-new-twitter"'
-@var text     hehe2           "Tired of Twitter?" '"https://twitter.com/FreeplayG/status/1489407495244333071"'
 
 ==/UserStyle== */
 @-moz-document domain("twitter.com") {
@@ -509,6 +499,7 @@ Below was included in the last update, but since I forgot to change the version 
 			}
         }
 	}
+
 	// Annoying huge "Promote" button on your own tweets when professional account is enabled. You can already do it from the analytics button.
 	[data-testid="primaryColumn"] a[href$="/quick_promote_web/intro"] {
 		display: none;
