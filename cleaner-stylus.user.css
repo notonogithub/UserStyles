@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Cleaner Stylus
-@version        1.2.1
+@version        1.2.2
 @description    Makes the Stylus extension look a bit nicer!
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/cleaner-stylus.user.css
 @preprocessor   stylus
@@ -341,13 +341,13 @@
 			justify-content space-between
 			// flex-direction: column;
 			background: inherit;
-			background rgba(150,150,150,0.07)
-
+			// background rgba(150,150,150,0.07)
+			filter invert(.02)
 			.main-controls {
 				display contents
 			}
 			#disable-all-wrapper, #find-styles {
-				margin-bottom calc(var(--inner-padding) / 2) !important
+				margin-bottom calc(var(--inner-padding) / 4) !important
 			}
 			#disable-all-wrapper {
 				background-color: inherit;
@@ -375,13 +375,16 @@
 				margin: 0;
 				margin-right var(--inner-padding)
 				z-index: 2;
+				position relative
+				// padding-right 16px
 				// padding-block 4px
 				#find-styles-link {
 					// border: 1px solid rgba(0,0,0,0.1);
-					margin: -8px 0;
+					margin: -8px 0 !important;
 					text-decoration: none;
 					margin-right: 8px;
 					font-weight 700
+					// padding-left 0 !important
 					// background-color rgba(145, 208, 198, .4)
 				}
 			}
@@ -396,6 +399,9 @@
 					font-size: 16px;
 					font-weight: 1000;
 					padding-bottom: 4px;
+				}
+				#write-for-frames {
+					margin-left 4px !important
 				}
 				.match {
 					width: 100%;
@@ -418,6 +424,9 @@
 			#popup-options {
 				padding 0 calc(var(--inner-padding) / 2)
 				flex-grow 1
+				button:not(:hover) {
+					background none
+				}
 			}
 		}
 		#search-results {
@@ -425,9 +434,12 @@
 			margin-right: auto !important;
 			width: 100%;
 			order: 3;
-			padding-top: 30px;
+			margin-top: 30px;
 			background-color: inherit;
 			box-sizing border-box
+			&::before {
+				content unset !important
+			}
 			.search-results-nav[data-type="top"] {
 				display: none;
 			}
@@ -468,34 +480,119 @@
 			}
 			.search-results-nav {
 				position: sticky;
-				bottom: 0;
+				bottom: 10px;
+				left 10px
+				width max-content !important
 				background: inherit;
-				filter invert(.05)
+				// filter invert(.05)
+				border 1px solid rgba(0,0,0,0.1)
+				border-radius 100px
 				margin-inline calc(0px - var(--inner-padding))
-				margin-top 1em
+				margin-top 4em
+				margin-bottom 0 !important
+				overflow hidden
+				button {
+					margin 0
+					padding 4px 8px !important
+				}
 			}
 			#search-results-list {
 				display: flex;
 				flex-wrap: wrap;
 				margin: 0 6px;
+				gap 24px
 				justify-content: center;
 				.search-result {
-					box-shadow: none;
-					border: none;
-					width: 360px;
-					padding: 8px;
-					margin: 0;
-					border-radius: 6px;
-					padding-bottom: 25px;
-					background-color: transparent;
+					box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+					border 1px solid rgba(0,0,0,0.1)
+					border none
+					width: 280px;
+					background none !important
+					padding 12px
+					padding-bottom 6px
+					margin: 0
+					border-radius: 8px;
+					// padding-bottom: 25px;
+					// margin-
+					overflow hidden
+					background none
+					display flex
+					flex-direction column
+					transition transform .02s
+					&:hover {
+						transform scale(1.01)
+					}
+					&:active {
+						transform scale(1)
+						transition transform .1s
+					}
+					.search-result-info {
+						display contents
+					}
+					img {
+						order -1
+						margin -12px
+						margin-bottom 0
+						width unset
+						// border-radius 8px
+						// box-shadow 0 4px 8px rgba(0,0,0,0.2)
+					}
 					.search-result-title {
 						text-decoration: none;
+						// padding 8px
+						padding-bottom 0
+						margin-bottom 0
+						margin-top 10px
 						span {
-							font-size: 14px !important;
+							font-size 1.2em !important
 						}
+						img {
+							margin 0
+							order 2
+							margin-left auto
+						}
+						
+					}
+					.not-matching-explainer {
+						border 0
+						z-index 0
+						border-radius 8px
+						margin 0
+						margin-top 12px
+						margin-bottom 0
+						// order 2
 					}
 					.search-result-meta {
-						background-color: hsla(0, 0%, 93%, 0.2);
+						padding 0
+						// padding-top 4px
+						box-sizing border-box
+						// bottom 10px
+						// left 10px
+						// width max-content
+						background none
+						position static
+						[data-type=author] {
+							margin-right auto !important
+						}
+						> div:not(:first-child) {
+							margin-left 10px
+							dd {
+								font-weight 400
+							}
+						}
+						a {
+							font-weight 400
+							text-decoration none
+						}
+					}
+					.search-result-status {
+						position absolute
+						margin 4px
+						border-radius 4px
+					}
+					.search-result-description {
+						order 2
+						position static
 					}
 				}
 				.search-result:hover {
