@@ -6,18 +6,13 @@
 
 ***/
 
-/* Update 1.1.5
-- Fixed mobile swiping
-- Styled accounts menu
-- Styled mobile popup menu
-- Tweaked nav
-- Public page improvements
-- Styled compose
+/* Update 1.1.6
+- Reverted mobile popup menu, broke scrolling
 */
 
 /* ==UserStyle==
 @name           Mastodon Modern
-@version        1.1.5
+@version        1.1.6
 @description    Gives Mastodon a nicer look :)
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/mastodon/modern.user.css
 @preprocessor   stylus
@@ -1100,29 +1095,29 @@
 			
 		}
 		
-		.modal-root__container {
-			overflow-y auto !important
-			display unset
-			animation unset
-			> .actions-modal {
-				width unset
-				margin 20px
-				margin-bottom 40px
-				margin-top calc(100vh - 340px)
-				// margin-bottom 50px
-				min-height max-content
-				max-height unset !important
-				border-radius var(--radius)
-				max-width unset
-				// animation slideUp .7s 0s backwards cubic-bezier(0,1,0,1.1)
-				// overflow visible !important
-				ul {
-					max-height unset !important
-					min-height max-content !important
-					overflow visible !important
-				}
-			}
-		}
+		// .modal-root__container {
+		// 	overflow-y auto !important
+		// 	display unset
+		// 	animation unset
+		// 	> .actions-modal {
+		// 		width unset
+		// 		margin 20px
+		// 		margin-bottom 40px
+		// 		margin-top calc(100vh - 340px)
+		// 		// margin-bottom 50px
+		// 		min-height max-content
+		// 		max-height unset !important
+		// 		border-radius var(--radius)
+		// 		max-width unset
+		// 		// animation slideUp .7s 0s backwards cubic-bezier(0,1,0,1.1)
+		// 		// overflow visible !important
+		// 		ul {
+		// 			max-height unset !important
+		// 			min-height max-content !important
+		// 			overflow visible !important
+		// 		}
+		// 	}
+		// }
 		
 		/.search-popout {
 			max-width unset !important
