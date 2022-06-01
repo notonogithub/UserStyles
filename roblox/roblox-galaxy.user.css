@@ -1,15 +1,11 @@
-/* Update 1.1.3
-- The create page has caused me too much pain, so now I've excluded that page with a regex that has also caused me pain trying to create.
-- More fixes.
-
-1.1.4
-- HOTFIX WEEE: FIXED BACKGROUND YAYYY
+/* 1.1.5
+- Responsiveness improvements in games page
 */
 
 
 /* ==UserStyle==
 @name           Roblox Galaxy
-@version        1.1.4
+@version        1.1.5
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/roblox/roblox-galaxy.user.css
 @preprocessor   stylus
 
@@ -27,6 +23,7 @@
 @var text boop "𝘿𝙞𝙨𝙖𝙗𝙡𝙞𝙣𝙜 𝙩𝙝𝙚 𝙤𝙥𝙩𝙞𝙤𝙣𝙨 𝙗𝙚𝙡𝙤𝙬 𝙘𝙖𝙣 𝙝𝙚𝙡𝙥 𝙬𝙞𝙩𝙝 𝙥𝙚𝙧𝙛𝙤𝙧𝙢𝙖𝙣𝙘𝙚" '"Okay!"'
 @var checkbox cards "Full card hover animation" 1
 @var checkbox blur  "Blur Effects" 1
+@var text donate "Donate" `"https://www.buymeacoffee.com/Freeplay"`
 ==/UserStyle== */
 
 @-moz-document regexp(".+roblox.com\\/(?!.*develop).*") {
@@ -696,7 +693,10 @@
 		overflow-x: hidden;
 		.game-main-content {
 			background: none !important;
+			display flex
+			flex-wrap wrap
 			justify-content space-between
+			gap 20px
 			&::before, &::after {
 				content unset !important
 			}
@@ -705,6 +705,7 @@
 			border-radius: 8px;
 			background-color: rgba(0,0,0,0.4);
 			overflow: visible !important;
+			margin 0 auto
 			img, iframe {
 				border-radius: 8px;
 			}
@@ -753,13 +754,21 @@
 			background-color: rgba(0,0,0,0.4) !important;
 			border-radius: 8px;
 			padding: 25px !important;
-			width: calc(100% - 670px);
-			height: 360px;
+			width: 300px;
+			max-height: 360px;
+			height auto !important
+			flex-grow 1 !important
+			// display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			// align-items center
 			// backdrop-filter: blur(10px);
 			
 			.game-title-container {
 				display: flex;
 				flex-direction: column;
+				height 0
+				flex-grow 1
 				h2 {
 					padding: 0 !important;
 					font-weight: 700 !important;
@@ -774,7 +783,6 @@
 			}
 			.game-buttons-container {
 				// position: relative;
-				inset: 25px;
 				top: unset;
 				width: unset !important;
 				padding: 0;
