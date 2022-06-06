@@ -8,16 +8,13 @@
 ***/
 @-moz-document domain("mastodon.coffee"), domain("mstdn.social"), domain("mastodon.art"), domain("mastodon.social"), domain("mastodon.online"), domain("") {
 
-/* Update 1.1.8
-- Fixes in public pages & mobile
-- Minor tweaks & foxes
-- New mobile table of contents in about more page
-- Styled links
+/* Update 1.1.9
+- Quick fix for table of contents in about page
 */
 
 /* ==UserStyle==
 @name           Mastodon Modern
-@version        1.1.8
+@version        1.1.9
 @description    Gives Mastodon a nicer look :)
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/mastodon/modern.user.css
 @preprocessor   stylus
@@ -850,7 +847,7 @@
 			.table-of-contents {
 				max-height calc(100vh - 20px)
 				min-height unset !important
-				overflow-y scroll
+				overflow-y scroll !important
 				display flex
 				flex-direction column
 				position sticky
