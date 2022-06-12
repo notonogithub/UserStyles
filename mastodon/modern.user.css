@@ -6,16 +6,16 @@
 
 
 ***/
-@-moz-document domain("mastodon.coffee"), domain("mstdn.social"), domain("mastodon.art"), domain("mastodon.social"), domain("mastodon.online") {
+@-moz-document domain("mastodon.coffee"), domain("mstdn.social"), domain("mastodon.art"), domain("mastodon.social"), domain("mastodon.online"), domain("mastodon.lol") {
 
-/* Update 1.1.11
-- Fixed post borders in public pages
-- Minor tweaks & fixes
+/* Update 1.2.0
+- Right to Left language support!
+- More fixes
 */
 
 /* ==UserStyle==
 @name           Mastodon Modern
-@version        1.1.11
+@version        1.2.0
 @description    Gives Mastodon a nicer look :)
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/mastodon/modern.user.css
 @preprocessor   stylus
@@ -35,6 +35,8 @@
 	
 	transBounce1 = .2s cubic-bezier(0,0,0,1.1)
 	
+	media = ".media-gallery, .video-player, .status-card.horizontal.interactive, .status-card, .audio-player"
+	
 	/:root {
 		--tl-width 750px
 		--radius 12px
@@ -45,6 +47,13 @@
 		--shadow 0 10px 40px -10px rgba(0,0,0,0.15)
 		--shadow-low 0 8px 16px -10px rgba(0,0,0,0.4)
 		--shadow-med 0 8px 60px -30px rgba(0,0,0,0.1)
+	}
+	
+	/.rtl {
+		textarea, p {
+			text-align right
+			direction rtl
+		}
 	}
 	
 	.button--block {
@@ -122,19 +131,27 @@
 		}
 		input {
 			border-radius var(--radius-round) !important
-			padding-left 20px
+			padding-inline-start 20px !important
+			padding-inline-end 40px !important
 		}
 		.search__icon > i {
-			right 15px
+			// right 15px
+			margin-inline 5px
 		}
 	}
 	.compose-form {
+		.reply-indicator {
+			&__display-name {
+				padding 0
+			}
+		}
 		.compose-form__autosuggest-wrapper, .autosuggest-textarea__textarea { 
 			border-radius var(--radius) var(--radius) 0 0 !important
 		}
 		.compose-form__buttons-wrapper {
 			border-radius 0 0 var(--radius) var(--radius) !important
 		}
+		
 		.compose-form__autosuggest-wrapper,
  		.compose-form__buttons-wrapper {
 			// background rgba(255,255,255,.1) !important
@@ -181,7 +198,6 @@
 		margin 0 10px
 		@media (min-width: responsiveW1) {
 			max-width var(--tl-width) !important
-			// margin 0 15px
 			padding 0 15px
 		}
 		padding-top 30px !important
@@ -221,7 +237,7 @@
 	.column, .columns-area {
 		overflow visible !important
 	}
-	
+
 	// ACCOUNT PAGE
 	
 	
@@ -322,7 +338,7 @@
 			dd {
 				border 0
 				&:not(.verified) {
-					padding-left 0
+					padding-inline-start 0
 				}
 			}
 		}
@@ -412,16 +428,19 @@
 		}
 	}
 	
+	status-left-padding = 78px
 	.status {
 		// border 0
-		--status-left-padding 78px
+		
 		overflow visible !important
 		// border 0 !important
-		padding 15px 15px 15px var(--status-left-padding) !important
+		padding 15px !important
+		padding-inline-start status-left-padding !important
 	}
 	.status__prepend, .notification__message {
 		padding-top 15px !important
 		padding-bottom 0 !important
+		margin-inline-start status-left-padding
 		margin-bottom -10px !important
 		z-index 2
 	}
@@ -441,9 +460,11 @@
 		.status__avatar {
 			top 15px
 			left 15px !important
+			right 15px
 			z-index 2
 		}
 		.display-name {
+			
 			strong {
 				font-weight 600
 			}
@@ -454,8 +475,12 @@
 		padding-top 2px
 		margin-inline -100px
 		padding-inline 100px
+		text-align unset !important
 		&.status__content--with-spoiler > p:first-child {
 			margin-bottom 0
+		}
+		/.rtl & {
+			text-align right !important
 		}
 	}
 	.status__content__spoiler-link {
@@ -465,18 +490,17 @@
 		color inherit
 		font-weight 700
 		background none
-		margin-left -100px !important
-		padding-left 100px !important
+		margin-inline-start -100px !important
+		padding-inline-start 100px !important
 		width calc(100% + 150px)
-		text-align left
+		text-align unset
 		font-size .8em
 		&:hover, &:focus {
 			background-color var(--hover-color)
 		}
 	}
-	.media-gallery, .video-player, .status-card.horizontal.interactive, .status-card, .audio-player {
-		// margin-left -62px
-		margin-left calc(15px - var(--status-left-padding))
+	{media} {
+		margin-inline-start 15px - status-left-padding
 		width unset !important
 		box-shadow var(--shadow-low)
 		border-radius var(--radius)
@@ -484,6 +508,7 @@
 		animation scaleIn .4s
 		max-width unset !important
 		max-height 80vh !important
+		direction unset
 		&.status-card {
 			box-shadow var(--shadow)
 			box-shadow none
@@ -511,8 +536,8 @@
 		&:first-child {
 			// margin-top 0
 		}
-		.media-gallery, .video-player, .status-card.horizontal.interactive {
-			margin-left 0 !important
+		{media} {
+			margin-inline 0 !important
 			max-height unset !important
 		}
 		.status__content {
@@ -523,7 +548,7 @@
 		.picture-in-picture__header {
 			border-radius var(--radius) var(--radius) 0 0
 		}
-		.video-player {
+		{media} {
 			margin 0 !important
 			border-radius 0 !important
 		}
@@ -544,12 +569,12 @@
 			min-width 0
 			border-radius var(--radius)
 			&:last-child {
-				margin-right 0 !important
+				margin 0 !important
 			}
 			&[aria-label]::after {
 				content attr(aria-label)
 				font-size .7em
-				margin-left .5em
+				margin-inline-start .5em
 				white-space nowrap
 				overflow hidden
 				text-overflow ellipsis
@@ -592,13 +617,13 @@
 		@media (min-width: responsiveW2) {
 			position fixed
 			width 285px
-			margin-left 600px
+			margin-inline-start 600px
 			top 0 !important
 			left unset !important
 			right unset !important
 			min-height 48px !important
 			@media (min-width: responsiveW1) {
-				margin-left calc(var(--tl-width) - 5px)
+				margin-inline-start calc(var(--tl-width) - 5px)
 			}
 			&:not(.column-back-button) {
 				padding-top 0
@@ -610,6 +635,22 @@
 			.column-header, .column-header__buttons button {
 				background none !important
 			}			
+			
+			.announcements {
+				flex-direction column-reverse
+				align-items flex-start
+			}
+			.announcements__container {
+				width 100% !important
+				.react-swipeable-view-container {
+					// height unset !important
+				}
+			}
+			.announcements__mastodon {
+				margin-inline-start 10px
+				z-index -1
+				position relative
+			}
 		}
 		@media (min-width: mobileW) and (max-width: responsiveW2) {
 			&.column-back-button {
@@ -642,7 +683,7 @@
 				}
 			}
 		}
-		transition margin-left transBounce1
+		transition margin transBounce1
 	}
 	
 	
@@ -667,7 +708,7 @@
 		// font-weight 550
 		opacity .9
 		.column-link__icon, /.column-header__icon {
-			margin-right 1em !important
+			margin-inline-end 1em !important
 		}
 		&::before {
 			content: "" !important;
@@ -748,7 +789,6 @@
 					// display contents
 					> * {
 						flex-grow 0
-						// margin-left 20px !important
 					}
 					> a {
 						// display contents
@@ -791,6 +831,9 @@
 					// height 126px !important
 					background-size contain !important
 					background-position left
+					/.rtl & {
+						background-position right !important
+					}
 					border-radius 0 !important
 					// &::before {
 					// 	content ""
@@ -818,6 +861,9 @@
 						transform translate(-40%, -20%)
 						filter blur(100px)
 						opacity .2
+						/.rtl & {
+							transform translate(40%, -20%)
+						}
 					}
 				}
 				> * {
@@ -914,7 +960,7 @@
 				box-sizing border-box
 				overflow-x scroll !important
 				scroll-snap-type x mandatory
-				scroll-padding-left 30px
+				scroll-padding-inline-start 30px
 				gap 20px 30px
 				position relative
 				background none !important
@@ -942,7 +988,7 @@
 						border 0 !important
 					}
 					&:last-child {
-						margin-right 70%
+						margin-inline-end 70%
 					}
 				}
 			}
@@ -1066,8 +1112,7 @@
 			margin-bottom -5px !important
 		}
 		.status {
-			--status-left-padding 70px !important
-			// padding-left 72px !important
+			status-left-padding = 70px !important
 			padding-top 14px !important
 			.status__avatar {
 				left 14px !important
@@ -1083,7 +1128,7 @@
 			.status__expand {
 				// width 50px !important
 			}
-			.media-gallery, .video-player, .status-card.horizontal.interactive {
+			{media}  {
 				margin-bottom 0 !important
 			}
 		}
@@ -1119,8 +1164,13 @@
 				overflow visible !important
 				padding-inline 5px
 				box-shadow 0 0 24px rgba(0,0,0,0.1)
+				/.rtl & {
+					flex-direction row-reverse
+					// The react swiping directions can't be reversed, so I would have to reverse this, instead.
+				}
 				a {
 					flex-grow 1 !important
+					flex-basis unset !important
 					padding-block 20px
 					position relative
 					border 0
@@ -1144,8 +1194,8 @@
 						border-radius 100px
 						background-color currentColor
 						left 50%
-						margin-left -2.5px
-						transition bottom .2s cubic-bezier(0,0,0,4), width .2s, margin-left .2s
+						margin-inline-start -2.5px
+						transition bottom .2s cubic-bezier(0,0,0,4), width .2s, margin .2s
 					}
 					&:active {
 						transform translateY(5px)
@@ -1167,6 +1217,7 @@
 			}
 			#tabs-bar__portal {
 				margin 10px 20px !important
+				margin-right auto !important
 				width max-content !important
 				box-shadow var(--shadow) !important
 				max-width calc(100vw - 130px)
@@ -1181,7 +1232,7 @@
 					min-width 60px
 				}
 				.column-header > button {
-					padding-right 15px
+					padding-inline-start 15px
 					transform-origin center !important
 				}
 				.column-header {
@@ -1214,7 +1265,7 @@
 		}
 		
 		.status__action-bar {
-			margin-left -78px + 15px
+			margin-inline-start -78px + 15px
 			margin-bottom -10px
 			.icon-button {
 				flex-grow 1 !important
@@ -1227,7 +1278,7 @@
 		// Fix dropdown note preview
 		.modal-root__modal .status.light {
 			overflow hidden !important
-			padding-left 70px !important
+			padding-inline-start 70px !important
 		}
 		.getting-started {
 			padding 20px
@@ -1326,18 +1377,18 @@
 		> div {
 			border 0 !important
 			padding 0 !important
-			&:not(:last-child):not(.drawer) {
-				padding-right 2px !important
+			&:not(.drawer):not(:last-child) {
+				padding-inline-end 2px !important
 			}
 			&.column {
 				flex-grow 1
 				max-width 600px
 			}
 			&:first-child {
-				margin-left auto !important
+				margin-inline-start auto !important
 			}
 			&:last-child {
-				margin-right auto !important
+				margin-inline-end auto !important
 			}
 		}
 		.drawer {
@@ -1351,10 +1402,10 @@
 				a {
 					border 0
 					&:first-child {
-						padding-left 15px !important
+						padding-inline-start 15px !important
 					}
 					&:last-child {
-						padding-right 15px !important
+						padding-inline-end 15px !important
 					}
 				}
 			}
