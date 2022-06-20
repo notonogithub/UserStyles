@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Tutanota Modern
-@version        1.0.1
+@version        1.0.2
 @description    A more modern, compact layout for Tutanota!
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/tutanota/tutanotamodern.user.css
 @preprocessor   stylus
@@ -62,6 +62,7 @@
 	.header-nav {
 		position: absolute;
 		height: 93px;
+		// height 140px
 		width: sidebarWidth;
 		// display: flex;
 		// flex-direction: column;
@@ -97,6 +98,7 @@
 				}
 			}
 			&.header-right {
+				flex-wrap wrap
 				.button-height {
 					height: 30px;
 				}
@@ -105,7 +107,23 @@
 				}
 				.nav-bar, & > .flex {
 					display: contents;
+					&[href="#"] {
+						display flex !important
+						flex-direction row
+						order -1
+						margin 0
+						position fixed
+						bottom 0
+						left 0
+						right unset
+						padding 10px 20px
+						span {
+							margin-right 10px
+						}
+					}
 				}
+				
+				
 				.plr-nav-button, .search-bar {
 					padding: 0;
 					flex: unset !important;
@@ -203,6 +221,7 @@
 			}
 			drawer-menu {
 				height: 35px !important;
+				padding-bottom 30px
 				opacity: 1;
 				overflow: hidden;
 				transition: opacity .2s, height .3s !important;
