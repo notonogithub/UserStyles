@@ -1,0 +1,911 @@
+/* 
+
+!! ENABLING CSS GRID MASONRY
+	- IN FIREFOX:
+		- Go to about:config in your URL bar
+		- Accept the Risk
+		- Search for "layout.css.grid-template-masonry-value.enabled"
+		- Make sure it's set to "true"
+		- Restart Firefox
+	- OTHER BROWSERS:
+		- ... You may just have to wait until the feature gets fully supported.
+			You can check the status of the feature here:
+			https://caniuse.com/mdn-css_properties_grid-template-rows_masonry
+
+!! SOME SETTINGS DO NOT WORK WITH THESE DDG SETTINGS:
+- Header: On & Fixed;
+- Page Width: 'Wide' or 'Super Wide'
+
+*/
+
+/* ==UserStyle==
+@name           Ecosia Modern
+@version        1.0.0
+@description    Making better use of screen space. Moving modules aside requires CSS Grid Masonry, which many browsers don't support yet.
+@updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/ecosia/modern.user.css
+@preprocessor   stylus
+
+ -- AUTHOR STUFF --
+@namespace      Freeplay
+@author         Freeplay (https://freeplay.codeberg.page/)
+@homepageURL    https://codeberg.org/Freeplay/UserStyles
+@supportURL     https://codeberg.org/Freeplay/UserStyles/issues
+
+@var checkbox fixedSearch "Fixed Search Bar" 1
+@var checkbox sideNav "Sidebar Navigation" 1
+@var checkbox modAside "Move Modules Aside [REQURES CSS GRID MASONRY]" 1
+@var checkbox newsCards "News Cards" 1
+@var checkbox shoppingCards "Shopping Cards" 1
+@var checkbox animations "More Animations" 1
+@var checkbox tweaks "Other Tweaks" 1
+
+@var text hehe "Donate!" '"https://www.buymeacoffee.com/Freeplay"'
+==/UserStyle== */
+
+@-moz-document domain("ecosia.org") {
+    /* Insert code here... */
+	.layout {
+		overflow unset !important
+	}
+
+	@media (min-width 992px) {
+		if sideNav {
+			.button__text {
+				text-overflow ellipsis
+				overflow hidden
+				display inline !important
+			}
+			.main-header__content {
+				// border 0 !important
+				padding-bottom 15px !important
+			}
+			.image-preview {
+				margin-right 15px !important
+				margin-left 135px !important
+				
+				width calc(100% - 150px) !important
+				border-radius 10px
+			}
+
+			.main-header__search-navigation {
+				position fixed
+				left 0
+				padding-left 0 !important
+				margin-top 30px !important		
+				width 115px !important
+				border-radius 0 10px 10px 0
+				overflow hidden auto
+				max-height calc(100vh - 100px)
+				padding-bottom 10px
+				// background-color inherit
+				// filter drop-shadow(0 2px 6px rgba(0,0,0,0.05))
+				
+				.search-navigation__list {
+					display block
+					width 100%
+					
+					li {
+						display block
+						margin 0 !important
+						height auto
+						padding 0 !important
+						.tab {
+							transition margin .2s !important
+						}
+						.tab::after {
+							inset-block 10px // hehe I love -inline & -block
+							width 3px
+							left 0
+							border-radius 0 10px 10px 0
+							height unset
+						}
+						
+						a {
+							padding 8px 12px !important
+							padding-right 18px !important
+							height unset !important
+							width 100%
+							font-size .75em
+							max-width 100%
+							min-width 70px
+							opacity .7
+							font-weight 600 !important
+							&:not(.search-navigation__dropdown-link) > svg {
+								margin-right 8px
+								border 1px solid var(--color-decorative-border-1)
+								padding 4px
+								border-radius 6px
+								height 2em !important
+								width 2em
+							}
+							&.search-navigation__dropdown-link svg {
+								transform scale(.9)
+								border-radius 6px !important
+							}
+							&:hover {
+								opacity 1
+							}
+						}
+						.tab--highlighted {
+							background-color var(--color-button-background-secondary-hover)
+							border-radius 0 20px 20px 0
+							margin-block 4px
+							width max-content
+							max-width 100%
+							min-width 100px
+							overflow hidden !important
+							a {
+								opacity 1
+								svg {
+									// color white !important
+									background-color var(--color-button-background-secondary-hover)
+								}
+							}
+						}
+					}
+				}
+				.dropdown {
+					position static
+					width unset !important
+					border-radius 0 !important
+					background none
+					box-shadow none
+				}
+			}
+			.images__results {
+				padding-left 120px !important
+			}
+			#search-filters {
+				padding-left 125px !important
+			}
+
+			#search-filters  {
+				padding-top 10px
+			}
+			
+			.shopping {
+				padding-left 120px
+				.mainline__sorting {
+					justify-content flex-start
+				}
+				.mainline {
+					padding-left 20px
+				}
+				.sidebar {
+					order 2
+					margin-right 20px
+					margin-left 0
+				}
+			}
+		}
+		
+		if modAside {
+			@supports not (grid-template-rows: masonry) {
+				body::before {
+					padding 20px !important
+					display block
+					text-align center
+					// color red
+					background-color rgba(255,0,0,0.05)
+					content "BETTER ECOSIA LAYOUT WARNING: You cannot use the ''Move Modules Aside'' option because your browser does not support CSS Grid Masonry. Please view the instructions at the top of the style's code to enable (I highly suggest doing this to make full use of this style!), or disable the option in the style's settings"
+				}
+			}
+			@supports (grid-template-columns masonry) {
+				
+				.web  {
+					padding-top 0 !important
+					max-width 1900px
+					grid-template-columns minmax(0px, 120px) minmax(100px,660px) minmax(30px, 60px) minmax(0,900px) 24px !important
+					grid-template-rows masonry
+					&:after {
+						content ""
+						grid-column 3
+						height 100%
+						min-width 30px
+						margin-left auto
+						// margin-right 20px
+						border-left 1px solid var(--color-decorative-border-1)
+						box-shadow inset 24px 0 24px -24px rgba(0,0,0,0.05)
+						z-index 1
+						// border-radius 10px
+					}
+					.mainline {
+						display contents
+						> * {
+							display contents
+							> * {
+								grid-column 2
+								&:not([data-test-id="mainline-result-web"]):not(.pagination):not(.query-correction) {
+									grid-column 4
+									&,/.sidebar__result:not(.snippet) {
+										max-width 500px
+									}
+									&[data-test-id="mainline-result-productAds"],
+									&[data-test-id="mainline-result-videosSnippet"],
+ 									&[data-test-id="mainline-result-newsSnippet"],
+ 									&[data-test-id="mainline-result-imagesSnippet"],
+ 									/[data-test-id="sidebar-result-imagesSnippet"] {
+										max-width unset !important
+										margin-right -24px !important
+										.snippet__control--next {
+											right 30px
+										}
+										li:last-child {
+											box-sizing content-box
+											padding-right 24px !important
+										}
+										.snippet__header {
+											padding-right 24px
+											max-width 500px
+										}
+										.snippet__carousel {
+											&::before {
+												content unset !important
+											}
+											&::after {
+												all unset !important
+												content "" !important
+												position absolute !important
+												inset 0 !important 
+												pointer-events none !important
+												// min-width 800px 
+												transition opacity .1s !important
+												box-shadow inset -140px 0 60px -60px var(--color-background-primary) !important
+											}
+											&.snippet__carousel--end::after {
+												opacity 0 !important
+												transition opacity .4s !important
+											}
+										}
+										.carousel__content {
+											border 0 !important
+											
+										}
+										
+									}
+									> div, .result {
+										padding 0 !important
+										margin-bottom 30px !important
+									}
+								}
+							}
+						}
+						.result {
+							padding-block 10px
+							margin 0
+						}
+					}
+					.product-ads-carousel__item {
+						min-width 120px
+					}
+					.news-snippet__item, .videos-snippet__item {
+						min-width 150px
+					}
+
+					.snippet {
+						padding 0 !important
+						overflow visible !important
+						border 0 !important
+						.snippet__carousel {
+							margin 0
+							// margin-left -30px
+						}
+						.carousel__content {
+							border-radius 0 10px 10px 0
+							margin 10px 0
+							margin-left -30px
+							padding-left 30px
+							margin-right 0
+							border-right 1px solid var(--color-decorative-border-1)
+							scroll-padding-left 30px
+							> div {
+								margin-right -1px
+							}
+						}
+						.snippet__control {
+							display block
+							margin-inline 5px
+						}
+						.snippet__item {
+							padding 0
+							margin-right 10px
+							max-width 200px
+						}
+
+
+						.images-snippet__list {
+							width auto !important
+							display grid
+							grid-auto-flow dense !important
+
+							grid-template-rows 120px 120px
+							grid-template-columns masonry
+							grid-gap 5px
+						}
+						.images-snippet__item {
+							margin-right 0
+							max-height 100px
+							width unset !important
+							flex unset !important
+							max-height unset !important
+							border-radius 10px
+							overflow hidden
+							* {
+								width unset !important
+								height unset !important
+							}
+							img {
+								height 120px !important
+							}
+						}
+						.images-snippet__card {
+							// background-color black !important
+						}
+						.images-snippet__image {
+							transition transform .2s cubic-bezier(0,0,0,1) !important
+						}
+					}
+					/[data-test-id="mainline-result-ad"] {
+						& + & {
+							margin-top -10px
+						}
+					}
+					.related-queries__header {
+						padding-top 0
+					}
+					[data-test-id="mainline-result-wordDefinitions"] {
+						order -1
+						> section {
+							margin-top 0
+							border 1px solid var(--color-decorative-border-1)
+							border-radius 10px
+							overflow hidden
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	.entity {
+		box-shadow 0 10px 30px -20px rgba(0,0,0,0.2) !important
+	}
+	.sidebar__result {
+		margin-bottom 20px !important
+		& + .result {
+			padding 0 !important
+			margin-bottom 0 !important
+		}
+	}
+	
+	.web__sidebar {
+		.sidebar__result {
+			overflow hidden
+		}
+		.entity__header {
+			display contents
+			.entity-titles {
+				display contents
+				h2 {
+					display inline-block
+					padding 16px
+					padding-bottom 5px
+					font-weight 500
+				}
+			}
+			.entity__image {
+				flex-grow 0
+				float right
+				margin-right 16px
+			}
+		}
+		.entity__content {
+			padding-top 0
+		}
+	}
+	if newsCards {
+		.news, .videos {
+			max-width unset !important
+			// padding-right 30px !important
+			
+			&__results {
+				display flex
+				flex-wrap wrap
+				grid-gap 20px
+				padding-inline 10px
+				display grid
+				grid-template-columns repeat(auto-fit, minmax(400px, 1fr))
+			}
+			&__result-wrapper {
+				// border 1px solid var(--color-decorative-border-1)
+				border-radius 10px
+				overflow hidden !important
+				// width 400px
+				height auto !important
+				flex-grow 1
+				padding 18px
+				box-shadow 0 8px 24px rgba(0,0,0,0.1)
+				background-color var(--color-background-secondary) !important
+				&:hover, &:focus-within {
+					.news-result__thumbnail {
+						border-bottom-left-radius 70%
+					}
+				}
+			}
+			& &__result {
+				padding 0 !important
+				margin 0 !important
+				display inline
+				overflow hidden !important
+				.result__thumbnail {
+					float right
+					height max-content
+				}
+				.news-result__thumbnail {
+					margin 0px !important
+					// margin-bottom 6px !important
+					// margin-top -18px !important
+					// height 100%
+					transform translate(18px, -18px) scale(1.1)
+					transform-origin top right
+					border-bottom-left-radius 100%
+					transition border-radius .2s cubic-bezier(0,1,1,1.2)
+				}
+				.result__body {
+					padding 14px
+					display contents
+					div {
+						display contents
+					}
+					* {
+						display inline
+					}
+					.result__link.link {
+						display block !important
+					}
+					a::after {
+						content unset !important
+					}
+				}
+			}
+			[class*=__pagination] {
+				// width 100%
+				grid-column 1 / -1
+				margin -20px
+				margin-top 0
+			}
+			&.videos {
+				padding-top 20px
+				.videos__result-wrapper {
+					height 200px !important
+					position relative
+					align-self flex-start
+					transition max-height .4s cubic-bezier(.5,0,0,0) !important
+					&::after {
+						content ""
+						position absolute
+						inset 0
+						top unset
+						height 4em
+						background linear-gradient(transparent, var(--color-background-secondary))
+						
+					}
+				}
+				.result__thumbnail {
+					// float left
+					margin 0 !important
+					margin-bottom -20px !important
+					transform translate(20px, -20px)
+					a {
+						margin 0 !important
+						border-bottom-left-radius 100px
+					}
+				}
+				.result__body .duration-tag {
+					display none
+				}
+				.video-result__description {
+					// display none
+					max-height 50px
+					// display block
+				}
+			}
+		}
+	}
+	
+	if shoppingCards {
+		.shopping__mainline {
+			max-width unset !important
+			flex-grow 1
+			border 0 !important
+			.base-products__items {
+				grid-template-columns repeat(auto-fit ,minmax(300px,1fr))
+				gap 20px
+			}
+		}
+		.shopping__sidebar {
+			position sticky
+			top 20px
+			max-height calc(100vh - 140px)
+			overflow-y auto
+			// padding-bottom 200px !important
+			margin 20px
+			margin-right 0
+			background var(--lt-color-background-default)
+			border-radius 12px
+		}
+		.product.card {
+			flex-direction row
+			min-height 200px
+			background none !important
+			transition box-shadow .1s, transform .2s
+			background-color var(--color-background-secondary) !important
+			&:hover, &:focus {
+				box-shadow var(--lt-shadowDefault)
+				transform translateY(-2px)
+			}
+			&:active {
+				transform scale(.99)
+			}
+			.product__thumbnail {
+				min-height inherit
+				min-width 50%
+				max-width 50%
+			}
+			.product__content {
+				width 0
+			}
+			h2 {
+				// white-space pre-wrap
+				font-weight 600
+				max-width 100%
+				-webkit-line-clamp 4 !important
+
+			}
+		}
+	}
+	
+	// Dark Reader fixes
+	[data-darkreader-mode="dynamic"] {
+		.deep-links__link.link-bubble {
+			border 0 !important
+		}
+		* {
+			--lt-color-background-default var(--darkreader-bg--color-background-tertiary)
+			--color-button-background-secondary-hover var(--darkreader-bg--color-button-content-secondary)
+			--color-decorative-border-1 var(--darkreader-border--color-decorative-border-1)
+			--color-background-primary var(--darkreader-bg--color-background-primary)
+			--color-background-secondary var(--darkreader-bg--color-background-tertiary) 
+		}
+		.main-footer__wave, .main-footer__background {
+			color var(--darkreader-bg--color-background-secondary) !important
+			filter brightness(1.5)
+			opacity .5
+		}
+		.main-footer__card {
+			z-index 1
+		}
+		.search-form__search-field {
+			&:hover {
+				filter invert(.08)
+			}
+			&:focus-within {
+				filter invert(.1)
+			}
+		}
+	}
+	
+	if tweaks {
+		body {
+			--color-background-primary #f9f9f9
+			--color-background-secondary white
+			// --lt-color-gray-200 #e5e5e5 !important
+		}
+		.main-footer__wave {
+			filter drop-shadow(0 12px 12px rgba(0,0,0,0.1)) !important
+		}
+		.above-fold-section {
+			// background var(--color-background-primary) !important
+			margin-top -100px !important
+		}
+		
+		h2 {
+			// font-weight 600 !important
+		}
+		a:not(.result__link), .result-title__heading, h2 {
+			font-weight 500 !important
+		}
+		.result__header {
+			display flex
+			flex-direction column
+			position relative !important
+		}
+		.result__info {
+			position static !important
+			order 2
+			margin-bottom 0 !important
+			a {
+				font-size .8em
+				font-weight 500
+				&::after {
+					content unset !important
+				}
+			}
+			.domain-label {
+				position absolute !important
+				// left 0 !important
+				right 100% !important
+				top 5px !important
+				
+			}
+		}
+		.result__title {
+			position static !important
+		}
+		.result__link {
+			&::after {
+				height unset !important
+				inset 0 !important
+			}
+		}
+		
+		
+		.snippet__item, .image-feed__item {
+			&, &.snippet__item img {
+				animation slideRight .4s backwards
+				for row in 1..100 {
+					&.snippet__item:nth-child({row}) img {
+						animation-delay .05s * row
+					}
+					/article:nth-child({row}) {
+						animation-delay .01s * row
+					}
+				}
+			}
+		}
+		.news__result-wrapper, .videos__result-wrapper {
+			animation slideUp .4s backwards
+			for row in 1..10 {
+				&:nth-child({row}) {
+					animation-delay .03s * row
+				}
+				
+				
+			}
+		}
+		
+		
+		.image-feed__item {
+			padding-inline 5px !important
+			.image-result__link-wrapper {
+				border-radius 10px
+				overflow hidden
+				transition transform .3s cubic-bezier(0,0,0,2)
+				transform scale(.99)
+				../:hover ^[1..-1] {
+					transform scale(1)
+				}
+				&:active {
+					transform scale(.98)
+					transition transform .15s cubic-bezier(0,0,0,1)
+				}
+			}
+			.image-result__details {
+				padding-inline 5px
+			}
+		}
+		
+		@media (min-width 992px) {
+			.image-preview {
+				padding 0 !important
+				overflow hidden !important
+				display unset !important
+				display flex !important
+				.image-preview__image-link {
+					width max-content !important
+					height 100% !important
+					display flex !important
+					align-items center
+					min-width 40%
+					background-color rgba(255,255,255,0.1)
+				}
+				.image-preview__media {
+					display contents !important
+				}
+				img {
+					// max-height unset !important
+					max-width 100% !important
+					width unset !important
+					max-height 100% !important
+					height unset
+					// display block !important
+					min-height unset !important
+					background-attachment fixed !important
+					&[lazy="loading"] {
+						height 100%
+					}
+				}
+				.image-preview-fallback {
+					// display unset !important
+					width 100% !important
+				}
+				.image-preview__details {
+					padding-inline 20px
+					flex-shrink 1
+					flex-grow 1
+					width auto
+					flex-basis min-content
+					min-width 300px !important
+				}
+				.image-preview__details-content {
+					max-width 500px
+					margin auto
+					animation slideRight .4s
+				}
+
+			}
+		}
+		@media (max-width 991px) {
+			@supports (grid-template-columns masonry) {
+				.image-feed {
+					display grid !important
+					grid-template-columns repeat(auto-fit, minmax(calc(100px + 10%), 1fr))
+					grid-template-rows masonry
+				}
+			}
+			.image-result {
+				animation-name slideUp
+			}
+		}
+		
+		.search-form__search-field {
+			transition filter .2s
+			margin-left 10px !important
+			filter invert(.05)
+			&:not(:focus-within) {
+				box-shadow none !important
+				// box-shadow 0 4px 24px rgba(0,0,0,0.1) !important
+				
+			}
+
+			.search-form__input-wrapper {
+				padding-left 20px
+				background inherit
+				// border-radius 10px
+				z-index 5
+				svg {
+
+				}
+			}
+			.search-form__submit {
+				// margin-left -1px  !important
+				// display none
+				// background none !important
+				// background black
+				// margin 4px
+				// height 100%
+				border-radius 100px
+				transition transform .3s cubic-bezier(0,0,0,1.2), background-color .2s
+			}
+
+			> *, .suggestion-list {
+				border 0 !important
+			}
+			&:hover {
+				filter invert(.03)
+			}
+			&:focus-within {
+				filter invert(0)
+				border-bottom-right-radius 0 !important
+				.search-form__submit {
+					&, / ^[-1..-1]:hover {
+						transform scale(.7)
+					}
+				}
+			}
+			.search-form__suggestions {
+				// position relative
+			}
+			.search-form__suggestions-list {
+				width 100% !important
+			}
+			.suggestion-item {
+				margin-inline 5px
+				border-radius 10px
+				height 35px
+				transition background-color .2s
+				animation fromHeight .2s backwards cubic-bezier(0,1,0,1.1)
+				&:first-child::before {
+					content ""
+					position absolute
+					top 0
+					left 20px
+					right 20px
+					border-top 1px solid var(--color-decorative-border-1)
+				}
+				a {
+					height 35px
+					line-height 35px 
+				}
+				for row in (1..10) {
+					&:nth-child({row}) {
+						// animation-delay .02s * row
+					}
+				}
+			}
+		}
+		
+		.main-header__logo {
+			filter saturate(0) opacity(.6)
+			transition filter .2s
+			&:hover {
+				filter none
+			}
+		}
+		// .main-header {
+		// 	display contents
+		// }
+		// .main-header__content {
+		// 	position sticky !important
+		// 	top 0px
+		// 	background linear-gradient(var(--color-background-primary), transparent) !important
+		// 	// background none !important
+		// 	border 0 !important
+		// 	padding-bottom 0 !important
+		// 	&::before {
+		// 		// content ""
+		// 		position absolute
+		// 		inset 0
+		// 		background-color var(--color-background-primary)
+		// 		opacity .6
+		// 	}
+		// 	// filter drop-shadow(0 4px 4px rgba(0,0,0,0.1))
+		// }
+		// if sideNav {
+		// 	.main-header__search-navigation.main-header__search-navigation {
+		// 		margin-top 20px !important
+		// 	}
+		// }
+	}
+	if fixedSearch {
+		@media only screen and (min-width 992px) {
+			.main-header__logo {
+				position fixed
+			}
+			.search-form__mobile-wrapper {
+				border-radius 100px
+				box-shadow 0 -20px 40px 10px var(--color-background-primary) !important
+			}
+			.main-header__search {
+				z-index 20
+				position fixed
+				left 110px
+				width calc(100vw - 400px) !important
+			}
+			.main-header__install-cta {
+				display none !important
+			}
+		}
+	}
+	
+	if animations {
+		@keyframes fromHeight {
+			from {
+				height 0
+				opacity 0
+			}
+		}
+		@keyframes slideUp {
+			from {
+				transform translateY(20px)
+				opacity 0
+			}
+		}
+		@keyframes slideRight {
+			from {
+				transform translateX(10px)
+				opacity 0
+			}
+		}
+	}
+}
