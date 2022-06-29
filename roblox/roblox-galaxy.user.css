@@ -1,11 +1,11 @@
-/* 1.1.5
-- Responsiveness improvements in games page
+/* 1.1.6
+- Host BG gradient on Roblox itself, becuase I'm dumb and didn't do that earlier.
 */
 
 
 /* ==UserStyle==
-@name           Roblox Galaxy
-@version        1.1.5
+@name           ROBLOX GALAXY
+@version        1.1.6
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/roblox/roblox-galaxy.user.css
 @preprocessor   stylus
 
@@ -69,7 +69,7 @@
 			transform: scale(2);
 			pointer-events: none;
 			z-index: -1;
-			background-image: url("https://www.pixelstalk.net/wp-content/uploads/2016/05/Colorful-Gradient-Desktop-Wallpaper.jpeg");
+			background-image: url("https://tr.rbxcdn.com/8ef4e11f2ab05d6f7e91db29387bc050/420/420/Decal/Png");
 		}
 		&:hover:before {
 			transform: scale(1);
