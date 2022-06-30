@@ -6,15 +6,21 @@
 
 
 ***/
-@-moz-document domain("mastodon.coffee"), domain("mstdn.social"), domain("mastodon.art"), domain("mastodon.social"), domain("mastodon.online"), domain("mastodon.lol") {
+@-moz-document domain("mastodon.coffee"), domain("mstdn.social"), domain("mastodon.art"), domain("mastodon.social"), domain("mastodon.online"), domain("mastodon.lol"), domain("mastodon.technology") {
 
-/* Update 1.2.1
-- Mobile fixes
+/* Update 1.3.0
+- More tweaks & fixes
+- Mobile improvements
+	- Posts are now full-width
+- Improved lists in nav column
+- Hid prefrences in nav column, still accessable from account dropdown
+- Explore Page Improvements
+	- Styled Trends, News, & Account cards
 */
 
 /* ==UserStyle==
 @name           Mastodon Modern
-@version        1.2.1
+@version        1.3.0
 @description    Gives Mastodon a nicer look :)
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/mastodon/modern.user.css
 @preprocessor   stylus
@@ -27,14 +33,14 @@
 ==/UserStyle== */
 
     /* Insert code here... */
-#mastodon, .public-layout { // Wrapped in this so it doesn't mess with other front ends the instance probably has
+#mastodon, .public-layout, .modal-layout { // Wrapped in this so it doesn't mess with other front ends the instance probably has
 	responsiveW1 = 1320px
 	responsiveW2 = 1191px
 	mobileW = 895px
 	
 	transBounce1 = .2s cubic-bezier(0,0,0,1.1)
 	
-	media = ".media-gallery, .video-player, .status-card.horizontal.interactive, .status-card, .audio-player"
+	media = ".media-gallery, .video-player, .status-card.horizontal.interactive, .status-card, .audio-player, .picture-in-picture-placeholder"
 	
 	/:root {
 		--tl-width 750px
@@ -75,7 +81,9 @@
 		border-color var(--border-color) !important
 		font-display swap !important
 	}
-	.media-gallery__item, .column-link, select, .status-card, .audio-player {
+	.load-more,
+	.trends__item, .story,
+	.media-gallery__item, .column-link, select, .status-card, .audio-player, .account {
 		transition transform .4s cubic-bezier(0,0,0,3) !important
 		&:active {
 			transform scale(.99)
@@ -103,16 +111,57 @@
 	.react-toggle-thumb {
 		pointer-events: none
 	}
-	.account__avatar, #profile_page_avatar {
+	.account__avatar, #profile_page_avatar, .account__avatar-composite, .account-card__title__avatar img {
 		border-radius 30% !important
 	}
-	
+	.account,
 	.detailed-status__action-bar,
 	.column-header__collapsible-inner,
 	.compose-form__buttons-wrapper,
 	.audio-player, .box-widget input[type="email"], .box-widget input[type="password"], .box-widget input[type="text"], .box-widget textarea, .compose-form .spoiler-input__input, .compose-form__autosuggest-wrapper, .compose-form__poll-wrapper select, .poll__option input[type="text"], .report-dialog-modal__textarea, .search__input, .setting-text, .statuses-grid .detailed-status {
 		border 0 !important
 	}
+	
+	
+	// p:last-child {
+	// 	.hashtag, .mention {
+	// 		display inline-block
+	// 		padding .0em .4em
+	// 		margin-block 0.1em
+	// 		background-color var(--border-color)
+	// 		text-decoration none !important
+	// 		border-radius 8px
+	// 		// margin-inline .2em
+	// 		font-size .9em
+	// 		position relative
+	// 		overflow hidden
+	// 		// font-weight 700
+	// 		margin-top auto
+	// 		vertical-align bottom
+	// 		span {
+	// 			text-decoration none !important
+	// 		}
+	// 		&::after {
+	// 			content ""
+	// 			position absolute
+	// 			inset 0
+	// 			background-color var(--hover-color)
+	// 			opacity 0
+	// 		}
+	// 		&:hover, &:focus {
+	// 			&:after {
+	// 				opacity 1
+	// 			}
+	// 		}
+	// 	}
+	// }
+	
+	
+	
+	
+	
+	
+	
 	
 	.columns-area__panels__pane__inner {
 		margin-top 30px
@@ -139,6 +188,16 @@
 			margin-inline 5px
 		}
 	}
+	.compose__action-bar-dropdown {
+		.icon-button {
+			width auto !important
+			height auto !important
+			padding 8px
+			i {
+				// font-size 10px
+			}
+		}
+	}
 	.compose-form {
 		.reply-indicator {
 			&__display-name {
@@ -151,20 +210,9 @@
 		.compose-form__buttons-wrapper {
 			border-radius 0 0 var(--radius) var(--radius) !important
 		}
-		
-		.compose-form__autosuggest-wrapper,
- 		.compose-form__buttons-wrapper {
-			// background rgba(255,255,255,.1) !important
-		}
-		textarea, .compose-form__modifiers {
-			// background none !important
-		}
-		.icon-button.inverted, .text-icon-button, .character-counter, textarea {
-			// filter saturate(0) invert()
-			
-		}
 		.compose-form__publish-button-wrapper {
 			overflow visible !important
+			max-width 100%
 		}
 	}
 	@media (min-width: mobileW) {
@@ -178,7 +226,7 @@
 				font-size 0
 				line-height 0
 				opacity 0
-				transition font-size .2s, line-height .3s cubic-bezier(1, 0, 0, 0)
+				transition font-size .2s, line-height .3s cubic-bezier(.5, 0, 0, 0)
 				transition-duration .2s
 			}
 			&:hover, &:focus-within {
@@ -188,7 +236,7 @@
 					line-height 1.5
 					opacity 1
 					transform translateY(0px)
-					transition font-size .1s, line-height .3s cubic-bezier(0.8, 0, 0, 1.2), opacity .2s .1s
+					transition font-size .1s, line-height .3s cubic-bezier(0, 0, 0, 1.2), opacity .2s .1s
 				}
 			}
 		}
@@ -209,7 +257,7 @@
 				box-shadow var(--shadow-med)
 			}
 		}
-		.scrollable {
+		:not(.scrollable--flex) > .scrollable {
 			padding-bottom 40vh !important
 		}
 	}
@@ -234,8 +282,16 @@
 			}
 		}
 	}
+	.columns-area {
+		box-sizing border-box
+		padding-bottom 20px
+		height 100% !important
+	}
 	.column, .columns-area {
 		overflow visible !important
+	}
+	.explore__search-results {
+		padding 10px
 	}
 
 	// ACCOUNT PAGE
@@ -317,6 +373,8 @@
 		flex-wrap wrap
 		align-items center
 		border 0
+		margin-top 0 !important
+		margin-bottom 10px !important
 		gap 10px
 		/ .public-account-bio .account__header__fields {
 			padding 20px !important
@@ -361,6 +419,9 @@
 			padding-inline 14px
 		}
 	}
+	.account__header__content {
+		padding-top 10px
+	}
 	&#mastodon .account__section-headline {
 		background none
 		/.with-modals & {
@@ -385,20 +446,33 @@
 	
 	
 	// STATUSES
-	.focusable, .entry, .statuses-grid__item .detailed-status {
+	.scrollable > div:first-child > [tabindex="-1"]:last-child .status__wrapper {
+		&::after {
+			content unset
+		}
+	}
+	
+	statuses-list = ".focusable, .entry, .statuses-grid__item .detailed-status, .trends__item, .story, .account-card, :not(.focusable) > .account, .timeline-hint"
+	{statuses-list} {
 		overflow clip
+		border 0 !important
 		border-radius var(--radius) !important
 		transition background .2s, box-shadow .4s, margin .2s, border .2s
-		animation slideUp .4s forwards cubic-bezier(0,1,1,1)
+		animation slideUp backwards .4s cubic-bezier(0,1,1,1)
 		position relative
+		&.trends__item, &.story, &.account-card {
+			animation-name slideUpFade
+			for row in 1..10 {
+				&:nth-child({row}) {
+					animation-delay .04s * row
+				}
+			}
+		}
 		&.focusable {
 			background none
 		}
 		&.entry {
 			margin-bottom 10px
-			.status {
-				border 0 !important
-			}
 		}
 		&:not(.detailed-status__wrapper) {
 			&::after {
@@ -408,33 +482,145 @@
 				left var(--radius)
 				right var(--radius)
 				border-top 1px solid var(--border-color)
-
+				pointer-events none
 			}
 			&::before {
 				content ""
 				position absolute
-				z-index -1
 				inset 0
 				bottom 1px
 				pointer-events none
 				transition background-color .2s
 			}
 			&:hover, &:focus-within {
-				// background-color var(--hover-color) !important
 				&::before {
 					background-color var(--hover-color)
 				}
 			}
 		}
+		/.explore__links {
+			padding 10px !important
+			display flex
+			flex-wrap wrap
+			.trends__item {
+				margin 10px
+				padding 25px !important
+				box-shadow var(--shadow-med)
+				width 200px
+				// font-size 2em
+				// overflow visible !important
+				&::after {
+					content unset !important
+					inset 0 !important
+					border-radius var(--radius)
+					pointer-events none
+					border 1px solid var(--border-color) !important
+				}
+				a {
+					font-size 1.4em
+					line-height 1.7em
+				}
+				.trends__item__sparkline {
+					height 100%
+					svg {
+						height 100%
+						// width 100%
+						float right
+						overflow visible !important
+						position relative
+						z-index -1
+						
+						path {
+							display unset !important
+							transition transform 1s
+							&:first-child {
+								transform-origin center
+								// transform scale(2)
+								// filter blur(0px) !important
+								// d path("M-200 -200 L200 -200 L200 200 L-200 200 Z") !important
+							}
+						}
+					}
+				}
+				&:hover, &:focus-within {
+					svg path:first-child {
+						transform scale(2)
+						// filter blur(40px) !important
+					}
+				}
+			}
+		}
+		&.trends__item, &.story {
+			padding 10px
+			flex-grow 1
+		}
+		&.story {
+			padding 15px
+			.story__details {
+				padding-left 0 !important
+			}
+			.story__thumbnail {
+				margin-right 0
+			}
+		}
+		&.account-card {
+			display flex
+			flex-direction column
+			/.explore__suggestions {
+				padding 10px
+				display grid
+				grid-template-columns repeat(auto-fit, minmax(300px, 1fr))
+			}
+			// border 1px solid var(--border-color) !important
+			box-shadow var(--shadow)
+			.account-card__header {
+				padding 0 !important
+				// padding-bottom 4px !important
+				
+			}
+			.account-card__title__avatar .account__avatar {
+				width 64px !important
+				height 64px !important
+				background-size 64px 64px !important
+			}
+			.account-card__bio {
+				margin-top 0 !important
+			}
+			.account-card__actions {
+				// display block
+				margin-top auto !important
+			}
+		}
+		&.timeline-hint a {
+			&::before {
+				content ""
+				position absolute
+				inset 0
+			}
+		}
 	}
 	
 	
-	.status {
-		// border 0
-		overflow visible !important
+	.conversation {
+		// padding 0 !important
+		.status__content, p {
+			// color inherit !important
+			// opacity .95
+		}
+	}
+	.status, .focusable > .account {
+		border 0 !important
+		// overflow visible !important
 		// border 0 !important
 		padding 15px !important
-		padding-inline-start var(--status-left-padding) !important
+		&:not(.account) {
+			padding-inline-start var(--status-left-padding) !important
+		}
+		&.account {
+			.account__avatar-wrapper {
+				margin-left 10px
+			}
+		}
 	}
 	.status__prepend, .notification__message {
 		padding-top 15px !important
@@ -480,6 +666,9 @@
 		}
 		/.rtl & {
 			text-align right !important
+		}
+		.status__content__text > br:first-child {
+			display none !important
 		}
 	}
 	.status__content__spoiler-link {
@@ -527,6 +716,9 @@
 		padding 15px !important
 		padding-bottom 5px !important
 	}
+	div:empty + div > .detailed-status__wrapper {
+		margin-top 0 !important
+	}
 	.detailed-status__wrapper, .detailed-status, .picture-in-picture {
 		&.detailed-status__wrapper {
 			margin-block 15px
@@ -571,6 +763,7 @@
 				margin 0 !important
 			}
 			&[aria-label]::after {
+				all unset
 				content attr(aria-label)
 				font-size .7em
 				margin-inline-start .5em
@@ -597,6 +790,8 @@
 			}
 		}
 	}
+	
+
 	
 	
 	
@@ -684,6 +879,21 @@
 		}
 		transition margin transBounce1
 	}
+	.column-header__collapsible-inner {
+		padding-bottom 0 !important
+		overflow hidden
+	}
+	
+	.setting-toggle {
+		display flex
+		align-items center
+		margin-bottom 14px
+		position relative
+		.setting-toggle__label {
+			margin-bottom 0 !important
+			flex-grow 1
+		}
+	}
 	
 	
 	.navigation-panel {
@@ -693,58 +903,95 @@
 		// margin-top 46px
 		height calc(100% - 30px)
 		box-sizing border-box
-	}
-	.column-link {
-		flex-grow 2 !important
-		display flex !important
-		align-items center !important
-		align-content center
-		max-height 3.3em
-		min-height 2.7em !important
-		padding-block 0
-		position relative
-		box-sizing border-box
-		// font-weight 550
-		opacity .9
-		.column-link__icon, /.column-header__icon {
-			margin-inline-end 1em !important
+		hr {
+			// display none
 		}
-		&::before {
-			content: "" !important;
-			position absolute
-			border-radius: 100px !important;
-			width unset !important
-			height unset !important
-			inset 0px 0px !important
-			// min-height 43px
-			opacity 0 !important
-			background-color rgba(150,150,150,0.1)
-			transition opacity .2s
-		}
-		&.active {
-			opacity 1 !important
-			font-weight 600
-		}
-		&:hover, &:focus {
-			&:before {
+		.column-link {
+			flex-grow 2 !important
+			display flex !important
+			align-items center !important
+			align-content center
+			max-height 3.3em
+			min-height 2.7em !important
+			padding-block 0
+			position relative
+			box-sizing border-box
+			// font-weight 550
+			opacity .9
+			overflow hidden
+			.column-link__icon, /.column-header__icon {
+				margin-inline-end 1em !important
+			}
+			&::before {
+				content: "" !important;
+				position absolute
+				border-radius: 100px !important;
+				width unset !important
+				height unset !important
+				inset 0px 0px !important
+				// min-height 43px
+				opacity 0 !important
+				background-color rgba(150,150,150,0.1)
+				transition opacity .2s
+			}
+			&.active {
 				opacity 1 !important
+				font-weight 600
+			}
+			&:hover, &:focus {
+				&:before {
+					opacity 1 !important
+				}
+			}
+			&[href="/settings/preferences"] {
+				display none !important
+			}
+			&[href="/web/lists"] {
+				& + div {
+					hr {
+						display none
+					}
+					.column-link {
+						i {
+							opacity .2
+						}
+					}
+				}
 			}
 		}
+		
 	}
 	.getting-started__trends {
-		.trends__item__current {
-			display none
-		}
-		.trends__item__sparkline { 
-			path:first-child {
-				display none
-			}
-			path:last-child {
-				mask linear-gradient(to left, black, black, transparent)
-				
-			}
+		display unset !important
+	}
+	.trends__item {
+		display flex !important
+	}
+	.trends__item__name a {
+		&::before {
+			content ""
+			position absolute
+			inset 0
 		}
 	}
+	.trends__item__current {
+		display none
+	}
+	.trends__item__sparkline { 
+		overflow visible !important
+		svg {
+			overflow visible !important
+		}
+		path:first-child {
+			// display none
+			filter blur(10px)
+		}
+		path:last-child {
+			mask linear-gradient(to left, black, black, transparent)
+
+		}
+	}
+	
 	
 	
 	
@@ -795,6 +1042,14 @@
 						max-height 126px
 						margin-bottom 10px
 					}
+					.icon-button {
+						width auto !important
+						height auto !important
+						padding 20px
+						i {
+							font-size 20px
+						}
+					}
 				}
 				.navigation-bar__profile {
 					font-size 1.2em
@@ -813,14 +1068,6 @@
 					bottom 10px
 					// min-height 4em
 					width auto !important
-					.icon-button {
-						width auto !important
-						height auto !important
-						padding 20px
-						i {
-							font-size 20px
-						}
-					}
 				}
 				.account__avatar {
 					// position static
@@ -900,6 +1147,19 @@
 		@media (min-width 416px) {
 			.grid, .grid-4 {
 				gap 15px
+				a {
+					max-width 100%
+					box-sizing border-box
+				}
+			}
+			
+			.row__mascot {
+				width 0
+				img {
+					max-width 100%
+					object-fit contain
+					object-position bottom
+				}
 			}
 			.header {
 				border-radius var(--radius)
@@ -909,7 +1169,6 @@
 			}
 			.public-account-header {
 				border-radius var(--radius)
-				--border-color transparent !important
 				border 0 !important
 				&:not(.public-account-header--no-bar) {
 					margin-bottom 15px
@@ -938,13 +1197,35 @@
 				top 10px
 			}
 		} 
+		@media (max-width 600px) {
+			.public-account-header__bar {
+				// flex-wrap nowrap
+				.avatar {
+					width 100px !important
+					height 100px !important
+					margin-top -50px
+				}
+				.public-account-header__tabs {
+					border 0 !important
+				}
+				.account__header__fields {
+					border 0 !important
+					padding-top 0 !important
+				}
+			}
+		}
 		@media (max-width 416px) {
+			
+			
 			.contact-widget {
 				padding 0 10px
 			}
 			.grid-4 > div:not(.column-4) {
 				position relative
 				z-index 2
+				&.column-2 {
+					padding-block 20px
+				}
 			}
 			.table-of-contents {
 				// margin calc(0px - var(--radius) * 2) 0
@@ -1001,16 +1282,7 @@
 			overflow hidden
 		}
 		
-		.account-card__header {
-			padding 0 !important
-			padding-bottom 4px !important
-		}
-		.account-card__bio {
-			margin-top 0 !important
-		}
-		.account-card__actions {
-			margin-top auto !important
-		}
+		
 		
 		// Statuses
 		.statuses-grid {
@@ -1057,6 +1329,10 @@
 			}
 		}
 		
+		.account__header__fields {
+			margin-bottom 0 !important
+		}
+		
 		// Footer
 		.footer {
 			// Was just something that annoyed me a lil', now it's even :)
@@ -1065,18 +1341,70 @@
 			}
 		}
 	}
+	// FOLLOW PROMPT
+	&.modal-layout {
+		overflow hidden
+		.container-alt {
+			background inherit
+			height 100%
+			.public-layout {
+				padding 0 !important
+			}
+			.form-container {
+				max-width 500px !important
+				padding 0
+				background inherit
+				display flex
+				flex-direction column
+				justify-content center
+				height 100%
+				h2 {
+					// display none
+					margin 0
+					padding 20px
+					font-weight 600
+				}
+				.follow-prompt {
+					// height 0
+					// flex-grow 1
+					margin 0
+					border-radius 0 0 var(--radius) var(--radius)
+					overflow-y auto
+					.activity-stream {
+						margin 0 !important
+					}
+				}
+			}
+			.entry {
+				border-radius var(--radius) !important
+			}
+		}
+		
+		#new_remote_follow {
+			position sticky
+			bottom 0
+			padding 20px
+			padding-bottom 60px
+			background inherit
+			// border-radius var(--radius)
+			// margin-inline 15px
+		}
+	}
 	
 	
 	
 	
 	
 	// Mobile
+	fullWidthTl() {
+		
+	}
 	@media (max-width: mobileW) {
 		/:root {
 			--status-left-padding 70px
 		}
 		.columns-area--mobile > .column {
-			overflow hidden !important
+			// overflow hidden !important
 			> div > div {
 				animation fadeUp .4s
 			}
@@ -1088,7 +1416,8 @@
 			padding 0 !important
 			max-width unset
 			.scrollable:not(.scrollable--flex) {
-				padding 5px !important
+				padding 0px !important
+				padding-top 15px !important
 				padding-bottom 40vh !important
 				&::before {
 					content ""
@@ -1098,7 +1427,8 @@
 					z-index -1
 				}
 				.account-timeline__header {
-					margin -5px !important
+					margin 0px !important
+					margin-top -15px !important
 				}
 			}
 
@@ -1108,11 +1438,17 @@
 			.scrollable, .account__header__image, > div {
 				border-radius 0 !important
 			}
+			
 		}
-		.status__prepend, .notification__message {
-			margin-bottom -5px !important
+		.explore__links {
+			padding 0 !important
 		}
-
+		.status__wrapper, .story {
+			border-radius 0 !important
+			&::after {
+				inset-inline 0 !important
+			}
+		}
 		.status {
 			padding-top 14px !important
 			.status__avatar {
@@ -1133,7 +1469,20 @@
 				margin-bottom 0 !important
 			}
 		}
-		
+		.detailed-status__wrapper {
+			margin 10px
+			border-radius var(--radius) !important
+		}
+		.status__action-bar {
+			margin-inline-start -78px + 15px
+			margin-bottom -10px
+			.icon-button {
+				flex-grow 1 !important
+				margin 0 !important
+				justify-content center
+				padding .7em !important
+			}
+		}
 		
 		.tabs-bar__wrapper {
 			// order 2
@@ -1217,7 +1566,7 @@
 				}
 			}
 			#tabs-bar__portal {
-				margin 10px 20px !important
+				margin 10px 15px !important
 				margin-right auto !important
 				width max-content !important
 				box-shadow var(--shadow) !important
@@ -1228,19 +1577,23 @@
 				> button {
 					padding-inline 20px
 				}
-				button {
-					// min-width 60px
+				.column-header__wrapper {
+					display flex
+					flex-direction column-reverse
+				}
+				.column-header {
+					border-radius 0 !important
 				}
 				.column-header > button {
-					padding-inline-start 15px
+					padding-inline 15px
 					transform-origin center !important
 				}
 				.column-header__buttons > button {
 					// padding-inline 0 !important
-					padding-inline 10px
+					padding-inline 15px
 					transition padding .2s, margin .2s
 					&:first-child {
-						padding-inline-start 20px
+						padding-inline-start 10px
 						&.active {
 							margin-inline-start 20px
 						}
@@ -1249,7 +1602,7 @@
 						padding-inline-end 20px
 					}
 					&.active {
-						padding-inline 15px
+						padding-inline 20px
 					}
 				}
 				.column-header {
@@ -1260,7 +1613,12 @@
 				}
 				.column-header__collapsible {
 					max-width calc(100vw - 40px) !important
+					
 					opacity 1 !important
+					margin-bottom -1px // sometimes there's an annoying 1px gap, so
+					&:not(.collapsed) {
+						max-height calc(100vh - 150px)
+					}
 				}
 				// .column-header__collapsible {
 				// 	transition margin-top .2s cubic-bezier(0,0,0,2)
@@ -1275,27 +1633,33 @@
 			}
 			/.floating-action-button {
 				bottom 70px
+				right 15px
+				width 55px
+				height 55px
 			}
 		}
 		.icon-button:after {
 			content unset !important
 		}
 		
-		.status__action-bar {
-			margin-inline-start -78px + 15px
-			margin-bottom -10px
-			.icon-button {
-				flex-grow 1 !important
-				margin 0 !important
-				justify-content center
-				padding .7em !important
-			}
+		
+		
+		
+		.notification__filter-bar + .scrollable {
+			border-radius var(--radius) var(--radius) 0 0 !important
 		}
+		
 		
 		// Fix dropdown note preview
 		.modal-root__modal .status.light {
 			overflow hidden !important
 			padding-inline-start 70px !important
+		}
+		
+		
+		.columns-area {
+			padding-bottom 0 !important
+			overflow hidden !important
 		}
 		.getting-started {
 			padding 20px
@@ -1316,6 +1680,7 @@
 			}
 			.compose-form {
 				padding-bottom 100px !important
+				
 			}
 			.compose-form__autosuggest-wrapper {
 				border-radius var(--radius) !important
@@ -1343,6 +1708,27 @@
 				button {
 					padding 7px
 					border-radius 0 !important
+				}
+			}
+			
+			/.is-composing {
+				.modal-root__modal.report-modal {
+					width 100vw
+					height 100%
+					border-radius 0
+					.report-modal__comment {
+						padding 20px
+						padding-bottom 100px
+						.button:last-child {
+							position fixed
+							bottom 0
+							left 0
+							right 0
+							width calc(100% - 40px) !important
+							display block !important
+							margin 20px
+						}
+					}
 				}
 			}
 			
@@ -1381,7 +1767,7 @@
 		}
 		
 	}
-	
+
 	// Fix up multi-columns
 	/.layout-multiple-columns #mastodon .columns-area {
 		overflow auto hidden !important
@@ -1457,6 +1843,12 @@
 		@keyframes slideUp {
 			from { 
 				transform translateY(20px) 
+			}
+		}
+		@keyframes slideUpFade {
+			from { 
+				transform translateY(20px) 
+				filter opacity(0)
 			}
 		}
 		@keyframes slideUpBig {
