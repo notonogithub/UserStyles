@@ -6,7 +6,7 @@
 
 
 ***/
-@-moz-document domain("mastodon.coffee"), domain("mstdn.social"), domain("mastodon.art"), domain("mastodon.social"), domain("mastodon.online"), domain("mastodon.lol"), domain("mastodon.technology") {
+@-moz-document domain("mastodon.coffee"), domain("mstdn.social"), domain("mastodon.art"), domain("mastodon.social"), domain("mastodon.online"), domain("mastodon.lol"), domain("mastodon.technology"), domain("mas.to"){
 
 /* Update 1.3.1
 - Felt like the status bar on mobile was offset, and it was!
