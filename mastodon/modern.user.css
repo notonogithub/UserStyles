@@ -6,15 +6,17 @@
 
 
 ***/
-@-moz-document domain("mastodon.coffee"), domain("mstdn.social"), domain("mastodon.art"), domain("mastodon.social"), domain("mastodon.online"), domain("mastodon.lol"), domain("mastodon.technology"), domain("mas.to"){
-
-/* Update 1.3.1
-- Felt like the status bar on mobile was offset, and it was!
+@-moz-document domain("mastodon.coffee"), domain("mstdn.social"), domain("mastodon.art"), domain("mastodon.social"), domain("mastodon.online"), domain("mastodon.lol"), domain("mastodon.technology"), domain("mas.to"), domain("c.im"), domain("nerdculture.de"), domain("maly.io"), domain("queer.party"), domain("fosstodon.org"), domain("meow.social") {
+/* Update 1.3.2
+- Added some more larger instances that don't have modifications
+	- You can still edit the style to add your own instance!
+- More respect to prefers-reduced-motion
+- Minor fixes
 */
 
 /* ==UserStyle==
 @name           Mastodon Modern
-@version        1.3.1
+@version        1.3.2
 @description    Gives Mastodon a nicer look :)
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/mastodon/modern.user.css
 @preprocessor   stylus
@@ -75,31 +77,33 @@
 		border-color var(--border-color) !important
 		font-display swap !important
 	}
-	.load-more,
-	.trends__item, .story,
-	.media-gallery__item, .column-link, select, .status-card, .audio-player, .account {
-		transition transform .4s cubic-bezier(0,0,0,3) !important
-		&:active {
-			transform scale(.99)
-			transition transform .4s cubic-bezier(0,0,0,1) !important
+	@media (prefers-reduced-motion: no-preference) {
+		.load-more,
+		.trends__item, .story,
+		.media-gallery__item, .column-link, select, .status-card, .audio-player, .account {
+			transition transform .4s cubic-bezier(0,0,0,3) !important
+			&:active {
+				transform scale(.99)
+				transition transform .4s cubic-bezier(0,0,0,1) !important
+			}
 		}
-	}
-	.react-toggle-track, .button, .icon-button, .floating-action-button {
-		transition transform .4s cubic-bezier(0,0,0,4) !important
-		&:active {
-			transform scale(.95)
-			transition transform .4s cubic-bezier(0,0,0,1) !important
-		}
-	}
-	.status__content__spoiler-link {
-		span {
-			display inline-block
+		.react-toggle-track, .button, .icon-button, .floating-action-button {
 			transition transform .4s cubic-bezier(0,0,0,4) !important
+			&:active {
+				transform scale(.95)
+				transition transform .4s cubic-bezier(0,0,0,1) !important
+			}
 		}
-		
-		&:active span {
-			transition transform .4s cubic-bezier(0,0,0,1) !important
-			transform translateY(1px)
+		.status__content__spoiler-link {
+			span {
+				display inline-block
+				transition transform .4s cubic-bezier(0,0,0,4) !important
+			}
+
+			&:active span {
+				transition transform .4s cubic-bezier(0,0,0,1) !important
+				transform translateY(1px)
+			}
 		}
 	}
 	.react-toggle-thumb {
@@ -112,7 +116,7 @@
 	.detailed-status__action-bar,
 	.column-header__collapsible-inner,
 	.compose-form__buttons-wrapper,
-	.audio-player, .box-widget input[type="email"], .box-widget input[type="password"], .box-widget input[type="text"], .box-widget textarea, .compose-form .spoiler-input__input, .compose-form__autosuggest-wrapper, .compose-form__poll-wrapper select, .poll__option input[type="text"], .report-dialog-modal__textarea, .search__input, .setting-text, .statuses-grid .detailed-status {
+	.audio-player, .box-widget input[type="email"], .box-widget input[type="password"], .box-widget input[type="text"], .box-widget textarea, .compose-form .spoiler-input__input, .compose-form__autosuggest-wrapper, .compose-form__poll-wrapper select, .report-dialog-modal__textarea, .search__input, .setting-text, .statuses-grid .detailed-status {
 		border 0 !important
 	}
 	
@@ -192,6 +196,7 @@
 			}
 		}
 	}
+	
 	.compose-form {
 		.reply-indicator {
 			&__display-name {
@@ -207,6 +212,41 @@
 		.compose-form__publish-button-wrapper {
 			overflow visible !important
 			max-width 100%
+		}
+		.compose-form__upload__actions {
+			z-index 5
+			position relative
+		}
+		.compose-form__upload-thumbnail {
+			display flex
+			flex-direction column
+		}
+		.compose-form__upload__warning {
+			// top 50%
+			position relative
+			// inset 0
+			// bottom 0
+			display flex
+			justify-content center
+			background rgba(0,0,0,0.7)
+			flex-grow 1
+			box-shadow 0 -50px rgba(0,0,0,0.7)
+			> button {
+				width 100%
+				height 100%
+				font-weight 700
+				// background rgba(255,255,255,0.8)
+				border-radius var(--radius)
+				padding-inline 1em
+				color white
+				box-shadow var(--shadow-low)
+				i {
+					margin-right .2em
+					transform scale(1.2)
+				}
+			}
+			
+			
 		}
 	}
 	@media (min-width: mobileW) {
