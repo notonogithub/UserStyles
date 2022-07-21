@@ -20,7 +20,7 @@
 
 /* ==UserStyle==
 @name           Ecosia Modern
-@version        1.0.0
+@version        1.1.0
 @description    Making better use of screen space. Moving modules aside requires CSS Grid Masonry, which many browsers don't support yet.
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/ecosia/modern.user.css
 @preprocessor   stylus
@@ -38,10 +38,15 @@
 @var checkbox shoppingCards "Shopping Cards" 1
 @var checkbox animations "More Animations" 1
 @var checkbox tweaks "Other Tweaks" 1
+@var checkbox neumorphism "Neumorphism Spin (lower contrast)" 0
 
 @var text hehe "Donate!" '"https://www.buymeacoffee.com/Freeplay"'
 ==/UserStyle== */
 
+/* UPDATE 1.1.0
+- Improve Dark Reader footer :)
+- New *sort of* neumorphism option
+*/
 @-moz-document domain("ecosia.org") {
     /* Insert code here... */
 	.layout {
@@ -78,7 +83,7 @@
 				max-height calc(100vh - 100px)
 				padding-bottom 10px
 				// background-color inherit
-				// filter drop-shadow(0 2px 6px rgba(0,0,0,0.05))
+				filter drop-shadow(0 2px 6px rgba(0,0,0,0.05))
 				
 				.search-navigation__list {
 					display block
@@ -576,11 +581,19 @@
 			--color-decorative-border-1 var(--darkreader-border--color-decorative-border-1)
 			--color-background-primary var(--darkreader-bg--color-background-primary)
 			--color-background-secondary var(--darkreader-bg--color-background-tertiary) 
+				
+			--darkreader-text--ia-backdrop-color var(--darkreader-bg--color-background-primary)
+				
+			--darkreader-bg--color-background-secondary #202620
+			--darkreader-bg--color-background-secondary var(--darkreader-bg--color-elevation-layer-1)
+		}
+		.main-footer__background {
+			opacity .5
+			filter brightness(1.5) saturate(.5)
 		}
 		.main-footer__wave, .main-footer__background {
 			color var(--darkreader-bg--color-background-secondary) !important
-			filter brightness(1.5)
-			opacity .5
+			background-color transparent
 		}
 		.main-footer__card {
 			z-index 1
@@ -908,4 +921,93 @@
 			}
 		}
 	}
+	
+	.layout__footer {
+		z-index 2
+	}
+	.main-footer {
+		background none !important
+	}
+	.main-footer__content {
+		max-width calc(100% - 450px) !important
+		width max-content !important
+		flex-wrap wrap
+		flex-direction column
+		position absolute
+		bottom 10px
+		right 24px
+		padding-block 15px !important
+		gap 10px
+		border-radius 10px
+		background-color var(--color-background-primary) !important
+		box-shadow 0 1px 2px var(--color-elevation-layer-1),0 0 8px var(--color-elevation-layer-2)
+	}
+	
+	
+	if neumorphism {
+		body {
+			--shadow 0 2px 8px rgba(0,0,0,0.1)
+				
+			--lt-color-background-default var(--darkreader-bg--color-background-tertiary)
+			--color-background-secondary var(--color-background-primary)
+		}
+		p, span, h1, h2, h3, h4, h5, h6 {
+			opacity .9
+		}
+		.snippet-thumbnail__image {
+			border-radius 10px
+			overflow hidden
+		}
+		*, *::before, &::after {
+			border 0 !important
+		}
+		[class*=link-bubble], .button, .tab--highlighted, .chip, .card {
+			// background none !important
+			background var(--color-background-primary) !important
+			transition box-shadow .2s, transform .2s !important
+			&:hover {
+				
+				box-shadow var(--shadow)
+			}
+			
+		}
+		.search-form__search-field.search-form__search-field {
+			filter none !important
+			// box-shadow var(--shadow) !important
+			transition box-shadow .2s, transform .2s !important
+			.search-form__input-wrapper {
+				background none !important
+				box-shadow var(--shadow)
+				border-radius 100px
+				transition box-shadow .2s !important
+			}
+			&:focus-within, &:hover {
+				.search-form__input-wrapper {
+					box-shadow none !important
+				}
+				.button {
+					background none !important
+					color var(--color-text-primary) !important
+				}
+			}
+			&:focus-within {
+				.button {
+					box-shadow var(--shadow)
+				}
+			}
+			&:not(:focus-within):hover {
+				box-shadow inset var(--shadow) !important
+			}
+		}
+		.image-preview {
+			background var(--color-background-primary) !important
+			box-shadow var(--shadow)
+			* {
+				color var(--color-text-primary) !important
+			}
+			
+		}
+	}
+	
+	
 }
