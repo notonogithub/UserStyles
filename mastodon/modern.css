@@ -22,10 +22,7 @@
 .modal-layout button,
 #mastodon label,
 .public-layout label,
-.modal-layout label,
-#mastodon :not(.account__header__tabs__name) > :not(h1) > span,
-.public-layout :not(.account__header__tabs__name) > :not(h1) > span,
-.modal-layout :not(.account__header__tabs__name) > :not(h1) > span {
+.modal-layout label {
   user-select: none;
 }
 #mastodon .button--block,
