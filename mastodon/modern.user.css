@@ -7,13 +7,13 @@
 
 ***/
 @-moz-document domain("mastodon.coffee"), domain("mstdn.social"), domain("mastodon.art"), domain("mastodon.social"), domain("mastodon.online"), domain("mastodon.lol"), domain("mastodon.technology"), domain("mas.to"), domain("c.im"), domain("nerdculture.de"), domain("maly.io"), domain("queer.party"), domain("fosstodon.org"), domain("meow.social"), domain("indieweb.social") {
-/* Update 1.3.4
-- oops sorry about the not being able to select some text thing
+/* Update 1.3.5
+- Minor fixes
 */
 
 /* ==UserStyle==
 @name           Mastodon Modern
-@version        1.3.4
+@version        1.3.5
 @description    Gives Mastodon a nicer look :)
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/mastodon/modern.user.css
 @preprocessor   stylus
@@ -609,6 +609,12 @@
 				margin-top auto !important
 			}
 		}
+		&.empty-column-indicator {
+			display block
+		}
+		&.timeline-hint {
+			display block
+		}
 		&.timeline-hint a {
 			&::before {
 				content ""
@@ -616,6 +622,13 @@
 				inset 0
 			}
 		}
+	}
+	.empty-column-indicator {
+		// height max-content !important
+		// min-height 100px
+		display unset 
+		contain unset
+		padding 10px !important
 	}
 	
 	
@@ -937,7 +950,7 @@
 			// font-weight 550
 			opacity .9
 			overflow hidden
-			.column-link__icon, /.column-header__icon {
+			.column-link__icon, /.column-header > button .column-header__icon {
 				margin-inline-end 1em !important
 			}
 			&::before {
