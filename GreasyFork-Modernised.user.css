@@ -1,7 +1,7 @@
 /* ==UserStyle==
  -- THEME STUFF --
 @name           GreasyFork | Modernized ( Optional Dark Theme )
-@version        1.3.13
+@version        1.3.14
 @description    A much cleaner and more modern version of GreasyFork!
 @updateURL     	https://codeberg.org/Freeplay/UserStyles/raw/branch/main/GreasyFork-Modernised.user.css
 
@@ -17,6 +17,10 @@
 @var checkbox darkmode "Dark Mode" 0 
 
 ==/UserStyle== */
+/* Aug, 7 / 22
+- Inverted codeblock colors for dark mode
+- dark mode fixes
+- widescreen layout fixes
 /* Nov, 20 / 21
 - Quick lil' fix to details page & header.
 /* Dec, 16 / 20
@@ -148,6 +152,7 @@
 			max-height: none !important;
 			border: none !important;
 			border-radius: 4px !important;
+			filter  invert(90%)
 		}
 		pre.prettyprint {
 			background-color: white !important;
@@ -245,7 +250,8 @@
 			margin: 0;
 			padding: 10px;
 			display: flex;
-			flex-wrap: wrap;
+			flex-direction column
+			// flex-wrap: wrap;
 		}
 		body > .width-constraint > * {
 			width: 100%;
@@ -507,12 +513,12 @@
 		#browse-script-list {
 			margin-top: 0;
 		}
-		#browse-script-list, #user-script-list, #user-deleted-script-list {
+		#browse-script-list, #user-script-list, #user-deleted-script-list, .script-list {
 			display: grid;
 			grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
 			grid-gap: 10px;
-			border: none;
-			box-shadow: none;
+			border: none !important;
+			box-shadow: none !important;
 			background-color: transparent;
 		}
 		
@@ -520,7 +526,8 @@
 	}
 		
 		
-			#browse-script-list > li, #user-script-list > li, #user-deleted-script-list > li {
+			#browse-script-list > li, #user-script-list > li, #user-deleted-script-list > li,
+ 			#user-library-script-list > li {
 				border: var(--border-button) !important;
 				border-radius: .5rem;
 				background-color: var(--color-tertiary);
@@ -768,6 +775,7 @@
 		canvas {
 			background-color: white !important;
 		}
+		
 		/*** FORUMS ***/
 		.discussion-read {
 			background-color: var(--color-secondary) !important;
