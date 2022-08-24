@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Cleaner Stylus
-@version        1.2.3
+@version        1.2.4
 @description    Makes the Stylus extension look a bit nicer!
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/cleaner-stylus.user.css
 @preprocessor   stylus
@@ -26,19 +26,37 @@
 		}
 		.split-btn {
 			display flex
-			button:first-child {
+			position relative
+			// border-ra
+			button:first-of-type {
 				border-top-right-radius 0 !important
 				border-bottom-right-radius 0 !important
 				flex-grow 1
 			}
-			button:last-child {
+			button:last-of-type {
 				border-top-left-radius 0 !important
 				border-bottom-left-radius 0 !important
+				padding-inline 12px !important
+				&::after {
+					// margin-bottom 1px
+				}
 			}
+		}
+		.split-btn-menu {
+			box-shadow 0 4px 12px rgba(0,0,0,.1) !important
+			border-radius 8px
+			border 0
+			top 120%
+			left 0
+			right 0
 		}
 		input, select {
 			border: 1px solid rgba(0,0,0,0.1) !important;
 			border-radius: 4px !important;
+		}
+		.checkbox-wrapper {
+			height max-content
+			align-self center
 		}
 		.checkbox-container {
 			margin-right .5em
@@ -377,11 +395,16 @@
 					> div {
 						// margin 0 !important
 						margin-left 4px !important
+						padding-inline 3px
 					}
+					// order 2
 				}
 				#write-style-for {
 					font-size: 16px;
 					font-weight: 700;
+					order -1
+					margin-right .5em
+					flex-grow 1
 				}
 				#write-for-frames {
 					margin-left 4px !important
@@ -389,6 +412,7 @@
 				.match {
 					width: 100%;
 					margin-left padding-left calc(var(--inner-padding) + 4px)
+					margin-top .4em
 					span a {
 						text-decoration: none;
 						font-size: 13px;
@@ -406,22 +430,49 @@
 				}
 			}
 		}
-		#popup-options, & > .actions {
-			background: inherit;
-			// background rgba(150,150,150,0.07)
-			filter invert(.02)
-			z-index 2
+		// #popup-options, & > .actions {
+		// 	background: inherit;
+		// 	// background rgba(150,150,150,0.07)
+		// 	filter invert(.02)
+		// 	z-index 2
+		// }
+		&::before {
+			content ""
+			position absolute
+			background inherit
+			inset 0
+			filter invert(0.04)
+		}
+		#installed {
+			background inherit
+			border-radius 12px 12px 0 0
+			padding-top 8px !important
 		}
 		#popup-options {
 			padding var(--outer-padding) calc(var(--inner-padding) / 2 + 4px) !important
 			padding-top 0 !important
+			padding-bottom 10px !important
+			gap 4px
+			> * {
+				// flex-grow 0
+			}
+			#options-btn {
+				// padding-inline 8px !important
+				margin-left auto
+				flex-grow 0
+				svg {
+					fill currentColor
+					stroke transparent
+					opacity .5
+				}
+			}
 		}
 		#search-results {
 			margin-left: auto !important;
 			margin-right: auto !important;
 			width: 100%;
 			order: 3;
-			margin-top: 30px;
+			padding-top: 30px;
 			background-color: inherit;
 			box-sizing border-box
 			&::before {
@@ -450,9 +501,10 @@
 					margin-left: 10px !important;
 					align-items: center;
 					display: flex;
+					margin-right 10px
 				}
 				.select-resizer {
-					flex-grow: 1;
+					// flex-grow: 1;
 					select {
 						height: 30px;
 						padding-left: 5px;
