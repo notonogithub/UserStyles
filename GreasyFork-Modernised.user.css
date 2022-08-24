@@ -1,7 +1,7 @@
 /* ==UserStyle==
  -- THEME STUFF --
 @name           GreasyFork | Modernized ( Optional Dark Theme )
-@version        1.3.14
+@version        1.3.15
 @description    A much cleaner and more modern version of GreasyFork!
 @updateURL     	https://codeberg.org/Freeplay/UserStyles/raw/branch/main/GreasyFork-Modernised.user.css
 
@@ -17,87 +17,8 @@
 @var checkbox darkmode "Dark Mode" 0 
 
 ==/UserStyle== */
-/* Aug, 7 / 22
-- Inverted codeblock colors for dark mode
-- dark mode fixes
-- widescreen layout fixes
-/* Nov, 20 / 21
-- Quick lil' fix to details page & header.
-/* Dec, 16 / 20
-- Fixed codeblocks being barely visable https://codeberg.org/Freeplay/UserStyles/issues/4
-/* Nov, 15 / 20
-- Added borders to sections
-- More fixes
-/* Nov, 12 / 20
-- Changed header to accommodate for other languages & Username lengths (I didn't think about that stuff before, woops!)
-- Added border around script list items 
-/* Nov, 11 / 20
-- Fixed login screen
-- Modernised login button in header
-- More fixes & Tweaks
-- Better thumbnails with Greasy Fork Tweaks https://greasyfork.org/en/scripts/368183
-/* Nov, 7 / 20
-- Modernised Favorites List
-- Tweaked sidebar scrollbar
-- Improved Header & Search bar!
-/* Nov, 4 / 20
-- Modernised dropdown, contributed by: https://codeberg.org/Riedler
-/* Oct, 23 / 20
-- Changed card color in Dark Mode
-- More fixes
-- More tweaks
-- More links to buttons...
-- Changed button color on hover in light theme
-/* Oct, 19 / 20
-- Nicer font
-- Fixed spacing in some areas
-- Fixed alerts box on Dark Mode
-- Better sortof seperators
-- Transparent blurred header, can be removed by making color-primary var opaque.
-- More Tweaks
-- Now works with 'Greasy Fork Tweaks'! https://greasyfork.org/en/scripts/368183
-/* Oct, 15 / 20
-- Added max-width to alerts
-- Added boxes around forms and comments
-- Added scrollbar-color to firefox
-- Added max-heights to script lists
-- More stylized buttons
-- More fixes
-- Made stat charts on Dark Mode light
-/* Aug, 31 / 20
-- Fixed ad placement in Script Details page
-- Less saturated topbar on light theme, You can always change the colors inside of :root{}
-- Moved some buttons on scripts list page
-/* Aug, 23 / 20
-- Properly modernised the Script Details page! :D
-/* Aug, 20 / 20
-- Softened Shadows
-- Changed script details page a bit
-- Fixed header on homepage
-- Fixed forums on Dark Mode
-- Moved search bar to header
-- Fixed some textboxes
-- More fixes
-/* Aug, 16 / 20
-- Better positioning & look
-- Better sidebar
-- Forums support
-- Added max-width to some pages
-- Better Metadata
-*/
-/* Jul, 6 / 20
-- Dark Mode!
-*/
-/* Jun, 7 / 20 
-- Changed links back to underlines, Didn't work too well in some areas
-*/
-/* Jun, 5 / 20 
-- Minor changes - AKA other things I forgot to log.
-- Modern TextBox
-- Sortof Modern Dropdown
-- Links are now shown by the blue color instead of the underline, hovering displays underline
-- Tweaked Header
-*/
+
+
 @-moz-document domain("greasyfork.org") {
 	:root {
 		if darkmode {
@@ -162,9 +83,8 @@
 		}
 		
 		.post-discussion > p:first-child,
- 		.sidebarred-main-content > p,
-		.post-discussion > div:last-of-type ,
- 		{
+		.sidebarred-main-content > p,
+		{
 			font-size: 0;
 		}
 		.sidebarred-main-content > h2 + p {
@@ -526,7 +446,7 @@
 	}
 		
 		
-			#browse-script-list > li, #user-script-list > li, #user-deleted-script-list > li,
+			#browse-script-list > li, #user-script-list > li, #user-deleted-script-list > li, #user-unlisted-script-list > li,
  			#user-library-script-list > li {
 				border: var(--border-button) !important;
 				border-radius: .5rem;
@@ -534,11 +454,11 @@
 				transition: box-shadow .2s;
 				color: var(--color-text);
 				display: flex;
+				&:hover {
+					box-shadow: 0px 2px 20px rgba(0,0,0,0.1);
+				}
 			}
-			#browse-script-list > li:hover, #user-script-list > li:hover, #user-deleted-script-list > li:hover {
-				box-shadow: 0px 2px 20px rgba(0,0,0,0.1);
-			}
-				#browse-script-list > li > article, #user-script-list > li > article, #user-deleted-script-list > li > article {
+				#browse-script-list > li > article, #user-script-list > li > article, #user-deleted-script-list > li > article, #user-unlisted-script-list > li > article {
 					height: 100%;
 					display: flex;
 					flex-wrap: wrap;
