@@ -20,7 +20,7 @@
 
 /* ==UserStyle==
 @name           Ecosia Modern
-@version        1.1.0
+@version        1.1.1
 @description    Making better use of screen space. Moving modules aside requires CSS Grid Masonry, which many browsers don't support yet.
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/ecosia/modern.user.css
 @preprocessor   stylus
@@ -43,9 +43,9 @@
 @var text hehe "Donate!" '"https://www.buymeacoffee.com/Freeplay"'
 ==/UserStyle== */
 
-/* UPDATE 1.1.0
-- Improve Dark Reader footer :)
-- New *sort of* neumorphism option
+/* UPDATE 1.1.1
+- Fixes
+- Better spacing w/ move modules aside option.
 */
 @-moz-document domain("ecosia.org") {
     /* Insert code here... */
@@ -94,6 +94,7 @@
 						margin 0 !important
 						height auto
 						padding 0 !important
+						background none
 						.tab {
 							transition margin .2s !important
 						}
@@ -104,6 +105,10 @@
 							border-radius 0 10px 10px 0
 							height unset
 						}
+						svg {
+							min-width 24px
+						}
+						
 						
 						a {
 							padding 8px 12px !important
@@ -147,6 +152,52 @@
 								}
 							}
 						}
+						&.search-navigation__item--highlight {
+							a {
+								color var(--color-brand-primary)
+							}
+							svg {
+								border-color var(--color-brand-primary) !important
+								// border-width 1px !important
+								padding 3px !important
+								box-shadow 10px 0 30px -4px var(--color-brand-primary)
+								transition transform .7s cubic-bezier(0,0,0,1.4)
+								
+								animation fromStatic 1s backwards !important
+							}
+							svg:last-child:not(:first-child) {
+								position absolute
+								left 24px
+								top 22px
+								width 14px !important
+								max-height 14px !important
+								min-width unset
+								border 0 !important
+								padding 2px !important
+								border-radius 100px
+								background-color var(--color-brand-primary)
+								color white
+								transform rotate(10deg)
+								// opacity .8
+								animation starAnimateIn .4s backwards cubic-bezier(0,0,0,1.4) !important
+							}
+							&:hover, &:focus-within {
+								svg {
+									transform rotate(10deg)
+								}
+								.search-navigation__highlight-star {
+									transform rotate(240deg) !important
+								}
+							}
+						}
+						@keyframes starAnimateIn {
+							from {
+								filter opacity(0)
+								transform scale(0.1) rotate(300deg)
+							}
+						}
+						
+						
 					}
 				}
 				.dropdown {
@@ -225,6 +276,16 @@
 									&,/.sidebar__result:not(.snippet) {
 										max-width 500px
 									}
+									&[data-test-id="mainline-result-mapsSnippet"],
+ 									&[data-test-id="mainline-result-wordDefinitions"],
+									&[data-test-id="mainline-result-mapsSnippet"]{
+										order -5
+										// display none
+										// grid-row 1
+									}
+									&[data-test-id*="mainline-result"]:not(:empty) {
+										margin-bottom 20px
+									}
 									&[data-test-id="mainline-result-productAds"],
 									&[data-test-id="mainline-result-videosSnippet"],
  									&[data-test-id="mainline-result-newsSnippet"],
@@ -270,7 +331,7 @@
 									}
 									> div, .result {
 										padding 0 !important
-										margin-bottom 30px !important
+										// margin-bottom 30px !important
 									}
 								}
 							}
@@ -391,11 +452,16 @@
 			display contents
 			.entity-titles {
 				display contents
+				h1, h2, h3, h4, h5, h6 {
+					padding-block 0
+					padding-inline 16px
+					// padding-bottom 5px
+					font-weight 500
+				}
 				h2 {
 					display inline-block
 					padding 16px
-					padding-bottom 5px
-					font-weight 500
+					padding-bottom 0
 				}
 			}
 			.entity__image {
@@ -584,8 +650,8 @@
 				
 			--darkreader-text--ia-backdrop-color var(--darkreader-bg--color-background-primary)
 				
-			--darkreader-bg--color-background-secondary #202620
 			--darkreader-bg--color-background-secondary var(--darkreader-bg--color-elevation-layer-1)
+				
 		}
 		.main-footer__background {
 			opacity .5
@@ -901,7 +967,16 @@
 		}
 	}
 	
+	
 	if animations {
+		@keyframes fromStatic {
+			from {
+				transform none
+				filter none
+				box-shadow none
+				border-width 0px
+			}
+		}
 		@keyframes fromHeight {
 			from {
 				height 0
@@ -917,6 +992,11 @@
 		@keyframes slideRight {
 			from {
 				transform translateX(10px)
+				opacity 0
+			}
+		}
+		@keyframes fromOpacity {
+			from {
 				opacity 0
 			}
 		}
