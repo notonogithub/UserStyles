@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Youtube - Spoiler videos with keywords
-@version        1.0.1
+@version        1.0.2
 @description    Censor videos while browsing
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/youtube-spoiler.user.css
 @preprocessor   stylus
@@ -37,7 +37,7 @@ ytd-grid-video-renderer, ytd-rich-grid-media {
 				&::after {
 					content ""
 					position absolute
-					inset -200px
+					inset -400px
 					bottom calc(100% + 8px)
 
 					background-color black
