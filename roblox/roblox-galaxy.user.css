@@ -1,11 +1,11 @@
-/* 1.1.6
-- Host BG gradient on Roblox itself, becuase I'm dumb and didn't do that earlier.
+/* 1.1.7
+- Disabled game cards style on large tiles, as it was broken.
 */
 
 
 /* ==UserStyle==
 @name           ROBLOX GALAXY
-@version        1.1.6
+@version        1.1.7
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/roblox/roblox-galaxy.user.css
 @preprocessor   stylus
 
@@ -1102,7 +1102,7 @@
 		width: auto !important;
 		padding: 0 !important;
 	}
-	.game-card-container:not([href*="roblox.com/groups/"]) {
+	.game-card-container:not([href*="roblox.com/groups/"]):not(.featured-grid-item-container):not(.featured-game-container) {
 		if cards {
 			perspective: 100px;
 		}
@@ -1269,7 +1269,7 @@
 			}
 		}
 	}
-	
+
 	/*** STORE ***/
 	[data-internal-page-name="Catalog"] {
 		.hlist {
