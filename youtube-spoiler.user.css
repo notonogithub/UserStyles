@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Youtube - Spoiler videos with keywords
-@version        1.0.0
+@version        1.0.1
 @description    Censor videos while browsing
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/youtube-spoiler.user.css
 @preprocessor   stylus
@@ -11,12 +11,12 @@
 @homepageURL    https://codeberg.org/Freeplay/UserStyles
 @supportURL     https://codeberg.org/Freeplay/UserStyles/issues
 
-@var text keywords "Keywords" "Enter words here"
+@var text keywords "Keywords (CASE SENSITIVE)" "Enter words here"
 ==/UserStyle== */
 
 @-moz-document domain("youtube.com") {
     /* Insert code here... */
-ytd-grid-video-renderer {
+ytd-grid-video-renderer, ytd-rich-grid-media {
 	overflow hidden
 	#details {
 		position relative
@@ -28,7 +28,7 @@ ytd-grid-video-renderer {
 	#video-title-link, #video-title {
 		for row in keywords {
 
-			&[aria-label*={row}] {
+			&[aria-label*={row}]:not(#video-title-link) {
 				// filter blur(10px)
 				overflow visible !important
 				z-index 2
