@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Youtube - Spoiler videos with keywords
-@version        1.0.2
+@version        1.0.3
 @description    Censor videos while browsing
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/youtube-spoiler.user.css
 @preprocessor   stylus
@@ -16,13 +16,17 @@
 
 @-moz-document domain("youtube.com") {
     /* Insert code here... */
-ytd-grid-video-renderer, ytd-rich-grid-media {
+
+ytd-grid-video-renderer, ytd-video-renderer, ytd-rich-grid-media {
 	overflow hidden
 	#details {
 		position relative
 		z-index 2
 	}
 	#meta {
+		overflow visible !important
+	}
+	.title-and-badge, #title-wrapper {
 		overflow visible !important
 	}
 	#video-title-link, #video-title {
@@ -42,6 +46,17 @@ ytd-grid-video-renderer, ytd-rich-grid-media {
 
 					background-color black
 					color white
+					
+					^[0].ytd-item-section-renderer ^[1..-1],
+ 					^[0].ytd-vertical-list-renderer ^[1..-1]{
+						box-shadow -560px 400px black,
+									400px 500px var(--yt-spec-general-background-a)
+						// bottom -900px
+						// right calc(100% + 15px)
+						// box-shadow 400px 0
+					}
+					
+					
 				}
 				&::before {
 					content "Spoilered, hover to view"
@@ -51,7 +66,7 @@ ytd-grid-video-renderer, ytd-rich-grid-media {
 		}
 	}
 	&:hover {
-		#video-title-link, #video-title {
+		#video-title-link, #video-title#video-title {
 			font-size 1.2em !important
 			transition all 0s 1s
 			&::before, &::after {
