@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Youtube - Spoiler videos with keywords
-@version        1.0.3
+@version        1.0.4
 @description    Censor videos while browsing
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/youtube-spoiler.user.css
 @preprocessor   stylus
@@ -17,7 +17,8 @@
 @-moz-document domain("youtube.com") {
     /* Insert code here... */
 
-ytd-grid-video-renderer, ytd-video-renderer, ytd-rich-grid-media {
+ytd-grid-video-renderer, ytd-video-renderer, ytd-rich-grid-media, 
+ytd-playlist-renderer, ytd-playlist-panel-video-renderer, ytd-playlist-video-renderer {
 	overflow hidden
 	#details {
 		position relative
@@ -26,13 +27,15 @@ ytd-grid-video-renderer, ytd-video-renderer, ytd-rich-grid-media {
 	#meta {
 		overflow visible !important
 	}
-	.title-and-badge, #title-wrapper {
+	.title-and-badge, #title-wrapper, #content {
 		overflow visible !important
 	}
 	#video-title-link, #video-title {
+		// opacity .5
 		for row in keywords {
 
-			&[aria-label*={row}]:not(#video-title-link) {
+			&[aria-label*={row}]:not(#video-title-link),
+ 			&[title*={row}]:not(#video-title-link) {
 				// filter blur(10px)
 				overflow visible !important
 				z-index 2
@@ -55,7 +58,15 @@ ytd-grid-video-renderer, ytd-video-renderer, ytd-rich-grid-media {
 						// right calc(100% + 15px)
 						// box-shadow 400px 0
 					}
-					
+					^[0].ytd-playlist-video-list-renderer ^[1..-1],
+ 					^[0].ytd-playlist-panel-renderer ^[1..-1] {
+						bottom -200px
+						right calc(100% + 8px)
+						background-color var(--yt-spec-general-background-b)
+					}
+					^[0].ytd-playlist-panel-renderer ^[1..-1] {
+						background-color var(--yt-spec-general-background-a)
+					}
 					
 				}
 				&::before {
