@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Youtube - Spoiler videos with keywords
-@version        1.0.6
+@version        1.0.7
 @description    Censor videos while browsing
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/youtube-spoiler.user.css
 @preprocessor   stylus
@@ -66,7 +66,8 @@ ytd-playlist-sidebar-primary-info-renderer {
 					}
 					^[0].ytd-playlist-video-list-renderer ^[1..-1],
  					^[0].ytd-playlist-panel-renderer ^[1..-1],
- 					^[0].ytd-item-section-renderer ^[1..-1] {
+ 					^[0].ytd-item-section-renderer ^[1..-1],
+ 					^[0].ytd-watch-next-secondary-results-renderer ^[1..-1] {
 						bottom -200px
 						right calc(100% + 8px)
 						background-color var(--yt-spec-general-background-b)
