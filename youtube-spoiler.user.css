@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Youtube - Spoiler videos with keywords
-@version        1.0.5
+@version        1.0.6
 @description    Censor videos while browsing
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/youtube-spoiler.user.css
 @preprocessor   stylus
@@ -17,8 +17,9 @@
 @-moz-document domain("youtube.com") {
     /* Insert code here... */
 
+.ytp-videowall-still,
 ytd-grid-video-renderer, ytd-video-renderer, ytd-rich-grid-media, 
-ytd-playlist-renderer, ytd-playlist-panel-video-renderer, ytd-playlist-video-renderer, ytd-grid-playlist-renderer,
+ytd-playlist-renderer, ytd-playlist-panel-video-renderer, ytd-playlist-video-renderer, ytd-grid-playlist-renderer, ytd-compact-video-renderer,
 ytd-playlist-sidebar-primary-info-renderer {
 	overflow hidden
 	#details {
@@ -36,11 +37,15 @@ ytd-playlist-sidebar-primary-info-renderer {
 		for row in keywords {
 
 			&[aria-label*={row}]:not(#video-title-link),
- 			&[title*={row}]:not(#video-title-link) {
+ 			&[title*={row}]:not(#video-title-link),
+ 			^[0].ytp-videowall-still[aria-label*={row}] {
 				// filter blur(10px)
-				overflow visible !important
-				z-index 2
-				position relative
+				&:not(.ytp-videowall-still) {
+					overflow visible !important
+					z-index 2
+					position relative
+				}
+				
 				font-size 0 !important
 				&::after {
 					content ""
@@ -60,7 +65,8 @@ ytd-playlist-sidebar-primary-info-renderer {
 						// box-shadow 400px 0
 					}
 					^[0].ytd-playlist-video-list-renderer ^[1..-1],
- 					^[0].ytd-playlist-panel-renderer ^[1..-1] {
+ 					^[0].ytd-playlist-panel-renderer ^[1..-1],
+ 					^[0].ytd-item-section-renderer ^[1..-1] {
 						bottom -200px
 						right calc(100% + 8px)
 						background-color var(--yt-spec-general-background-b)
@@ -68,17 +74,32 @@ ytd-playlist-sidebar-primary-info-renderer {
 					^[0].ytd-playlist-panel-renderer ^[1..-1] {
 						background-color var(--yt-spec-general-background-a)
 					}
+					^[0].ytp-videowall-still::after {
+						inset 0 !important
+						top 0 !important
+						bottom 0 !important
+						box-shadow none !important
+						// opacity 0 !important
+					}
 					
 				}
 				&::before {
 					content "Spoilered, hover to view"
 					font-size 1.4rem
 				}
+				^[0].ytp-videowall-still::before {
+					position absolute !important
+					inset 0 !important
+					z-index 2
+					display flex
+					justify-content center
+					align-items center
+				}
 			}
 		}
 	}
 	&:hover {
-		#video-title-link, #video-title#video-title {
+		#video-title-link, #video-title#video-title, &.ytp-videowall-still {
 			font-size 1.2em !important
 			transition all 0s 1s
 			&::before, &::after {
