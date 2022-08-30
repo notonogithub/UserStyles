@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Cleaner Stylus
-@version        1.2.4
+@version        1.2.5
 @description    Makes the Stylus extension look a bit nicer!
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/cleaner-stylus.user.css
 @preprocessor   stylus
@@ -374,6 +374,8 @@
 				display contents
 			}
 			#disableAll-label {
+				margin-top .5em
+				margin-bottom .1em
 				padding-left calc(var(--inner-padding) + 4px) !important
 			}
 			#write-style {
@@ -385,13 +387,14 @@
 				// padding-left calc(var(--inner-padding) + 4px)
 				// border-top 1px solid rgba(0,0,0,.1)
 				margin 0
-				align-items center
+				// align-items center
 				#write-as {
 					position relative
 					// margin-top 4px
 					left unset !important
 					display flex
-					margin-right 8px
+					margin-right 4px
+					align-self center
 					> div {
 						// margin 0 !important
 						margin-left 4px !important
@@ -405,17 +408,30 @@
 					order -1
 					margin-right .5em
 					flex-grow 1
+					width calc(100% - 50px)
 				}
 				#write-for-frames {
 					margin-left 4px !important
+					margin-right 8px !important
+					// align-self flex-end
+					order 1
+					margin-top .4em
 				}
 				.match {
-					width: 100%;
+					// width: 100%;
 					margin-left padding-left calc(var(--inner-padding) + 4px)
 					margin-top .4em
 					span a {
 						text-decoration: none;
 						font-size: 13px;
+					}
+					.breadcrumbs ~ span {
+						margin-left 10px !important
+						// display flex
+						// align-items center
+						&::before {
+							margin-top .4em
+						}
 					}
 				}
 				#write-for-frames {
