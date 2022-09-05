@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Cleaner Stylus
-@version        1.2.5
+@version        1.2.6
 @description    Makes the Stylus extension look a bit nicer!
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/cleaner-stylus.user.css
 @preprocessor   stylus
@@ -44,9 +44,9 @@
 		}
 		.split-btn-menu {
 			box-shadow 0 4px 12px rgba(0,0,0,.1) !important
-			border-radius 8px
+			border-radius 6px
 			border 0
-			top 120%
+			margin-bottom 18px !important
 			left 0
 			right 0
 		}
@@ -463,6 +463,9 @@
 			background inherit
 			border-radius 12px 12px 0 0
 			padding-top 8px !important
+			&:nth-child(2) {
+				border-radius 0 0 12px 12px !important
+			}
 		}
 		#popup-options {
 			padding var(--outer-padding) calc(var(--inner-padding) / 2 + 4px) !important
