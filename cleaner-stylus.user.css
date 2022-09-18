@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Cleaner Stylus
-@version        1.3.0
+@version        1.4.0
 @description    Makes the Stylus extension look a bit nicer!
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/cleaner-stylus.user.css
 @preprocessor   stylus
@@ -15,10 +15,13 @@
 @-moz-document url-prefix("moz-extension://"), url-prefix("chrome-extension://") {
 	#stylus-manage, #stylus-popup, #stylus {
 		transition background-color .2s
+		--border 1px solid rgba(150,150,150,.2)
 		button, #find-styles-link {
 			border-color: rgba(0,0,0,0.1) !important;
 			border-radius: 4px !important;
-			padding: 8px 16px !important;
+			&:not(#save-button) {
+				padding: 8px 14px !important;
+			}
 			background-image: none;
 			height: auto !important;
 			width unset !important
@@ -50,8 +53,63 @@
 			left 0
 			right 0
 		}
+		.filter-selection {
+			// margin 0 !important
+			inset unset !important
+			border-radius 6px
+			overflow hidden
+			display flex
+			align-items center
+			// background-color rgba(100,100,100,0.05)
+			border var(--border)
+
+			margin-bottom 4px
+			> label {
+				// padding 12px
+				height 2.5em !important
+				padding-right 6px
+				border-right var(--border)
+			}
+			.select-resizer {
+				position relative
+				inset unset
+				flex-grow 1
+				// padding 7px
+				height 2.5em
+				align-items center
+				padding-bottom 2px
+				box-sizing border-box
+				select {
+					margin-left 0 !important
+					padding-left 2px
+					position absolute
+					inset 0 !important
+					height unset
+					width 100% !important
+				}
+				svg {
+					top unset
+					right .5em
+				}
+				&:hover, &:focus {
+					background-color rgba(100,100,100,0.1)
+				}
+			}
+		}
+		.sorter-selection {
+			height 2.5em
+			align-items center
+			select {
+				height 100%
+				padding-inline .4em
+			}
+			svg {
+				top unset
+				right .5em
+			}
+		}
 		input, select {
-			border: 1px solid rgba(0,0,0,0.1) !important;
+			border: var(--border) !important;
 			border-radius: 4px !important;
 		}
 		.checkbox-wrapper {
@@ -69,8 +127,6 @@
 		}
 		#header {
 			box-shadow: 2px 0 24px rgba(0,0,0,0.07);
-			border-right: none;
-			border-bottom: none;
 		}
 		#header-resizer {
 			opacity 0
@@ -132,7 +188,7 @@
 					left: 10px;
 					right: 10px;
 					top: 0px;
-					border-bottom: 1px solid rgba(100,100,100,.1);
+					border-bottom: var(--border);
 					
 				}
 				&:hover {
@@ -180,126 +236,111 @@
 		}
 		
 	}
-	#stylus-manage {		
-		overflow-x: hidden;
-		height: auto;
+	#stylus-manage, #stylus-install-usercss {
 		#header {
-			display: flex;
-			flex-direction: column;
-			padding: 25px;
-			background: inherit;
+			background inherit
+			padding 24px 18px
 			box-shadow none
-			// background rgba(150,150,150,0.05)
-			// background-color rgba(255,255,255,0.04)
-			#manage-heading {
-				// margin: 0 25px;
-				font-weight: 500 !important;
-				display: unset !important;
+			// border-bottom 6px solid #339999
+			// border-bottom-right-radius 10px
+			h1 {
+				opacity .9
+				
 			}
-			.filter-selection {
-				margin-bottom: 7px;
-				display: flex;
-				& > * {
-					flex-grow: 1;
+			button {
+				// flex-grow 1
+				margin-right 6px
+				.split-btn > ^[-1..-1]:first-child {
+					margin-right 0 !important
+				}
+				
+			}
+			#search-help, #sorter-help {
+				margin 0
+				margin-left .4em
+				align-self center
+			}
+			details {
+				padding 12px
+				// padding-bottom 0
+				border var(--border)
+				border-radius 6px
+				overflow hidden
+				margin-block 20px !important
+				box-shadow 0 8px 24px rgba(0,0,0,0.04)
+				// background-color white
+				background-color rgba(255,255,255,0.03)
+				&::marker {
+					position absolute
+					right 0
+				}
+				summary {
+					margin 0
+					// border-bottom var(--border)
+					margin -12px !important
+					// margin-bottom 0 !important
+					padding-top 12px !important
+					padding-inline 16px !important
+					& + * {
+						margin-top 12px
+					}
+					// margin-bottom 12px !important
+					// padding 0
+					padding 8px 12px
+					// background-color rgba(100,100,100,0.03)
+					h2 {
+						font-size 1.2em
+						// font-weight 500
+						margin-left .2em
+						text-transform uppercase
+						font-size .85em
+						opacity .8
+					}
+				}
+			}
+			#search-wrapper {
+				display flex
+				flex-wrap wrap
+				align-items center
+				width 100%
+				input, select {
+					padding .4em
+					padding-right 16px
+					height 2.5em
+					width 100%
+					
+				}
+				.select-wrapper {
+					display flex
+					align-items center
+					flex-grow 1
+					margin-top 6px
+					// width 100%
+					select {
+						width 100% !important
+					}
+					svg {
+						top unset !important
+						margin-top 1px
+						right 6px
+					}
 				}
 			}
 			
 		}
-		#manage-settings {
-			flex-direction: column !important;
-			// margin-inline -12px
-			& > .settings-column {
-				// padding: 20px;
-				// border: 1px solid rgba(0, 0, 0, 0.1);
-				margin-top: 0;
-				flex-direction: row;
-				flex-wrap: wrap;
-				// padding: 20px;
-				box-sizing border-box
-				// border: 1px solid rgba(100, 100, 100, 0.1);
-				margin-block 18px
-				// margin-inline -6px
-				// box-shadow 0 4px 24px rgba(0,0,0,0.04)
-				details, #update-check {
-					display: flex !important;
-					a {
-						display: flex;
-						align-items: center;
-					}
-					& > * {
-						// flex-grow: 1 !important;
-						// max-width: unset;
-					}
-				}
-				summary {
-					margin: 0;
-					margin-left: 0px;
-					// display flex
-					border-top 1px solid rgba(100,100,100,0.2)
-					padding-top 16px
-					h2 {
-						font-weight: 500;
-						margin: 0 !important;
-						// margin-left: 6px !important;
-						border: none !important;
-						font-size 1em
-						text-transform uppercase
-						font-weight 500
-						margin-bottom 4px !important
-						// opacity .8
-					}
-					a {
-						display inline-flex
-						margin-left 4px
-					}
-				}
-				#search-wrapper, #sort-wrapper {
-					flex-wrap: wrap;
-					input {
-						width: 100% !important;
-						flex: unset;
-						margin: 0 !important;
-						margin-top: 4px !important;
-						margin-bottom: 6px !important; 
-						padding: 10px !important;
-						border-radius: 4px !important;
-						height: 30px !important;
-					}
-					.select-wrapper, .sorter-selection {
-						flex-grow: 1;
-						max-width: calc(100% - 28px);
-						margin-right: 5px;
-						select {
-							height: 30px;
-							padding-left: 5px;
-							flex: 1 1 100px;
-							
-						}
-						svg {
-							top: 8px;
-							right: 8px;
-						}
-					}
-				}
-				#sort-wrapper {
-					margin-bottom: 0;
-				}
-				#check-all-updates {
-					margin-right: 8px;
-				}
-				#manage-text span a {
-					text-decoration: none;
-					font-size: .8rem;
-					opacity: .8;
-					text-underline-offset: 4px;
-				}
-				#manage-text span::after {
-					content: "/";
-					margin-left: 8px;
+		#manage-text {
+			line-height 2
+			text-underline-offset .3em
+			letter-spacing .05em
+			opacity .85
+			span {
+				&::after {
+					content: "/"
+					margin-inline 1em !important
 				}
 			}
+			
 		}
-		
 	}
 	.oldUI #stylus-manage #installed {
 		max-width: 100%;
@@ -630,7 +671,7 @@
 				width max-content !important
 				background: inherit;
 				// filter invert(.05)
-				border 1px solid rgba(0,0,0,0.1)
+				border var(--border)
 				border-radius 100px
 				margin-inline calc(0px - var(--inner-padding))
 				margin-top 4em
@@ -649,7 +690,7 @@
 				justify-content: center;
 				.search-result {
 					box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-					border 1px solid rgba(0,0,0,0.1)
+					border var(--border)
 					border none
 					width: 280px;
 					background none !important
@@ -787,6 +828,9 @@
 		background: inherit;
 		z-index: 9999999;
 		& > div {
+			box-shadow 0 12px 48px rgba(0,0,0,0.1)
+			// box-shadow none
+			// border var(--border) !important
 			#message-box-title {
 				background: none;
 				box-shadow: 0 2px 8px rgba(0,0,0,0.1)
@@ -794,12 +838,12 @@
 			}
 			#message-box-contents {
 				.config-body > label:not(:first-child) {
-					border-top: 1px solid rgba(0,0,0,0.07) !important;
+					border-top: var(--border) !important;
 				}
 			}
 			#message-box-buttons {
 				background: none;
-				border-top: 1px solid rgba(0,0,0,0.1);
+				border-top: var(--border);
 				display flex
 				align-items center
 				label {
