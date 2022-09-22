@@ -1,8 +1,8 @@
 /* ==UserStyle==
 @name           Discord - Server-List Drawer
-@version        1.0.4
+@version        1.0.5
 @description    A server-list drawer for Discord.
-@updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/discord_server-list-drawer.user.css
+@updateURL      https://userstyles.world/api/style/81.user.css
 
  -- AUTHOR STUFF --
 @namespace      Freeplay
@@ -17,16 +17,16 @@
 
  * @name        Server-list Drawer
  * @author      Freeplay#5676
- * @version     1.0.4
+ * @version     1.0.5
  * @description A server-list drawer for Discord!
  * @authorId    158296466119458816
  * @source      https://github.com/Freeplayg/discord-serverlist-drawer
 
 **/
 
-/* 1.0.4
-- Fixed server labels not appearing until hover.
- */
+/* 1.0.5
+- Fixed!
+*/
 
 [class*="wrapper-"][class*="guilds-"] {
     position: fixed;
@@ -195,9 +195,12 @@
 [class*="wrapper-"][class*="guilds-"] [class*="listItem-"] [class*="childWrapper-"] {
     border-radius: 15px !important;
 }
-[class*="wrapper-"][class*="guilds-"] [class*="listItem-"] .wrapper-25eVIn,
-[class*="wrapper-"][class*="guilds-"] [class*="listItem-"] [class*="placeholderMask-"] {
-    margin: 0 12px;
+[class*="wrapper-"][class*="guilds-"] [class*="listItem-"] [class*="blobContainer"] > div,
+[class*="wrapper-"][class*="guilds-"] [class*="listItem-"] [data-dnd-name] > div,
+[class*="wrapper-"][class*="guilds-"] [class*="listItem-"] [class*="placeholderMask-"],
+[class*="wrapper-"][class*="guilds-"] [class*="scroller-"] > [class*="tutorialContainer-"],
+[class*="wrapper-"][class*="guilds-"] [class*="scroller-"] > [class*="listItem-"] {
+    margin-inline: 12px;
     border-radius: 15px;
     overflow: visible !important;
 }
@@ -231,7 +234,8 @@
     pointer-events: none;
 }
 
-/* For Discord clients that support data-guild-name in listitem elements (Powercord, not sure about others), covers up version above */
+/* For Discord clients that support data-guild-name in listitem elements 
+	(Powercord, not sure about others), covers up version above */
 [class*="wrapper-"][class*="guilds-"] [class*="listItem-"][data-guild-name]::after,
 [class*="wrapper-"][class*="guilds-"] [class*="wrapper-"][data-folder-name]::after {
     content: attr(data-guild-name);
@@ -279,8 +283,8 @@
     opacity: 1;
 }
 
-[class*="wrapper-"][class*="guilds-"] [class*="scroller-"] > [class*="tutorialContainer-"]:nth-last-child(3) foreignObject,
-[class*="wrapper-"][class*="guilds-"] [class*="scroller-"] > [class*="listItem-"]:nth-last-child(2) foreignObject {
+[class*="wrapper-"][class*="guilds-"] [class*="scroller-"] > [class*="tutorialContainer-"]:not(:first-of-type) foreignObject,
+[class*="wrapper-"][class*="guilds-"] [class*="scroller-"] > [class*="listItem-"] foreignObject {
     overflow: visible !important;
     mask: unset !important;
     width: 215px !important;
@@ -310,7 +314,7 @@
 .base-3dtUhz {
     left: 0 !important;
 }
-.header-2V-4Sw, .searchBar-6Kv8R2, [class*="discoverHeader"],
+nav > div > header, [class*="privateChannels"] > [class*="searchBar-"], [class*="discoverHeader"],
 [class*="notice-"] {
     padding-left: 58px !important;
     margin-left: 0 !important;
