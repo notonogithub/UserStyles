@@ -6,14 +6,15 @@
 
 
 ***/
-@-moz-document domain("mastodon.coffee"), domain("mstdn.social"), domain("mastodon.art"), domain("mastodon.social"), domain("mastodon.online"), domain("mastodon.lol"), domain("mastodon.technology"), domain("mas.to"), domain("c.im"), domain("nerdculture.de"), domain("maly.io"), domain("queer.party"), domain("fosstodon.org"), domain("meow.social"), domain("indieweb.social") {
-/* Update 1.3.5
-- Minor fixes
+@-moz-document domain("mastodon.coffee"), domain("mstdn.social"), domain("mastodon.art"), domain("mastodon.social"), domain("mastodon.online"), domain("mastodon.lol"), domain("mas.to"), domain("c.im"), domain("nerdculture.de"), domain("maly.io"), domain("queer.party"), domain("fosstodon.org"), domain("meow.social"), domain("indieweb.social") {
+/* Update 1.3.6
+- Fixes for new Mastodon logged out view
+- Removed mastodon.technology, rip :(
 */
 
 /* ==UserStyle==
 @name           Mastodon Modern
-@version        1.3.5
+@version        1.3.6
 @description    Gives Mastodon a nicer look :)
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/mastodon/modern.user.css
 @preprocessor   stylus
@@ -41,6 +42,7 @@
 		--radius-round 24px
 		--hover-color rgba(170,170,170, 0.07)
 		--border-color rgba(120,120,120, 0.2)
+		--border-color-2 rgba(120,120,120, 1)
 		--shadow 0 10px 40px -10px rgba(0,0,0,0.15)
 		--shadow-low 0 8px 16px -10px rgba(0,0,0,0.4)
 		--shadow-med 0 8px 60px -30px rgba(0,0,0,0.1)
@@ -60,9 +62,9 @@
 	.button--block {
 		font-weight 700
 	}
-	.compose-form__upload-thumbnail,
+	.compose-form__upload-thumbnail, .button,
 	button:not(.column-header__button), video, input, iframe, .privacy-dropdown__dropdown, .react-toggle-track,
- 	.reply-indicator, .compose-form__warning {
+	.reply-indicator, .compose-form__warning {
 		border-radius var(--radius) !important
 	}
 	button, .focusable, a, .media-gallery__item-thumbnail {
@@ -142,9 +144,11 @@
 	}
 	
 	
-	
-	.columns-area__panels__pane__inner {
-		margin-top 30px
+	// LEFT COLUMN
+	@media (min-width mobileW) {
+		.columns-area__panels__pane__inner {
+			margin-top 30px
+		}
 	}
 	.compose-panel {
 		margin-top 0
@@ -231,6 +235,112 @@
 			
 		}
 	}
+	.server-banner {
+		// padding-inline 15px
+		padding-inline 10px
+		.server-banner__introduction {
+			// padding-inline 10px
+		}
+		.server-banner__hero {
+			border-radius var(--radius)
+			// margin-inline -10px
+			width 100%
+			// width calc(100% + 20px)
+			border-radius var(--radius) var(--radius) 0 0
+			border 1px solid var(--border-color)
+			box-sizing border-box
+		}
+		.server-banner__description {
+			// margin-inline -10px
+			// background-color var(--hover-color)
+			border 1px solid var(--border-color)
+			padding 15px
+			margin-top -20px
+			// margin-top calc(-20px - var(--radius))
+			// padding-top calc(15px + var(--radius))
+			border-radius 0 0 var(--radius) var(--radius)
+		}
+		.server-banner__meta {
+			flex-direction column
+			// margin-inline -10px
+			// margin-top 30px !important
+			// border-top 2px solid var(--border-color-2)
+			// padding-top 20px
+			// border 1px solid var(--border-color)
+			// border-radius var(--radius)
+			// padding 15px
+			.server-banner__meta__column {
+				width unset
+				overflow visible
+				display flex
+				flex-direction row
+				flex-wrap wrap
+				align-items flex-end
+				h4 {
+					margin 0
+					font-size .9em !important
+					width 100%
+					// font-weight 500
+				}
+				.account {
+					margin-inline -10px
+					padding 10px !important
+					width 100%
+					&::after {
+						content unset
+					}
+				}
+				// .server-banner__number {
+				// 	font-size 2em
+				// 	// margin .5em
+				// 	// margin-left auto
+				// 	font-weight 400
+				// 	// order 2
+				// 	// height auto !important
+				// 	line-height 1.5
+				// }
+				// .server-banner__number-label {
+				// 	font-size 1.2em
+				// 	font-weight 400
+				// }
+				.server-banner__number, .server-banner__number-label {
+					font-size 1.1em
+					line-height 2
+					margin-right .5em
+				}
+				.server-banner__number-label {
+					font-weight 400 !important
+				}
+			}
+		}
+	}
+	.navigation-panel__sign-in-banner {
+		margin-inline 5px
+		padding 20px
+		border 1px solid
+		border-radius var(--radius)
+		// background-color var(--hover-color)
+		// margin 15px
+		margin-bottom 20px
+		margin-top 10px
+		// margin-inline 5px
+		order -1
+		hr {
+			display none
+		}
+		.sign-in-banner {
+			padding 0
+			p {
+				color inherit !important
+				// font-weight 500
+				// opacity .
+				line-height 1.5
+			}
+			> :last-child {
+				margin-bottom 0
+			}
+		}
+	}
 	@media (min-width: mobileW) {
 		/.layout-single-column .getting-started__footer {
 			opacity .5
@@ -259,10 +369,13 @@
 	}
 	
 	.columns-area__panels__main {
-		margin 0 10px
-		@media (min-width: responsiveW1) {
+		//
+		@media (min-width responsiveW1) {
 			max-width var(--tl-width) !important
 			padding 0 15px
+		}
+		@media (min-width mobileW) {
+ 			margin 0 10px
 		}
 		padding-top 30px !important
 		overflow visible !important
@@ -275,6 +388,12 @@
 		}
 		:not(.scrollable--flex) > .scrollable {
 			padding-bottom 40vh !important
+		}
+		.column-actions {
+			position static
+			.column-actions__background {
+				border-bottom-left-radius var(--radius)
+			}
 		}
 	}
 	.scrollable,
@@ -490,6 +609,10 @@
 		&.entry {
 			margin-bottom 10px
 		}
+		.status__expand {
+			// width 100%
+			// z-index -1
+		}
 		&:not(.detailed-status__wrapper) {
 			&::after {
 				content ""
@@ -626,9 +749,22 @@
 	.empty-column-indicator {
 		// height max-content !important
 		// min-height 100px
-		display unset 
+		// display unset 
 		contain unset
 		padding 10px !important
+		color unset
+		opacity .8
+		font-size 1.2em
+		line-height 2
+		// font-weight 600
+		span {
+			// color inherit !important
+		}
+		a {
+			display block
+			font-weight 700
+			font-size 1.1em
+		}
 	}
 	
 	
@@ -639,7 +775,7 @@
 			// opacity .95
 		}
 	}
-	.status, .focusable > .account {
+	.status, .columns-area__panels__main .account {
 		border 0 !important
 		// overflow visible !important
 		// border 0 !important
@@ -649,7 +785,7 @@
 		}
 		&.account {
 			.account__avatar-wrapper {
-				margin-left 10px
+				margin-left 0px
 			}
 		}
 	}
@@ -790,17 +926,23 @@
 			flex 0 1 auto !important
 			min-width 0
 			border-radius var(--radius)
+			// font-size 12px !important
 			&:last-child {
 				margin 0 !important
 			}
 			&[aria-label]::after {
 				all unset
 				content attr(aria-label)
-				font-size .7em
+				font-size 12px
 				margin-inline-start .5em
 				white-space nowrap
 				overflow hidden
 				text-overflow ellipsis
+			}
+			.icon-button__counter {
+				width auto !important
+				// font-weight 700
+				// font-size inherit
 			}
 		}
 		.status__action-bar-dropdown, .detailed-status__action-bar-dropdown, .detailed-status__button {
@@ -929,7 +1071,7 @@
 	
 	.navigation-panel {
 		// padding 10px
-		padding-top 50px
+		
 		padding-bottom 20px
 		// margin-top 46px
 		height calc(100% - 30px)
@@ -937,64 +1079,74 @@
 		hr {
 			// display none
 		}
-		.column-link {
-			flex-grow 2 !important
-			display flex !important
-			align-items center !important
-			align-content center
-			max-height 3.3em
-			min-height 2.7em !important
-			padding-block 0
-			position relative
-			box-sizing border-box
-			// font-weight 550
-			opacity .9
-			overflow hidden
-			.column-link__icon, /.column-header > button .column-header__icon {
-				margin-inline-end 1em !important
+		@media (min-width responsiveW2) {
+			padding-top 50px !important
+			.navigation-panel__logo {
+				display none
 			}
-			&::before {
-				content: "" !important;
-				position absolute
-				border-radius: 100px !important;
-				width unset !important
-				height unset !important
-				inset 0px 0px !important
-				// min-height 43px
-				opacity 0 !important
-				background-color rgba(150,150,150,0.1)
-				transition opacity .2s
-			}
-			&.active {
-				opacity 1 !important
-				font-weight 600
-			}
-			&:hover, &:focus {
-				&:before {
-					opacity 1 !important
+		}
+		@media (min-width mobileW) {
+			.column-link {
+				flex-grow 2 !important
+				display flex !important
+				align-items center !important
+				align-content center
+				max-height 3.3em
+				min-height 2.7em !important
+				padding-block 0
+				position relative
+				box-sizing border-box
+				// font-weight 550
+				opacity .9
+				overflow hidden
+				.column-link__icon, /.column-header > button .column-header__icon {
+					margin-inline-end 1em !important
 				}
-			}
-			&[href="/settings/preferences"] {
-				display none !important
-			}
-			&[href="/web/lists"] {
-				& + div {
-					hr {
-						display none
+				&::before {
+					content: "" !important;
+					position absolute
+					border-radius: 100px !important;
+					width unset !important
+					height unset !important
+					inset 0px 0px !important
+					// min-height 43px
+					opacity 0 !important
+					background-color rgba(150,150,150,0.1)
+					transition opacity .2s
+				}
+				&.active {
+					opacity 1 !important
+					font-weight 600
+				}
+				&:hover, &:focus {
+					&:before {
+						opacity 1 !important
 					}
-					.column-link {
-						i {
-							opacity .2
+				}
+				&[href="/settings/preferences"] {
+					display none !important
+				}
+				&[href="/web/lists"] {
+					& + div {
+						hr {
+							display none
+						}
+						.column-link {
+							i {
+								opacity .2
+							}
 						}
 					}
 				}
 			}
 		}
-		
 	}
-	.getting-started__trends {
-		display unset !important
+	@media (min-width mobileW) {
+		.getting-started__trends {
+			display unset !important
+		}
 	}
+	
 	.trends__item {
 		display flex !important
 	}
