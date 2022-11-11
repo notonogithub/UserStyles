@@ -15,11 +15,13 @@
 - MORE FIXES!!!
 - Updated instructions for adding your server
 - Made the click area for opening posts larger
+
+1.3.9: Hotfix for mobile, oops
 */
 
 /* ==UserStyle==
 @name           Mastodon Modern
-@version        1.3.8
+@version        1.3.9
 @description    Gives Mastodon a nicer look :)
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/mastodon/modern.user.css
 @preprocessor   stylus
@@ -1822,9 +1824,7 @@
 			border-radius 0 !important
 			pointer-events none
 			z-index 105
-			
-			bottom 80px !important
-			
+						
 			> * {
 				pointer-events all
 			}
