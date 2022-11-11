@@ -3885,7 +3885,6 @@
     border-radius: 0 !important;
     pointer-events: none;
     z-index: 105;
-    bottom: 80px !important;
   }
   #mastodon .tabs-bar__wrapper > *,
   .public-layout .tabs-bar__wrapper > *,
