@@ -2,18 +2,24 @@
 /*** 
 
 
-	!!! MAKE SURE TO ADD YOUR INSTANCE URL TO THE LIST BELOW !!!
+	!!! MAKE SURE TO ADD YOUR SERVER URL USING THE STEPS BELOW !!!
+	1. Install the style
+	2. Click the "Edit" in the left sidebar
+	3. Click the "Settings" button in the left sidebar
+	4. Paste your server's URL in the "Custom included sites" textbox
 
 
 ***/
-@-moz-document domain("mastodon.coffee"), domain("mstdn.social"), domain("mastodon.art"), domain("mastodon.social"), domain("mastodon.online"), domain("mastodon.lol"), domain("mas.to"), domain("c.im"), domain("nerdculture.de"), domain("maly.io"), domain("queer.party"), domain("fosstodon.org"), domain("meow.social"), domain("indieweb.social") {
-/* Update 1.3.7
-- Fixes for Mastodon's changes
+@-moz-document domain("mastodon.coffee"), domain("mstdn.social"), domain("masto.ai"), domain("mastodon.art"), domain("mastodon.social"), domain("mastodon.online"), domain("mastodon.lol"), domain("mas.to"), domain("c.im"), domain("nerdculture.de"), domain("maly.io"), domain("queer.party"), domain("fosstodon.org"), domain("meow.social"), domain("indieweb.social"), domain("raru.re") {
+/* Update 1.3.8
+- MORE FIXES!!!
+- Updated instructions for adding your server
+- Made the click area for opening posts larger
 */
 
 /* ==UserStyle==
 @name           Mastodon Modern
-@version        1.3.7
+@version        1.3.8
 @description    Gives Mastodon a nicer look :)
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/mastodon/modern.user.css
 @preprocessor   stylus
@@ -27,7 +33,7 @@
 
 #mastodon, .public-layout, .modal-layout { // Wrapped in this so it doesn't mess with other front ends the instance probably has
 	responsiveW1 = 1320px
-	responsiveW2 = 1191px
+	responsiveW2 = 1175px
 	mobileW = 895px
 	
 	transBounce1 = .2s cubic-bezier(0,0,0,1.1)
@@ -37,7 +43,6 @@
 	/:root {
 		--tl-width 750px
 		--radius 12px
-		// --radius 0px
 		--radius-round 24px
 		--hover-color rgba(170,170,170, 0.07)
 		--border-color rgba(120,120,120, 0.2)
@@ -146,7 +151,8 @@
 	// LEFT COLUMN
 	@media (min-width responsiveW2) {
 		.columns-area__panels__pane__inner {
-			margin-top 30px
+			padding-top 30px
+			box-sizing border-box
 		}
 	}
 	.compose-panel {
@@ -315,20 +321,20 @@
 	}
 	.navigation-panel__sign-in-banner {
 		margin-inline 5px
-		padding 20px
-		border 1px solid
-		border-radius var(--radius)
+		// padding 20px
+		// border 1px solid
+		// border-radius var(--radius)
 		// background-color var(--hover-color)
 		// margin 15px
 		margin-bottom 20px
-		margin-top 10px
+		// margin-top 10px
 		// margin-inline 5px
-		order -1
+		// order -1
 		hr {
-			display none
+			// display none
 		}
 		.sign-in-banner {
-			padding 0
+			// padding 0
 			p {
 				color inherit !important
 				// font-weight 500
@@ -340,41 +346,20 @@
 			}
 		}
 	}
-	@media (min-width: mobileW) {
-		/.layout-single-column .getting-started__footer {
-			opacity .5
-			transition opacity .4s
-			a {
-				text-decoration none
-			}
-			> p {
-				font-size 0
-				line-height 0
-				opacity 0
-				transition font-size .2s, line-height .3s cubic-bezier(.5, 0, 0, 0)
-				transition-duration .2s
-			}
-			&:hover, &:focus-within {
-				opacity 1
-				> p {
-					font-size 1em
-					line-height 1.5
-					opacity 1
-					transform translateY(0px)
-					transition font-size .1s, line-height .3s cubic-bezier(0, 0, 0, 1.2), opacity .2s .1s
-				}
-			}
-		}
+	.link-footer > p:last-child {
+		margin-bottom 0
 	}
 	
+	// CENTER COLUMN
+	
 	.columns-area__panels__main {
-		//
+		
+		@media (min-width responsiveW2) {
+			margin 0 10px
+		}
 		@media (min-width responsiveW1) {
 			max-width var(--tl-width) !important
 			padding 0 15px
-		}
-		@media (min-width mobileW) {
-			margin 0 10px
 		}
 		padding-top 30px !important
 		overflow visible !important
@@ -421,11 +406,18 @@
 		padding-bottom 20px
 		height 100% !important
 	}
-	.column, .columns-area {
-		overflow visible !important
-	}
+	// .column, .columns-area {
+	// 	overflow visible !important
+	// }
 	.explore__search-results {
 		padding 10px
+	}
+	.dismissable-banner {
+		border-radius var(--radius) var(--radius) 0 0
+		& ~ .scrollable {
+			border-top-left-radius 0
+			border-top-right-radius 0
+		}
 	}
 
 	// ACCOUNT PAGE
@@ -543,6 +535,9 @@
 				border 0
 				background none
 			}
+			&.verified {
+				background none !important
+			}
 		}
 		&.account__header__account-note.account__header__account-note {
 			// margin 10px
@@ -622,6 +617,7 @@
 			// z-index -1
 		}
 		&:not(.detailed-status__wrapper) {
+			// Hover
 			&::after {
 				content ""
 				position absolute
@@ -775,14 +771,6 @@
 		}
 	}
 	
-	
-	.conversation {
-		// padding 0 !important
-		.status__content, p {
-			// color inherit !important
-			// opacity .95
-		}
-	}
 	.status, .columns-area__panels__main .account {
 		border 0 !important
 		// overflow visible !important
@@ -800,23 +788,34 @@
 	.status__prepend, .notification__message {
 		padding-top 15px !important
 		padding-bottom 0 !important
-		margin-inline-start var(--status-left-padding)
+		// margin-inline-start var(--status-left-padding)
 		margin-bottom -10px !important
 		z-index 2
+		position relative
+		.notification__display-name {
+			white-space nowrap // Some incredibly long usernames are annoying
+		}
 	}
 	.account__avatar-overlay-base {
 		width 100%
 		height 100%
 		background-size cover
 		border-radius var(--radius)
+		.account__avatar {
+			width 90% !important
+			height 90% !important
+		}
 	}
 	.account__avatar-overlay-overlay {
 		border-radius var(--radius-round)
-		bottom -10%
-		right -10%
+		overflow hidden
 	}
 	.status__info {
 		margin-top 5px
+		> * {
+			position relative
+			z-index 2
+		}
 		.status__avatar {
 			top 15px
 			left 15px !important
@@ -830,12 +829,32 @@
 			}
 		}
 	}
+	.focusable:not(.detailed-status__wrapper) .status__content {
+		// Expand the click area to open post
+		overflow visible
+		.status__content__text {
+			max-height inherit !important
+			overflow hidden
+		}
+		&::before, &::after {
+			content ""
+			position absolute 
+			top 100%
+			left 0
+			right 0
+			height 900px
+		}
+		&::after {
+			bottom 100%
+			top unset
+		}
+	}
 	.status__content {
-		min-height 1.4em
 		padding-top 2px
 		margin-inline -100px
 		padding-inline 100px
 		text-align unset !important
+		
 		&.status__content--with-spoiler > p:first-child {
 			margin-bottom 0
 		}
@@ -863,15 +882,12 @@
 		}
 	}
 	{media} {
-		margin-inline-start calc(15px - var(--status-left-padding))
-		width unset !important
 		box-shadow var(--shadow-low)
 		border-radius var(--radius)
 		margin-block 15px !important
 		animation scaleIn .4s
 		max-width unset !important
 		max-height 80vh !important
-		direction unset
 		&.status-card {
 			box-shadow var(--shadow)
 			box-shadow none
@@ -923,8 +939,17 @@
 		}
 	}
 	
+	.status__action-bar {
+		margin-top .7em
+	}
 	.status__action-bar, .detailed-status__action-bar, .picture-in-picture__footer {
-		// padding-top 0
+		// margin-top .5em
+		position relative
+		z-index 2
+		pointer-events none
+		> * {
+			pointer-events all
+		}
 		.icon-button {
 			display inline-flex
 			align-items center
@@ -975,8 +1000,12 @@
 
 	
 	
-	
+	.ui__header {
+		z-index 101
+	}
 	.tabs-bar__wrapper, .column-back-button--slim .column-back-button {
+		z-index 101
+		
 		/.column-header {
 			font-weight 600
 			&, button {
@@ -1028,6 +1057,13 @@
 			}
 		}
 		@media (min-width: mobileW) and (max-width: responsiveW2) {
+			&.tabs-bar__wrapper { // Overlay timeline over header when scrolling down
+				top 0 !important
+				min-height 55px
+				.column-header {
+					min-height 55px
+				}
+			}
 			&.column-back-button {
 				border-radius 0 !important
 			}
@@ -1080,17 +1116,25 @@
 	.navigation-panel {
 		// padding 10px
 		
-		padding-bottom 20px
+		// padding-bottom 20px
 		// margin-top 46px
-		height calc(100% - 30px)
+		// height calc(100% - 10px)
 		box-sizing border-box
 		hr {
 			// display none
 		}
 		@media (min-width responsiveW2) {
+			// padding 10px
 			padding-top 50px !important
 			.navigation-panel__logo {
 				display none
+			}
+		}
+		@media (max-width responsiveW2 - 1) {
+			// padding 10px
+			box-sizing border-box
+			a::before {
+				border-radius 0 !important
 			}
 		}
 		@media (min-width mobileW) {
@@ -1113,7 +1157,7 @@
 				&::before {
 					content: "" !important;
 					position absolute
-					border-radius: 100px !important;
+					border-radius: 100px;
 					width unset !important
 					height unset !important
 					inset 0px 0px !important
@@ -1134,7 +1178,7 @@
 				&[href="/settings/preferences"] {
 					display none !important
 				}
-				&[href="/web/lists"] {
+				&[href="/lists"] {
 					& + div {
 						hr {
 							display none
@@ -1587,9 +1631,6 @@
 	
 	
 	// Mobile
-	fullWidthTl() {
-		
-	}
 	@media (max-width: mobileW) {
 		/:root {
 			--status-left-padding 15px
@@ -1602,6 +1643,95 @@
 		}
 		.columns-area--mobile > .column > .column-header__wrapper {
 			display none
+		}
+		.ui__header {
+			z-index 5
+		}
+		.columns-area__panels {
+			overflow-x scroll !important
+			justify-content flex-start
+			max-width 100% !important
+			flex-wrap nowrap !important
+			
+			
+			// Below was experimental stuff, not sure if I'll include
+			
+			// Slide to open nav
+			// scroll-snap-type x mandatory
+			// .columns-area__panels__main {
+			// 	min-width 100% !important
+			// 	z-index 2
+			// 	scroll-snap-align: start;
+			// }
+			// .columns-area__panels__pane--navigational {
+			// 	// min-width 300px !important
+			// 	// height 10px !important
+			// 	// display flex !important
+			// 	order -1
+			// 	min-width 300px !important
+			// 	height 50px !important
+			// 	display block !important
+			// 	scroll-snap-align: start;
+			// 	// display contents !important
+			// 	.columns-area__panels__pane__inner {
+			// 		// position sticky !important
+			// 		min-width 300px !important
+			// 		// right 0
+			// 		// top 0
+			// 		background none !important
+			// 	}
+			// 	.column-link span {
+			// 		display inline !important
+			// 	}
+			// 	.navigation-panel {
+			// 		background none
+			// 		padding 10px
+			// 	}
+			// }
+			
+			
+			// flex-direction column
+			// .columns-area__panels__pane--navigational {
+			// 	position fixed
+			// 	bottom 0
+			// 	height 60px !important
+			// 	width 100%
+			// 	display block !important
+			// 	z-index 10
+			// 	overflow-x scroll
+			// 	// background none.
+			// 	.columns-area__panels__pane__inner {
+			// 		// width 100%
+			// 		width max-content !important
+			// 		height 60px
+			// 		.navigation-panel {
+			// 			flex-direction row
+			// 			min-height unset !important
+			// 			max-height 0px !important
+			// 			padding 0 !important
+			// 			// align-items flex-end
+			// 			overflow visible
+			// 			width max-content
+						
+			// 			&::before {
+			// 				content ""
+			// 				position absolute
+			// 				inset 0
+			// 				top -120px
+			// 				height 240px
+			// 				background inherit
+			// 				z-index -1
+			// 				mask linear-gradient(transparent, black)
+			// 			}
+			// 			a {
+			// 				min-height 60px
+			// 				span {
+			// 					display unset
+			// 				}
+			// 			}
+			// 		}
+			// 	}
+			// }
 		}
 		.columns-area__panels__main {
 			padding 0 !important
@@ -1692,6 +1822,8 @@
 			border-radius 0 !important
 			pointer-events none
 			z-index 105
+			
+			bottom 80px !important
 			
 			> * {
 				pointer-events all
@@ -1962,9 +2094,10 @@
 		
 	}
 
-	// Fix up multi-columns
+	// Fix up multi-columns 
 	/.layout-multiple-columns #mastodon .columns-area {
 		overflow auto hidden !important
+		padding 0
 		.column-header, .scrollable, .column-back-button, .account__header__image {
 			border-radius 0 !important	
 		}
