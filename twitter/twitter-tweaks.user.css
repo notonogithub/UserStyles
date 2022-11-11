@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Twitter Tweaks by @FreeplayG
-@version        1.3.19
+@version        1.3.20
 @description    Uncrop images, hide trends, Avatar roundness, move header aside, and more!!
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/twitter/twitter-tweaks.user.css
 @preprocessor   stylus
@@ -307,6 +307,19 @@
 			// margin-left: 64px;
 			color: inherit;
 			opacity: .4;
+		}
+	}
+	[href="/elonmusk/header_photo"] + div [data-testid="UserName"], [href="/elonmusk"] {
+		span:first-child > span {
+			&::after {
+				content "Parody"
+				font-size .65em
+				background-color rgba(150,150,150,0.2)
+				padding .2em .5em
+				border-radius 6px
+				margin-inline .5em
+				vertical-align bottom
+			}
 		}
 	}
 	
