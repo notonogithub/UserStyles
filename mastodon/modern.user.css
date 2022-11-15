@@ -11,17 +11,15 @@
 
 ***/
 @-moz-document domain("mastodon.coffee"), domain("mstdn.social"), domain("masto.ai"), domain("mastodon.art"), domain("mastodon.social"), domain("mastodon.online"), domain("mastodon.lol"), domain("mas.to"), domain("c.im"), domain("nerdculture.de"), domain("maly.io"), domain("queer.party"), domain("fosstodon.org"), domain("meow.social"), domain("indieweb.social"), domain("raru.re") {
-/* Update 1.3.8
-- MORE FIXES!!!
-- Updated instructions for adding your server
-- Made the click area for opening posts larger
-
-1.3.9: Hotfix for mobile, oops
+/* Update 1.3.10
+- More compactness in Mastodon's advanced view
+- Changed notes look
+- More tweaks
 */
 
 /* ==UserStyle==
 @name           Mastodon Modern
-@version        1.3.9
+@version        1.3.10
 @description    Gives Mastodon a nicer look :)
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/mastodon/modern.user.css
 @preprocessor   stylus
@@ -499,6 +497,71 @@
 		}
 		
 	}
+	// .account__header__account-note {
+	// 	display flex
+	// 	overflow hidden
+	// 	margin-inline -5px
+	// 	// padding-inline 5px
+	// 	// padding-bottom 5px
+	// 	// border-radius var(--radius)
+	// 	transition padding .02s
+	// 	position relative
+	// 	width 10em
+	// 	padding .4em .7em
+	// 	border-radius var(--radius)
+	// 	border 1px solid var(--border-color)
+	// 	label {
+	// 		margin 0
+	// 		// display flex
+	// 		// align-items center
+	// 		font-weight 600
+	// 		margin-right .7em
+	// 		font-size 12px
+	// 	}
+	// 	textarea {
+	// 		// margin 0 !important
+	// 		display inline
+	// 		margin -100px
+	// 		padding 102px
+	// 		width 0
+	// 		flex-grow 1
+	// 		font-weight 500
+	// 		// opacity .7
+	// 		// color inherit
+	// 		transition background .1s
+	// 		font-size 12px
+	// 		// padding-top 1px
+	// 		&:not(:focus) {
+	// 			cursor pointer
+	// 		}
+	// 		&::placeholder {
+	// 			font-weight 600
+	// 			transition color .2s !important
+	// 		}
+	// 		&:hover:not(:focus)::placeholder {
+	// 			color unset !important
+	// 			opacity .8
+	// 		}
+	// 	}
+	// 	&:focus-within {
+	// 		padding .7em
+	// 		border 1px solid var(--border-color)
+	// 		box-shadow var(--shadow)
+	// 		label {
+	// 			z-index 2
+	// 		}
+	// 	}
+	// 	// &:not(:focus-within) {
+	// 	// 	&::after {
+	// 	// 		content ""
+	// 	// 		position absolute
+	// 	// 		left 0
+	// 	// 		right 0
+	// 	// 		bottom 1px
+	// 	// 		border-top 1px solid var(--border-color)
+	// 	// 	}
+	// 	// }
+	// }
 	.account__header__fields, .account__header__account-note {
 		display flex
 		flex-wrap wrap
@@ -542,24 +605,63 @@
 			}
 		}
 		&.account__header__account-note.account__header__account-note {
-			// margin 10px
-			padding 0 !important
-			margin-bottom 15px
+			// padding 0 !important
+			margin-bottom 10px
 			gap 0
-			background none !important
-			border 1px solid var(--border-color) !important
-		}
-		textarea {
-			width 0
-			flex-grow 1
-			margin 0 !important
-			border-radius 0
-			// padding 0
-		}
-		label {
-			margin 0
-			font-weight 600
-			padding-inline 14px
+			border 0
+			padding 0 !important
+			margin-inline 0 !important
+			// padding .4em .8em !important
+			// transition padding .01s, margin .01s
+			// display inline
+			border-radius 8px
+			font-size 12px
+			label {
+				z-index 2
+				padding 0 !important
+				padding-right .7em !important
+				pointer-events none
+				line-height inherit
+				font-size inherit
+				font-weight inherit
+				vertical-align unset
+				&::after {
+					// content ":"
+				}
+			}
+			&:focus-within {
+				padding .5em .7em !important
+				margin-inline -5px !important
+				border 1px solid
+			}
+			&:not(:focus-within) {
+				border-radius 0
+				border-bottom 1px solid
+				padding-bottom .4em !important
+			}
+			textarea {
+				width 0
+				flex-grow 1
+				margin 0 !important
+				border-radius 0
+				padding 0
+				margin -100px !important
+				padding 100px !important
+				line-height inherit
+				font-size inherit
+				font-weight inherit
+				vertical-align unset
+				background none
+				&::placeholder {
+					// opacity .7 !important
+					font-weight 600
+				}
+			}
+			label {
+				margin 0
+				font-weight 600
+				padding-inline 14px
+			}
 		}
 	}
 	&#mastodon .account__section-headline {
@@ -980,6 +1082,7 @@
 				// font-size inherit
 			}
 		}
+		.status__action-bar__dropdown, 
 		.status__action-bar-dropdown, .detailed-status__action-bar-dropdown, .detailed-status__button {
 			display contents
 		}
@@ -1053,7 +1156,6 @@
 				}
 			}
 			.announcements__mastodon {
-				margin-inline-start 10px
 				z-index -1
 				position relative
 			}
@@ -1099,7 +1201,7 @@
 		transition margin transBounce1
 	}
 	.column-header__collapsible-inner {
-		padding-bottom 0 !important
+		// padding-bottom 0 !important
 		overflow hidden
 	}
 	
@@ -1630,13 +1732,43 @@
 	
 	
 	
-	
+	compactStatuses() {
+		.scrollable:not(.scrollable--flex) {
+			padding 0px !important
+			// padding-top 15px !important
+			padding-bottom 40vh !important
+			&::before {
+				content ""
+				position absolute
+				inset 0
+				background-color inherit
+				z-index -1
+			}
+			.account-timeline__header {
+				margin 0px !important
+				margin-top -15px !important
+			}
+		}
+
+		{statuses-list} {
+			border-radius 0 !important
+			&::after {
+				inset-inline 0 !important
+			}
+		}
+		.detailed-status__wrapper {
+			margin 10px !important
+			border-radius var(--radius) !important
+		}
+		.icon-button {
+			flex-grow 1 !important
+			justify-content center
+		}
+	}
 	
 	// Mobile
 	@media (max-width: mobileW) {
-		/:root {
-			--status-left-padding 15px
-		}
+		compactStatuses()
 		.columns-area--mobile > .column {
 			// overflow hidden !important
 			> div > div {
@@ -1647,7 +1779,7 @@
 			display none
 		}
 		.ui__header {
-			z-index 5
+			z-index 101
 		}
 		.columns-area__panels {
 			overflow-x scroll !important
@@ -1741,22 +1873,7 @@
 			> .columns-area--mobile {
 				overflow visible !important
 			}
-			.scrollable:not(.scrollable--flex) {
-				padding 0px !important
-				padding-top 15px !important
-				padding-bottom 40vh !important
-				&::before {
-					content ""
-					position absolute
-					inset 0
-					background-color inherit
-					z-index -1
-				}
-				.account-timeline__header {
-					margin 0px !important
-					margin-top -15px !important
-				}
-			}
+			
 
 			~/ .is-composing .columns-area__panels__main {
 				padding-bottom 40px !important
@@ -1769,12 +1886,7 @@
 		.explore__links {
 			padding 0 !important
 		}
-		.status__wrapper, .story {
-			border-radius 0 !important
-			&::after {
-				inset-inline 0 !important
-			}
-		}
+		
 		.status {
 			padding-top 14px !important
 			.status__avatar {
@@ -1795,10 +1907,7 @@
 				margin-bottom 0 !important
 			}
 		}
-		.detailed-status__wrapper {
-			margin 10px
-			border-radius var(--radius) !important
-		}
+		
 		.status__action-bar {
 			margin-inline-start calc(0px - var(--status-left-padding) + 15px)
 			margin-bottom -10px
@@ -2098,6 +2207,9 @@
 	/.layout-multiple-columns #mastodon .columns-area {
 		overflow auto hidden !important
 		padding 0
+		
+		compactStatuses()
+		
 		.column-header, .scrollable, .column-back-button, .account__header__image {
 			border-radius 0 !important	
 		}
@@ -2108,7 +2220,7 @@
 			border 0 !important
 			padding 0 !important
 			&:not(.drawer):not(:last-child) {
-				padding-inline-end 2px !important
+				margin-inline-end 2px !important
 			}
 			&.column {
 				flex-grow 1
@@ -2122,11 +2234,12 @@
 			}
 		}
 		.drawer {
-			padding-inline 10px !important
+			padding-inline 6px !important
 			padding-top 20px !important
+			// width 285px
 			.drawer__header {
 				border-radius var(--radius-round)
-				margin-inline 5px
+				margin-inline 10px
 				overflow hidden
 				border 0 !important
 				a {
@@ -2140,19 +2253,34 @@
 				}
 			}
 		}
+		.search {
+			margin-inline 10px
+		}
 		.drawer__inner:not(.darker), .drawer__inner__mastodon {
 			background-color transparent
 			border 0 !important
 		}
 		.drawer__inner.darker {
-			border-radius var(--radius) var(--radius) 0 0
-			margin-inline 5px
-			width calc(100% - 10px)
+			border-radius var(--radius-round) var(--radius-round) 0 0
+			// margin-inline 10px
+			// width calc(100% - 20px)
+			// padding-bottom 10px
+			// height calc(100% - 10px)
 		}
 		
 		.getting-started__trends {
 			padding 0px 20px
 		}
+		
+		.status {
+			padding-bottom 10px !important
+		}
+		.detailed-status {
+			.status__content {
+				font-size 1.3em
+			}
+		}
+		
 	}
 	
 	
