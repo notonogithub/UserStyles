@@ -1,6 +1,19 @@
+
+/*** 
+
+
+	!!! MAKE SURE TO ADD YOUR SERVER URL USING THE STEPS BELOW !!!
+	1. Install the style
+	2. Click the "Edit" in the left sidebar
+	3. Click the "Settings" button in the left sidebar
+	4. Paste your server's URL in the "Custom included sites" textbox
+
+
+***/
+
 /* ==UserStyle==
 @name           Mastodon Mobile: Swipable navigation drawer
-@version        1.0.1
+@version        1.0.2
 @description    Moves the nav buttons in the side & header to its own drawer :)
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/mastodon/nav-drawer.user.css
 @preprocessor   stylus
@@ -12,7 +25,7 @@
 @supportURL     https://codeberg.org/Freeplay/UserStyles/issues
 ==/UserStyle== */
 
-@-moz-document domain("mastodon.coffee") {
+@-moz-document domain("mastodon.coffee"), domain("mstdn.social"), domain("masto.ai"), domain("mastodon.art"), domain("mastodon.social"), domain("mastodon.online"), domain("mastodon.lol"), domain("mas.to"), domain("c.im"), domain("nerdculture.de"), domain("maly.io"), domain("queer.party"), domain("fosstodon.org"), domain("meow.social"), domain("indieweb.social"), domain("raru.re") {
 	@media (max-width 895px) {
 		.ui__header {
 			width 300px
@@ -29,6 +42,7 @@
 			max-width 100% !important
 			flex-wrap nowrap !important
 			scroll-snap-type x mandatory
+			min-height 100vh !important
 			.columns-area__panels__main {
 				min-width 100% !important
 				z-index 2
@@ -54,7 +68,6 @@
 					background none
 					padding 10px
 					height calc(100% - 70px)
-					// margin-top 70px
 					padding-bottom 70px
 				}
 			}
