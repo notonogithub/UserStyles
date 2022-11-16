@@ -1,0 +1,44 @@
+@media (max-width: 895px) {
+  .ui__header {
+    width: 300px;
+    position: fixed;
+    padding: 10px;
+    background: none;
+    height: 70px;
+    z-index: unset !important;
+  }
+  .columns-area__panels {
+    overflow-x: scroll !important;
+    overflow-y: hidden;
+    justify-content: flex-start;
+    max-width: 100% !important;
+    flex-wrap: nowrap !important;
+    scroll-snap-type: x mandatory;
+  }
+  .columns-area__panels .columns-area__panels__main {
+    min-width: 100% !important;
+    z-index: 2;
+    scroll-snap-align: start;
+  }
+  .columns-area__panels .columns-area__panels__main .tabs-bar__wrapper {
+    top: 0px;
+  }
+  .columns-area__panels .columns-area__panels__pane--navigational {
+    order: -1;
+    min-width: 300px !important;
+    height: 50px !important;
+    display: block !important;
+    scroll-snap-align: start;
+  }
+  .columns-area__panels .columns-area__panels__pane--navigational .columns-area__panels__pane__inner {
+    min-width: 300px !important;
+  }
+  .columns-area__panels .columns-area__panels__pane--navigational .column-link span {
+    display: inline !important;
+  }
+  .columns-area__panels .columns-area__panels__pane--navigational .navigation-panel {
+    background: none;
+    padding: 10px;
+    margin-top: 70px;
+  }
+}
