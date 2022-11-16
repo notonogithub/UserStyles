@@ -29,6 +29,7 @@
     height: 50px !important;
     display: block !important;
     scroll-snap-align: start;
+    margin-top: 70px;
   }
   .columns-area__panels .columns-area__panels__pane--navigational .columns-area__panels__pane__inner {
     min-width: 300px !important;
@@ -39,6 +40,7 @@
   .columns-area__panels .columns-area__panels__pane--navigational .navigation-panel {
     background: none;
     padding: 10px;
-    margin-top: 70px;
+    height: calc(100% - 70px);
+    padding-bottom: 70px;
   }
 }
