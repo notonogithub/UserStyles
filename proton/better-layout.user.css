@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Proton Suite Alternative Layout
-@version        1.0.7
+@version        1.1.0
 @description    A better, more compact, nicer looking layout for ProtonMail, ProtonCalendar, and ProtonDrive.
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/proton/better-layout.user.css
 @preprocessor   stylus
@@ -12,14 +12,13 @@
 @supportURL     https://codeberg.org/Freeplay/UserStyles/issues
 
 @var range sat "Theme Color Saturation" [.6, 0, 1, .1]
-@var range sidebarWidth "Sidebar Width" [220, 170, 300, 5, "px"]
-@var range toolbarHeight "Toolbar Height" [50, 35, 50, 5, "px"]
+@var range sidebarWidth "Sidebar Width" [250, 170, 300, 5, "px"]
+@var range toolbarHeight "Toolbar Height" [40, 35, 50, 5, "px"]
 @var checkbox footer    "Hide Sidebar Footer" 1
 @var text  image       "Sidebar Background (Place in quotes)" '""'
 @var range allignment  "Sidebar Background: Alignment" [0, 0, 100, "%"]
 @var range blur        "Sidebar Background: Blur"      [0, 0, 20, 2]
 @var range opac        "Sidebar Background: Opacity"   [.5, .1, 1, 0.1]
-@var checkbox rounded  "Rounded corners" 1
 
 @var checkbox collapseSidebar "[WIP] Collapse Sidebar" 0
 
@@ -90,8 +89,12 @@
 			top: 0;
 			left: 0;
 			bottom: 0;
-			width: var(--sidebar-width);
-			background: url(image);
+			// right -20px !important
+			width: calc(var(--sidebar-width) + 24px);
+			if image != "" {
+				background: url(image);
+			}
+			
 			background-position-x: allignment;
 			background-size: cover;
 			if not blur == 0 {
@@ -101,6 +104,9 @@
 			opacity: opac;
 			transition: background-position-x .2s, transform .3s, filter .2s, opacity .2s;
 		}
+	}
+	.content {
+		background var(--background-weak)
 	}
 	.content > [class="flex flex-item-fluid flex-nowrap"] {
 		display: contents;
@@ -123,7 +129,10 @@
 		
 		background: none;
 		--background-norm transparent
+		// background var(--background-weak)
 		padding-bottom: 8px;
+		margin-bottom 0 !important
+		padding-inline 4px
 		z-index: 1;
         transition: width .4s, transform .2s cubic-bezier(0,0,0,1.5);
 		& > * {
@@ -132,8 +141,8 @@
 		}
 		.logo-container {
 			padding: 0 14px;
-			margin: 20px 0;
-			margin-bottom 15px
+			margin: 15px 0;
+			margin-bottom 10px
 			.apps-dropdown-button svg {
 				transform scale(.8)
 			}
@@ -144,7 +153,9 @@
 			margin-bottom 10px
 			margin-top 0
 			padding: 0 14px;
+			border-radius 100px !important
 			// margin-top 5px
+			// --border-radius-md 100px
 		}
 		/[id*=advanced-search-overlay] {
 			--width 600 !important
@@ -185,7 +196,9 @@
 						justify-content: center;
 						border: none !important;
 						box-shadow: none;
-						border-radius: 4px !important;
+						&:not(:hover) {
+							// background none
+						}
 						span {
 							width: 100%;
 							border: none !important;
@@ -234,9 +247,18 @@
 		& > [class="px0-5 pb0-5 flex-item-noshrink"] {
 			padding-bottom: 0;
 			margin-bottom 0
+			margin-top 2px
 			z-index: 3;
-			padding-inline 14px
-			font-size .9em
+			padding-inline 18px
+			font-size .8em
+			width auto !important
+			button {
+				// width unset
+				// padding .8em 1.7em
+				// border-radius 100px
+				font-weight 600
+				font-size 1em
+			}
 		}
 		.flex.flex-align-items-center {
 			flex-wrap nowrap
@@ -244,9 +266,11 @@
 		& > .scroll-if-needed {
 			margin-top: -30px;
 			background: linear-gradient(200deg, transparent, var(--background-weak) );
+			// background var(--background-weak)
 			scrollbar-color: transparent transparent;
 			transition: scrollbar-color .2s;
 			overflow-y: scroll;
+			mask linear-gradient(transparent, black 50px)
 			&:hover, &:focus-within {
 				scrollbar-color: unset;
 			}
@@ -257,9 +281,21 @@
 			top: 0;
 			min-height: 40px;
 			width: 100%;
+			// background var(--background-weak)
 			// background: linear-gradient(var(--background-norm),  transparent);
 			z-index: 2;
 			pointer-events: none;
+		}
+		
+		// Separators
+		.my0-25 {
+			margin-inline 20px
+			height 0
+			border-bottom 1px solid var(--border-norm)
+			margin-block .4em
+		}
+		.app-infos {
+			background var(--background-weak)
 		}
 		if footer {
 			.app-infos {
@@ -270,9 +306,7 @@
 }
 	
 	.main {
-		if rounded {
-			border-radius: 24px 0 0 30px !important;
-		}
+		border-radius 24px 0 0 0 !important
 		z-index: 2;
 		border-top: 0;
 		border-left: 0;
