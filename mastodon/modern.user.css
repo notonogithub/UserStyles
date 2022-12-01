@@ -24,11 +24,14 @@
 - Fixed interaction modal with cards that have long text
 - Improved responsiveness / mobile layout
 - More tweaks!! More fixes!!!
+
+/* HOTFIX 1.4.1
+- Fixed overflow in compose box in advanced view
 */
 
 /* ==UserStyle==
 @name           Mastodon Modern
-@version        1.4.0
+@version        1.4.1
 @description    Gives Mastodon a nicer look :)
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/mastodon/modern.user.css
 @preprocessor   stylus
@@ -239,10 +242,15 @@
 	}
 	
 	.compose-form {
+		// overflow hidden
 		.reply-indicator {
 			&__display-name {
 				padding 0
 			}
+		}
+		.compose-form__autosuggest-wrapper {
+			// height 0
+			// flex-grow 1
 		}
 		.compose-form__autosuggest-wrapper, .autosuggest-textarea__textarea { 
 			border-radius var(--radius) var(--radius) 0 0 !important
@@ -2278,11 +2286,27 @@
 					}
 				}
 			}
+			.search {
+				z-index 2
+			}
 			& > .drawer__pager {
+				overflow visible !important
 				&, & > .drawer__inner:not(.darker) {
-					overflow visible
+					// overflow visible
+					
 				}
-				
+				& > .drawer__inner:not(.darker)  {
+					top -20px
+					// inset-inline -6px
+					// padding-inline 6px
+					margin-inline-start -6px
+					margin-inline-end -4px
+					width calc(100% + 10px)
+					padding-inline-start 6px
+					padding-inline-end 4px
+					padding-top 20px
+					height calc(100% + 20px)
+				}
 			}
 			.drawer__inner__mastodon {
 				margin-inline -6px
