@@ -1,25 +1,34 @@
 
-/*** 
 
+	 //////////////////////////////////////////////////////////////////// 🦊
+	//																	//
+	//	!!! MAKE SURE TO ADD YOUR SERVER URL USING THE STEPS BELOW !!!	//
+	//	1. Install the style											//
+	//	2. Click the "Edit" in the left sidebar							//
+	//	3. Click the "Settings" button in the left sidebar				//
+	//	4. Paste your server's URL in the								//
+	//		"Custom included sites" textbox like this:					//
+	//  		*//DOMAIN HERE/*  										//
+	//																	//
+	 //////////////////////////////////////////////////////////////////// 
 
-	!!! MAKE SURE TO ADD YOUR SERVER URL USING THE STEPS BELOW !!!
-	1. Install the style
-	2. Click the "Edit" in the left sidebar
-	3. Click the "Settings" button in the left sidebar
-	4. Paste your server's URL in the "Custom included sites" textbox
-
-
-***/
-@-moz-document domain("mastodon.coffee"), domain("mstdn.social"), domain("masto.ai"), domain("mastodon.art"), domain("mastodon.social"), domain("mastodon.online"), domain("mastodon.lol"), domain("mas.to"), domain("c.im"), domain("nerdculture.de"), domain("maly.io"), domain("queer.party"), domain("fosstodon.org"), domain("meow.social"), domain("indieweb.social"), domain("raru.re") {
-/* Update 1.3.10
-- More compactness in Mastodon's advanced view
-- Changed notes look
-- More tweaks
+	 
+@-moz-document domain("mastodon.coffee"), domain("brands.town"), domain("mstdn.social"), domain("social.vivaldi.net"), domain("masto.ai"), domain("mastodon.art"), domain("tech.lgbt"), domain("mastodon.social"), domain("mastodon.online"), domain("mastodon.lol"), domain("mas.to"), domain("c.im"), domain("nerdculture.de"), domain("maly.io"), domain("corteximplant.com"), domain("queer.party"), domain("fosstodon.org"), domain("meow.social"), domain("indieweb.social"), domain("raru.re"), domain("ani.work") {
+/* Update 1.4.0
+- Fixed overflow / unable to scroll in left column
+- Added underlines to links
+- Changed the look of the profile fields
+- Styled option toggles
+- Notification tweaks
+- Added edit icon next to edited posts
+- Fixed interaction modal with cards that have long text
+- Improved responsiveness / mobile layout
+- More tweaks!! More fixes!!!
 */
 
 /* ==UserStyle==
 @name           Mastodon Modern
-@version        1.3.10
+@version        1.4.0
 @description    Gives Mastodon a nicer look :)
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/mastodon/modern.user.css
 @preprocessor   stylus
@@ -40,12 +49,20 @@
 	
 	media = ".media-gallery, .video-player, .status-card.horizontal.interactive, .status-card, .audio-player, .picture-in-picture-placeholder"
 	
+	fa() {
+		font: normal normal normal 14px/1 FontAwesome;
+		font-size: 14px;
+		font-size: inherit;
+		text-rendering: auto;
+	}
+	
 	/:root {
 		--tl-width 750px
 		--radius 12px
 		--radius-round 24px
 		--hover-color rgba(170,170,170, 0.07)
-		--border-color rgba(120,120,120, 0.2)
+		--elevated-color rgba(150,150,200,0.1)
+		--border-color rgba(120,120,200, 0.2)
 		--border-color-2 rgba(120,120,120, 1)
 		--shadow 0 10px 40px -10px rgba(0,0,0,0.15)
 		--shadow-low 0 8px 16px -10px rgba(0,0,0,0.4)
@@ -66,6 +83,11 @@
 	.button--block {
 		font-weight 700
 	}
+	.unhandled-link {
+		text-decoration underline
+		text-underline-offset .2em
+	}
+	
 	.compose-form__upload-thumbnail, .button,
 	button:not(.column-header__button), video, input, iframe, .privacy-dropdown__dropdown, .react-toggle-track,
 	.reply-indicator, .compose-form__warning {
@@ -78,12 +100,14 @@
 			outline-offset -2px
 		}
 	}
-	* {
-		border-color var(--border-color) !important
+	*:not(.radio-button__input):not(input) {
 		font-display swap !important
 	}
+	:not(.radio-button__input):not(input):not(span) {
+		border-color var(--border-color) !important
+	}
 	@media (prefers-reduced-motion: no-preference) {
-		.load-more,
+		.load-more, .setting-toggle, .column-header__back-button, .column-back-button,
 		.trends__item, .story,
 		.media-gallery__item, .column-link, select, .status-card, .audio-player, .account {
 			transition transform .4s cubic-bezier(0,0,0,3) !important
@@ -92,6 +116,7 @@
 				transition transform .4s cubic-bezier(0,0,0,1) !important
 			}
 		}
+		.column-header__button, .column-header__buttons > .column-header__back-button,
 		.react-toggle-track, .button, .icon-button, .floating-action-button {
 			transition transform .4s cubic-bezier(0,0,0,4) !important
 			&:active {
@@ -131,9 +156,10 @@
 		border-radius var(--radius)
 	}
 	/.dropdown-menu__container__list {
-		overflow hidden
+		overflow hidden auto
 		border-radius var(--radius)
 		margin-block -4px
+		max-height 70vh
 	}
 	/.dropdown-menu__item {
 		overflow hidden
@@ -146,6 +172,25 @@
 	/.dropdown-menu__separator {
 		margin 0 !important
 	}
+	.interaction-modal {
+		border-radius var(--radius)
+		overflow-y auto
+	}
+	.interaction-modal__choices {
+		gap 10px
+		display flex
+		flex-wrap wrap
+		.interaction-modal__choices__choice {
+			max-height 50vh
+			overflow-y auto
+			// background-color var(--elevated-color)
+			border 1px solid var(--border-color)
+			flex 1 0 270px 
+			border-radius var(--radius)
+			transition background .2s
+			position relative
+		}
+	}
 	
 	
 	// LEFT COLUMN
@@ -157,6 +202,12 @@
 	}
 	.compose-panel {
 		margin-top 0
+		overflow-y auto
+		margin-top -30px
+		padding-top 30px
+		padding-bottom 10px
+		box-sizing border-box
+		height 100vh
 	}
 	.search {
 		&, /.search-popout {
@@ -173,7 +224,6 @@
 			padding-inline-end 40px !important
 		}
 		.search__icon > i {
-			// right 15px
 			margin-inline 5px
 		}
 	}
@@ -232,7 +282,7 @@
 				color white
 				box-shadow var(--shadow-low)
 				i {
-					margin-right .2em
+					margin-inline-end .2em
 					transform scale(1.2)
 				}
 			}
@@ -243,6 +293,7 @@
 	.server-banner {
 		// padding-inline 15px
 		padding-inline 10px
+		// overflow-y auto
 		.server-banner__introduction {
 			// padding-inline 10px
 		}
@@ -295,23 +346,10 @@
 						content unset
 					}
 				}
-				// .server-banner__number {
-				// 	font-size 2em
-				// 	// margin .5em
-				// 	// margin-left auto
-				// 	font-weight 400
-				// 	// order 2
-				// 	// height auto !important
-				// 	line-height 1.5
-				// }
-				// .server-banner__number-label {
-				// 	font-size 1.2em
-				// 	font-weight 400
-				// }
 				.server-banner__number, .server-banner__number-label {
 					font-size 1.1em
 					line-height 2
-					margin-right .5em
+					margin-inline-end .5em
 				}
 				.server-banner__number-label {
 					font-weight 400 !important
@@ -321,18 +359,7 @@
 	}
 	.navigation-panel__sign-in-banner {
 		margin-inline 5px
-		// padding 20px
-		// border 1px solid
-		// border-radius var(--radius)
-		// background-color var(--hover-color)
-		// margin 15px
 		margin-bottom 20px
-		// margin-top 10px
-		// margin-inline 5px
-		// order -1
-		hr {
-			// display none
-		}
 		.sign-in-banner {
 			// padding 0
 			p {
@@ -361,6 +388,7 @@
 			max-width var(--tl-width) !important
 			padding 0 15px
 		}
+		
 		padding-top 30px !important
 		overflow visible !important
 		transition max-width transBounce1, margin transBounce1
@@ -419,11 +447,23 @@
 			border-top-right-radius 0
 		}
 	}
+	
+	.empty-column-indicator {
+		contain unset
+		padding 10px !important
+		color unset
+		opacity .8
+		font-size 1.2em
+		line-height 2
+		a {
+			display block
+			font-weight 700
+			font-size 1.1em
+		}
+	}
+	
 
 	// ACCOUNT PAGE
-	
-	
-	
 	.scrollable--flex .account-timeline__header {
 		margin 0 !important
 	}
@@ -436,6 +476,7 @@
 		margin-bottom 10px
 		background-color inherit
 		border-radius var(--radius) !important
+		animation slideUp backwards .4s cubic-bezier(0,1,1,1)
 		.account__moved-note {
 			box-sizing border-box
 			border-radius var(--radius)
@@ -464,145 +505,116 @@
 			}
 		}
 		.account__header__bar {
-			// padding 10px 20px
 			border 0
+			background inherit !important
 			border-radius var(--radius) var(--radius) 0 0
 			margin-top calc(0px - var(--radius)) !important
+			display flex
+			flex-direction column
+			.account__header__tabs {
+				overflow visible !important
+			}
+			.avatar {
+				margin-inline-start 0 !important
+				overflow visible !important
+				position relative
+				.account-role {
+					position absolute
+					bottom 0
+					left 100%
+					border-radius var(--radius-round)
+				}
+			}
+			.account__avatar {
+				border 0
+				box-shadow var(--shadow)
+				// background none
+			}
 		}
 		.account__header__tabs__name {
 			margin-bottom 0
 			h1 {
 				display flex
 				flex-wrap wrap
+				white-space unset
 				span {
-					margin-right .4em
+					margin-inline-end .4em
 				}
 			}
 		}
-		.account-role {
-			margin-right .4em
-			> span {
-				margin 0 !important
-			}
-		}
+		
 		.account__header__extra {
 			margin-top 10px
-		}
-		.account__header__bio {
-			// margin 0
-			// margin-top 10px
-			> div {
-				// padding-inline 10px !important
-			}
+			line-height 1.5
 		}
 		
 	}
-	// .account__header__account-note {
-	// 	display flex
-	// 	overflow hidden
-	// 	margin-inline -5px
-	// 	// padding-inline 5px
-	// 	// padding-bottom 5px
-	// 	// border-radius var(--radius)
-	// 	transition padding .02s
-	// 	position relative
-	// 	width 10em
-	// 	padding .4em .7em
-	// 	border-radius var(--radius)
-	// 	border 1px solid var(--border-color)
-	// 	label {
-	// 		margin 0
-	// 		// display flex
-	// 		// align-items center
-	// 		font-weight 600
-	// 		margin-right .7em
-	// 		font-size 12px
-	// 	}
-	// 	textarea {
-	// 		// margin 0 !important
-	// 		display inline
-	// 		margin -100px
-	// 		padding 102px
-	// 		width 0
-	// 		flex-grow 1
-	// 		font-weight 500
-	// 		// opacity .7
-	// 		// color inherit
-	// 		transition background .1s
-	// 		font-size 12px
-	// 		// padding-top 1px
-	// 		&:not(:focus) {
-	// 			cursor pointer
-	// 		}
-	// 		&::placeholder {
-	// 			font-weight 600
-	// 			transition color .2s !important
-	// 		}
-	// 		&:hover:not(:focus)::placeholder {
-	// 			color unset !important
-	// 			opacity .8
-	// 		}
-	// 	}
-	// 	&:focus-within {
-	// 		padding .7em
-	// 		border 1px solid var(--border-color)
-	// 		box-shadow var(--shadow)
-	// 		label {
-	// 			z-index 2
-	// 		}
-	// 	}
-	// 	// &:not(:focus-within) {
-	// 	// 	&::after {
-	// 	// 		content ""
-	// 	// 		position absolute
-	// 	// 		left 0
-	// 	// 		right 0
-	// 	// 		bottom 1px
-	// 	// 		border-top 1px solid var(--border-color)
-	// 	// 	}
-	// 	// }
-	// }
 	.account__header__fields, .account__header__account-note {
 		display flex
 		flex-wrap wrap
-		align-items center
-		border 0
 		gap 10px
+		gap 2px
 		background none
-		margin-inline -5px
+		// margin-inline -10px
+		border-radius var(--radius)
+		overflow hidden
+		width max-content
+		// max-width calc(100% + 20px)
+		max-width 100%
 		&.account__header__fields {
-			margin-top 15px
+			margin-top 10px
+			margin-bottom -10px
 		}
 		/ .public-account-bio .account__header__fields {
 			padding 20px !important
 			padding-bottom 0 !important
 		}
 		dl, &.account__header__account-note.account__header__account-note {
-			border 0
-			border-radius var(--radius)
+			// border 0
+			// border-radius var(--radius)
+			border-radius 0
 			overflow hidden
-			// background-color var(--border-color)
-			border 1px solid var(--border-color-2)
+			&:not(.verified) {
+				background-color var(--elevated-color)
+			}
+			
+			border 0
+			// border 1px solid var(--border-color)
 			padding 8px 12px !important
 			position relative
 			overflow hidden
-			dt, dd {
-				width unset
-				// padding-block .5em
-			}
+			// min-width max-content
+			flex-grow 1
+			// max-width max-content !important
 			dt {
-				background none
 				color unset
 				opacity .9
 				text-transform capitalize
 			}
-			dd {
-				border 0
-				background none
-			}
+
 			&.verified {
-				background none !important
+				// background none !important
 			}
+			
+			dd {
+				white-space unset
+				max-height unset
+				& > span > a:first-child:last-child, .h-card:first-child:last-child a {
+					&::after {
+						content ""
+						position absolute
+						inset 0
+						background-color var(--hover-color)
+						opacity 0
+						transition opacity .2s
+					}
+					&:hover:after, &:focus:after {
+						opacity 1
+					}
+				}
+			}
+			
+			
 		}
 		&.account__header__account-note.account__header__account-note {
 			// padding 0 !important
@@ -614,12 +626,15 @@
 			// padding .4em .8em !important
 			// transition padding .01s, margin .01s
 			// display inline
+			background none !important
 			border-radius 8px
 			font-size 12px
+			width unset
+			background none
 			label {
 				z-index 2
 				padding 0 !important
-				padding-right .7em !important
+				padding-inline-end .7em !important
 				pointer-events none
 				line-height inherit
 				font-size inherit
@@ -664,7 +679,7 @@
 			}
 		}
 	}
-	&#mastodon .account__section-headline {
+	.account__section-headline {
 		background none
 		/.with-modals & {
 			border 0 !important
@@ -686,6 +701,32 @@
 		padding-bottom var(--radius)
 	}
 	
+	// Gallery
+	.account-gallery__container {
+		border-radius 24px
+		overflow hidden
+		padding 0
+		margin 8px
+		gap 4px
+		// justify-content center
+		/.account-gallery__item {
+			margin 0
+			border-radius 0
+			flex 1 1 200px
+			transition flex 1s cubic-bezier(.2,1,0,1)
+			&:hover {
+				flex-grow 2 !important
+			}
+			a {
+				transition transform .7s
+				
+				&:hover, &:focus {
+					transform scale(1.05)
+
+				}
+			}
+		}
+	}
 	
 	// STATUSES 
 	.scrollable > div:first-child > [tabindex="-1"]:last-child .status__wrapper {
@@ -704,7 +745,7 @@
 		position relative
 		&.trends__item, &.story, &.account-card {
 			animation-name slideUpFade
-			for row in 1..10 {
+			for row in 1..11 {
 				&:nth-child({row}) {
 					animation-delay .04s * row
 				}
@@ -726,8 +767,7 @@
 				content ""
 				position absolute
 				bottom 0px
-				left var(--radius)
-				right var(--radius)
+				inset-inline var(--radius)
 				border-top 1px solid var(--border-color)
 				pointer-events none
 			}
@@ -739,11 +779,9 @@
 				pointer-events none
 				transition background-color .2s
 			}
-			@media (min-width mobileW) {
-				&:hover, &:focus-within {
-					&::before {
-						background-color var(--hover-color)
-					}
+			&:hover, &:focus-within {
+				&::before {
+					background-color var(--hover-color)
 				}
 			}
 		}
@@ -809,7 +847,7 @@
 				padding-left 0 !important
 			}
 			.story__thumbnail {
-				margin-right 0
+				margin-inline-end 0
 			}
 		}
 		&.account-card {
@@ -854,39 +892,20 @@
 			}
 		}
 	}
-	.empty-column-indicator {
-		// height max-content !important
-		// min-height 100px
-		// display unset 
-		contain unset
-		padding 10px !important
-		color unset
-		opacity .8
-		font-size 1.2em
-		line-height 2
-		// font-weight 600
-		span {
-			// color inherit !important
-		}
-		a {
-			display block
-			font-weight 700
-			font-size 1.1em
-		}
-	}
+	
 	
 	.status, .columns-area__panels__main .account {
 		border 0 !important
-		// overflow visible !important
-		// border 0 !important
-		padding 15px !important
+		padding-block 15px !important
 		&:not(.account) {
 			padding-inline-start var(--status-left-padding) !important
 		}
-		&.account {
-			.account__avatar-wrapper {
-				margin-left 0px
-			}
+		&::before {
+			inset -10px !important
+			border-radius var(--radius)
+		}
+		&::after {
+			// bottom -10px !important
 		}
 	}
 	.status__prepend, .notification__message {
@@ -896,9 +915,33 @@
 		margin-bottom -10px !important
 		z-index 2
 		position relative
-		.notification__display-name {
-			white-space nowrap // Some incredibly long usernames are annoying
+		font-weight 400
+		[class*="icon-wrapper"] {
+			display flex
+			align-items center
 		}
+		a {
+			white-space nowrap
+			font-weight 600
+		}
+	}
+	.notification-favourite, .notification-reblog {
+		.notification__message {
+			& ~ div {
+				.status__info, .status__action-bar {
+					display none
+				}
+				.status {
+					min-height unset
+				}
+				.attachment-list {
+					margin-top 0
+				}
+			}
+		}
+	}
+	.status__avatar {
+		min-width 45px
 	}
 	.account__avatar-overlay-base {
 		width 100%
@@ -916,20 +959,33 @@
 	}
 	.status__info {
 		margin-top 5px
+		align-items flex-start
 		> * {
 			position relative
 			z-index 2
 		}
-		.status__avatar {
-			top 15px
-			left 15px !important
-			right 15px
-			z-index 2
-		}
 		.display-name {
-			
+			color unset !important
 			strong {
 				font-weight 600
+			}
+		}
+		.status__relative-time {
+			display flex
+			font-weight 500
+			font-size 15px
+			// line-height 22px
+			.status__visibility-icon {
+				order 2
+				margin-inline-start .4em
+			}
+			abbr {
+				// text-decoration none
+				margin-inline-start .7em
+				&::after {
+					content: ""
+					fa()
+				}
 			}
 		}
 	}
@@ -944,8 +1000,7 @@
 			content ""
 			position absolute 
 			top 100%
-			left 0
-			right 0
+			inset-inline 0
 			height 900px
 		}
 		&::after {
@@ -958,6 +1013,7 @@
 		margin-inline -100px
 		padding-inline 100px
 		text-align unset !important
+		line-height 1.5
 		
 		&.status__content--with-spoiler > p:first-child {
 			margin-bottom 0
@@ -967,6 +1023,14 @@
 		}
 		.status__content__text > br:first-child {
 			display none !important
+		}
+		.status__content__text {
+			// display inline !important
+		}
+		p:empty {
+			max-height 0
+			// min-height 0 !important
+			// display inline !important
 		}
 	}
 	.status__content__spoiler-link {
@@ -988,7 +1052,8 @@
 	{media} {
 		box-shadow var(--shadow-low)
 		border-radius var(--radius)
-		margin-block 15px !important
+		margin-top 15px !important
+		margin-bottom 10px !important
 		animation scaleIn .4s
 		max-width unset !important
 		max-height 80vh !important
@@ -1006,6 +1071,11 @@
 	}
 	.media-gallery__item:not([style*="50%"]) {
 		border-radius var(--radius)
+	}
+	.audio-player {
+		.video-player__seek {
+			margin var(--radius)
+		}
 	}
 	.detailed-status {
 		padding 15px !important
@@ -1035,8 +1105,8 @@
 			border-radius var(--radius) var(--radius) 0 0
 		}
 		{media} {
+			--radius 0
 			margin 0 !important
-			border-radius 0 !important
 		}
 		.picture-in-picture__footer {
 			border-radius 0 0 var(--radius) var(--radius)
@@ -1044,13 +1114,16 @@
 	}
 	
 	.status__action-bar {
-		margin-top .7em
+		margin-top .4em
+		margin-bottom -8px
 	}
 	.status__action-bar, .detailed-status__action-bar, .picture-in-picture__footer {
-		// margin-top .5em
 		position relative
 		z-index 2
 		pointer-events none
+		gap 0
+		overflow-x auto
+		
 		> * {
 			pointer-events all
 		}
@@ -1058,14 +1131,16 @@
 			display inline-flex
 			align-items center
 			width unset !important
-			padding .3em .5em !important
+			padding .5em !important
 			height unset !important
 			flex 0 1 auto !important
-			min-width 0
+			min-width 50px
 			border-radius var(--radius)
-			// font-size 12px !important
 			&:last-child {
 				margin 0 !important
+			}
+			i {
+				min-width 22px
 			}
 			&[aria-label]::after {
 				all unset
@@ -1078,8 +1153,6 @@
 			}
 			.icon-button__counter {
 				width auto !important
-				// font-weight 700
-				// font-size inherit
 			}
 		}
 		.status__action-bar__dropdown, 
@@ -1110,20 +1183,16 @@
 	}
 	.tabs-bar__wrapper, .column-back-button--slim .column-back-button {
 		z-index 101
-		
-		/.column-header {
+		/.column-header, /.column-inline-form {
 			font-weight 600
-			&, button {
-				// border-radius 0 !important
-				border-bottom-left-radius 0 !important
-				border-bottom-right-radius 0 !important
-			}
+			border-bottom-left-radius 0 !important
+			border-bottom-right-radius 0 !important
 			& ~ .scrollable {
 				border-top-left-radius 0 !important
 				border-top-right-radius 0 !important
 			}
 		}
-		@media (min-width: responsiveW2) {
+		@media (min-width mobileW) {
 			position fixed
 			width 285px
 			margin-inline-start 600px
@@ -1134,6 +1203,12 @@
 			@media (min-width: responsiveW1) {
 				margin-inline-start calc(var(--tl-width) - 5px)
 			}
+			@media (max-width responsiveW2 - 1) {
+				margin-inline-start calc(100% - 275px)
+				width 265px
+				margin-top 10px
+				
+			}
 			&:not(.column-back-button) {
 				padding-top 0
 			}
@@ -1141,13 +1216,98 @@
 			overflow clip
 			border-radius var(--radius) var(--radius) !important
 			box-shadow 0 12px 12px -12px rgba(0,0,0,0.1)
-			.column-header, .column-header__buttons button {
-				background none !important
-			}			
 			
-			.announcements {
+			.column-header__wrapper {
+				gap 2px !important
+				display flex
+				flex-direction column
+			}
+			.column-back-button {
+				background none
+			}
+			
+			.column-header/*, .column-header__buttons button:not(.active)*/ {
+				background none !important
+			}
+			.column-header > button {
+				z-index 2
+			}
+			.column-header__buttons {
+				margin-left .5em
+			}
+			.column-header__buttons button {
+				transition background .2s, transform .3s !important
+				position relative
+				border-radius 100px !important
+				min-width 40px
+				// min-width 50px
+				// margin-left .4em
+				// transform scale(.9)
+				margin 5px
+				margin-inline-start 0
+				// border-radius var(--radius) !important
+				font-size .9em
+				padding-inline 15px
+				.icon-with-badge {
+					position absolute
+					inset 0
+					display flex
+					align-items center
+					justify-content center
+					.icon-with-badge__badge {
+						right -2px
+						left unset
+						top unset
+						bottom 0px
+						border-radius var(--radius-round)
+					}
+				}
+				.column-header__icon {
+					margin-inline-end 0
+				}
+				&:not(.active) {
+					background var(--elevated-color) !important
+				}
+				
+				&::before {
+					content ""
+					position absolute
+					inset 0
+					top calc(100% + 5px)
+					bottom -5px
+					background inherit
+					z-index -1
+					transition inset .1s
+					border-radius 100px
+					pointer-events none
+				}
+				&::after {
+					// content ""
+					position absolute
+					inset 0
+					background var(--elevated-color)
+					border-radius 100%
+				}
+				&.active {
+					// filter contrast(1.1)
+					// z-index -1
+					// opacity .7
+					&::before {
+						inset -10px -300px
+					}
+				}
+			}
+			
+
+			
+			.announcements, .column-header__collapsible:not(.collapsed) {
+				
 				flex-direction column-reverse
 				align-items flex-start
+				animation slideDowFade .3s backwards cubic-bezier(0,1,0,1.2)
+			}
+			.column-header__collapsible {
+				transition none
 			}
 			.announcements__container {
 				width 100% !important
@@ -1159,91 +1319,134 @@
 				z-index -1
 				position relative
 			}
-		}
-		@media (min-width: mobileW) and (max-width: responsiveW2) {
-			&.tabs-bar__wrapper { // Overlay timeline over header when scrolling down
-				top 0 !important
-				min-height 55px
-				.column-header {
-					min-height 55px
-				}
-			}
-			&.column-back-button {
-				border-radius 0 !important
-			}
-			&:not(.column-back-button) {
-				padding-top 0
-				.tabs-bar {
-					margin-bottom 0
-					border 0 !important
-				}
-				#tabs-bar__portal {
-					border-radius 0 !important
-					.column-header, button {
-						border-radius 0 !important
-					}
-				}
 
-				& ~ .columns-area .scrollable {
-					border-radius 0 !important
-				}
-				/ #mastodon .columns-area__panels__main {
-					&, .columns-area {
-						padding-top 0 !important
-					}
-
-					> div, .scrollable {
-						border-radius 0 !important
-					}
-				}
-			}
+			
+			
 		}
+// 		@media (min-width mobileW) and (max-width: responsiveW2) {
+			
+// 			&.tabs-bar__wrapper { // Overlay timeline over header when scrolling down
+// 				top 0 !important
+// 				min-height 55px
+// 				.column-header, .column-header__buttons button {
+// 					min-height 55px
+// 					min-width 55px
+// 				}
+// 			}
+// 			&.column-back-button {
+// 				border-radius 0 !important
+// 			}
+// 			&:not(.column-back-button) {
+// 				padding-top 0
+// 				.tabs-bar {
+// 					margin-bottom 0
+// 					border 0 !important
+// 				}
+// 				#tabs-bar__portal {
+// 					border-radius 0 !important
+// 					.column-header, button {
+// 						border-radius 0 !important
+// 					}
+// 				}
+
+// 				& ~ .columns-area .scrollable {
+// 					border-radius 0 !important
+// 				}
+// 				/ #mastodon .columns-area__panels__main {
+// 					&, .columns-area {
+// 						padding-top 0 !important
+// 					}
+
+// 					> div, .scrollable {
+// 						border-radius 0 !important
+// 					}
+// 				}
+// 			}
+// 		}
 		transition margin transBounce1
 	}
 	.column-header__collapsible-inner {
 		// padding-bottom 0 !important
 		overflow hidden
+		// background none
 	}
-	
+	:not(:nth-child(2)) > .column-settings__section {
+		// margin-top 1em !important
+	}
+	.column-settings__row, .column-settings__hashtags {
+		border-radius var(--radius)
+		margin-bottom 1em
+	}
+	.column-select__control {
+		border-radius var(--radius)
+	}
 	.setting-toggle {
 		display flex
+		flex-direction row-reverse
 		align-items center
 		margin-bottom 14px
 		position relative
+		padding .7em
+		background var(--elevated-color)
+		margin-bottom 2px
+		overflow hidden
+		&:first-child {
+			border-top-left-radius var(--radius)
+			border-top-right-radius var(--radius)
+		}
+		&:last-child {
+			border-bottom-left-radius var(--radius)
+			border-bottom-right-radius var(--radius)
+		}
+		
+		// border-radius var(--radius)
 		.setting-toggle__label {
 			margin-bottom 0 !important
 			flex-grow 1
+		}
+		&::before {
+			content ""
+			position absolute
+			inset 0
+			background var(--hover-color)
+			opacity 0
+			transition opacity .2s
+			pointer-events none
+		}
+		&:hover, &:focus-within {
+			&::before {
+				opacity 1
+			}
 		}
 	}
 	
 	
 	.navigation-panel {
-		// padding 10px
-		
-		// padding-bottom 20px
-		// margin-top 46px
-		// height calc(100% - 10px)
 		box-sizing border-box
+		height calc(100vh - 40px)
+		padding-bottom 10px
 		hr {
-			// display none
+			display none
 		}
 		@media (min-width responsiveW2) {
-			// padding 10px
 			padding-top 50px !important
 			.navigation-panel__logo {
 				display none
 			}
-		}
-		@media (max-width responsiveW2 - 1) {
-			// padding 10px
-			box-sizing border-box
-			a::before {
-				border-radius 0 !important
+			[href="/settings/preferences"] {
+				display none !important
 			}
 		}
+		// @media (max-width responsiveW2 - 1) {
+		// 	box-sizing border-box
+		// 	a::before {
+		// 		border-radius 0 !important
+		// 	}
+		// }
+		
 		@media (min-width mobileW) {
-			.column-link {
-				flex-grow 2 !important
+			/.column-link {
+				flex-grow 100 !important
 				display flex !important
 				align-items center !important
 				align-content center
@@ -1252,11 +1455,12 @@
 				padding-block 0
 				position relative
 				box-sizing border-box
-				// font-weight 550
 				opacity .9
 				overflow hidden
+				background none !important
 				.column-link__icon, /.column-header > button .column-header__icon {
 					margin-inline-end 1em !important
+					font-size 16px !important
 				}
 				&::before {
 					content: "" !important;
@@ -1279,15 +1483,14 @@
 						opacity 1 !important
 					}
 				}
-				&[href="/settings/preferences"] {
-					display none !important
-				}
 				&[href="/lists"] {
 					& + div {
 						hr {
 							display none
 						}
 						.column-link {
+							margin-bottom 2px
+
 							i {
 								opacity .2
 							}
@@ -1466,220 +1669,220 @@
 			}
 		}
 	
-	// Public layout
-	&.public-layout {
-		.container:nth-child(2) > .grid .column-1 {
-			position sticky
-			align-self flex-end
-			bottom 0
-			min-height calc(100vh - 80px)
-			> * {
-				border-radius var(--radius)
-				overflow hidden
-				border 0 !important
-			}
-			a, .hero-widget__text {
-				border 0 !important
-			}
-		}
+	// Public layout -- Public layout gone now so, commented out
+// 	&.public-layout {
+// 		.container:nth-child(2) > .grid .column-1 {
+// 			position sticky
+// 			align-self flex-end
+// 			bottom 0
+// 			min-height calc(100vh - 80px)
+// 			> * {
+// 				border-radius var(--radius)
+// 				overflow hidden
+// 				border 0 !important
+// 			}
+// 			a, .hero-widget__text {
+// 				border 0 !important
+// 			}
+// 		}
 		
-		@media (min-width 416px) {
-			.grid, .grid-4 {
-				gap 15px
-				a {
-					max-width 100%
-					box-sizing border-box
-				}
-			}
+// 		@media (min-width 416px) {
+// 			.grid, .grid-4 {
+// 				gap 15px
+// 				a {
+// 					max-width 100%
+// 					box-sizing border-box
+// 				}
+// 			}
 			
-			.row__mascot {
-				width 0
-				img {
-					max-width 100%
-					object-fit contain
-					object-position bottom
-				}
-			}
-			.header {
-				border-radius var(--radius)
-				// margin-top 20px
-				// margin-bottom 15px
-				margin 15px 0
-			}
-			.public-account-header {
-				border-radius var(--radius)
-				border 0 !important
-				&:not(.public-account-header--no-bar) {
-					margin-bottom 15px
-				}
+// 			.row__mascot {
+// 				width 0
+// 				img {
+// 					max-width 100%
+// 					object-fit contain
+// 					object-position bottom
+// 				}
+// 			}
+// 			.header {
+// 				border-radius var(--radius)
+// 				// margin-top 20px
+// 				// margin-bottom 15px
+// 				margin 15px 0
+// 			}
+// 			.public-account-header {
+// 				border-radius var(--radius)
+// 				border 0 !important
+// 				&:not(.public-account-header--no-bar) {
+// 					margin-bottom 15px
+// 				}
 
-				.public-account-header__bar::before {
-					border 0
-				}
-			}
-			.account__section-headline {
-				border-radius var(--radius) var(--radius) 0 0
-				border 0
-				// margin-bottom calc(0px - var(--radius))
-				// padding-bottom var(--radius)
-				& + .activity-stream > .entry:first-child {
-					border-radius 0 !important
-				}
-			}
-			.table-of-contents {
-				max-height calc(100vh - 20px)
-				min-height unset !important
-				overflow-y scroll !important
-				display flex
-				flex-direction column
-				position sticky
-				top 10px
-			}
-		} 
-		@media (max-width 600px) {
-			.public-account-header__bar {
-				// flex-wrap nowrap
-				.avatar {
-					width 100px !important
-					height 100px !important
-					margin-top -50px
-				}
-				.public-account-header__tabs {
-					border 0 !important
-				}
-				.account__header__fields {
-					border 0 !important
-					padding-top 0 !important
-				}
-			}
-		}
-		@media (max-width 416px) {
+// 				.public-account-header__bar::before {
+// 					border 0
+// 				}
+// 			}
+// 			.account__section-headline {
+// 				border-radius var(--radius) var(--radius) 0 0
+// 				border 0
+// 				// margin-bottom calc(0px - var(--radius))
+// 				// padding-bottom var(--radius)
+// 				& + .activity-stream > .entry:first-child {
+// 					border-radius 0 !important
+// 				}
+// 			}
+// 			.table-of-contents {
+// 				max-height calc(100vh - 20px)
+// 				min-height unset !important
+// 				overflow-y scroll !important
+// 				display flex
+// 				flex-direction column
+// 				position sticky
+// 				top 10px
+// 			}
+// 		} 
+// 		@media (max-width 600px) {
+// 			.public-account-header__bar {
+// 				// flex-wrap nowrap
+// 				.avatar {
+// 					width 100px !important
+// 					height 100px !important
+// 					margin-top -50px
+// 				}
+// 				.public-account-header__tabs {
+// 					border 0 !important
+// 				}
+// 				.account__header__fields {
+// 					border 0 !important
+// 					padding-top 0 !important
+// 				}
+// 			}
+// 		}
+// 		@media (max-width 416px) {
 			
 			
-			.contact-widget {
-				padding 0 10px
-			}
-			.grid-4 > div:not(.column-4) {
-				position relative
-				z-index 2
-				&.column-2 {
-					padding-block 20px
-				}
-			}
-			.table-of-contents {
-				// margin calc(0px - var(--radius) * 2) 0
-				max-height 70vh
-				// min-height max-content !important
-				max-content min-content
-				display flex
-				flex-direction column
-				flex-wrap wrap
-				// padding calc(30px + var(--radius)) 20px
-				padding 30px
-				box-sizing border-box
-				overflow-x scroll !important
-				scroll-snap-type x mandatory
-				scroll-padding-inline-start 30px
-				gap 20px 30px
-				position relative
-				background none !important
-				border 0 !important
-				scroll-behavior smooth
-				> li {
-					width 70%
-					max-height 80%
-					overflow-y auto
-					// margin-right 20px
-					// margin-bottom 20px
-					// background-color var(--hover-color)
-					border 1px solid var(--border-color)
-					border-radius var(--radius)
-					scroll-snap-align start
-					box-shadow var(--shadow)
-					transition background-color .2s, box-shadow .2s
-					&:hover, &:focus-within {
-						background-color var(--hover-color)	
-					}
-					ul {
-						border 0 !important
-					}
-					> a {
-						border 0 !important
-					}
-					&:last-child {
-						margin-inline-end 70%
-					}
-				}
-			}
-		}
-		// Login & About page
-		.account-card, .card > a,
-		.page-header, .statuses-grid__item,
-		.box-widget, .directory__tag > a, .hero-widget,
-		.landing-page__call-to-action, .table-of-contents, .rules-list {
-			border-radius var(--radius)
-			overflow hidden
-		}
+// 			.contact-widget {
+// 				padding 0 10px
+// 			}
+// 			.grid-4 > div:not(.column-4) {
+// 				position relative
+// 				z-index 2
+// 				&.column-2 {
+// 					padding-block 20px
+// 				}
+// 			}
+// 			.table-of-contents {
+// 				// margin calc(0px - var(--radius) * 2) 0
+// 				max-height 70vh
+// 				// min-height max-content !important
+// 				max-content min-content
+// 				display flex
+// 				flex-direction column
+// 				flex-wrap wrap
+// 				// padding calc(30px + var(--radius)) 20px
+// 				padding 30px
+// 				box-sizing border-box
+// 				overflow-x scroll !important
+// 				scroll-snap-type x mandatory
+// 				scroll-padding-inline-start 30px
+// 				gap 20px 30px
+// 				position relative
+// 				background none !important
+// 				border 0 !important
+// 				scroll-behavior smooth
+// 				> li {
+// 					width 70%
+// 					max-height 80%
+// 					overflow-y auto
+// 					// margin-right 20px
+// 					// margin-bottom 20px
+// 					// background-color var(--hover-color)
+// 					border 1px solid var(--border-color)
+// 					border-radius var(--radius)
+// 					scroll-snap-align start
+// 					box-shadow var(--shadow)
+// 					transition background-color .2s, box-shadow .2s
+// 					&:hover, &:focus-within {
+// 						background-color var(--hover-color)	
+// 					}
+// 					ul {
+// 						border 0 !important
+// 					}
+// 					> a {
+// 						border 0 !important
+// 					}
+// 					&:last-child {
+// 						margin-inline-end 70%
+// 					}
+// 				}
+// 			}
+// 		}
+// 		// Login & About page
+// 		.account-card, .card > a,
+// 		.page-header, .statuses-grid__item,
+// 		.box-widget, .directory__tag > a, .hero-widget,
+// 		.landing-page__call-to-action, .table-of-contents, .rules-list {
+// 			border-radius var(--radius)
+// 			overflow hidden
+// 		}
 		
 		
 		
-		// Statuses
-		.statuses-grid {
-			margin auto
-		}
-		.entry {
-			&, & ~ .entry {
-				margin 0
-				&:not(:last-child):not(:first-child) {
-					border-radius 0 !important
-				}
-				&:not(:first-child:last-child) {
-					&:last-child {
-						border-top-left-radius 0 !important
-						border-top-right-radius 0 !important
-					}
-					&:first-child {
-						border-bottom-left-radius 0 !important
-						border-bottom-right-radius 0 !important
-					}
-				}
-			}
-			&:last-child:before {
-				content unset !important
-			}
-			&::before, &::after {
-				bottom 1px !important
-			}
-		}
-		.status {
-			.status__content {
-				margin-top 0
-			}
-		}
-		.detailed-status {
-			padding 20px !important
-			padding-bottom 5px !important
-			.status__content {
-				margin-top 0
-			}
-			.detailed-status__meta {
-				margin-top 15px
-				margin-bottom 10px
-			}
-		}
+// 		// Statuses
+// 		.statuses-grid {
+// 			margin auto
+// 		}
+// 		.entry {
+// 			&, & ~ .entry {
+// 				margin 0
+// 				&:not(:last-child):not(:first-child) {
+// 					border-radius 0 !important
+// 				}
+// 				&:not(:first-child:last-child) {
+// 					&:last-child {
+// 						border-top-left-radius 0 !important
+// 						border-top-right-radius 0 !important
+// 					}
+// 					&:first-child {
+// 						border-bottom-left-radius 0 !important
+// 						border-bottom-right-radius 0 !important
+// 					}
+// 				}
+// 			}
+// 			&:last-child:before {
+// 				content unset !important
+// 			}
+// 			&::before, &::after {
+// 				bottom 1px !important
+// 			}
+// 		}
+// 		.status {
+// 			.status__content {
+// 				margin-top 0
+// 			}
+// 		}
+// 		.detailed-status {
+// 			padding 20px !important
+// 			padding-bottom 5px !important
+// 			.status__content {
+// 				margin-top 0
+// 			}
+// 			.detailed-status__meta {
+// 				margin-top 15px
+// 				margin-bottom 10px
+// 			}
+// 		}
 		
-		.account__header__fields {
-			margin-bottom 0 !important
-		}
+// 		.account__header__fields {
+// 			margin-bottom 0 !important
+// 		}
 		
-		// Footer
-		.footer {
-			// Was just something that annoyed me a lil', now it's even :)
-			.column-3, .column-4 {
-				text-align right
-			}
-		}
-	}
+// 		// Footer
+// 		.footer {
+// 			// Was just something that annoyed me a lil', now it's even :)
+// 			.column-3, .column-4 {
+// 				text-align right
+// 			}
+// 		}
+// 	}
 	// FOLLOW PROMPT
 	&.modal-layout {
 		overflow hidden
@@ -1746,23 +1949,55 @@
 			}
 			.account-timeline__header {
 				margin 0px !important
-				margin-top -15px !important
 			}
 		}
 
 		{statuses-list} {
 			border-radius 0 !important
 			&::after {
-				inset-inline 0 !important
+				// inset-inline 0 !important
 			}
 		}
 		.detailed-status__wrapper {
-			margin 10px !important
-			border-radius var(--radius) !important
+			margin 0 !important
 		}
 		.icon-button {
-			flex-grow 1 !important
+			// flex-grow 1 !important
 			justify-content center
+		}
+	}
+	
+	// That layout between mobile and regular view
+	@media (min-width mobileW) and (max-width responsiveW2 - 1) {
+		/.layout-single-column {
+			.ui__header {
+				background none !important
+				border 0
+				margin-inline-end 280px
+				padding-top 12px
+				// z-index 0
+				position static
+			}
+			.columns-area__panels__main {
+				border-top-left-radius 0 !important
+				border-top-right-radius var(--radius) !important
+				overflow clip !important
+				margin-inline 10px !important
+				margin-top -20px
+				.columns-area {
+					border-radius 0 var(--radius) 0 0 !important
+					padding-bottom 0 !important
+				}
+			}
+			.navigation-panel {
+				background none
+				border 0
+				padding-top 10px
+				width 265px !important
+				height calc(100vh - 50px) !important
+				padding-bottom 10px
+				// padding-inline 10px
+			}
 		}
 	}
 	
@@ -1779,97 +2014,56 @@
 			display none
 		}
 		.ui__header {
-			z-index 101
+			// z-index 101
+			position static
+			border-bottom 0
+			margin-bottom calc(0px - var(--radius))
+			padding-bottom var(--radius)
+			box-sizing content-box
+			// margin-inline-end 55px
+			[href^="/@"] {
+				position fixed
+				margin-inline -35px
+			}
+			[href="/publish"] {
+				position fixed
+				bottom 10px
+				// right 10px
+				margin-inline -50px
+				border-radius 100px !important
+				height 50px
+				width 50px
+				font-size 0
+				&::before {
+					content ""
+					font normal normal normal 14px/1 FontAwesome
+					position absolute
+					inset 0
+					display flex
+					justify-content center
+					align-items center
+					font-size 20px
+				}
+			}
+		}
+		.tabs-bar__wrapper {
+			top 0
+		}
+		.column-back-button.column-back-button {
+			border-radius 0 !important
 		}
 		.columns-area__panels {
-			overflow-x scroll !important
+			// overflow-x scroll !important
 			justify-content flex-start
 			max-width 100% !important
 			flex-wrap nowrap !important
-			
-			
-			// Below was experimental stuff, not sure if I'll include
-			
-			// Slide to open nav
-			// scroll-snap-type x mandatory
-			// .columns-area__panels__main {
-			// 	min-width 100% !important
-			// 	z-index 2
-			// 	scroll-snap-align: start;
-			// }
-			// .columns-area__panels__pane--navigational {
-			// 	// min-width 300px !important
-			// 	// height 10px !important
-			// 	// display flex !important
-			// 	order -1
-			// 	min-width 300px !important
-			// 	height 50px !important
-			// 	display block !important
-			// 	scroll-snap-align: start;
-			// 	// display contents !important
-			// 	.columns-area__panels__pane__inner {
-			// 		// position sticky !important
-			// 		min-width 300px !important
-			// 		// right 0
-			// 		// top 0
-			// 		background none !important
-			// 	}
-			// 	.column-link span {
-			// 		display inline !important
-			// 	}
-			// 	.navigation-panel {
-			// 		background none
-			// 		padding 10px
-			// 	}
-			// }
-			
-			
-			// flex-direction column
-			// .columns-area__panels__pane--navigational {
-			// 	position fixed
-			// 	bottom 0
-			// 	height 60px !important
-			// 	width 100%
-			// 	display block !important
-			// 	z-index 10
-			// 	overflow-x scroll
-			// 	// background none.
-			// 	.columns-area__panels__pane__inner {
-			// 		// width 100%
-			// 		width max-content !important
-			// 		height 60px
-			// 		.navigation-panel {
-			// 			flex-direction row
-			// 			min-height unset !important
-			// 			max-height 0px !important
-			// 			padding 0 !important
-			// 			// align-items flex-end
-			// 			overflow visible
-			// 			width max-content
-						
-			// 			&::before {
-			// 				content ""
-			// 				position absolute
-			// 				inset 0
-			// 				top -120px
-			// 				height 240px
-			// 				background inherit
-			// 				z-index -1
-			// 				mask linear-gradient(transparent, black)
-			// 			}
-			// 			a {
-			// 				min-height 60px
-			// 				span {
-			// 					display unset
-			// 				}
-			// 			}
-			// 		}
-			// 	}
-			// }
 		}
 		.columns-area__panels__main {
 			padding 0 !important
 			max-width unset
+			border-top-right-radius var(--radius)
+			overflow clip !important
+			// order 2
 			> .columns-area--mobile {
 				overflow visible !important
 			}
@@ -1890,8 +2084,8 @@
 		.status {
 			padding-top 14px !important
 			.status__avatar {
-				left 14px !important
-				width 45px !important
+				width 42px !important
+				min-width 45px !important
 				height 45px !important
 				background-size 45px !important
 				> div {
@@ -1900,181 +2094,38 @@
 					background-size cover !important
 				}
 			}
-			.status__expand {
-				// width 50px !important
-			}
 			{media}  {
 				margin-bottom 0 !important
 			}
 		}
 		
 		.status__action-bar {
-			margin-inline-start calc(0px - var(--status-left-padding) + 15px)
-			margin-bottom -10px
+			margin-inline -10px
+			margin-bottom -5px
 			.icon-button {
-				flex-grow 1 !important
 				margin 0 !important
 				justify-content center
 				padding .7em !important
 			}
 		}
 		
-		.tabs-bar__wrapper {
-			position fixed !important
-			top unset !important
-			bottom 0 !important
-			left 0 !important
-			right 0 !important
-			display flex
-			flex-direction column
-			box-shadow none !important
-			padding 0
-			background none
-			border-radius 0 !important
-			pointer-events none
-			z-index 105
-						
-			> * {
-				pointer-events all
-			}
-			.tabs-bar {
-				order 2
-				margin 0
-				border 0
-				// height 60px
-				border-radius var(--radius-round) var(--radius-round) 0 0
-				// border-top 1px solid var(--border-color)
-				color white !important
-				overflow visible !important
-				padding-inline 5px
-				box-shadow 0 0 24px rgba(0,0,0,0.1)
-				/.rtl & {
-					flex-direction row-reverse
-					// The react swiping directions can't be reversed, so I would have to reverse this, instead.
-				}
-				a {
-					flex-grow 1 !important
-					flex-basis unset !important
-					padding-block 20px
-					position relative
-					border 0
-					background none !important
-					transition transform .4s cubic-bezier(0,0,0,4), filter .1s
-					> i {
-						font-size 18px
-						filter opacity(.7)
-						.icon-with-badge__badge {
-							font-size .5em
-							border-radius var(--radius-round)
-						}
-						transition transform .2s cubic-bezier(0,0,0,1.2)
-					}
-					&::before {
-						content ""
-						position absolute
-						bottom -10px
-						width 5px
-						height 10px
-						border-radius 100px
-						background-color currentColor
-						left 50%
-						margin-inline-start -2.5px
-						transition bottom .2s cubic-bezier(0,0,0,4), width .2s, margin .2s
-					}
-					&:active {
-						transform translateY(5px)
-						transition transform 1s
-					}
-				}
-				a.active {
-					transform translateY(-2px)
-					i {
-						// transform scale(1.2) translateY(0px)
-						filter none !important
-					}
-					&::before {
-						bottom -6px
-						width 10px
-						margin-left -5px
-					}
-				}
-			}
-			#tabs-bar__portal {
-				margin 10px 15px !important
-				margin-right auto !important
-				width max-content !important
-				box-shadow var(--shadow) !important
-				max-width calc(100vw - 130px)
-				border-radius var(--radius-round) !important
-				overflow hidden
-				transition transform .2s
-				> button {
-					padding-inline 20px
-				}
-				.column-header__wrapper {
-					display flex
-					flex-direction column-reverse
-				}
-				.column-header {
-					border-radius 0 !important
-				}
-				.column-header > button {
-					padding-inline 15px
-					transform-origin center !important
-				}
-				.column-header__buttons > button {
-					// padding-inline 0 !important
-					padding-inline 15px
-					transition padding .2s, margin .2s
-					&:first-child {
-						padding-inline-start 10px
-						&.active {
-							margin-inline-start 20px
-						}
-					}
-					&:last-child {
-						padding-inline-end 20px
-					}
-					&.active {
-						padding-inline 20px
-					}
-				}
-				.column-header {
-					transition transform .2s
-					&:active {
-						transform scale(.98)
-					}
-				}
-				.column-header__collapsible {
-					max-width calc(100vw - 40px) !important
-					
-					opacity 1 !important
-					margin-bottom -1px // sometimes there's an annoying 1px gap, so
-					&:not(.collapsed) {
-						max-height calc(100vh - 150px)
-					}
-				}
-				// .column-header__collapsible {
-				// 	transition margin-top .2s cubic-bezier(0,0,0,2)
-				// 	overflow-y auto !important
-				// 	&:not(.collapsed) {
-				// 		// width auto !important
-				// 		max-width calc(100vw - 40px)
-				// 		// margin-top 5px
-				// 	}
-				// 	max-width 100%
-				// }
-			}
-			/.floating-action-button {
-				bottom 70px
-				right 15px
-				width 55px
-				height 55px
-				z-index 105
-			}
-		}
 		.icon-button:after {
 			content unset !important
+		}
+		
+		.navigation-panel {
+			// border-color transparent !important
+			// border-right 1px solid
+			// border 0
+			// background rgba(100,100,100,0.05)
+			// background none
+			// padding-top 10px
+			margin-top -55px
+			padding-top 55px
+			height 100vh
+			border 0
+			margin-inline-start 1px
+			padding-bottom 80px
 		}
 		
 		
@@ -2136,8 +2187,7 @@
 				position fixed
 				bottom 70px
 				border-radius var(--radius-round) !important
-				left 20px
-				right 20px
+				inset-inline 20px
 				padding-block 0
 				z-index 2
 				button {
@@ -2169,30 +2219,6 @@
 			
 		}
 		
-		// .modal-root__container {
-		// 	overflow-y auto !important
-		// 	display unset
-		// 	animation unset
-		// 	> .actions-modal {
-		// 		width unset
-		// 		margin 20px
-		// 		margin-bottom 40px
-		// 		margin-top calc(100vh - 340px)
-		// 		// margin-bottom 50px
-		// 		min-height max-content
-		// 		max-height unset !important
-		// 		border-radius var(--radius)
-		// 		max-width unset
-		// 		// animation slideUp .7s 0s backwards cubic-bezier(0,1,0,1.1)
-		// 		// overflow visible !important
-		// 		ul {
-		// 			max-height unset !important
-		// 			min-height max-content !important
-		// 			overflow visible !important
-		// 		}
-		// 	}
-		// }
-		
 		/.search-popout {
 			max-width unset !important
 			width calc(100vw - 70px) !important
@@ -2203,7 +2229,7 @@
 		
 	}
 
-	// Fix up multi-columns 
+	// Advanced View Fixes 
 	/.layout-multiple-columns #mastodon .columns-area {
 		overflow auto hidden !important
 		padding 0
@@ -2251,6 +2277,16 @@
 						padding-inline-end 15px !important
 					}
 				}
+			}
+			& > .drawer__pager {
+				&, & > .drawer__inner:not(.darker) {
+					overflow visible
+				}
+				
+			}
+			.drawer__inner__mastodon {
+				margin-inline -6px
+				margin-inline-end -4px
 			}
 		}
 		.search {
@@ -2303,6 +2339,12 @@
 		@keyframes slideUpFade {
 			from { 
 				transform translateY(20px) 
+				filter opacity(0)
+			}
+		}
+		@keyframes slideDowFade {
+			from {
+				transform translateY(-20px)
 				filter opacity(0)
 			}
 		}
