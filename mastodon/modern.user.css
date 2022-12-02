@@ -25,13 +25,14 @@
 - Improved responsiveness / mobile layout
 - More tweaks!! More fixes!!!
 
-/* HOTFIX 1.4.1
-- Fixed overflow in compose box in advanced view
+/* HOTFIX 1.4.2
+- Fixed overflow in Media tab in Advanced View
+- Other minor fixes
 */
 
 /* ==UserStyle==
 @name           Mastodon Modern
-@version        1.4.1
+@version        1.4.2
 @description    Gives Mastodon a nicer look :)
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/mastodon/modern.user.css
 @preprocessor   stylus
@@ -545,7 +546,7 @@
 				display flex
 				flex-wrap wrap
 				white-space unset
-				span {
+				> span {
 					margin-inline-end .4em
 				}
 			}
@@ -711,16 +712,17 @@
 	
 	// Gallery
 	.account-gallery__container {
-		border-radius 24px
-		overflow hidden
+		border-radius var(--radius)
+		overflow clip
 		padding 0
-		margin 8px
+		margin 4px
 		gap 4px
+		min-height max-content
 		// justify-content center
 		/.account-gallery__item {
 			margin 0
 			border-radius 0
-			flex 1 1 200px
+			flex 1 1 calc(100px + 15%)
 			transition flex 1s cubic-bezier(.2,1,0,1)
 			&:hover {
 				flex-grow 2 !important
@@ -904,7 +906,8 @@
 	
 	.status, .columns-area__panels__main .account {
 		border 0 !important
-		padding-block 15px !important
+		padding-block 15px
+		// overflow visible
 		&:not(.account) {
 			padding-inline-start var(--status-left-padding) !important
 		}
@@ -913,7 +916,7 @@
 			border-radius var(--radius)
 		}
 		&::after {
-			// bottom -10px !important
+			// bottom -10.5px !important
 		}
 	}
 	.status__prepend, .notification__message {
@@ -1183,12 +1186,6 @@
 		}
 	}
 	
-
-	
-	
-	.ui__header {
-		z-index 101
-	}
 	.tabs-bar__wrapper, .column-back-button--slim .column-back-button {
 		z-index 101
 		/.column-header, /.column-inline-form {
@@ -1677,220 +1674,18 @@
 			}
 		}
 	
-	// Public layout -- Public layout gone now so, commented out
-// 	&.public-layout {
-// 		.container:nth-child(2) > .grid .column-1 {
-// 			position sticky
-// 			align-self flex-end
-// 			bottom 0
-// 			min-height calc(100vh - 80px)
-// 			> * {
-// 				border-radius var(--radius)
-// 				overflow hidden
-// 				border 0 !important
-// 			}
-// 			a, .hero-widget__text {
-// 				border 0 !important
-// 			}
-// 		}
+	// ABOUT PAGE
+	.about {
+		.account {
+			margin-top -10px
+			padding 0
+			overflow visible
+			&::after {
+				content unset !important
+			}
+		}
+	}
 		
-// 		@media (min-width 416px) {
-// 			.grid, .grid-4 {
-// 				gap 15px
-// 				a {
-// 					max-width 100%
-// 					box-sizing border-box
-// 				}
-// 			}
-			
-// 			.row__mascot {
-// 				width 0
-// 				img {
-// 					max-width 100%
-// 					object-fit contain
-// 					object-position bottom
-// 				}
-// 			}
-// 			.header {
-// 				border-radius var(--radius)
-// 				// margin-top 20px
-// 				// margin-bottom 15px
-// 				margin 15px 0
-// 			}
-// 			.public-account-header {
-// 				border-radius var(--radius)
-// 				border 0 !important
-// 				&:not(.public-account-header--no-bar) {
-// 					margin-bottom 15px
-// 				}
-
-// 				.public-account-header__bar::before {
-// 					border 0
-// 				}
-// 			}
-// 			.account__section-headline {
-// 				border-radius var(--radius) var(--radius) 0 0
-// 				border 0
-// 				// margin-bottom calc(0px - var(--radius))
-// 				// padding-bottom var(--radius)
-// 				& + .activity-stream > .entry:first-child {
-// 					border-radius 0 !important
-// 				}
-// 			}
-// 			.table-of-contents {
-// 				max-height calc(100vh - 20px)
-// 				min-height unset !important
-// 				overflow-y scroll !important
-// 				display flex
-// 				flex-direction column
-// 				position sticky
-// 				top 10px
-// 			}
-// 		} 
-// 		@media (max-width 600px) {
-// 			.public-account-header__bar {
-// 				// flex-wrap nowrap
-// 				.avatar {
-// 					width 100px !important
-// 					height 100px !important
-// 					margin-top -50px
-// 				}
-// 				.public-account-header__tabs {
-// 					border 0 !important
-// 				}
-// 				.account__header__fields {
-// 					border 0 !important
-// 					padding-top 0 !important
-// 				}
-// 			}
-// 		}
-// 		@media (max-width 416px) {
-			
-			
-// 			.contact-widget {
-// 				padding 0 10px
-// 			}
-// 			.grid-4 > div:not(.column-4) {
-// 				position relative
-// 				z-index 2
-// 				&.column-2 {
-// 					padding-block 20px
-// 				}
-// 			}
-// 			.table-of-contents {
-// 				// margin calc(0px - var(--radius) * 2) 0
-// 				max-height 70vh
-// 				// min-height max-content !important
-// 				max-content min-content
-// 				display flex
-// 				flex-direction column
-// 				flex-wrap wrap
-// 				// padding calc(30px + var(--radius)) 20px
-// 				padding 30px
-// 				box-sizing border-box
-// 				overflow-x scroll !important
-// 				scroll-snap-type x mandatory
-// 				scroll-padding-inline-start 30px
-// 				gap 20px 30px
-// 				position relative
-// 				background none !important
-// 				border 0 !important
-// 				scroll-behavior smooth
-// 				> li {
-// 					width 70%
-// 					max-height 80%
-// 					overflow-y auto
-// 					// margin-right 20px
-// 					// margin-bottom 20px
-// 					// background-color var(--hover-color)
-// 					border 1px solid var(--border-color)
-// 					border-radius var(--radius)
-// 					scroll-snap-align start
-// 					box-shadow var(--shadow)
-// 					transition background-color .2s, box-shadow .2s
-// 					&:hover, &:focus-within {
-// 						background-color var(--hover-color)	
-// 					}
-// 					ul {
-// 						border 0 !important
-// 					}
-// 					> a {
-// 						border 0 !important
-// 					}
-// 					&:last-child {
-// 						margin-inline-end 70%
-// 					}
-// 				}
-// 			}
-// 		}
-// 		// Login & About page
-// 		.account-card, .card > a,
-// 		.page-header, .statuses-grid__item,
-// 		.box-widget, .directory__tag > a, .hero-widget,
-// 		.landing-page__call-to-action, .table-of-contents, .rules-list {
-// 			border-radius var(--radius)
-// 			overflow hidden
-// 		}
-		
-		
-		
-// 		// Statuses
-// 		.statuses-grid {
-// 			margin auto
-// 		}
-// 		.entry {
-// 			&, & ~ .entry {
-// 				margin 0
-// 				&:not(:last-child):not(:first-child) {
-// 					border-radius 0 !important
-// 				}
-// 				&:not(:first-child:last-child) {
-// 					&:last-child {
-// 						border-top-left-radius 0 !important
-// 						border-top-right-radius 0 !important
-// 					}
-// 					&:first-child {
-// 						border-bottom-left-radius 0 !important
-// 						border-bottom-right-radius 0 !important
-// 					}
-// 				}
-// 			}
-// 			&:last-child:before {
-// 				content unset !important
-// 			}
-// 			&::before, &::after {
-// 				bottom 1px !important
-// 			}
-// 		}
-// 		.status {
-// 			.status__content {
-// 				margin-top 0
-// 			}
-// 		}
-// 		.detailed-status {
-// 			padding 20px !important
-// 			padding-bottom 5px !important
-// 			.status__content {
-// 				margin-top 0
-// 			}
-// 			.detailed-status__meta {
-// 				margin-top 15px
-// 				margin-bottom 10px
-// 			}
-// 		}
-		
-// 		.account__header__fields {
-// 			margin-bottom 0 !important
-// 		}
-		
-// 		// Footer
-// 		.footer {
-// 			// Was just something that annoyed me a lil', now it's even :)
-// 			.column-3, .column-4 {
-// 				text-align right
-// 			}
-// 		}
-// 	}
 	// FOLLOW PROMPT
 	&.modal-layout {
 		overflow hidden
@@ -2025,10 +1820,22 @@
 			// z-index 101
 			position static
 			border-bottom 0
-			margin-bottom calc(0px - var(--radius))
-			padding-bottom var(--radius)
+			// margin-bottom calc(0px - var(--radius))
+			// padding-bottom var(--radius)
 			box-sizing content-box
-			// margin-inline-end 55px
+			&::after {
+				content ""
+				position absolute
+				right 46px
+				top 53px
+				background inherit
+				width calc(var(--radius) * 2)
+				height var(--radius)
+				// border-bottom-left-radius 200%
+				// border-radius 100%
+				border-radius 100px 100px 0 0
+				transform rotate(45deg)
+			}
 			[href^="/@"] {
 				position fixed
 				margin-inline -35px
@@ -2037,11 +1844,12 @@
 				position fixed
 				bottom 10px
 				// right 10px
-				margin-inline -50px
+				margin-inline -60px
 				border-radius 100px !important
-				height 50px
-				width 50px
+				height 60px
+				width 60px
 				font-size 0
+				box-shadow var(--shadow-low)
 				&::before {
 					content ""
 					font normal normal normal 14px/1 FontAwesome
@@ -2050,7 +1858,8 @@
 					display flex
 					justify-content center
 					align-items center
-					font-size 20px
+					font-size 24px
+					
 				}
 			}
 		}
@@ -2071,6 +1880,7 @@
 			max-width unset
 			border-top-right-radius var(--radius)
 			overflow clip !important
+			// z-index 2
 			// order 2
 			> .columns-area--mobile {
 				overflow visible !important
@@ -2226,6 +2036,26 @@
 			}
 			
 		}
+		
+		// ABOUT PAGE
+		.about {
+			margin-inline 10px !important
+			.account {
+				margin-top 0
+			}
+			.about__meta {
+				border-radius var(--radius)
+			}
+			.about__header__hero, .about__section {
+				margin-inline -11px
+				width unset
+			}
+			.about__section {
+				margin-bottom 0
+				border-bottom 1px solid
+			}
+		}
+		
 		
 		/.search-popout {
 			max-width unset !important
