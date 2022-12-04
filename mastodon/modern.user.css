@@ -9,11 +9,12 @@
 	//	4. Paste your server's URL in the								//
 	//		"Custom included sites" textbox like this:					//
 	//  		*//DOMAIN HERE/*  										//
+	//	5. Click "Save"													//
 	//																	//
 	 //////////////////////////////////////////////////////////////////// 
 
 	 
-@-moz-document domain("mastodon.coffee"), domain("brands.town"), domain("mstdn.social"), domain("social.vivaldi.net"), domain("masto.ai"), domain("mastodon.art"), domain("tech.lgbt"), domain("mastodon.social"), domain("mastodon.online"), domain("mastodon.lol"), domain("mas.to"), domain("c.im"), domain("nerdculture.de"), domain("maly.io"), domain("corteximplant.com"), domain("queer.party"), domain("fosstodon.org"), domain("meow.social"), domain("indieweb.social"), domain("raru.re"), domain("ani.work") {
+@-moz-document domain("mastodon.coffee"), domain("brands.town"), domain("mstdn.social"), domain("social.vivaldi.net"), domain("masto.ai"), domain("mastodon.art"), domain("tech.lgbt"), domain("mastodon.social"), domain("mastodon.online"), domain("mastodon.lol"), domain("floss.social"), domain("mas.to"), domain("c.im"), domain("nerdculture.de"), domain("maly.io"), domain("corteximplant.com"), domain("queer.party"), domain("fosstodon.org"), domain("meow.social"), domain("indieweb.social"), domain("raru.re"), domain("ani.work") {
 /* Update 1.4.0
 - Fixed overflow / unable to scroll in left column
 - Added underlines to links
@@ -32,7 +33,7 @@
 
 /* ==UserStyle==
 @name           Mastodon Modern
-@version        1.4.2
+@version        1.4.3
 @description    Gives Mastodon a nicer look :)
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/mastodon/modern.user.css
 @preprocessor   stylus
@@ -546,9 +547,7 @@
 				display flex
 				flex-wrap wrap
 				white-space unset
-				> span {
-					margin-inline-end .4em
-				}
+				gap 0 .4em
 			}
 		}
 		
@@ -879,6 +878,10 @@
 				width 64px !important
 				height 64px !important
 				background-size 64px 64px !important
+				img {
+					width inherit
+					height inherit
+				}
 			}
 			.account-card__bio {
 				margin-top 0 !important
@@ -1759,6 +1762,11 @@
 			border-radius 0 !important
 			&::after {
 				// inset-inline 0 !important
+			}
+		}
+		[class*="explore__"] {
+			> * {
+				border-radius var(--radius) !important
 			}
 		}
 		.detailed-status__wrapper {
