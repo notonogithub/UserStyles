@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Mastodon Advanced View Plus
-@version        1.0.0
+@version        1.0.1
 @description    Adds more options for Mastodon's advanced view!
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/mastodon/advanced-view-plus.user.css
 @preprocessor   stylus
@@ -22,7 +22,7 @@
 @var checkbox lastColumnStick "Columns: Stick last column to right" 1
 @var checkbox cascade         "Columns: Cascade" 0
 @var range minColumnsAmountShrink "Columns: Cascade Shrink Amount" [250, 50, 250, 10, "px"]
-@var text  minColumns         "Set named columns to fixed size (separate by space)" "Notifications"
+@var text  minColumns         "Set named columns to fixed size (separate by space)" "EnterNamesHere"
 @var range minColumnsWidth    "Set named columns to fixed size: size" [250, 250, 800, 50, "px"]
 @var checkbox snapColumns     "Scroll Snap Columns" 0
 @var text aaaaaaaaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA "Donate!" '"https://www.buymeacoffee.com/Freeplay"'
