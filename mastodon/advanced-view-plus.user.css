@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Mastodon Advanced View Plus
-@version        1.0.1
+@version        1.0.2
 @description    Adds more options for Mastodon's advanced view!
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/mastodon/advanced-view-plus.user.css
 @preprocessor   stylus
@@ -20,16 +20,14 @@
 @var range columnMaxWidth     "Columns: Max Width (700 = full)"     [600, 300, 700, 50, "px"]
 @var range columnOpacity      "Columns: Unfocused Opacity" [1, .5, 1, .1]
 @var checkbox lastColumnStick "Columns: Stick last column to right" 1
-@var checkbox cascade         "Columns: Cascade" 0
-@var range minColumnsAmountShrink "Columns: Cascade Shrink Amount" [250, 50, 250, 10, "px"]
+@var text collapsedColumns    "Columns: Cascade named columns: (Separate by space. Type 'All' for all columns)" "EnterNamesHere"
+@var range minColumnsAmountShrink "Columns: Cascade Shrink Amount" [250, 50, 300, 10, "px"]
 @var text  minColumns         "Set named columns to fixed size (separate by space)" "EnterNamesHere"
 @var range minColumnsWidth    "Set named columns to fixed size: size" [250, 250, 800, 50, "px"]
 @var checkbox snapColumns     "Scroll Snap Columns" 0
 @var text aaaaaaaaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA "Donate!" '"https://www.buymeacoffee.com/Freeplay"'
 
 ==/UserStyle== */
-
-// @-moz-document domain("mastodon.coffee"), domain("mstdn.social"), domain("mastodon.art"), domain("mastodon.social"), domain("mastodon.online"), domain("mastodon.lol"), domain("mastodon.technology"), domain("mas.to"), domain("c.im"), domain("nerdculture.de"), domain("maly.io"), domain("queer.party"), domain("brands.town"), domain("fosstodon.org"), domain("meow.social"), domain("indieweb.social"), domain("masto.ai") {
 	
 .layout-multiple-columns > #mastodon {
 	softGradientRight = linear-gradient(
@@ -239,76 +237,121 @@
 	
 	// Cascading Columns
 	&#mastodon {
-		if cascade {
-			.column-header__wrapper, .column-header {
-				z-index unset !important // Weird behavior w/ headers if this is not set
-			}
-		}
+		// if cascade {
+		// 	.column-header__wrapper, .column-header {
+		// 		z-index unset !important // Weird behavior w/ headers if this is not set
+		// 	}
+		// }
 		.column.column.column {
 			transition-timing-function cubic-bezier(0,0,0,1.1) !important
 			transition-duration .2s !important
 			position relative
 			z-index 1
 			background inherit !important
-			if cascade {
-				minColumnsAmountShrinkMore = minColumnsAmountShrink / 1.5
-				box-shadow 0px 0 200px rgba(0,0,0,.4)
-				background inherit
-				// padding-inline 0
-				
-				// margin-inline-end minColumnsAmountShrinkMore !important
-				
-				// transition transform 0s !important
-				&:not(:nth-child(2)) {
-					margin-left 50px - columnMinWidth
-					margin-left - minColumnsAmountShrink
-				}
-				&:not(:last-child) > * > * {
-					opacity columnOpacity !important
-					if columnOpacity == 1 {
-						opacity .6 !important
-					}
-					transition opacity .2s
-				}
-				&:hover {
-					// margin 0
-					opacity 1 !important
-					z-index 2
-					// transition transform 0s !important
-					> * > * {
-						opacity 1 !important
-					}
-					& ~ .column > * > * {
+			minColumnsAmountShrinkMore = minColumnsAmountShrink / 1.5
+			
+			for name in collapsedColumns {
+				if name == "All" {
+					selector = "&"
+					box-shadow 0px 0 200px rgba(0,0,0,.4)
+					&:not(:last-child) > * > * {
 						opacity columnOpacity !important
 						if columnOpacity == 1 {
 							opacity .6 !important
 						}
-						
+						transition opacity .2s
 					}
-
-					&:not(:nth-last-child(2)) {
-						// opacity 0 !important
-						// margin-right columnMinWidth - 100px
+				} else {
+					selector = "&[aria-label^=" + name + "], &:last-child"
+				}
+				{selector} {
+					margin-right - minColumnsAmountShrink !important
+					overflow clip
+					&:last-child {
+						transition background 0s .2s !important
+						box-shadow none !important
+						> * {
+							transition transform .2s !important
+							transition-timing-function cubic-bezier(0,0,0,1.1) !important
+						}
+						&::after {
+							content ""
+							position absolute
+							inset 0
+							box-shadow inset -200px 0 200px -200px rgba(0,0,0,.7)
+							opacity 0
+							z-index 99999
+							pointer-events none
+							transition .2s opacity
+						}
 					}
-					& ~ .column {
-						transform translateX(columnMinWidth - 100px)
-						transform translateX(minColumnsAmountShrinkMore)
+					&:hover {
+						z-index 2
+						// box-shadow 0px 0 200px rgba(0,0,0,.4) !important
 						
 						& > * > * {
-							// opacity columnOpacity !important
+							opacity 1 !important
+						}
+						& ~ .column {
+							// 
+							// margin-left - minColumnsAmountShrinkMore !important
+							// &:not(:last-child) {
+								transform translateX(minColumnsAmountShrinkMore)
+								// margin-right - minColumnsAmountShrinkMore
+								// margin-left minColumnsAmountShrinkMore
+								for row in (1..20) {
+									&:nth-child({row}) {
+										// transform translateX(minColumnsAmountShrinkMore - (minColumnsAmountShrinkMore / (row / 4)))
+										transform translateX(minColumnsAmountShrinkMore / (row / 4))
+										&:last-child {
+											> * {
+												transform translateX(minColumnsAmountShrinkMore / (row / 4))
+											}
+										}
+									}
+								}
+							// }
+							box-shadow 0px 0 200px rgba(0,0,0,.4) !important
+							
+							&:last-child {
+								transform none !important
+								// z-index -1
+								background none !important
+								box-shadow none !important
+								transition background 0s !important
+								pointer-events none
+								&::after {
+									opacity 1
+								}
+								> * {
+									pointer-events all
+									box-shadow 0px 0 200px rgba(0,0,0,.4) !important
+									transform translateX(minColumnsAmountShrinkMore)
+								}
+								
+							}
+							
+							
+							& > * {
+								opacity columnOpacity
+								// if columnOpacity == 1 {
+								// 	opacity .6 !important
+								// }
+							}
 						}
 						
 					}
-					
-				}
-
-				.scrollable {
-					&::before {
-						content unset !important
+					& + .column {
+						box-shadow 0px 0 200px rgba(0,0,0,.4)
+					}
+					.scrollable {
+						&::before {
+							content unset !important
+						}
 					}
 				}
-
 			}
+			
 		}
 	}
 	
@@ -406,6 +449,7 @@
 	&#mastodon {
 		overflow-x auto
 		justify-content unset
+		
 		> div {
 			// display contents
 			min-width max-content
@@ -462,6 +506,12 @@
 				}
 			}
 			
+			// if alignColumns {
+			// 	// width 1% !important
+			// 	// width 30vw !important
+			// 	// flex 1 0 30% !important
+			// }
+			
 			if snapColumns {
 				scroll-snap-align start
 			}
@@ -477,7 +527,18 @@
 			width drawerW !important
 			scroll-snap-align end
 		}
+		
 	}
 	
 	
 }
+
+
+
+
+
+
+
+
+
+
