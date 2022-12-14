@@ -13,6 +13,11 @@ labels:
 
 ---
 
+<!--
+    IF APPLICABLE (or if it isn't already):
+    SELECT THE CORRESPONDING MILESTONE YOUR ISSUE IS RELATED TO WITH THE COLUMN TO THE RIGHT 
+-->
+
 **Link to style:**
 
 
