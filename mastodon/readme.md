@@ -4,10 +4,12 @@ Makes Mastodon look a bit nicer :)
 | ![](https://codeberg.org/Freeplay/UserStyles/raw/branch/main/mastodon/images/mastodon-modern.png) | ![](https://codeberg.org/Freeplay/UserStyles/raw/branch/main/mastodon/images/mastodon-modern-multicolumn.png) | ![](https://codeberg.org/Freeplay/UserStyles/raw/branch/main/mastodon/images/mastodon-modern-post.png) | ![](https://codeberg.org/Freeplay/UserStyles/raw/branch/main/mastodon/images/mastodon-modern-post-dark.png) |
 | --- | --- | --- | --- |
 
-## If you're a user,
-**[You can install the style for any instance here, using the Stylus browser extension (NOT Stylish)](https://userstyles.world/style/4773)**
+### **[Install for any server using the Stylus browser extension](https://userstyles.world/style/4773)**
+### [Report issues for the style here](https://codeberg.org/Freeplay/UserStyles/milestone/3093)
 
-## Tutorial + Example for adding a Mastodon theme:
+--
+
+## Example for adding to your own instance:
 https://github.com/Coffeedon/Cofffee-Assets#to-use-a-pre-made-theme
 
 **For light theme, you may need to include `@import 'mastodon-light/diff';`**
