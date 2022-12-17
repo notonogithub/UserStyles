@@ -1,0 +1,63 @@
+/* ==UserStyle==
+@name           Match Stylus Sidebar to Editor Theme
+@version        1.0.0
+@description    Makes the sidebar in the editor the same color as the editor theme
+@updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/stylus-match-editor-theme.user.css
+@preprocessor   stylus
+
+ -- AUTHOR STUFF --
+@namespace      Freeplay
+@author         Freeplay (https://freeplay.codeberg.page/)
+@homepageURL    https://codeberg.org/Freeplay/UserStyles
+@supportURL     https://codeberg.org/Freeplay/UserStyles/issues
+
+@var checkbox light "Enable if a using light theme" 0 
+==/UserStyle== */
+
+@-moz-document url-prefix("moz-extension://"), url-prefix("chrome-extension://") {
+	#sections {
+		padding-left: 0;
+	}
+	#header {
+		background: rgba(150,150,150,0.02) !important;
+		button, input, select {
+			background rgba(150,150,150,0.02)
+			border-color rgba(150,150,150,0.5)
+		}
+		if light {
+			* {
+				--fg black
+				color var(--fg)
+			}
+		} else {
+			* {
+				--fg hsl(0, 0%, 80%)
+				color var(--fg)
+			}
+		}
+	}
+	#header-resizer {
+		opacity .2
+	}
+	@media (min-width: 851px) {
+		.single-editor .CodeMirror {
+			padding-left: var(--header-width)
+		}
+	}
+	@media (max-width: 850px) {
+		#sections {
+			margin-top: -500px;
+			flex-grow: 1;
+		}
+		.single-editor .CodeMirror {
+			padding-top: 500px;
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+}
