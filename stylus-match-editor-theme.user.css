@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Match Stylus Sidebar to Editor Theme
-@version        1.0.0
+@version        1.0.1
 @description    Makes the sidebar in the editor the same color as the editor theme
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/stylus-match-editor-theme.user.css
 @preprocessor   stylus
@@ -15,6 +15,7 @@
 ==/UserStyle== */
 
 @-moz-document url-prefix("moz-extension://"), url-prefix("chrome-extension://") {
+#stylus-edit {
 	#sections {
 		padding-left: 0;
 	}
@@ -58,6 +59,6 @@
 	
 	
 	
-	
+}
 	
 }
