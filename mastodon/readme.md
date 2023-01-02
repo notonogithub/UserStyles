@@ -5,7 +5,7 @@ Makes Mastodon look a bit nicer :)
 | --- | --- | --- | --- |
 
 ### **[Install for any server using the Stylus browser extension](https://userstyles.world/style/4773)**
-### [Report issues for the style here](https://codeberg.org/Freeplay/UserStyles/milestone/3093)
+#### **WARNING:** Glitch-soc & its derivatives are not supported.
 
 --
 
