@@ -4,7 +4,7 @@ Makes Mastodon look a bit nicer :)
 | ![](https://codeberg.org/Freeplay/UserStyles/raw/branch/main/mastodon/images/mastodon-modern.png) | ![](https://codeberg.org/Freeplay/UserStyles/raw/branch/main/mastodon/images/mastodon-modern-multicolumn.png) | ![](https://codeberg.org/Freeplay/UserStyles/raw/branch/main/mastodon/images/mastodon-modern-post.png) | ![](https://codeberg.org/Freeplay/UserStyles/raw/branch/main/mastodon/images/mastodon-modern-post-dark.png) |
 | --- | --- | --- | --- |
 
-### **[Install for any server using the Stylus browser extension](https://userstyles.world/style/4773)**
+### **> [Install for any server using the Stylus browser extension](https://userstyles.world/style/4773) <**
 #### **WARNING:** Glitch-soc & its derivatives are not supported.
 
 
@@ -12,6 +12,7 @@ Makes Mastodon look a bit nicer :)
 
 https://github.com/Coffeedon/Cofffee-Assets#to-use-a-pre-made-theme
 
+- **Make sure to use the compiled code from [this repo's `modern.css`](https://codeberg.org/Freeplay/UserStyles/src/branch/main/mastodon/modern.css)**
 - **For light theme, you may need to include `@import 'mastodon-light/diff';`**
 - **Same goes for the High Contrast theme `@import 'contrast/diff';`**
 - While not tested thoroughly, could work well with other color themes, as well. 
