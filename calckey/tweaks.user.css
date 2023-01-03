@@ -1,0 +1,326 @@
+/* ==UserStyle==
+@name           Misskey/Calckey Tweaks
+@version        1.0.0
+@description    It says Misskey tweaks but I haven't actually tested there
+@updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/mastodon/calckey/tweaks.user.css
+@preprocessor   stylus
+
+ -- AUTHOR STUFF --
+@namespace      Freeplay
+@author         Freeplay (https://freeplay.codeberg.page/)
+@homepageURL    https://codeberg.org/Freeplay/UserStyles
+@supportURL     https://codeberg.org/Freeplay/UserStyles/issues
+
+
+@var checkbox altDeck	"Deck View: Alternative Design" 1
+@var checkbox hideDeck	"Deck View: Hide controls" 1
+@var range    columnMin	"Deck View: Columns Minimum Width (enable flexible column)" [330, 330, 1000, 10, "px"]
+@var range    columnMax	"Deck View: Columns Maximum Width (enable flexible column)" [600, 330, 1000, 10, "px"]
+@var checkbox altPost	"Alternative Post Design" 0
+@var checkbox altCW		"Alternative Show Content Button Design" 1
+@var checkbox unfixImg	"Auto Media Height" 1
+
+==/UserStyle== */
+
+#misskey_app, #calckey_app {
+	
+bg() {
+	content ""
+	position absolute
+	inset 0
+}
+
+.column[style^="flex: 1 1 0%"] {
+	min-width columnMin
+	max-width columnMax
+	flex-grow 999999 !important
+}
+
+if altDeck {
+	.mk-deck {
+		--navBg transparent
+		--X14 transparent
+		&::before, &::after {
+			content ""
+			flex 1 9999 0px !important
+		}
+		> div:first-child {
+			position sticky
+			left 0
+			backdrop-filter blur(20px)
+			z-index 2
+			&::before {
+				content ""
+				position absolute
+				inset 0
+				background var(--bg)
+				z-index 2
+				opacity .8
+			}
+		}
+		> .main {
+			// flex-grow 0 !important
+			// width max-content !important
+			display contents !important
+		}
+		.columns {
+			// padding-left 4px
+			margin-left -80px
+			padding-left 80px
+			flex-grow 0 !important
+			width max-content !important
+			// width max-content
+			display contents !important
+		}
+		.column {
+			border 0 !important
+			margin-left 0 !important
+			margin-right 8px !important
+			display flex
+			flex-direction column
+			
+			&.paged {
+				background none !important
+			}
+			> header {
+				margin-top 2px
+				height 30px !important
+				background none !important
+				align-items center
+				padding-inline var(--radius) !important
+
+				&.indicated {
+					box-shadow none
+					color var(--accent)
+					font-weight 600
+					&::after {
+						content ""
+						width 20px
+						height 8px
+						background-color var(--accent)
+						border-radius 100px
+					}
+				}
+				.header {
+					align-items center !important
+					display flex !important
+					i {
+						font-size 1em !important
+					}
+				}
+
+			}
+			> header + div {
+				border-radius var(--radius) var(--radius) 0 0 !important
+				height 0 !important
+				flex-grow 1 !important
+				[style="padding: 12px;"], > div {
+					padding 0px !important
+				}
+				&, & > div {
+					display flex
+					flex-direction column
+					flex-grow 1
+					// overflow clip
+					
+				}
+			}
+			.main._gap {
+				&, & > ._gap {
+					margin-top 0 !important
+				}
+
+			}
+			[data-sticky-container-header-height] {
+				width 800px
+				margin auto
+				max-width 100%
+			}
+			.thin {
+				// backdrop-filter blur(10px) !important
+				// background none !important
+				// z-index 2
+				// position relative
+				// margin-bottom 1em
+				// &::before {
+				// 	bg()
+				// 	background var(--panelHeaderBg)
+				// 	opacity 1
+				// }
+
+			}
+			header + div > div > [style*="position: sticky; top: var(--stickyTop"] {
+				> div {
+					border 0 !important
+				}
+				border-radius var(--radius)
+				overflow clip
+				margin-bottom .2em
+				.highlight {
+					inset-block 6px !important
+					height unset
+					border-radius var(--radius)
+					z-index -1
+					opacity .2
+				}
+				.active {
+					font-weight 600
+				}
+				button {
+					display inline-flex !important
+					align-items center
+				}
+
+				& + div {
+					height 0
+					overflow-y auto
+					flex-grow 1
+					--stickyTop 0 !important
+					border-radius var(--radius) var(--radius) 0 0
+					
+				}
+			}
+			.banner::after {
+				
+				// content unset !important
+				top 100px !important
+				border-radius var(--radius) var(--radius) 0 0 !important
+			}
+
+		}
+		.sideMenu {
+			// margin-left 0 !important
+			order 2
+		}
+	}
+}
+
+
+if altPost {
+	.article {
+		display grid !important
+		// justify-content space-between
+		align-items center
+		grid-template-columns 58px
+		.avatar {
+			width 45px !important
+			height @width
+			grid-row 1 / span 2
+			position relative !important
+			top 0 !important
+		}
+		> .main {
+
+			display contents
+
+			header.header {
+				display contents
+			}
+			> :not(.ticker) {
+				grid-column 1 / span 3
+				width 100% !important
+				max-width 100% !important
+				// overflow hidden
+			}
+			.is-bot {
+				display none
+			}
+			.name, .info {
+				grid-row 1
+			}
+			.username, .ticker {
+				grid-row 2
+				font-size .9em
+				align-self flex-start
+			}
+
+			.ticker {
+				justify-self flex-end
+				padding .1em .7em
+				border-radius 100px
+				background-color var(--accent) !important
+				font-size .8em
+				text-shadow 0 2px 2px black
+			}
+
+			.body {
+				margin-top .2em
+				overflow hidden
+				margin-inline -100px
+				padding-inline 100px
+			}
+
+		}
+
+	}
+}
+
+
+if unfixImg {
+	.gird-container {
+		margin-block .7em !important
+	}
+	.gird-container::before {
+		content: unset !important
+	}
+	.gird-container > div {
+		position: static !important;
+		height: auto !important;
+		max-height: 80vh !important;
+		border-radius var(--radius)
+		overflow clip
+	}
+}
+
+
+
+// Replies
+
+article ~ .wrpstxzv {
+	font-size 1em !important
+}
+	
+// Hide deck menu until hovering
+if hideDeck {
+	.sideMenu {
+		transition width .2s, opacity .1s .15s
+	}
+	.sideMenu:not(:hover) {
+		width 1px !important
+		overflow hidden
+		opacity 0
+		transition width .2s .1s, opacity .2s
+	}
+}
+
+// Show Content Button
+if altCW {
+	.cw > button:last-child {
+		text-align: unset !important;
+		margin: 5px -200px !important;
+		width: calc(100% + 400px) !important;
+		padding: 12px 200px !important;
+		display: block !important;
+		background: none;
+		color: var(--renote) !important;
+
+	}
+	.cw > button:last-child:hover,
+	.cw > button:last-child:focus {
+		background: var(--panelHighlight) !important;
+	}
+	.cw > button:last-child > * {
+		display: inline-block;
+		transition: transform 0.3s cubic-bezier(0, 0, 0, 4);
+	}
+	.cw > button:last-child:active > * {
+		transform: translateY(1px) !important;
+		transition: transform 0.2s;
+	}
+}
+}
+
+
+
+
+
