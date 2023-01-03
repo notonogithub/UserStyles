@@ -28,11 +28,15 @@
 
 - Added some more larger vanilla servers, 
 	although please remember you can still do above to add your own home server!!!
+	
+*//*  Hotfix 1.5.1
+- Fixed checkbox positions in settings page
+- Only FF users get cool header banner blur effect >:( , unreliable in chromium browsers.
 */
 
 /* ==UserStyle==
 @name           Mastodon Modern
-@version        1.5.0
+@version        1.5.1
 @description    Gives Mastodon a nicer look :)
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/mastodon/modern.user.css
 @preprocessor   stylus
@@ -638,6 +642,9 @@
 						opacity .7
 						clip-path: inset(55px 0 0 0 round var(--radius));
 						mask linear-gradient(transparent 55px, black 50px, transparent)
+					}
+					& ~ div {
+						z-index 2
 					}
 				}
 				.avatar {
@@ -2531,7 +2538,7 @@
 					inset 0
 				}
 				input {
-					inset 1em
+					inset 1em !important
 				}
 			}
 			> {
@@ -2551,7 +2558,6 @@
 			margin-top .4em
 		}
 		.spacer {
-			// display none
 			border-top 1px solid var(--border-color) !important
 		}
 
@@ -2794,5 +2800,20 @@
 	}
 
 }
+
+//////////////////////////////
+//							//
+//	  STYLUS-ONLY OPTIONS	//
+//							//
+//////////////////////////////
+:root {
+	
+}
+
+
+
+
+
+
 	
 }
