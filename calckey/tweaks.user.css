@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Misskey/Calckey Tweaks
-@version        1.0.0
+@version        1.0.1
 @description    It says Misskey tweaks but I haven't actually tested there
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/mastodon/calckey/tweaks.user.css
 @preprocessor   stylus
@@ -78,7 +78,8 @@ if altDeck {
 			margin-right 8px !important
 			display flex
 			flex-direction column
-			
+			overflow visible !important
+			contain unset
 			&.paged {
 				background none !important
 			}
@@ -88,11 +89,16 @@ if altDeck {
 				background none !important
 				align-items center
 				padding-inline var(--radius) !important
-
+				.menu {
+					transform rotate(90deg)
+				}
 				&.indicated {
 					box-shadow none
 					color var(--accent)
 					font-weight 600
+					._button {
+						order 2
+					}
 					&::after {
 						content ""
 						width 20px
@@ -114,6 +120,9 @@ if altDeck {
 				border-radius var(--radius) var(--radius) 0 0 !important
 				height 0 !important
 				flex-grow 1 !important
+				
+				box-shadow 0 2px 4px rgba(0,0,0,0.04)
+				
 				[style="padding: 12px;"], > div {
 					padding 0px !important
 				}
