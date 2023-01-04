@@ -79,7 +79,6 @@ if altDeck {
 			display flex
 			flex-direction column
 			overflow visible !important
-			contain unset
 			&.paged {
 				background none !important
 			}
