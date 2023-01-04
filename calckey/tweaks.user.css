@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Misskey/Calckey Tweaks
-@version        1.0.1
+@version        1.0.3
 @description    It says Misskey tweaks but I haven't actually tested there
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/mastodon/calckey/tweaks.user.css
 @preprocessor   stylus
@@ -40,17 +40,30 @@ if altDeck {
 	.mk-deck {
 		--navBg transparent
 		--X14 transparent
+		
+		/html[style*="background-image"] & {
+			> div:first-child,
+			.column > header *,
+ 			{
+				color white
+			}
+		}
+		
 		&::before, &::after {
 			content ""
 			flex 1 9999 0px !important
 		}
 		> div:first-child {
-			position sticky
+			position sticky !important
 			left 0
-			backdrop-filter blur(20px)
+			// backdrop-filter blur(20px)
 			z-index 2
+			
+			.body {
+				position static
+			}
 			&::before {
-				content ""
+				// content ""
 				position absolute
 				inset 0
 				background var(--bg)
@@ -79,6 +92,7 @@ if altDeck {
 			display flex
 			flex-direction column
 			overflow visible !important
+			background none !important
 			&.paged {
 				background none !important
 			}
@@ -87,7 +101,9 @@ if altDeck {
 				height 30px !important
 				background none !important
 				align-items center
+				overflow visible !important
 				padding-inline var(--radius) !important
+				// text-shadow 0 0 4px var(--bg), 0 0 2px var(--bg), 0 0 4px var(--bg) ,0 4px 4px var(--bg)
 				.menu {
 					transform rotate(90deg)
 				}
@@ -109,6 +125,7 @@ if altDeck {
 				.header {
 					align-items center !important
 					display flex !important
+					overflow visible
 					i {
 						font-size 1em !important
 					}
@@ -129,8 +146,12 @@ if altDeck {
 					display flex
 					flex-direction column
 					flex-grow 1
+					// background var(--bg)
 					// overflow clip
-					
+					[style="padding: 20px;"] {
+						background var(--bg)
+						border-radius var(--radius)
+					}
 				}
 			}
 			.main._gap {
