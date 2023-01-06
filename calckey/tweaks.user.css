@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Misskey/Calckey Tweaks
-@version        1.0.4
+@version        1.0.5
 @description    It says Misskey tweaks but I haven't actually tested there
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/mastodon/calckey/tweaks.user.css
 @preprocessor   stylus
@@ -187,7 +187,6 @@ if altDeck {
 				}
 				border-radius var(--radius)
 				overflow clip
-				margin-bottom .2em
 				.highlight {
 					inset-block 6px !important
 					height unset
