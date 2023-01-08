@@ -1,5 +1,5 @@
 # Mastodon Modern
-A UserStyle & theme that drastically improves the look & feel of Mastodon
+A UserStyle & theme that drastically improves the look & feel of Mastodon. Can be used with other themes that only change colors.
 
 | ![](https://codeberg.org/Freeplay/UserStyles/raw/branch/main/mastodon/images/mastodon-modern.png) | ![](https://codeberg.org/Freeplay/UserStyles/raw/branch/main/mastodon/images/mastodon-modern-multicolumn.png) | ![](https://codeberg.org/Freeplay/UserStyles/raw/branch/main/mastodon/images/mastodon-modern-post.png) | ![](https://codeberg.org/Freeplay/UserStyles/raw/branch/main/mastodon/images/mastodon-modern-post-dark.png) |
 | --- | --- | --- | --- |
