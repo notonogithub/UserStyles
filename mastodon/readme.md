@@ -1,11 +1,12 @@
 # Mastodon Modern
-Makes Mastodon look a bit nicer :)
+A UserStyle & theme that drastically improves the look & feel of Mastodon
 
 | ![](https://codeberg.org/Freeplay/UserStyles/raw/branch/main/mastodon/images/mastodon-modern.png) | ![](https://codeberg.org/Freeplay/UserStyles/raw/branch/main/mastodon/images/mastodon-modern-multicolumn.png) | ![](https://codeberg.org/Freeplay/UserStyles/raw/branch/main/mastodon/images/mastodon-modern-post.png) | ![](https://codeberg.org/Freeplay/UserStyles/raw/branch/main/mastodon/images/mastodon-modern-post-dark.png) |
 | --- | --- | --- | --- |
 
-### **> [Install for any server using the Stylus browser extension](https://userstyles.world/style/4773) <**
-#### **WARNING:** Glitch-soc & its derivatives are not supported.
+### **[Use with the Stylus browser extension!](https://userstyles.world/style/4773)**
+
+**WARNING: Glitch-soc & its derivatives are not supported.** Too many things I would have to change to support it :(
 
 
 ## Example for adding to your own instance:
