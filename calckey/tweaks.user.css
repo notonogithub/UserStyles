@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Misskey/Calckey Tweaks
-@version        1.0.7
+@version        1.0.8
 @description    It says Misskey tweaks but I haven't actually tested there
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/mastodon/calckey/tweaks.user.css
 @preprocessor   stylus
@@ -56,18 +56,18 @@ if altDeck {
 		> div:first-child {
 			position sticky !important
 			left 0
-			// backdrop-filter blur(20px)
+			backdrop-filter blur(20px)
 			z-index 2
 			
 			.body {
 				position static
 			}
 			&::before {
-				// content ""
+				content ""
 				position absolute
 				inset 0
 				background var(--bg)
-				z-index 2
+				z-index -1
 				opacity .8
 			}
 		}
