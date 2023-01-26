@@ -1,6 +1,6 @@
 /* ==UserStyle==
 @name           Proton Suite Alternative Layout
-@version        1.1.0
+@version        1.1.1
 @description    A better, more compact, nicer looking layout for ProtonMail, ProtonCalendar, and ProtonDrive.
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/proton/better-layout.user.css
 @preprocessor   stylus
@@ -318,6 +318,7 @@
 		.toolbar {
 			height: toolbarHeight;
 			min-height: 36px;
+			padding-right 30px
 			border-bottom: 0;
 			background: var(--background-norm);
 			box-shadow: var(--shadow-norm) !important;
@@ -435,6 +436,35 @@
 		}
 		
 	}
+	
+	
+	.drawer-visibility-control {
+		top 0 !important
+		height toolbarHeight
+		z-index 101
+		& ~ .drawer-sidebar {
+			position absolute
+			top 0
+			right 0
+			padding-right 50px !important
+			padding-left 20px !important
+			height toolbarHeight
+			background var(--background-norm)
+			width auto !important
+			z-index 100
+			border-radius 100px 0 0 100px
+			display flex
+			align-items center
+			.flex-column {
+				flex-direction row !important
+				gap 1em
+				margin-block auto !important
+			}
+		}
+	}
+	
+	
+	
 	if collapseSidebar {
 		.header {
 			transform translate(3px, 2px)
