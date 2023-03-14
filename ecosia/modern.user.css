@@ -20,7 +20,7 @@
 
 /* ==UserStyle==
 @name           Ecosia Modern
-@version        1.1.1
+@version        1.1.2
 @description    Making better use of screen space. Moving modules aside requires CSS Grid Masonry, which many browsers don't support yet.
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/ecosia/modern.user.css
 @preprocessor   stylus
@@ -71,7 +71,9 @@
 				width calc(100% - 150px) !important
 				border-radius 10px
 			}
-
+			.main-header__search-navigation {
+				height auto !important
+			}
 			.main-header__search-navigation {
 				position fixed
 				left 0
@@ -637,7 +639,7 @@
 	}
 	
 	// Dark Reader fixes
-	[data-darkreader-mode="dynamic"] {
+	[data-darkreader-scheme="dark"] {
 		.deep-links__link.link-bubble {
 			border 0 !important
 		}
@@ -948,21 +950,23 @@
 	}
 	if fixedSearch {
 		@media only screen and (min-width 992px) {
-			.main-header__logo {
-				position fixed
-			}
-			.search-form__mobile-wrapper {
-				border-radius 100px
-				box-shadow 0 -20px 40px 10px var(--color-background-primary) !important
-			}
-			.main-header__search {
-				z-index 20
-				position fixed
-				left 110px
-				width calc(100vw - 400px) !important
-			}
-			.main-header__install-cta {
-				display none !important
+			#__layout > .layout {
+				.main-header__logo {
+					position fixed
+				}
+				.search-form__mobile-wrapper {
+					border-radius 100px
+					box-shadow 0 -20px 40px 10px var(--color-background-primary) !important
+				}
+				.main-header__search {
+					z-index 20
+					position fixed
+					left 110px
+					width calc(100vw - 400px) !important
+				}
+				.main-header__install-cta {
+					display none !important
+				}
 			}
 		}
 	}
