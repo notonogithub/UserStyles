@@ -20,7 +20,7 @@
 
 /* ==UserStyle==
 @name           Ecosia Modern
-@version        1.1.2
+@version        1.1.3
 @description    Making better use of screen space. Moving modules aside requires CSS Grid Masonry, which many browsers don't support yet.
 @updateURL      https://codeberg.org/Freeplay/UserStyles/raw/branch/main/ecosia/modern.user.css
 @preprocessor   stylus
@@ -36,6 +36,7 @@
 @var checkbox modAside "Move Modules Aside [REQURES CSS GRID MASONRY]" 1
 @var checkbox newsCards "News Cards" 1
 @var checkbox shoppingCards "Shopping Cards" 1
+@var checkbox fullDesc "Show Full Description" 1
 @var checkbox animations "More Animations" 1
 @var checkbox tweaks "Other Tweaks" 1
 @var checkbox neumorphism "Neumorphism Spin (lower contrast)" 0
@@ -638,6 +639,12 @@
 		}
 	}
 	
+	if fullDesc {
+		.web-result__description {
+			-webkit-line-clamp unset !important
+		}
+	}
+	
 	// Dark Reader fixes
 	[data-darkreader-scheme="dark"] {
 		.deep-links__link.link-bubble {
@@ -677,10 +684,13 @@
 	}
 	
 	if tweaks {
-		body {
+		html:not(.dark) body {
 			--color-background-primary #f9f9f9
 			--color-background-secondary white
 			// --lt-color-gray-200 #e5e5e5 !important
+		}
+		.dark body {
+			--color-text-primary #ddd !important
 		}
 		.main-footer__wave {
 			filter drop-shadow(0 12px 12px rgba(0,0,0,0.1)) !important
